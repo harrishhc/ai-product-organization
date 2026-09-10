@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { loadProductContext, getBoundedContext } from '../runtime/context.js';
+import { loadProductContext, getBoundedContext, writeProductContext } from '../runtime/context.js';
 
 test('loadProductContext reads the template product context', () => {
   const ctx = loadProductContext('_template');
@@ -27,4 +27,24 @@ test('getBoundedContext refuses to default to full-context loading', () => {
 
 test('getBoundedContext rejects unknown section names', () => {
   assert.throws(() => getBoundedContext('_template', ['not_a_real_section']));
+});
+
+test('writeProductContext writes to the resolved product repository and round-trips', () => {
+  const original = loadProductContext('_template');
+  try {
+    const updated = { ...original, roadmap: { ...original.roadmap, current_state: 'test-write-roundtrip' } };
+    const { productId, contextPath } = writeProductContext('_template', updated);
+    assert.equal(productId, '_template');
+    assert.match(contextPath, /_template[\\/]context\.json$/);
+
+    const reread = loadProductContext('_template');
+    assert.equal(reread.roadmap.current_state, 'test-write-roundtrip');
+  } finally {
+    // Restore the checked-in fixture so this test has no lasting side effect.
+    writeProductContext('_template', original);
+  }
+});
+
+test('writeProductContext refuses an unregistered product, same as the read path', () => {
+  assert.throws(() => writeProductContext('nonexistent-product', {}));
 });

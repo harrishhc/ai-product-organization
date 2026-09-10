@@ -23,15 +23,16 @@ runtime/         executable PDM Core: identity/governance, capability
                  Context boundary, orchestrator, decision-state model,
                  instrumentation, methodology-evolution boundary (see runtime/*.js)
 methodology/     HH-owned methodology baseline (operational source of truth)
-  registry/      compact capability metadata (registry.json)
+  registry/      compact capability metadata (registry.json, 7 capabilities)
   capabilities/  detailed capability instructions, lazily loaded
-  provenance/    provenance records for any adopted external material
-vendor/          reserved for a one-time/deliberate seed import of external
-                 methodology (e.g. Dean Peters' skills/prompts) — empty until
-                 HH decides to perform that import; not a live dependency
+  provenance/    provenance records for adopted external material
+vendor/          pinned, one-time seed import of external methodology
+                 (4 skills from Dean Peters' Product Manager Skills, see
+                 vendor/dean-product-manager-skills/PROVENANCE.md) — not a
+                 live dependency; runtime never reads this directory
 products/        Product Registry only (registry.json) — a pointer index to
                  each product's OWN repository, never a copy of its content
-  registry.json  maps product id -> repository location + context entry
+  registry.json  maps product id -> repository location + context entry + metadata
   _template/     local fixture standing in as a "product repository" for
                  bootstrap/dev/testing
 governance/      role boundaries, decision model, delegation logic, governance principles
@@ -42,8 +43,10 @@ tests/           node:test suite covering behavior + architectural invariants
 ## Status
 
 v0.3 architectural record, with a working runtime bootstrap (`runtime/` +
-`tests/`, plain Node.js, zero npm dependencies — see `npm test`). Subordinate
-specialist-agent implementations (Research/Design/QA/Engineering), a real
-Product Context, and any vendored external methodology are still open — see
+`tests/`, plain Node.js, zero npm dependencies — see `npm test`) and an
+initial methodology seed imported from Dean Peters' Product Manager Skills
+(4 of ~70+ skills, pinned to one commit; see `methodology/README.md`).
+Subordinate specialist-agent implementations (Research/Design/QA/Engineering)
+and a real (non-template) Product Context are still open — see
 `docs/ARCHITECTURE.md` and the per-directory READMEs for what's decided vs.
 still pending HH approval.

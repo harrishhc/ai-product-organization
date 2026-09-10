@@ -37,7 +37,7 @@ export function _resetProductRegistryCache() {
  * must not invent or guess a location for it.
  *
  * @param {string} productId
- * @returns {{ productId: string, repositoryType: string, repositoryPath: string, contextEntry: string }}
+ * @returns {{ productId: string, repositoryType: string, repositoryPath: string, contextEntry: string, metadata: object }}
  */
 export function resolveProductRepository(productId) {
   const { products } = loadProductRegistry();
@@ -62,6 +62,9 @@ export function resolveProductRepository(productId) {
     repositoryType: entry.repository.type,
     repositoryPath,
     contextEntry: entry.context_entry,
+    // Optional per-product metadata (e.g. owner, tags) — not product context
+    // content, just registry-level bookkeeping. Defaults to {} when absent.
+    metadata: entry.metadata ?? {},
   };
 }
 

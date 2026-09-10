@@ -1,13 +1,9 @@
 # vendor/
 
-Reserved for pinned, provenance-tracked snapshots of external methodology
-(e.g. Dean Peters' Product Manager Skills / Product Manager Prompts), per
+Pinned, provenance-tracked snapshots of external methodology, per
 [`Upstream_Methodology_Governance_and_Sync_Specification`](../methodology/README.md).
-
-**This directory is intentionally empty for now** — not because importing is
-architecturally forbidden, but because it hasn't been done yet in this
-bootstrap. The approved model is **import/adapt once or deliberately, not a
-live upstream dependency**:
+The approved model is **import/adapt once or deliberately, not a live
+upstream dependency**:
 
 ```
 External methodology -> initial selective import/copy -> HH-owned methodology
@@ -15,30 +11,35 @@ External methodology -> initial selective import/copy -> HH-owned methodology
   -> PDM runtime
 ```
 
-A one-time (or periodically deliberate) seed import of selected Dean-derived
-capabilities into the HH repository is an expected, normal bootstrap step —
-it is not the same thing as the "live sync" the governance spec forbids.
-What is forbidden is the PDM *runtime* querying, checking, or depending on
-the upstream repositories during ordinary sessions.
+"No live runtime dependency on upstream" does not mean "never import the
+seed." What's forbidden is the PDM *runtime* querying, checking, or
+depending on the upstream repositories during ordinary sessions — not a
+deliberate, one-time (or periodically deliberate) seed import.
 
-Performing the actual import requires:
+## Contents
 
-1. HH's go-ahead to do it now (not required for every ordinary task — this
-   is a one-time/occasional maintenance action, not a recurring gate).
-2. Network access to fetch the upstream repository.
-3. A recorded provenance file (upstream URL, commit SHA, snapshot date,
-   license/attribution, sync status) alongside the copied content.
-4. Adapting the copied material into the HH methodology baseline
-   (`methodology/registry/` + `methodology/capabilities/`) — after which HH
-   may freely modify, merge, split, rename, extend, or retire it. No
-   upstream-compatibility requirement is introduced.
+- `dean-product-manager-skills/` — an initial seed import from Dean Peters'
+  Product Manager Skills, performed 2026-09-10. See
+  [`dean-product-manager-skills/PROVENANCE.md`](./dean-product-manager-skills/PROVENANCE.md)
+  for the exact commit, license, and which 4 skills (of the ~70+ available)
+  were selected and why. These are byte-for-byte upstream copies — nothing
+  in this directory is HH-adapted; the HH-adapted, registry-linked copies
+  live in [`../methodology/capabilities/`](../methodology/README.md).
 
-Re-checking upstream for *later* changes (as opposed to this initial import)
-is the part that must stay a deliberate, separately-invoked Methodology
-Evolution task — see `runtime/methodologyEvolution.js` — never a side effect
-of ordinary product/PDM work, and never performed automatically by anything
-in `runtime/`.
+Nothing from Product Manager Prompts has been imported yet.
 
-Until the import happens, the Capability Registry
-(`methodology/registry/registry.json`) indexes only HH-original placeholder
-capabilities so the routing/lazy-loading mechanics are real and testable.
+## Runtime rule (unchanged)
+
+`runtime/registry.js` never reads from this directory. It resolves every
+capability's detail exclusively from `methodology/capabilities/`, regardless
+of whether that capability's `source` is `hh-original` or
+`dean-product-manager-skills`. This directory exists for provenance,
+auditing, and future diffing against later upstream changes — not as
+something the runtime touches at decision-making time.
+
+## Re-syncing later upstream changes
+
+Checking whether these four skills (or anything else upstream) have since
+changed is Methodology Evolution work — a deliberate, separately-invoked
+task (see `runtime/methodologyEvolution.js`), never a side effect of
+ordinary product/PDM work, and never performed automatically.

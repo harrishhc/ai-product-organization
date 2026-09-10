@@ -44,3 +44,28 @@ test('loadCapabilityDetail lazily loads exactly the requested capability, not th
 test('loadCapabilityDetail throws for an unknown id rather than substituting a nearby one', () => {
   assert.throws(() => loadCapabilityDetail('does-not-exist'));
 });
+
+test('the four imported (dean-product-manager-skills) capabilities load and carry provenance', () => {
+  for (const id of ['problem-framing-canvas', 'discovery-process', 'prioritization-advisor', 'prd-development']) {
+    const { meta, detail } = loadCapabilityDetail(id);
+    assert.equal(meta.source, 'dean-product-manager-skills');
+    assert.equal(meta.provenance.upstream_repository, 'https://github.com/deanpeters/Product-Manager-Skills');
+    assert.ok(meta.provenance.commit, `${id} provenance is missing a commit`);
+    assert.ok(detail.includes('HH Methodology — Adapted Capability'), `${id} detail is missing the HH provenance header`);
+  }
+});
+
+test('imported capabilities sit alongside, not instead of, their HH-original counterparts', () => {
+  const ids = listCapabilityIds();
+  // Pairs that are deliberately complementary rather than duplicates.
+  assert.ok(ids.includes('discovery-question-set') && ids.includes('discovery-process'));
+  assert.ok(ids.includes('prioritization-comparison') && ids.includes('prioritization-advisor'));
+  assert.ok(ids.includes('prd-readiness-gate') && ids.includes('prd-development'));
+});
+
+test('existing narrow queries still resolve to the original HH-original capability, unaffected by the added imports', () => {
+  // prioritization-advisor uses a distinct decision_stage so it does not tie
+  // with prioritization-comparison for this exact (intents, decisionStage) query.
+  const candidates = filterCandidates({ intents: ['prioritization'], decisionStage: 'prioritize' });
+  assert.equal(selectSmallestSufficient(candidates).id, 'prioritization-comparison');
+});

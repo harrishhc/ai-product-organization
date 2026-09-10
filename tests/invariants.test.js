@@ -140,10 +140,33 @@ test('invariant: PDM can issue "disagree" and "dont_build_yet" without being for
 });
 
 // 7. PDM does not silently self-modify.
-test('invariant: no runtime module writes to disk (governance/methodology/registry are never auto-mutated)', () => {
+test('invariant: PDM Core, registry, product registry, decision, and evaluation never write to disk (governance/methodology/registry are never auto-mutated)', () => {
+  // context.js is the one intentional exception: it may write back to a
+  // PRODUCT's own repository via an explicit writeProductContext() call
+  // (the "optionally write/update product artifacts when authorized" step)
+  // — that is product data, not PDM/governance/methodology self-modification.
+  const mustNeverWrite = [
+    'pdmCore.js',
+    'registry.js',
+    'productRegistry.js',
+    'decision.js',
+    'evaluation.js',
+    'instrumentation.js',
+    'methodologyEvolution.js',
+    'orchestrator.js',
+  ];
   for (const { file, text } of runtimeSourceFiles()) {
+    if (!mustNeverWrite.includes(file)) continue;
     assert.doesNotMatch(text, /writeFileSync|createWriteStream|fs\.write\(/, `${file} should not write to disk automatically`);
   }
+});
+
+test('invariant: writeProductContext only ever writes inside the resolved product repository, never elsewhere', () => {
+  const contextSrc = readFileSync(path.join(RUNTIME_DIR, 'context.js'), 'utf8');
+  // The write path must go through resolveProductRepository()'s result, not
+  // a hardcoded or PDM-repo-relative path.
+  assert.match(contextSrc, /writeFileSync\(\s*contextPath/);
+  assert.match(contextSrc, /resolveProductRepository\(productId\)/);
 });
 
 // 8. Specialist delegation has a bounded purpose.

@@ -3,9 +3,11 @@
 // into PDM Core, methodology, or governance. This module resolves a
 // product's repository via the Product Registry (productRegistry.js) and
 // then retrieves only the bounded sections a task actually needs — never the
-// whole product, and never by scanning multiple products at once.
+// whole product, and never by scanning multiple products at once. It can
+// also write an update back to that same product repository, but only via
+// an explicit call (writeProductContext) — never automatically.
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { resolveProductRepository } from './productRegistry.js';
 
@@ -48,6 +50,26 @@ export function getBoundedContext(productId, sections) {
   const bounded = { product_id: full.product_id };
   for (const s of sections) bounded[s] = full[s];
   return bounded;
+}
+
+/**
+ * Writes an updated context back to the product's OWN repository (resolved
+ * via the Product Registry, same as loadProductContext). This is the
+ * "optionally write/update product artifacts when authorized" step of the
+ * PDM -> Product Registry -> ... round trip — it is never called
+ * automatically by anything else in runtime/; a caller invokes it
+ * explicitly, which is what "authorized" means here. Full-object overwrite
+ * only (no partial merge) to keep this the simplest reversible write
+ * primitive; a merge/patch API can be added later if a real need appears.
+ *
+ * @param {string} productId
+ * @param {object} updatedContext - full context object (see products/_template/context.json shape)
+ */
+export function writeProductContext(productId, updatedContext) {
+  const { repositoryPath, contextEntry } = resolveProductRepository(productId);
+  const contextPath = path.join(repositoryPath, contextEntry);
+  writeFileSync(contextPath, `${JSON.stringify(updatedContext, null, 2)}\n`, 'utf8');
+  return { productId, contextPath };
 }
 
 export { VALID_SECTIONS };
