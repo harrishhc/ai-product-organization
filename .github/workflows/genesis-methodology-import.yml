@@ -1,0 +1,14 @@
+name: Methodology Genesis Import
+
+# Retired after the one-time genesis import. The HH repository is now the
+# canonical methodology source of truth; methodology is maintained manually.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  retired:
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Genesis import retired; HH-owned methodology is canonical."

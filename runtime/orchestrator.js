@@ -54,7 +54,7 @@ export function selectCapability({ dominantUncertainty, intents, decisionStage }
       'selectCapability requires an explicit dominantUncertainty (the decision bottleneck this selection is meant to reduce) — routing must not be intent/stage matching alone.'
     );
   }
-  const candidates = filterCandidates({ intents, decisionStage });
+  const candidates = filterCandidates({ intents, decisionStage, dominantUncertainty });
   session?.recordCapabilitySelection?.(candidates.map((c) => c.id));
   const selected = selectSmallestSufficient(candidates);
   return { selected, candidates, dominantUncertainty };

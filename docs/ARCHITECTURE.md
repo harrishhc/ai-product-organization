@@ -19,7 +19,7 @@ v0.3 - HH AI Product Organization
 
 ## 3. Organizational Hierarchy
 
-```
+```text
 HH - Founder / CEO
   -> PDM - Senior Product Director
        -> Research Agent
@@ -101,7 +101,7 @@ PDM should maintain explicit distinctions among FACT, EVIDENCE, ASSUMPTION, HYPO
 
 ## 12. Conceptual Architecture Boundary
 
-```
+```text
 agents/
   pdm/
   research/
@@ -117,26 +117,34 @@ governance/
 methodology/
 ```
 
-## 13. Upstream Methodology
+## 13. Methodology Genesis and Ownership
 
-The PDM methodology layer may initially seed itself from Dean Peters' Product Manager Skills and Product Manager Prompts. After adoption, the HH repository is the runtime source of truth. External repositories are not runtime dependencies and are not checked during ordinary product work.
+The methodology layer was initially seeded from Dean Peters' Product Manager Skills and Product Manager Prompts. The pinned snapshots were imported into this repository as the **genesis seed**. After genesis, the HH repository is the canonical runtime source of truth.
 
-- https://github.com/deanpeters/Product-Manager-Skills
-- https://github.com/deanpeters/product-manager-prompts
+- Product Manager Skills: `1b5a524ebb95e9497fa3f25002d8b8ec528d4444`
+- Product Manager Prompts: `c3b91dba8f7782fac72c7aa340b98d6554b1f3ec`
 
-The implementation should preserve a clear separation between: upstream methodology, reusable PDM capability, product-specific context, and PDM evolution.
+The import preserves methodology-bearing assets while excluding upstream repository/application tooling. The two source ecosystems are kept distinct where their paths would otherwise collide; for example, the prompts ecosystem is namespaced under `methodology/prompts/`.
 
-## 14. Current Design Status
+## 14. Methodology Runtime Boundary
 
-v0.1 is an architectural record. It intentionally does not lock detailed skill implementations, subordinate-agent prompts, evaluation cases, or product-specific strategy. Those should be designed after the PDM Constitution is finalized.
+HH-owned methodology is a local runtime dependency. External repositories are **not** runtime dependencies and are not queried during ordinary product work.
+
+The runtime uses a compact registry for metadata-first routing and lazy-loads only the selected methodology asset. A large methodology repository must never become a large active context.
+
+The methodology registry is derived metadata, not a second source of truth. Changes to methodology source files are the authoritative change; registry synchronization only updates routing/index metadata.
 
 ## 15. Methodology Evolution Boundary
 
-Upstream methodology is a governed dependency, not a live runtime dependency. HH may vendor a pinned snapshot of Product Manager Skills and Product Manager Prompts into the repository.
+Methodology Evolution is an HH-governed maintenance plane, separate from Product Evolution and PDM Evolution.
 
-The methodology evolution path is: upstream change → diff → classify → validate → impact review → HH approval → vendor update → registry update → evaluation.
+The evolution path is:
 
-Methodology Evolution is distinct from Product Evolution and PDM Evolution. An upstream update must not silently modify PDM Core or product strategy.
+`local methodology change -> registry rebuild -> evaluation -> HH approval where required -> new methodology baseline`
+
+External upstream repositories may be consulted deliberately as future research or comparison input, but no upstream synchronization is required and no upstream change can silently modify the approved methodology.
+
+HH may copy, adapt, consolidate, rename, remove, or create methodology assets. The local baseline is allowed to diverge from upstream completely.
 
 ## 16. Capability Authority Boundary
 
@@ -144,15 +152,15 @@ Skills and prompts provide methods, analysis, facilitation, or structured work. 
 
 The decision flow is: capability → analysis/method → PDM synthesis and recommendation → HH decision where Founder authority applies.
 
-## 17. HH-Owned Methodology Boundary
+## 17. Registry and Selection Boundary
 
-The approved methodology used by PDM is maintained inside the HH repository. External repositories are reference sources only and are not queried during ordinary PDM sessions.
+The registry indexes the methodology ecosystem, including skills, workflows, prompts, workshops, flows, loops, patterns, generators, and HH-authored capabilities.
 
-HH may copy, adapt, consolidate, rename, or remove methodology assets as part of its own governed methodology evolution. The runtime does not require upstream compatibility.
+Selection is metadata-first:
 
-- The PDM runtime should function normally with zero network access to methodology source repositories.
-- Only the locally approved methodology baseline is loaded into active context.
-- Methodology updates are deliberate maintenance work, never a prerequisite for product execution.
+`intent + decision stage + dominant uncertainty -> candidate narrowing -> smallest sufficient capability -> lazy detail load`
+
+Where a capability explicitly declares uncertainty types, the runtime may enforce them. Missing uncertainty metadata is treated as unknown rather than invented. This prevents the registry from pretending to know semantic routing information that has not been established.
 
 ## 18. Token / Runtime Efficiency Principles
 
@@ -167,4 +175,4 @@ The system should optimize decision quality per unit of context, latency, tool u
 
 ## 19. Architecture Principle Summary
 
-Capabilities are reusable; Product Context is product-specific; upstream methodology is locally versioned and replaceable; PDM owns judgment and orchestration; HH owns final authority; evolution is governed across three separate planes. HH owns the runtime methodology baseline. External methodology is an optional maintenance input, not a runtime dependency. PDM minimizes context, tool calls, and delegation while preserving decision quality.
+Capabilities are reusable; Product Context is product-specific; methodology is HH-owned and locally versioned; PDM owns judgment and orchestration; HH owns final authority; evolution is governed across three separate planes. The initial upstream ecosystem is genetic source material, not an ongoing dependency. PDM minimizes context, tool calls, and delegation while preserving decision quality.

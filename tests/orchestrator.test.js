@@ -16,9 +16,8 @@ test('runStage rejects a stage name outside the twelve-stage loop', () => {
   assert.throws(() => runStage('INVENT_A_STAGE', session));
 });
 
-test('a minimal interaction can skip most of the twelve stages', () => {
+test('a minimal interaction can skip most of the twelve-stage loop', () => {
   const session = createSession();
-  // Only two stages needed for a trivial, already-clear decision.
   runStage('LISTEN', session);
   runStage('DECIDE', session);
   assert.equal(session.summary().toolCalls, 2);
@@ -30,7 +29,7 @@ test('end-to-end: select a capability, load only its detail, retrieve bounded co
     { dominantUncertainty: 'unclear which option to do first', intents: ['prioritization'], decisionStage: 'prioritize' },
     session
   );
-  assert.equal(selected.id, 'prioritization-comparison');
+  assert.equal(selected.id, 'capabilities:prioritization-comparison');
 
   const { detail } = loadSelectedCapability(selected, session);
   assert.match(detail, /Prioritization Comparison/);
