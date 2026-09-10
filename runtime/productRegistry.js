@@ -7,7 +7,7 @@
 // PDM -> Product Registry -> identify selected product -> resolve product
 // repository -> retrieve only relevant/bounded Product Context.
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -31,6 +31,36 @@ export function _resetProductRegistryCache() {
 }
 
 /**
+ * Resolves a repository descriptor to a local directory that can be read
+ * from disk right now — never performs network I/O itself. For "git_remote",
+ * the local clone is expected to already exist (created/updated by the
+ * separate, explicitly-invoked runtime/productSync.js#syncGitRemoteProduct);
+ * this function only checks that it's there, matching the "an ordinary pass
+ * needs no network call" invariant (tests/invariants.test.js).
+ */
+function resolveRepositoryPath(productId, repository) {
+  if (repository.type === 'local_path') {
+    return path.resolve(REPO_ROOT, repository.location);
+  }
+  if (repository.type === 'git_remote') {
+    const clonePath = path.resolve(REPO_ROOT, repository.local_clone_path);
+    if (!existsSync(clonePath)) {
+      throw new Error(
+        `Product "${productId}" uses repository.type "git_remote" but its local clone does not exist yet at ${clonePath}. ` +
+          'Run the deliberate sync step first: runtime/productSync.js#syncGitRemoteProduct (never performed automatically).'
+      );
+    }
+    return clonePath;
+  }
+  // Other repository kinds (a remote service, etc.) are a future extension
+  // point. Only local_path and git_remote are wired up in this bootstrap, to
+  // avoid overbuilding a resolver for kinds nothing uses yet.
+  throw new Error(
+    `Product "${productId}" uses repository.type "${repository.type}", which this bootstrap does not yet resolve. Supported: "local_path", "git_remote".`
+  );
+}
+
+/**
  * Resolves a single product's repository location by explicit id lookup —
  * never by scanning all registered products or the filesystem. A product
  * that has not been deliberately registered here cannot be resolved; PDM
@@ -48,15 +78,7 @@ export function resolveProductRepository(productId) {
         'Products are not auto-discovered; register the repository location explicitly before use.'
     );
   }
-  if (entry.repository.type !== 'local_path') {
-    // Real product repositories (a separate git checkout, a remote service, etc.)
-    // are a future extension point. Only local_path is wired up in this bootstrap
-    // to avoid overbuilding a resolver for repository kinds nothing uses yet.
-    throw new Error(
-      `Product "${productId}" uses repository.type "${entry.repository.type}", which this bootstrap does not yet resolve. Only "local_path" is supported.`
-    );
-  }
-  const repositoryPath = path.resolve(REPO_ROOT, entry.repository.location);
+  const repositoryPath = resolveRepositoryPath(productId, entry.repository);
   return {
     productId,
     repositoryType: entry.repository.type,

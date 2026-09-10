@@ -4,3 +4,8 @@ Thumbs.db
 .env
 .env.local
 node_modules/
+
+# Local clones of "git_remote" products (runtime/productSync.js). Each
+# product owns its own repository; these are working copies, never checked
+# into the PDM repo.
+/.product-clones/

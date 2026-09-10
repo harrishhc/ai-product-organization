@@ -19,10 +19,12 @@ agents/          reusable functional capabilities (cross-product)
   engineering/   Engineering / Coding agent
   evolution/     PDM Evolution Agent (independent evolution plane)
 runtime/         executable PDM Core: identity/governance, capability
-                 registry+resolver, Product Registry resolver, Product
-                 Context boundary, Work State + Active Brief boundary,
-                 orchestrator, decision-state model, instrumentation,
-                 methodology-evolution boundary (see runtime/*.js)
+                 registry+resolver, Product Registry resolver (local_path and
+                 git_remote products), Product Sync (deliberate, HH-gated
+                 clone/pull for git_remote products), Product Context
+                 boundary, Work State + Active Brief boundary, orchestrator,
+                 decision-state model, instrumentation, methodology-evolution
+                 boundary (see runtime/*.js)
 methodology/     HH-owned methodology baseline (operational source of truth)
   registry/      compact capability metadata (registry.json, 7 capabilities)
   capabilities/  detailed capability instructions, lazily loaded
@@ -33,7 +35,12 @@ vendor/          pinned, one-time seed import of external methodology
                  live dependency; runtime never reads this directory
 products/        Product Registry only (registry.json) — a pointer index to
                  each product's OWN repository, never a copy of its content
-  registry.json  maps product id -> repository location + context entry + metadata
+  registry.json  maps product id -> repository location (local_path or
+                 git_remote) + context entry + work-state entry + metadata.
+                 git_remote products (e.g. colon-biopsy-ai-app) resolve to a
+                 gitignored local clone under .product-clones/, created/kept
+                 in sync only by an explicit runtime/productSync.js call —
+                 never automatically during ordinary product work
   _template/     local fixture standing in as a "product repository" for
                  bootstrap/dev/testing
 governance/      role boundaries, decision model, delegation logic, governance principles
