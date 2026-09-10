@@ -1,0 +1,13 @@
+{
+  "name": "ai-product-organization",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HH AI Product Organization - PDM Core, HH-owned methodology, Capability Registry, and runtime orchestration (v0.3 architecture bootstrap).",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}

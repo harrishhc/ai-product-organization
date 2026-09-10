@@ -18,12 +18,28 @@ agents/          reusable functional capabilities (cross-product)
   qa/            QA agent
   engineering/   Engineering / Coding agent
   evolution/     PDM Evolution Agent (independent evolution plane)
+runtime/         executable PDM Core: identity/governance, capability
+                 registry+resolver, Product Context boundary, orchestrator,
+                 decision-state model, instrumentation, methodology-evolution
+                 boundary (see runtime/*.js)
+methodology/     HH-owned methodology baseline (operational source of truth)
+  registry/      compact capability metadata (registry.json)
+  capabilities/  detailed capability instructions, lazily loaded
+  provenance/    provenance records for any adopted external material
+vendor/          reserved for pinned external methodology snapshots — empty
+                 until an explicit HH-approved maintenance task populates it
 products/        product-specific context (one folder per product)
+  _template/     shape for onboarding a new product's Product Context
 governance/      role boundaries, decision model, delegation logic, governance principles
-methodology/     vendored/pinned upstream methodology, versioned separately from PDM Core
 docs/            architecture records
+tests/           node:test suite covering behavior + architectural invariants
 ```
 
 ## Status
 
-v0.3 architectural record. This repo currently holds the skeleton only — detailed skill implementations, subordinate-agent prompts, evaluation cases, and product-specific strategy are designed after the PDM Constitution is finalized.
+v0.3 architectural record, with a working runtime bootstrap (`runtime/` +
+`tests/`, plain Node.js, zero npm dependencies — see `npm test`). Subordinate
+specialist-agent implementations (Research/Design/QA/Engineering), a real
+Product Context, and any vendored external methodology are still open — see
+`docs/ARCHITECTURE.md` and the per-directory READMEs for what's decided vs.
+still pending HH approval.
