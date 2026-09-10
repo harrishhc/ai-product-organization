@@ -1,190 +1,202 @@
-# Strategic Product Management Frameworks
+<a id="pmprompts"></a>
+# Product Manager Prompts for Generative AI
 
-**AI-assisted tools for both strategic thinking and practical execution in product management**
-
-This collection helps you with both the strategic work (market positioning, customer discovery, competitive analysis) and the execution work (user stories, requirements, stakeholder communication). Each prompt creates a guided conversation with AI to help you think through problems systematically.
-
----
-
-## How These Actually Work
-
-These aren't fill-in-the-blank templates. They're structured conversations with AI that help you think through complex problems step by step.
-
-**Scope note for this directory:**
-- Prompts in `/prompts/` generally assume relevant context is already loaded in session.
-- If you need the assistant to gather context and guide tradeoff decisions, start in [`/prompt-generators/`](../prompt-generators/).
-- For that facilitation method, see: [persona-first-decision-facilitation-loop.md](../prompt-generators/persona-first-decision-facilitation-loop.md).
-
-**The approach:**
-- AI asks you questions to understand your specific situation
-- Context builds gradually instead of overwhelming you upfront
-- Built-in quality control - AI knows when to ask for missing information
-- Based on proven PM frameworks like Jobs-to-be-Done, Value Proposition Canvas, etc.
-
-**The teaching layer:**
-Every prompt has comment blocks that teach you how to work better with AI. When you view the raw code, you'll see:
-```markdown
-<!-- 
-## Description: Why this framework matters for PMs
-## Usage Note: What context you need before starting  
-## Instructions: How AI should guide the conversation
--->
+```text
+╔═════════════════════════════════════════════════════════════════════════╗
+║                                                                         ║
+║   ██████╗ ███╗   ███╗    ██████╗ ██████╗  ██████╗ ███╗   ███╗██████╗ ████████╗███████╗
+║   ██╔══██╗████╗ ████║    ██╔══██╗██╔══██╗██╔═══██╗████╗ ████║██╔══██╗╚══██╔══╝██╔════╝
+║   ██████╔╝██╔████╔██║    ██████╔╝██████╔╝██║   ██║██╔████╔██║██████╔╝   ██║   ███████╗
+║   ██╔═══╝ ██║╚██╔╝██║    ██╔═══╝ ██╔══██╗██║   ██║██║╚██╔╝██║██╔═══╝    ██║   ╚════██║
+║   ██║     ██║ ╚═╝ ██║    ██║     ██║  ██║╚██████╔╝██║ ╚═╝ ██║██║        ██║   ███████║
+║   ╚═╝     ╚═╝     ╚═╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝        ╚═╝   ╚══════╝
+║                                                                         ║
+║   119 practical prompt assets for AI-assisted product management        ║
+║   ChatGPT • Claude • Copilot • Gemini • and others                      ║
+║                                                                         ║
+║   Community Build v2.5 • August 9, 2026 • CC BY-NC-SA 4.0               ║
+╚═════════════════════════════════════════════════════════════════════════╝
 ```
-Read these comments first - they'll help you understand not just what to do, but why it works.
+
+**Practical AI tools for both the strategic thinking and the daily execution of product management — that also teach you to prompt better while you use them.**
+
+Every asset here works by copy-paste into ChatGPT, Claude, Gemini, Copilot, or any AI assistant. No installs, no accounts, no framework. Pick the problem you're solving, grab the prompt, go.
+
+_(Looking to equip an AI agent rather than a chat session? See the companion [Product Manager Skills](https://github.com/deanpeters/Product-Manager-Skills#pmskills) repo.)_
 
 ---
 
-## What's Available
+## Start With Your Problem
 
-### Strategic Foundation
-Core frameworks for product strategy and market positioning:
+### "I need this artifact, and I have my context ready"
 
-| Prompt | Best For | Framework Used |
-|--------|----------|----------------|
-| **[jobs-to-be-done.md](jobs-to-be-done.md)** | Understanding what customers are really trying to accomplish | Osterwalder Value Prop Canvas |
-| **[positioning-statement.md](positioning-statement.md)** | Clarifying how you compete and win | Geoffrey Moore framework |
-| **[framing-the-problem-statement.md](framing-the-problem-statement.md)** | Defining the right problem to solve | Problem framing methodology |
+You know the situation; you want execution-quality output in one pass. Go to **[/prompts/](prompts/)**:
 
-### Customer Discovery & Research  
-Tools for understanding markets and customers:
+- Write a PRD from your discovery notes → [prd-prompt-template](prompts/prd-prompt-template.md)
+- Understand what customers actually need → [jobs-to-be-done](prompts/jobs-to-be-done.md)
+- Turn win/loss debriefs into ground truth → [win-loss-analysis](prompts/win-loss-analysis-prompt.md)
+- Map who matters and how to engage them → [stakeholder-map](prompts/stakeholder-map-prompt-template.md)
+- Decode what an inbound ask really wants → [incoming-request-breakdown](prompts/incoming-request-breakdown.md)
+- Kill the launch on paper before reality does → [premortem](prompts/premortem-prompt-template.md)
+- Lose the legacy product without losing the legacy customer → [EOL suite](#product-end-of-life-eol)
+- Write user stories engineers don't hate → [user-story](prompts/user-story-prompt-template.md)
+- Frame an initiative as testable hypotheses → [lean-ux-canvas](prompts/lean-ux-canvas-prompt-template.md)
+- Design an agentic AI system responsibly → [agent-strategy-canvas](prompts/agent-strategy-canvas-prompt-template.md)
+- Save this session's context for the next one → [session-saver](prompts/session-saver-prompt.md)
 
-| Prompt | Best For | Framework Used |
-|--------|----------|----------------|
-| **[proto-persona-profile.md](proto-persona-profile.md)** | Creating initial customer profiles | Proto-persona canvas |
-| **[customer-journey-mapping-prompt-template.md](customer-journey-mapping-prompt-template.md)** | Mapping the full customer experience | Customer journey methodology |
-| **[company-profile-executive-insights-research.md](company-profile-executive-insights-research.md)** | Competitive intelligence and market analysis | Market analysis framework |
-| **[discovery-interview-guide-prompt-template.md](discovery-interview-guide-prompt-template.md)** | Planning interviews that surface real behavior | Mom Test + continuous discovery |
-| **[win-loss-analysis-prompt.md](win-loss-analysis-prompt.md)** | Turning win/loss and churn debriefs into ground truth (or the interview guide to collect it) | Win/loss doctrine, HUMINT discipline |
-| **[tam-sam-som-market-sizing.md](tam-sam-som-market-sizing.md)** | Sizing a market end to end: research, bottom-up arithmetic, top-down cross-check, sensitivity | TAM/SAM/SOM, bottom-up modeling |
+### "I need to think it through — facilitate me"
 
-### Requirements & Execution
-Structured approaches to defining what to build:
+You have a fuzzy situation and want a guided working session that ends in the finished deliverable. Go to **[/workshops/](workshops/)**:
 
-| Prompt | Best For | Framework Used |
-|--------|----------|----------------|
-| **[prd-prompt-template.md](prd-prompt-template.md)** | Generating a full PRD from session context | Canonical 9-section PRD structure |
-| **[user-story-prompt-template.md](user-story-prompt-template.md)** | Writing clear, testable user stories | Mike Cohn + Gherkin format |
-| **[user-story-splitting-prompt-template.md](user-story-splitting-prompt-template.md)** | Breaking down large stories effectively | Story splitting techniques |
-| **[backlog-epic-hypothesis.md](backlog-epic-hypothesis.md)** | Defining epics with testable hypotheses | Hypothesis-driven development |
+- Competitive battle card → [battle-card-workshop](workshops/battle-card-workshop.md)
+- PRD, section by section with checkpoints → [prd-workshop](workshops/prd-workshop.md)
+- Opportunity solution tree + first experiment → [opportunity-solution-tree-workshop](workshops/opportunity-solution-tree-workshop.md)
+- Build / don't-build business case with the math shown → [feature-investment-workshop](workshops/feature-investment-workshop.md)
+- Problem statement + "How might we" → [problem-framing-canvas-workshop](workshops/problem-framing-canvas-workshop.md)
+- Structured user-pain research table → [painstorming-workshop](workshops/painstorming-workshop.md)
+- Product/feature sunset plan, gated section by section → [product-sunset-workshop](workshops/product-sunset-workshop.md)
 
-### Market Analysis & Planning
-Research and analytical frameworks for strategic decisions:
+<a id="product-end-of-life-eol"></a>
+### "I need to lose the legacy product without losing the legacy customer"
 
-| Prompt | Best For | Framework Used |
-|--------|----------|----------------|
-| **[pestel-analysis-prompt-template.md](pestel-analysis-prompt-template.md)** | Understanding macro-market forces | PESTEL framework |
-| **[recommendation-canvas-template.md](recommendation-canvas-template.md)** | Building business cases for decisions | Business case methodology |
-| **[premortem-prompt-template.md](premortem-prompt-template.md)** | Naming failure risks before you commit | Gary Klein premortem |
-| **[lean-ux-canvas-prompt-template.md](lean-ux-canvas-prompt-template.md)** | Framing initiatives as hypotheses and experiments | Gothelf Lean UX Canvas v2 |
-| **[reverse-engineer-IEEE830srs-to-PRD-prompt-template.md](reverse-engineer-IEEE830srs-to-PRD-prompt-template.md)** | Translating technical requirements | IEEE 830 standards |
+PMs sweat pricing, P&Ls, business cases, and build/buy/partner decisions. EOL rarely makes that list -- which is exactly why it goes badly. Nobody practices the thing they think they'll figure out when it happens. These prompts cover the full EOL lifecycle, and every one of them right-sizes the effort so a minor feature deprecation gets a short punch list while a flagship retirement gets the full cross-functional playbook.
 
-### Product End-of-Life (EOL)
-Right-sized tools for the full sunset lifecycle -- from the go/no-go decision through the last support call:
+| Prompt | Best For | Start Here When... |
+|--------|----------|--------------------|
+| **[eol-readiness-assessment](prompts/eol-readiness-assessment.md)** | Go/no-go decision: should we sunset this at all? | Someone says "we should probably kill this" |
+| **[eol-checklist](prompts/eol-checklist.md)** | Phase-gated tactical checklist across up to 15 functional areas | The decision is made and you need the operational plan |
+| **[eol-stakeholder-sequence](prompts/eol-stakeholder-sequence.md)** | Who to talk to, in what order, and what each conversation covers | You need to socialize the decision without creating fires |
+| **[eol-internal-enablement](prompts/eol-internal-enablement.md)** | Support FAQ, sales scripts, objection handling, escalation playbook | Before the announcement hits customers |
+| **[eol-for-a-product-message](prompts/eol-for-a-product-message.md)** | Customer-facing EOL announcement (with or without a replacement) | Time to tell the customers |
+| **[product-sunset-workshop](workshops/product-sunset-workshop.md)** | Full facilitated sunset plan, section by section with checkpoints | You want to think it all through in one guided session |
 
-| Prompt | Best For | Framework Used |
-|--------|----------|----------------|
-| **[eol-readiness-assessment.md](eol-readiness-assessment.md)** | Deciding whether to sunset and scoping the effort | 7-question diagnostic + 3-tier complexity model |
-| **[eol-checklist.md](eol-checklist.md)** | Phase-gated tactical checklist across up to 15 functional areas | GA/NSC/EOS/EOE/EOM/EOL/EOSRV lifecycle phases |
-| **[eol-stakeholder-sequence.md](eol-stakeholder-sequence.md)** | Ordering stakeholder conversations so each informs the next | Legal-first sequencing + EOL-specific Mendelow |
-| **[eol-internal-enablement.md](eol-internal-enablement.md)** | Preparing Support, Sales, and CS before the announcement | Acknowledge-Reframe-Offer objection pattern |
-| **[eol-for-a-product-message.md](eol-for-a-product-message.md)** | Customer-facing EOL announcement with or without a replacement | 3-path messaging (Replacement, Migration, Graceful Exit) |
+**The Goldilocks rule:** every prompt asks how complex the sunset is before generating output. Tier 1 (feature deprecation) gets light-touch artifacts. Tier 2 (commercial product) gets the standard cross-functional process. Tier 3 (revenue-critical, hardware, or regulated) gets everything. The goal is coverage proportional to risk, not maximum ceremony.
 
-Every EOL prompt right-sizes output to the complexity of the sunset. A feature deprecation produces a short punch list; a flagship retirement produces the full cross-functional playbook.
+### "I need evidence about the market, not another meeting"
 
-### Communication & Vision
-Tools for stakeholder alignment and storytelling:
+The answers live on the public web, and the AI should do the fieldwork — with citations, labeled inference, and no invented facts. Go to **[/market-intelligence/](market-intelligence/)**:
 
-| Prompt | Best For | Framework Used |
-|--------|----------|----------------|
-| **[stakeholder-map-prompt-template.md](stakeholder-map-prompt-template.md)** | Mapping who matters and how to engage them | Power x Interest grid |
-| **[incoming-request-breakdown.md](incoming-request-breakdown.md)** | Decoding what an inbound ask really wants | Chief-of-staff triage read |
-| **[visionary-press-release.md](visionary-press-release.md)** | Working backwards from customer value | Amazon Working Backwards |
-| **[agent-strategy-canvas-prompt-template.md](agent-strategy-canvas-prompt-template.md)** | Designing agentic AI systems with authorization boundaries | Agent Strategy Canvas (9-box) |
-| **[session-saver-prompt.md](session-saver-prompt.md)** | Capturing a session as portable context for a fresh start | Prompt anatomy capture schema |
-| **[storyboard-storytelling-prompt.md](storyboard-storytelling-prompt.md)** | Creating compelling product narratives | Storyboarding methodology |
-| **[futuristic-product-faq.md](futuristic-product-faq.md)** | Anticipating stakeholder questions | FAQ development process |
+- Map a market's players and whitespace → [market-landscape-scan](market-intelligence/market-landscape-scan-prompt.md)
+- Research a competitor set, just-enough style → [competitive-research-snapshot](market-intelligence/competitive-research-snapshot-prompt.md)
+- Watch competitors on a schedule; report only material shifts → [competitive-intel-watch](market-intelligence/competitive-intel-watch-prompt.md)
+- Mine reviews and forums for unmet needs → [voice-of-customer-miner](market-intelligence/voice-of-customer-miner-prompt.md)
+- Size a market with citations, bottom-up → [tam-sam-som-analysis](market-intelligence/tam-sam-som-analysis-prompt.md)
+- Build an evidence-cited battle card → [battle-card-builder](market-intelligence/battle-card-builder-prompt.md)
+- SWOT a company with sources, not vibes → [swot-analysis](market-intelligence/swot-analysis-prompt.md)
+- Read an industry's structure and power → [porters-five-forces](market-intelligence/porters-five-forces-prompt.md)
+- Map growth options with evidence per quadrant → [ansoff-matrix](market-intelligence/ansoff-matrix-prompt.md)
+- Run a collection sweep by intel discipline (OSINT, FININT, GEOINT/DEMOINT, TECHINT, HUMINT, SIGINT, MASINT) → [the collection floor](market-intelligence/README.md#the-collection-floor-one-sweep-per-discipline)
+- Fuse it all into confidence-rated intelligence → [all-source-fusion](market-intelligence/all-source-fusion-prompt.md)
+- Schedule the whole thing on a weekly/monthly/quarterly rhythm → [fusion-cadence-routine](loops/fusion-cadence-routine.md)
 
----
+These are built to run unattended — in agent workflows, loops, and scheduled runs — with question budgets, materiality bars, and stop conditions.
 
-## Getting Started
+The tradecraft behind them — the eight intelligence-community collection disciplines, signal → inference chains, confidence stacking, and regional source overlays — lives on the [reference shelf](market-intelligence/reference/): start with the [Competitive Research Compendium](market-intelligence/reference/competitive-research-compendium.md).
 
-### If you're new to AI-assisted PM work
-1. **Start simple** - Try [positioning-statement.md](positioning-statement.md) or [jobs-to-be-done.md](jobs-to-be-done.md)
-2. **Read the comments first** - They teach you how to think with AI strategically
-3. **Answer questions thoroughly** - Better context leads to better insights
-4. **Iterate** - Use AI's follow-up questions to go deeper
+### "I need people to *get it*"
 
-### If you're comfortable with AI
-1. **Study the structure** - Notice how questions build strategic context
-2. **Customize for your situation** - Adapt prompts for your industry and company
-3. **Combine approaches** - Use multiple prompts for comprehensive analysis
-4. **Create your own variations** - Build on these patterns for unique challenges
+Evidence doesn't persuade; stories do. Go to **[/storytelling/](storytelling/)**:
 
----
+- Turn research into a stakeholder narrative → [Research-to-Narrative Bridge](storytelling/Generator%20-%20Research-to-Narrative%20Bridge.md)
+- Visual storyboards, hero's journeys, Starts-with-Why arcs → [browse the directory](storytelling/)
 
-## Why This Approach Works
+### "I run prompts as loops, goals, batches, or routines"
 
-**Context before content** - AI understands your specific situation before generating generic advice
+You still have to prompt the loop — nobody skipped that step, they just put a slash in front of it. Go to **[/loops/](loops/)** for seasoned recipes at three levels (plain commands → plain-English controls → Just Enough Jinja2):
 
-**Framework-guided thinking** - Uses proven PM methodologies like Jobs-to-be-Done, PESTEL, Value Prop Canvas
+- Split epics until nothing splits, with a pass ceiling → [story-splitting-loop](loops/story-splitting-loop.md)
+- Draft a PRD section by section, in dependency order → [prd-section-loop](loops/prd-section-loop.md)
+- Batch a backlog of epics without contaminating it → [epic-story-batch](loops/epic-story-batch.md)
+- Synthesize research one category at a time → [research-synthesis-loop](loops/research-synthesis-loop.md)
+- Run a versioned competitive watch that won't drift → [competitive-watch-routine](loops/competitive-watch-routine.md)
+- SWOT a competitor set with receipts, not vibes → [swot-batch](loops/swot-batch.md)
+- Size a market one segment at a time → [market-sizing-loop](loops/market-sizing-loop.md)
 
-**Progressive discovery** - Builds complexity gradually instead of overwhelming you upfront
+### "I want to build my own prompts — or my own agents"
 
-**Built-in quality control** - AI knows when to ask for missing information and how to validate assumptions
+- Learn the patterns by using the meta-prompts in **[/prompt-generators/](prompt-generators/)** — each one interviews you, then emits a reusable prompt
+- Design a custom research agent → [research-agent-prompt-generator](prompt-generators/research-agent-prompt-generator.md)
+- Study the pattern documents (below), then the exemplars in **[/vibes/](vibes/)** for loop-safe, agent-ready prompt structures
+- Reverse-engineer how any prompt works → **[/skeletons/](skeletons/)**
+- Package a prompt as an agent skill your assistant invokes on its own → **[/skills/](skills/)**, where each folder holds a `SKILL.md`, an output `template.md`, and a worked example
 
----
+### "I want my assistant to reach for this without being asked"
 
-- **Industry-specific examples** - Add scenarios common in your domain
-- **Organizational context** - Modify for your company's decision-making process
-- **Stakeholder language** - Adapt terminology for your audience
-- **Tool integration** - Reference your specific tools (Jira, Figma, etc.)
+**[/skills/](skills/)** — Agent Skills: the same PM work packaged so a coding or chat agent loads it by itself when the moment matches. Each skill is one folder: a `SKILL.md` with YAML frontmatter the agent reads to decide relevance, the usual teaching comment block underneath, plus supporting `template.md` and `examples/`.
 
-### Building Your Own Variations
-1. **Keep the comment structure** - Maintain the teaching methodology
-2. **Preserve the conversational flow** - One question at a time works best
-3. **Add your domain expertise** - Include frameworks specific to your industry
-4. **Test across platforms** - Make sure it works in ChatGPT, Claude, and Gemini
+- Name the creatures stalking your product practice → [dangerous-animals-of-pm-generator](skills/dangerous-animals-of-pm-generator/SKILL.md)
+
+These follow the [Agent Skills](https://agentskills.io) open standard rather than a convention of my own, so they install anywhere skills are supported — Claude Code, claude.ai, or the Skills API. Drop a folder into `~/.claude/skills/` (or symlink it there from your checkout) and the skill is available as `/skill-name`. `scripts/validate-prompts.py` enforces the spec's constraints, so a skill that passes CI is a skill that will actually upload.
+
+### "I need to laugh so I don't cry"
+
+**[/resumes-resignations-reactions/](resumes-resignations-reactions/)** — therapeutic workplace satire. You've earned it.
+
+**Can't find it?** The generated **[catalog](catalog/INDEX.md)** lists every asset with a one-line description.
 
 ---
 
-## Getting Better Results
+## How These Prompts Work (and Teach)
 
-### Before You Start
-- **Gather context** - Have relevant docs, data, or examples ready
-- **Know your objective** - What decision are you trying to make?
-- **Plan to iterate** - These are starting points, not final answers
+Three interaction modes power everything here — documented in **[interaction-modes.md](interaction-modes.md)**:
 
-### During Your Session
-- **Take time with AI questions** - Don't rush through the conversation
-- **Ask follow-ups** - "What else should I consider?"
-- **Challenge assumptions** - "What are the risks with this approach?"
-- **Explore alternatives** - "What other frameworks might apply?"
+1. **Facilitation** (*you* hold the context): the AI asks a budgeted 3–5 questions, one at a time, offering 3 context-aware recommendations plus "Other" — with standing escape routes ("take your best guess", or paste your notes to skip ahead). Spec: **[generative-guidance-pattern.md](generative-guidance-pattern.md)**.
+2. **Checkpointed co-construction** (*an artifact* holds the structure): the AI builds section by section against your template, stopping at a gate after each; gaps are labeled **Assumption** or **Open Question**, never invented.
+3. **Autonomous investigation** (*the world* holds the context): the AI researches under an evidence contract — search plan shown first, real URLs, Fact / Inference / Assumption labels, and defaults that let it proceed when nobody's answering.
 
-### After Your Session
-- **Validate with real people** - AI provides analysis, humans make decisions
-- **Document what you learned** - What worked? What would you change?
-- **Share insights** - Help others learn from your experience
+Prompts meant to run repeatedly — under loop or goal commands, or inside agents — use Jinja2 notation for explicit, bounded control flow: **[jinja2-prompt-structures.md](jinja2-prompt-structures.md)**.
 
----
+### The teaching layer: view the raw code
 
-## Contributing to This Collection
+Every prompt carries an HTML comment block (`<!-- ... -->`) with its Description, Usage Note, When NOT to Use, and Pedagogic Notes — the instructor's notes explaining *why* the prompt works. GitHub's pretty preview hides them, so click **Raw** and copy everything, comments included. The AI ignores them; you shouldn't.
 
-Found a gap? Built something useful? Share it.
+### From user to builder to teacher
 
-### What We're Looking For
-- Real PM problems you've solved using these approaches
-- Framework improvements based on your testing
-- Industry-specific adaptations of existing prompts
-- Better teaching approaches in the comment sections
-
-### How to Contribute
-1. Study existing patterns - Notice the comment-driven teaching approach
-2. Test thoroughly - Validate across ChatGPT, Claude, and Gemini
-3. Focus on learning - How does your prompt teach strategic thinking?
-4. Follow the style - Conversational flow with rich teaching comments
+1. **Use** the prompts on real work
+2. **Read the comments** to see why they're shaped that way
+3. **Customize** for your industry and team
+4. **Build your own** with the generators and pattern docs
+5. **Contribute back** — see [SUBMISSIONS-GUIDE.md](SUBMISSIONS-GUIDE.md)
 
 ---
 
-*Remember: The goal isn't to replace your strategic thinking. It's to help you think through complex problems more systematically.*
+## For Engineers and Agents Improving This Repo
 
-**Ready to tackle a strategic challenge? Pick a prompt that matches your current situation and give it a try.**
+- **[CLAUDE.md](CLAUDE.md)** / **[AGENTS.md](AGENTS.md)** — the authoring contract, directory intent, and quality bar for AI-assisted sessions
+- **[prompting-style-guide.md](prompting-style-guide.md)** — the full methodology
+- **`scripts/validate-prompts.py`** — structural checks (required metadata, v2 fixtures, companion-link resolution); errors block, warnings are the migrate-on-touch worklist
+- **`scripts/generate-catalog.py`** — regenerates `catalog/` from the metadata comment blocks (the blocks are the source of truth; the catalog is derived output)
+- **[CHANGELOG.md](CHANGELOG.md)** — what changed in each version and what's deliberately left open
+
+Run both scripts after any prompt edit. Existing v1-pattern prompts are grandfathered: migrate them to v2 when you touch them, and never mass-rewrite.
+
+---
+
+## Contributing
+
+Real problems, tested prompts, teaching comments. Start with **[SUBMISSIONS-GUIDE.md](SUBMISSIONS-GUIDE.md)**, then:
+
+```bash
+git clone https://github.com/deanpeters/product-manager-prompts.git
+git checkout -b your-improvement-name
+# make your changes, then:
+python3 scripts/validate-prompts.py
+python3 scripts/generate-catalog.py
+# commit, push, open a pull request
+```
+
+Test across ChatGPT, Claude, and Gemini. Humans make the strategic decisions; AI assists.
+
+---
+
+## Resources and Contact
+
+- **[Productside Workshops](https://www.productside.com/courses/ai-innovation-for-product-managers/)** — live training to go deeper
+- **Questions?** Open an [issue](https://github.com/deanpeters/product-manager-prompts/issues)
+- **Connect:** [Dean Peters on LinkedIn](https://www.linkedin.com/in/deanpeters/)
+
+## License
+
+Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — use, adapt, and share freely for non-commercial purposes with attribution and share-alike. **Commercial use requires expressed written permission from Dean Peters.** Plain-English guide: [LICENSING.md](LICENSING.md). (Versions prior to v2.3.0 were MIT; copies obtained under MIT remain MIT.)
+
+*Created by [Dean Peters](https://github.com/deanpeters) • Built for the product management community • Designed to teach through doing*

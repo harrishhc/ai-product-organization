@@ -13,3 +13,5 @@ dependencies and are not consulted during ordinary product work.
 
 The import intentionally excludes upstream repository/application tooling
 such as , , , release packaging, and CI machinery.
+The prompt ecosystem is namespaced under  to preserve
+both source ecosystems without overwriting files with the same names.
