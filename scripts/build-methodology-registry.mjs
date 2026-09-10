@@ -8,7 +8,7 @@ const registryPath = path.join(registryDir, 'ecosystem.json');
 const legacyPath = path.join(registryDir, 'registry.json');
 
 const TYPE_BY_DIR = {
-  skills: 'skill', prompts: 'prompt', workshops: 'workshop', flows: 'flow', loops: 'loop',
+  capabilities: 'capability', skills: 'skill', prompts: 'prompt', workshops: 'workshop', flows: 'flow', loops: 'loop',
   commands: 'workflow', skeletons: 'skeleton', vibes: 'pattern', storytelling: 'pattern',
   'prompt-generators': 'generator', patterns: 'pattern', 'market-intelligence': 'market-intelligence',
 };
@@ -21,7 +21,6 @@ function walk(dir, out = []) {
   }
   return out;
 }
-
 function firstHeading(text) { return text.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? null; }
 function frontmatter(text, key) {
   const block = text.match(/^---\n([\s\S]*?)\n---/m)?.[1];
@@ -80,7 +79,7 @@ for (const cap of legacy.capabilities ?? []) {
   }
 }
 function legacyFor(asset) {
-  return [asset.id.replace(/^skills:/, ''), asset.id.split(':').at(-1), asset.name]
+  return [asset.id.replace(/^(skills|capabilities):/, ''), asset.id.split(':').at(-1), asset.name]
     .map((v) => String(v).toLowerCase()).map((k) => legacyByKey.get(k)).find(Boolean) ?? null;
 }
 for (const asset of assets) {
@@ -94,18 +93,21 @@ for (const asset of assets) {
 }
 
 assets.sort((a, b) => a.id.localeCompare(b.id));
-const skills = assets.filter((a) => a.type === 'skill');
+const capabilityAssets = assets.filter((a) => a.type === 'skill' || a.type === 'capability');
 const registry = {
-  schema_version: '1.1.0',
+  schema_version: '1.2.0',
   source: 'HH-owned methodology genesis baseline',
   assets,
-  capabilities: skills.map((s) => ({
+  capabilities: capabilityAssets.map((s) => ({
     id: s.id, name: s.name, type: s.type,
     primary_intents: s.routing?.primary_intents ?? [],
     decision_stage: s.routing?.decision_stage ?? null,
+    selection_cues: s.routing?.selection_cues ?? [],
+    anti_cues: s.routing?.anti_cues ?? [],
+    cost_profile: s.routing?.cost_profile ?? null,
     source_reference: s.source_reference,
   })),
 };
 
 writeFileSync(registryPath, `${JSON.stringify(registry, null, 2)}\n`);
-console.log(`Indexed ${assets.length} methodology assets (${skills.length} skills).`);
+console.log(`Indexed ${assets.length} methodology assets (${capabilityAssets.length} routable capabilities).`);
