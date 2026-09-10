@@ -1,52 +1,30 @@
-// PDM Orchestrator: mechanism, not judgment. It enforces the architectural
-// bounds (stage selection, metadata-first capability routing, bounded
-// context retrieval, bounded specialist delegation, instrumentation) that
-// the PDM (the reasoning agent using this runtime) operates within. Which
-// stages/capabilities/delegations are actually necessary for a given
-// interaction is a PDM judgment call supplied as input, not decided here.
-//
-// This module must never import runtime/methodologyEvolution.js — ordinary
-// orchestration must have zero path to external methodology review.
+// Mechanism only: the orchestrator does not invent product judgment.
+// It sequences stages, routes an already-identified uncertainty, loads one
+// selected methodology asset, retrieves bounded product context, and delegates
+// bounded questions to specialists.
 
-import { filterCandidates, selectSmallestSufficient, loadCapabilityDetail } from './registry.js';
+import {
+  filterCandidates,
+  selectSmallestSufficient,
+  loadCapabilityDetail,
+} from './registry.js';
 import { getBoundedContext } from './context.js';
-import { selectDelegate } from './pdmCore.js';
-import { MAX_DELEGATION_DEPTH } from './instrumentation.js';
 
-// Specification §5 — the full reasoning loop. A given interaction should use
-// only the necessary subset, chosen by PDM judgment, not all twelve stages.
 export const REASONING_STAGES = Object.freeze([
-  'LISTEN',
-  'FRAME',
-  'IDENTIFY_UNKNOWNS',
-  'ANALYZE',
-  'CHALLENGE',
-  'EXPLORE_OPTIONS',
-  'PRIORITIZE',
-  'VALIDATE',
-  'DECIDE',
-  'DOCUMENT',
-  'DELEGATE',
-  'REVIEW',
+  'LISTEN', 'FRAME', 'IDENTIFY_UNKNOWNS', 'ANALYZE', 'CHALLENGE', 'EXPLORE_OPTIONS',
+  'PRIORITIZE', 'VALIDATE', 'DECIDE', 'DOCUMENT', 'DELEGATE', 'REVIEW',
 ]);
 
-export function runStage(stageName, session) {
-  if (!REASONING_STAGES.includes(stageName)) {
-    throw new Error(`Unknown reasoning stage: ${stageName}. Must be one of ${REASONING_STAGES.join(', ')}.`);
-  }
-  session?.recordToolCall?.(`stage:${stageName}`);
-  return { stage: stageName, at: new Date().toISOString() };
+export function runStage(stage, session) {
+  if (!REASONING_STAGES.includes(stage)) throw new Error(`Unknown reasoning stage: ${stage}`);
+  session?.recordToolCall?.(`stage:${stage}`);
+  return { stage };
 }
 
 /**
- * Metadata-first capability selection. Requires an explicit statement of the
- * dominant uncertainty being resolved (Capability Integration Spec §5,
- * Registry Spec §2/§5) — selection must be anchored to "what decision
- * bottleneck are we reducing", not to intents/decisionStage alone or a raw
- * keyword/name match. `intents`/`decisionStage` are how that already-
- * identified uncertainty gets operationalized into a registry query; they do
- * not replace stating it. Never loads capability detail files; that only
- * happens in loadSelectedCapability(), after a candidate is chosen.
+ * Selects methodology using the PDM's already-identified dominant uncertainty.
+ * `intents` and `decisionStage` operationalize that uncertainty in compact
+ * registry metadata; they never substitute for the uncertainty statement.
  */
 export function selectCapability({ dominantUncertainty, intents, decisionStage }, session) {
   if (!dominantUncertainty) {
@@ -54,16 +32,14 @@ export function selectCapability({ dominantUncertainty, intents, decisionStage }
       'selectCapability requires an explicit dominantUncertainty (the decision bottleneck this selection is meant to reduce) — routing must not be intent/stage matching alone.'
     );
   }
-  const candidates = filterCandidates({ intents, decisionStage });
+  const candidates = filterCandidates({ intents, decisionStage, dominantUncertainty });
   session?.recordCapabilitySelection?.(candidates.map((c) => c.id));
   const selected = selectSmallestSufficient(candidates);
   return { selected, candidates, dominantUncertainty };
 }
 
 export function loadSelectedCapability(selected, session) {
-  if (!selected) {
-    throw new Error('loadSelectedCapability requires a selected candidate (from selectCapability).');
-  }
+  if (!selected) throw new Error('loadSelectedCapability requires a selected candidate (from selectCapability).');
   const { meta, detail } = loadCapabilityDetail(selected.id);
   session?.recordCapabilityDetailLoad?.(selected.id, detail);
   return { meta, detail };
@@ -76,30 +52,25 @@ export function retrieveContext(productId, sections, session) {
   return bounded;
 }
 
-/**
- * Opens a bounded specialist delegation. Throws if it would exceed
- * MAX_DELEGATION_DEPTH (instrumentation.js) — this is the enforced stop
- * condition against unbounded/recursive delegation.
- */
-export function delegateToSpecialist({ dominantUncertaintyType, question, expectedOutput, decisionInformed }, session) {
-  const agent = selectDelegate(dominantUncertaintyType);
-  if (!agent) {
-    throw new Error(
-      `No specialist delegate is mapped for uncertainty type "${dominantUncertaintyType}". PDM should resolve this without delegation.`
-    );
+/** Opens a bounded specialist delegation. Throws if it would exceed the depth budget. */
+export function delegateToSpecialist(request, session) {
+  if (!request?.dominantUncertaintyType || !request?.question || !request?.expectedOutput || !request?.decisionInformed) {
+    throw new Error('delegation requires dominantUncertaintyType, question, expectedOutput, and decisionInformed');
   }
-  if (!question || !expectedOutput || !decisionInformed) {
-    throw new Error('Delegation requires an explicit question, expectedOutput, and decisionInformed (Runtime Architecture §10 invocation contract).');
-  }
-  const depth = session.enterDelegation(agent);
-  return { agent, question, expectedOutput, decisionInformed, depth };
+  const allowed = ['user_need', 'experience', 'technical_feasibility', 'quality'];
+  if (!allowed.includes(request.dominantUncertaintyType)) throw new Error(`unmapped uncertainty type: ${request.dominantUncertaintyType}`);
+  const maxDepth = session?.maxDelegationDepth ?? 2;
+  const current = session?.summary?.().delegationDepth ?? 0;
+  if (current >= maxDepth) throw new Error(`delegation depth exceeded: max ${maxDepth}`);
+  session?.recordDelegationStart?.(request);
+  return request;
 }
 
-/** Caller must invoke this once the specialist's result has been returned to PDM. */
 export function completeDelegation(session) {
-  session.exitDelegation();
+  session?.recordDelegationComplete?.();
 }
 
 export function delegationBudgetRemaining(session) {
-  return MAX_DELEGATION_DEPTH - session.summary().delegationDepth;
+  const maxDepth = session?.maxDelegationDepth ?? 2;
+  return Math.max(0, maxDepth - (session?.summary?.().delegationDepth ?? 0));
 }
