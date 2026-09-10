@@ -18,8 +18,7 @@ export function loadRegistryMetadata() {
   if (cachedRegistry) return cachedRegistry;
   try {
     cachedRegistry = JSON.parse(readFileSync(REGISTRY_PATH, 'utf8'));
-  } catch (error) {
-    // Backward-compatible bootstrap path for repositories before ecosystem registry migration.
+  } catch {
     cachedRegistry = JSON.parse(readFileSync(LEGACY_REGISTRY_PATH, 'utf8'));
     cachedRegistry._legacy = true;
   }
@@ -29,15 +28,11 @@ export function loadRegistryMetadata() {
 export function _resetRegistryCache() { cachedRegistry = null; }
 
 /**
- * Filters candidates using only compact metadata. dominantUncertainty is a
- * required decision input at the orchestrator boundary; if a capability
- * declares explicit uncertainty_types, they are enforced here. Unknown
- * uncertainty metadata remains neutral rather than being guessed.
+ * Filtering is metadata-only. The orchestrator is responsible for requiring
+ * dominant uncertainty; direct registry callers may omit it. If an asset
+ * declares explicit uncertainty_types, they are enforced rather than guessed.
  */
 export function filterCandidates({ intents = [], decisionStage, dominantUncertainty } = {}) {
-  if (dominantUncertainty === undefined || dominantUncertainty === null || dominantUncertainty === '') {
-    throw new Error('dominantUncertainty is required for capability selection');
-  }
   const { capabilities = [] } = loadRegistryMetadata();
   const results = [];
 
@@ -45,7 +40,7 @@ export function filterCandidates({ intents = [], decisionStage, dominantUncertai
     const matchedIntents = (cap.primary_intents ?? []).filter((i) => intents.includes(i));
     const stageMatch = decisionStage ? cap.decision_stage === decisionStage : false;
     const uncertaintyTypes = cap.uncertainty_types ?? null;
-    const uncertaintyMatch = uncertaintyTypes
+    const uncertaintyMatch = uncertaintyTypes && dominantUncertainty
       ? (uncertaintyTypes.includes(dominantUncertainty) ? 'matched' : 'mismatch')
       : 'unknown';
 
@@ -57,14 +52,7 @@ export function filterCandidates({ intents = [], decisionStage, dominantUncertai
     else if (matchedIntents.length > 0 || stageMatch) fit = 'fit';
     if (uncertaintyMatch === 'matched' && fit === 'fit') fit = 'strong_fit';
 
-    results.push({
-      id: cap.id,
-      name: cap.name,
-      type: cap.type,
-      fit,
-      matchedIntents,
-      uncertaintyMatch,
-    });
+    results.push({ id: cap.id, name: cap.name, type: cap.type, fit, matchedIntents, uncertaintyMatch });
   }
 
   const fitRank = { strong_fit: 0, fit: 1, weak_fit: 2 };
@@ -78,9 +66,8 @@ export function filterCandidates({ intents = [], decisionStage, dominantUncertai
 }
 
 const TIER_RANK = {
-  component: 0, interactive: 1, prompt: 1, workshop: 1, flow: 1, loop: 1,
-  advisor: 1, pattern: 1, skeleton: 1, generator: 1, 'market-intelligence': 1,
-  workflow: 2,
+  component: 0, capability: 0, interactive: 1, prompt: 1, workshop: 1, flow: 1, loop: 1,
+  advisor: 1, pattern: 1, skeleton: 1, generator: 1, 'market-intelligence': 1, workflow: 2,
 };
 
 export function selectSmallestSufficient(candidates) {
@@ -97,27 +84,22 @@ function resolveMethodologyPath(sourceReference) {
   }
   const target = path.resolve(__dirname, '..', sourceReference);
   const relative = path.relative(METHODOLOGY_ROOT, target);
-  if (relative.startsWith('..') || path.isAbsolute(relative)) {
-    throw new Error(`Methodology path escapes root: ${sourceReference}`);
-  }
+  if (relative.startsWith('..') || path.isAbsolute(relative)) throw new Error(`Methodology path escapes root: ${sourceReference}`);
   return target;
 }
 
-/** Load one selected asset; no candidate fan-out or eager dependency loading. */
 export function loadAsset(id) {
   const { assets = [] } = loadRegistryMetadata();
   const meta = assets.find((a) => a.id === id);
   if (!meta) throw new Error(`Unknown methodology asset id: ${id}`);
-  const detail = readFileSync(resolveMethodologyPath(meta.source_reference), 'utf8');
-  return { meta, detail };
+  return { meta, detail: readFileSync(resolveMethodologyPath(meta.source_reference), 'utf8') };
 }
 
-/** Backward-compatible name for callers that still think in capabilities. */
 export function loadCapabilityDetail(id) {
   const { capabilities = [] } = loadRegistryMetadata();
-  const meta = capabilities.find((c) => c.id === id);
+  const meta = capabilities.find((c) => c.id === id || c.id === `capabilities:${id}` || c.id === `skills:${id}`);
   if (!meta) throw new Error(`Unknown capability id: ${id}`);
-  return loadAsset(id);
+  return loadAsset(meta.id);
 }
 
 export function listCapabilityIds() {
