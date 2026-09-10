@@ -3,56 +3,6 @@
   "source": "HH-owned methodology genesis baseline",
   "assets": [
     {
-      "id": "capabilities:discovery-process",
-      "name": "discovery-process",
-      "type": "reference",
-      "source_reference": "methodology/capabilities/discovery-process.md",
-      "relative_path": "capabilities/discovery-process.md",
-      "summary": "Run a full discovery cycle from problem hypothesis to validated solution. Use when a team needs a structured path through framing, interviews, synthesis, and experiments.",
-      "related_skills": [
-        "skills:customer-journey-mapping-workshop",
-        "skills:discovery-interview-prep",
-        "skills:discovery-process",
-        "skills:epic-hypothesis",
-        "skills:jobs-to-be-done",
-        "skills:lean-ux-canvas",
-        "skills:opportunity-solution-tree",
-        "skills:prd-development",
-        "skills:problem-framing-canvas",
-        "skills:problem-statement",
-        "skills:proto-persona",
-        "skills:workshop-facilitation"
-      ],
-      "size_bytes": 20652,
-      "routing": {
-        "primary_intents": [
-          "discovery",
-          "research"
-        ],
-        "decision_stage": "discovery_execution",
-        "selection_cues": [
-          "a full discovery cycle is warranted, not just a targeted question",
-          "setting up continuous discovery as an ongoing practice",
-          "investigating a metric drop systematically"
-        ],
-        "anti_cues": [
-          "the dominant uncertainty is narrow enough for discovery-question-set alone",
-          "no time/access for interviews or experiments — use the lighter capability instead"
-        ],
-        "cost_profile": "high"
-      },
-      "provenance": {
-        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
-        "upstream_skill": "discovery-process",
-        "upstream_path": "skills/discovery-process/SKILL.md",
-        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
-        "branch": "main",
-        "imported_at": "2026-09-10",
-        "license": "CC BY-NC-SA 4.0",
-        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
-      }
-    },
-    {
       "id": "capabilities:discovery-question-set",
       "name": "Discovery Question Set",
       "type": "reference",
@@ -79,56 +29,6 @@
         "cost_profile": "low"
       },
       "provenance": null
-    },
-    {
-      "id": "capabilities:prd-development",
-      "name": "prd-development",
-      "type": "reference",
-      "source_reference": "methodology/capabilities/prd-development.md",
-      "relative_path": "capabilities/prd-development.md",
-      "summary": "Build a structured PRD that connects problem, users, solution, and success criteria. Use when turning discovery notes into an engineering-ready document for a major initiative.",
-      "related_skills": [
-        "skills:customer-journey-mapping-workshop",
-        "skills:discovery-process",
-        "skills:epic-breakdown-advisor",
-        "skills:epic-hypothesis",
-        "skills:jobs-to-be-done",
-        "skills:prd-development",
-        "skills:problem-framing-canvas",
-        "skills:problem-statement",
-        "skills:proto-persona",
-        "skills:tam-sam-som-calculator",
-        "skills:user-story",
-        "skills:user-story-mapping-workshop",
-        "skills:workshop-facilitation"
-      ],
-      "size_bytes": 25850,
-      "routing": {
-        "primary_intents": [
-          "prd",
-          "document"
-        ],
-        "decision_stage": "document",
-        "selection_cues": [
-          "prd-readiness-gate has passed and the actual PRD document needs to be written",
-          "moving from scattered discovery notes to an engineering-ready spec"
-        ],
-        "anti_cues": [
-          "discovery is not yet mature (run prd-readiness-gate first)",
-          "only a lightweight requirements note is needed, not a full PRD"
-        ],
-        "cost_profile": "high"
-      },
-      "provenance": {
-        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
-        "upstream_skill": "prd-development",
-        "upstream_path": "skills/prd-development/SKILL.md",
-        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
-        "branch": "main",
-        "imported_at": "2026-09-10",
-        "license": "CC BY-NC-SA 4.0",
-        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
-      }
     },
     {
       "id": "capabilities:prd-readiness-gate",
@@ -160,44 +60,6 @@
       "provenance": null
     },
     {
-      "id": "capabilities:prioritization-advisor",
-      "name": "prioritization-advisor",
-      "type": "reference",
-      "source_reference": "methodology/capabilities/prioritization-advisor.md",
-      "relative_path": "capabilities/prioritization-advisor.md",
-      "summary": "Choose a prioritization framework based on stage, team context, and stakeholder needs. Use when deciding between RICE, ICE, value/effort, or another scoring approach.",
-      "related_skills": [
-        "skills:prioritization-advisor",
-        "skills:workshop-facilitation"
-      ],
-      "size_bytes": 18057,
-      "routing": {
-        "primary_intents": [
-          "prioritization"
-        ],
-        "decision_stage": "prioritize_framework_selection",
-        "selection_cues": [
-          "team keeps arguing about how to prioritize, not just what to prioritize",
-          "unsure whether RICE/ICE/value-effort/other fits this team/stage"
-        ],
-        "anti_cues": [
-          "a framework is already agreed and just needs to be applied (use prioritization-comparison)",
-          "only one option exists — no prioritization decision to make"
-        ],
-        "cost_profile": "low"
-      },
-      "provenance": {
-        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
-        "upstream_skill": "prioritization-advisor",
-        "upstream_path": "skills/prioritization-advisor/SKILL.md",
-        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
-        "branch": "main",
-        "imported_at": "2026-09-10",
-        "license": "CC BY-NC-SA 4.0",
-        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
-      }
-    },
-    {
       "id": "capabilities:prioritization-comparison",
       "name": "Prioritization Comparison",
       "type": "reference",
@@ -223,49 +85,6 @@
         "cost_profile": "medium"
       },
       "provenance": null
-    },
-    {
-      "id": "capabilities:problem-framing-canvas",
-      "name": "problem-framing-canvas",
-      "type": "reference",
-      "source_reference": "methodology/capabilities/problem-framing-canvas.md",
-      "relative_path": "capabilities/problem-framing-canvas.md",
-      "summary": "Guide teams through MITRE's Problem Framing Canvas. Use when you need a clearer problem statement before jumping to solutions.",
-      "related_skills": [
-        "skills:discovery-interview-prep",
-        "skills:opportunity-solution-tree",
-        "skills:problem-framing-canvas",
-        "skills:problem-statement",
-        "skills:workshop-facilitation"
-      ],
-      "size_bytes": 19796,
-      "routing": {
-        "primary_intents": [
-          "problem_framing",
-          "discovery"
-        ],
-        "decision_stage": "framing",
-        "selection_cues": [
-          "a solution is being proposed before the problem is established",
-          "team may be solving the wrong problem or missing overlooked stakeholders"
-        ],
-        "anti_cues": [
-          "problem is already well-understood and validated",
-          "tactical bug fix or technical debt with no framing ambiguity",
-          "stakeholders already committed to a solution (address alignment first)"
-        ],
-        "cost_profile": "medium"
-      },
-      "provenance": {
-        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
-        "upstream_skill": "problem-framing-canvas",
-        "upstream_path": "skills/problem-framing-canvas/SKILL.md",
-        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
-        "branch": "main",
-        "imported_at": "2026-09-10",
-        "license": "CC BY-NC-SA 4.0",
-        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
-      }
     },
     {
       "id": "catalog",
