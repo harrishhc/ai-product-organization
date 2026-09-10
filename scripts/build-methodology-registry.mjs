@@ -22,10 +22,17 @@ function walk(dir, out = []) {
   return out;
 }
 function firstHeading(text) { return text.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? null; }
+function frontmatterBlock(text) { return text.match(/^---\n([\s\S]*?)\n---/m)?.[1] ?? ''; }
 function frontmatter(text, key) {
-  const block = text.match(/^---\n([\s\S]*?)\n---/m)?.[1];
+  const block = frontmatterBlock(text);
   if (!block) return null;
   return block.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))?.[1]?.trim().replace(/^['"]|['"]$/g, '') ?? null;
+}
+function frontmatterList(text, key) {
+  const block = frontmatterBlock(text);
+  const match = block.match(new RegExp(`^${key}:\\s*\\n((?:\\s+-.*\\n?)+)`, 'm'));
+  if (!match) return [];
+  return [...match[1].matchAll(/^\s+-\s+["']?(.+?)["']?\s*$/gm)].map((m) => m[1]);
 }
 function slug(value) { return value.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, ''); }
 function assetId(rel) {
@@ -41,10 +48,17 @@ if (existsSync(legacyPath)) {
 const preliminary = walk(root).map((file) => {
   const rel = path.relative(root, file).split(path.sep).join('/');
   const text = readFileSync(file, 'utf8');
+  const sourceType = TYPE_BY_DIR[rel.split('/')[0]] ?? 'reference';
+  const executionType = frontmatter(text, 'type');
   return {
     id: assetId(rel),
     name: frontmatter(text, 'name') || firstHeading(text) || path.basename(file),
-    type: TYPE_BY_DIR[rel.split('/')[0]] ?? 'reference',
+    type: sourceType,
+    execution_type: executionType || null,
+    theme: frontmatter(text, 'theme'),
+    intent: frontmatter(text, 'intent'),
+    best_for: frontmatterList(text, 'best_for'),
+    scenarios: frontmatterList(text, 'scenarios'),
     source_reference: `methodology/${rel}`,
     relative_path: rel,
     summary: frontmatter(text, 'description') || null,
@@ -95,16 +109,20 @@ for (const asset of assets) {
 assets.sort((a, b) => a.id.localeCompare(b.id));
 const capabilityAssets = assets.filter((a) => a.type === 'skill' || a.type === 'capability');
 const registry = {
-  schema_version: '1.2.0',
+  schema_version: '1.3.0',
   source: 'HH-owned methodology genesis baseline',
   assets,
   capabilities: capabilityAssets.map((s) => ({
-    id: s.id, name: s.name, type: s.type,
+    id: s.id,
+    name: s.name,
+    type: s.execution_type || s.type,
+    source_type: s.type,
     primary_intents: s.routing?.primary_intents ?? [],
     decision_stage: s.routing?.decision_stage ?? null,
     selection_cues: s.routing?.selection_cues ?? [],
     anti_cues: s.routing?.anti_cues ?? [],
     cost_profile: s.routing?.cost_profile ?? null,
+    theme: s.theme,
     source_reference: s.source_reference,
   })),
 };
