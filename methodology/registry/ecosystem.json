@@ -1,11 +1,11 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "source": "HH-owned methodology genesis baseline",
   "assets": [
     {
       "id": "capabilities:discovery-question-set",
       "name": "Discovery Question Set",
-      "type": "reference",
+      "type": "capability",
       "source_reference": "methodology/capabilities/discovery-question-set.md",
       "relative_path": "capabilities/discovery-question-set.md",
       "summary": null,
@@ -33,7 +33,7 @@
     {
       "id": "capabilities:prd-readiness-gate",
       "name": "PRD Readiness Gate",
-      "type": "reference",
+      "type": "capability",
       "source_reference": "methodology/capabilities/prd-readiness-gate.md",
       "relative_path": "capabilities/prd-readiness-gate.md",
       "summary": null,
@@ -62,7 +62,7 @@
     {
       "id": "capabilities:prioritization-comparison",
       "name": "Prioritization Comparison",
-      "type": "reference",
+      "type": "capability",
       "source_reference": "methodology/capabilities/prioritization-comparison.md",
       "relative_path": "capabilities/prioritization-comparison.md",
       "summary": null,
@@ -2435,65 +2435,13 @@
     },
     {
       "id": "readme",
-      "name": "Product Manager Skills",
+      "name": "HH-Owned Methodology",
       "type": "reference",
       "source_reference": "methodology/README.md",
       "relative_path": "README.md",
       "summary": null,
-      "related_skills": [
-        "skills:agent-orchestration-advisor",
-        "skills:ai-shaped-readiness-advisor",
-        "skills:ansoff-matrix",
-        "skills:autonomous-investigation",
-        "skills:battle-card-builder",
-        "skills:business-health-diagnostic",
-        "skills:company-intel",
-        "skills:competitive-analysis-process",
-        "skills:competitive-intel-watch",
-        "skills:competitive-research-snapshot",
-        "skills:context-engineering-advisor",
-        "skills:director-readiness-advisor",
-        "skills:discovery-interview-prep",
-        "skills:discovery-process",
-        "skills:eol-checklist",
-        "skills:eol-internal-enablement",
-        "skills:eol-message",
-        "skills:eol-process",
-        "skills:eol-readiness-advisor",
-        "skills:eol-stakeholder-sequence",
-        "skills:epic-breakdown-advisor",
-        "skills:executive-onboarding-playbook",
-        "skills:feature-investment-advisor",
-        "skills:incoming-request-advisor",
-        "skills:intel-discipline-advisor",
-        "skills:lifecycle-play-advisor",
-        "skills:market-landscape-scan",
-        "skills:opportunity-solution-tree",
-        "skills:organic-growth-advisor",
-        "skills:pestel-delta-monitor",
-        "skills:pm-skill-creator",
-        "skills:pol-probe",
-        "skills:pol-probe-advisor",
-        "skills:porters-five-forces",
-        "skills:positioning-statement",
-        "skills:prd-development",
-        "skills:press-release",
-        "skills:pricing-packaging-tracker",
-        "skills:prioritization-advisor",
-        "skills:problem-framing-canvas",
-        "skills:product-lifecycle-plays",
-        "skills:product-strategy-session",
-        "skills:roadmap-planning",
-        "skills:stakeholder-engagement-advisor",
-        "skills:stakeholder-identification",
-        "skills:stakeholder-mapping",
-        "skills:swot-analysis",
-        "skills:tam-sam-som-calculator",
-        "skills:user-story",
-        "skills:voice-of-customer-miner",
-        "skills:vp-cpo-readiness-advisor"
-      ],
-      "size_bytes": 30389
+      "related_skills": [],
+      "size_bytes": 2514
     },
     {
       "id": "skeletons",
@@ -5971,11 +5919,75 @@
   ],
   "capabilities": [
     {
+      "id": "capabilities:discovery-question-set",
+      "name": "Discovery Question Set",
+      "type": "capability",
+      "primary_intents": [
+        "discovery",
+        "research"
+      ],
+      "decision_stage": "identify_unknowns",
+      "selection_cues": [
+        "it is unclear who or what should be studied",
+        "multiple plausible next steps exist and the right one is not obvious"
+      ],
+      "anti_cues": [
+        "the dominant uncertainty is already known",
+        "the decision is purely about UX/interaction, not user/need evidence",
+        "a full discovery cycle is clearly warranted (use discovery-process instead)"
+      ],
+      "cost_profile": "low",
+      "source_reference": "methodology/capabilities/discovery-question-set.md"
+    },
+    {
+      "id": "capabilities:prd-readiness-gate",
+      "name": "PRD Readiness Gate",
+      "type": "capability",
+      "primary_intents": [
+        "prd",
+        "execution_gate"
+      ],
+      "decision_stage": "validate",
+      "selection_cues": [
+        "HH or PDM is about to write a PRD or delegate to Engineering",
+        "there is doubt about whether discovery is actually finished"
+      ],
+      "anti_cues": [
+        "still in early problem framing",
+        "no candidate direction has been selected yet"
+      ],
+      "cost_profile": "low",
+      "source_reference": "methodology/capabilities/prd-readiness-gate.md"
+    },
+    {
+      "id": "capabilities:prioritization-comparison",
+      "name": "Prioritization Comparison",
+      "type": "capability",
+      "primary_intents": [
+        "prioritization"
+      ],
+      "decision_stage": "prioritize",
+      "selection_cues": [
+        "multiple credible options exist and it is unclear what to do first",
+        "HH asks what should be prioritized"
+      ],
+      "anti_cues": [
+        "only one viable option exists",
+        "the problem itself is not yet established",
+        "the team hasn't yet picked a scoring framework (use prioritization-advisor first)"
+      ],
+      "cost_profile": "medium",
+      "source_reference": "methodology/capabilities/prioritization-comparison.md"
+    },
+    {
       "id": "skills:acquisition-channel-advisor",
       "name": "acquisition-channel-advisor",
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/acquisition-channel-advisor/SKILL.md"
     },
     {
@@ -5984,6 +5996,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/acquisition-channel-advisor/examples/conversation-flow.md"
     },
     {
@@ -5992,6 +6007,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/agent-orchestration-advisor/SKILL.md"
     },
     {
@@ -6000,6 +6018,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/ai-shaped-readiness-advisor/SKILL.md"
     },
     {
@@ -6008,6 +6029,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/altitude-horizon-framework/SKILL.md"
     },
     {
@@ -6016,6 +6040,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/altitude-horizon-framework/examples/sample.md"
     },
     {
@@ -6024,6 +6051,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/altitude-horizon-framework/examples/sample-industrial.md"
     },
     {
@@ -6032,6 +6062,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/altitude-horizon-framework/template.md"
     },
     {
@@ -6040,6 +6073,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/ansoff-matrix/SKILL.md"
     },
     {
@@ -6048,6 +6084,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/ansoff-matrix/examples/sample.md"
     },
     {
@@ -6056,6 +6095,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/ansoff-matrix/examples/sample-industrial.md"
     },
     {
@@ -6064,6 +6106,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/ansoff-matrix/template.md"
     },
     {
@@ -6072,6 +6117,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/autonomous-investigation/SKILL.md"
     },
     {
@@ -6080,6 +6128,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/autonomous-investigation/examples/protocol-in-action.md"
     },
     {
@@ -6088,6 +6139,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/autonomous-investigation/examples/protocol-in-action-industrial.md"
     },
     {
@@ -6096,6 +6150,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/autonomous-investigation/template.md"
     },
     {
@@ -6104,6 +6161,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/battle-card-builder/SKILL.md"
     },
     {
@@ -6112,6 +6172,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/battle-card-builder/examples/sample.md"
     },
     {
@@ -6120,6 +6183,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/battle-card-builder/examples/sample-industrial.md"
     },
     {
@@ -6128,6 +6194,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/battle-card-builder/template.md"
     },
     {
@@ -6136,6 +6205,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/business-health-diagnostic/SKILL.md"
     },
     {
@@ -6144,6 +6216,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/company-intel/SKILL.md"
     },
     {
@@ -6152,6 +6227,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/company-intel/examples/executive-signal-refresh.md"
     },
     {
@@ -6160,6 +6238,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/company-intel/examples/executive-signal-refresh-saas.md"
     },
     {
@@ -6168,6 +6249,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/company-intel/template.md"
     },
     {
@@ -6176,6 +6260,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/company-research/SKILL.md"
     },
     {
@@ -6184,6 +6271,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/company-research/examples/sample.md"
     },
     {
@@ -6192,6 +6282,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/company-research/examples/sample-lifesciences.md"
     },
     {
@@ -6200,6 +6293,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/company-research/template.md"
     },
     {
@@ -6208,6 +6304,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-analysis-process/SKILL.md"
     },
     {
@@ -6216,6 +6315,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-analysis-process/examples/sample.md"
     },
     {
@@ -6224,6 +6326,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-analysis-process/examples/sample-industrial.md"
     },
     {
@@ -6232,6 +6337,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-analysis-process/template.md"
     },
     {
@@ -6240,6 +6348,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-intel-watch/SKILL.md"
     },
     {
@@ -6248,6 +6359,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-intel-watch/examples/sample.md"
     },
     {
@@ -6256,6 +6370,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-intel-watch/examples/sample-industrial.md"
     },
     {
@@ -6264,6 +6381,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-intel-watch/template.md"
     },
     {
@@ -6272,6 +6392,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-research-snapshot/SKILL.md"
     },
     {
@@ -6280,6 +6403,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-research-snapshot/examples/sample.md"
     },
     {
@@ -6288,6 +6414,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-research-snapshot/examples/sample-industrial.md"
     },
     {
@@ -6296,6 +6425,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/competitive-research-snapshot/template.md"
     },
     {
@@ -6304,6 +6436,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/context-engineering-advisor/SKILL.md"
     },
     {
@@ -6312,6 +6447,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/customer-journey-map/SKILL.md"
     },
     {
@@ -6320,6 +6458,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/customer-journey-map/examples/meta-product-manager-skills.md"
     },
     {
@@ -6328,6 +6469,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/customer-journey-map/examples/sample.md"
     },
     {
@@ -6336,6 +6480,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/customer-journey-map/template.md"
     },
     {
@@ -6344,6 +6491,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/customer-journey-mapping-workshop/SKILL.md"
     },
     {
@@ -6352,6 +6502,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/derisk-measurement-advisor/SKILL.md"
     },
     {
@@ -6360,6 +6513,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/director-readiness-advisor/SKILL.md"
     },
     {
@@ -6368,6 +6524,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/director-readiness-advisor/examples/conversation-flow.md"
     },
     {
@@ -6376,6 +6535,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/discovery-interview-prep/SKILL.md"
     },
     {
@@ -6387,6 +6549,16 @@
         "research"
       ],
       "decision_stage": "discovery_execution",
+      "selection_cues": [
+        "a full discovery cycle is warranted, not just a targeted question",
+        "setting up continuous discovery as an ongoing practice",
+        "investigating a metric drop systematically"
+      ],
+      "anti_cues": [
+        "the dominant uncertainty is narrow enough for discovery-question-set alone",
+        "no time/access for interviews or experiments — use the lighter capability instead"
+      ],
+      "cost_profile": "high",
       "source_reference": "methodology/skills/discovery-process/SKILL.md"
     },
     {
@@ -6395,6 +6567,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/discovery-process/examples/sample.md"
     },
     {
@@ -6403,6 +6578,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/discovery-process/examples/sample-lifesciences.md"
     },
     {
@@ -6411,6 +6589,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/discovery-process/template.md"
     },
     {
@@ -6419,6 +6600,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-checklist/SKILL.md"
     },
     {
@@ -6427,6 +6611,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-checklist/examples/sample.md"
     },
     {
@@ -6435,6 +6622,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-checklist/examples/sample-industrial.md"
     },
     {
@@ -6443,6 +6633,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-checklist/template.md"
     },
     {
@@ -6451,6 +6644,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-internal-enablement/SKILL.md"
     },
     {
@@ -6459,6 +6655,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-internal-enablement/examples/sample.md"
     },
     {
@@ -6467,6 +6666,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-internal-enablement/examples/sample-industrial.md"
     },
     {
@@ -6475,6 +6677,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-internal-enablement/template.md"
     },
     {
@@ -6483,6 +6688,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-message/SKILL.md"
     },
     {
@@ -6491,6 +6699,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-message/examples/sample.md"
     },
     {
@@ -6499,6 +6710,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-message/examples/sample-industrial.md"
     },
     {
@@ -6507,6 +6721,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-message/template.md"
     },
     {
@@ -6515,6 +6732,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-process/SKILL.md"
     },
     {
@@ -6523,6 +6743,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-process/examples/sample.md"
     },
     {
@@ -6531,6 +6754,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-process/examples/sample-industrial.md"
     },
     {
@@ -6539,6 +6765,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-process/template.md"
     },
     {
@@ -6547,6 +6776,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-readiness-advisor/SKILL.md"
     },
     {
@@ -6555,6 +6787,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-stakeholder-sequence/SKILL.md"
     },
     {
@@ -6563,6 +6798,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-stakeholder-sequence/examples/sample.md"
     },
     {
@@ -6571,6 +6809,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-stakeholder-sequence/examples/sample-industrial.md"
     },
     {
@@ -6579,6 +6820,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/eol-stakeholder-sequence/template.md"
     },
     {
@@ -6587,6 +6831,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/epic-breakdown-advisor/SKILL.md"
     },
     {
@@ -6595,6 +6842,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/epic-hypothesis/SKILL.md"
     },
     {
@@ -6603,6 +6853,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/epic-hypothesis/examples/sample.md"
     },
     {
@@ -6611,6 +6864,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/epic-hypothesis/examples/sample-industrial.md"
     },
     {
@@ -6619,6 +6875,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/epic-hypothesis/template.md"
     },
     {
@@ -6627,6 +6886,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/executive-onboarding-playbook/SKILL.md"
     },
     {
@@ -6635,6 +6897,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/executive-onboarding-playbook/examples/sample.md"
     },
     {
@@ -6643,6 +6908,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/executive-onboarding-playbook/examples/sample-lifesciences.md"
     },
     {
@@ -6651,6 +6919,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/executive-onboarding-playbook/template.md"
     },
     {
@@ -6659,6 +6930,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/feature-investment-advisor/SKILL.md"
     },
     {
@@ -6667,6 +6941,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/feature-investment-advisor/examples/conversation-flow.md"
     },
     {
@@ -6675,6 +6952,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/finance-based-pricing-advisor/SKILL.md"
     },
     {
@@ -6683,6 +6963,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/finance-metrics-quickref/SKILL.md"
     },
     {
@@ -6691,6 +6974,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/finance-metrics-quickref/template.md"
     },
     {
@@ -6699,6 +6985,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/incoming-request-advisor/SKILL.md"
     },
     {
@@ -6707,6 +6996,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/incoming-request-advisor/examples/conversation-flow.md"
     },
     {
@@ -6715,6 +7007,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/incoming-request-advisor/template.md"
     },
     {
@@ -6723,6 +7018,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/intel-discipline-advisor/SKILL.md"
     },
     {
@@ -6731,6 +7029,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/intel-discipline-advisor/examples/conversation-flow.md"
     },
     {
@@ -6739,6 +7040,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/intel-discipline-advisor/examples/conversation-flow-industrial.md"
     },
     {
@@ -6747,6 +7051,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/intel-discipline-advisor/template.md"
     },
     {
@@ -6755,6 +7062,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/intelligence-collection-disciplines/SKILL.md"
     },
     {
@@ -6763,6 +7073,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/intelligence-collection-disciplines/examples/sample.md"
     },
     {
@@ -6771,6 +7084,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/intelligence-collection-disciplines/examples/sample-industrial.md"
     },
     {
@@ -6779,6 +7095,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/intelligence-collection-disciplines/template.md"
     },
     {
@@ -6787,6 +7106,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/jobs-to-be-done/SKILL.md"
     },
     {
@@ -6795,6 +7117,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/jobs-to-be-done/examples/sample.md"
     },
     {
@@ -6803,6 +7128,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/jobs-to-be-done/examples/sample-industrial.md"
     },
     {
@@ -6811,6 +7139,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/jobs-to-be-done/template.md"
     },
     {
@@ -6819,6 +7150,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/lean-ux-canvas/SKILL.md"
     },
     {
@@ -6827,6 +7161,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/lean-ux-canvas/examples/sample.md"
     },
     {
@@ -6835,6 +7172,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/lean-ux-canvas/template.md"
     },
     {
@@ -6843,6 +7183,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/lifecycle-play-advisor/SKILL.md"
     },
     {
@@ -6851,6 +7194,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/market-landscape-scan/SKILL.md"
     },
     {
@@ -6859,6 +7205,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/market-landscape-scan/examples/sample.md"
     },
     {
@@ -6867,6 +7216,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/market-landscape-scan/examples/sample-industrial.md"
     },
     {
@@ -6875,6 +7227,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/market-landscape-scan/template.md"
     },
     {
@@ -6883,6 +7238,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/opportunity-solution-tree/SKILL.md"
     },
     {
@@ -6891,6 +7249,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/opportunity-solution-tree/examples/sample.md"
     },
     {
@@ -6899,6 +7260,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/opportunity-solution-tree/template.md"
     },
     {
@@ -6907,6 +7271,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/organic-growth-advisor/SKILL.md"
     },
     {
@@ -6915,6 +7282,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/organic-growth-advisor/examples/sample.md"
     },
     {
@@ -6923,6 +7293,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/organic-growth-advisor/template.md"
     },
     {
@@ -6931,6 +7304,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pestel-analysis/SKILL.md"
     },
     {
@@ -6939,6 +7315,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pestel-analysis/examples/sample.md"
     },
     {
@@ -6947,6 +7326,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pestel-analysis/examples/sample-lifesciences.md"
     },
     {
@@ -6955,6 +7337,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pestel-analysis/template.md"
     },
     {
@@ -6963,6 +7348,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pestel-delta-monitor/SKILL.md"
     },
     {
@@ -6971,6 +7359,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pestel-delta-monitor/examples/sample.md"
     },
     {
@@ -6979,6 +7370,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pestel-delta-monitor/examples/sample-industrial.md"
     },
     {
@@ -6987,6 +7381,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pestel-delta-monitor/template.md"
     },
     {
@@ -6995,6 +7392,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pm-skill-creator/SKILL.md"
     },
     {
@@ -7003,6 +7403,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pol-probe/SKILL.md"
     },
     {
@@ -7011,6 +7414,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pol-probe-advisor/SKILL.md"
     },
     {
@@ -7019,6 +7425,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pol-probe/examples/sample.md"
     },
     {
@@ -7027,6 +7436,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pol-probe/examples/sample-industrial.md"
     },
     {
@@ -7035,6 +7447,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pol-probe/template.md"
     },
     {
@@ -7043,6 +7458,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/porters-five-forces/SKILL.md"
     },
     {
@@ -7051,6 +7469,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/porters-five-forces/examples/sample.md"
     },
     {
@@ -7059,6 +7480,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/porters-five-forces/examples/sample-industrial.md"
     },
     {
@@ -7067,6 +7491,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/porters-five-forces/template.md"
     },
     {
@@ -7075,6 +7502,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/positioning-statement/SKILL.md"
     },
     {
@@ -7083,6 +7513,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/positioning-statement/examples/sample.md"
     },
     {
@@ -7091,6 +7524,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/positioning-statement/examples/sample-industrial.md"
     },
     {
@@ -7099,6 +7535,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/positioning-statement/template.md"
     },
     {
@@ -7107,6 +7546,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/positioning-workshop/SKILL.md"
     },
     {
@@ -7118,6 +7560,15 @@
         "document"
       ],
       "decision_stage": "document",
+      "selection_cues": [
+        "prd-readiness-gate has passed and the actual PRD document needs to be written",
+        "moving from scattered discovery notes to an engineering-ready spec"
+      ],
+      "anti_cues": [
+        "discovery is not yet mature (run prd-readiness-gate first)",
+        "only a lightweight requirements note is needed, not a full PRD"
+      ],
+      "cost_profile": "high",
       "source_reference": "methodology/skills/prd-development/SKILL.md"
     },
     {
@@ -7126,6 +7577,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/prd-development/examples/sample.md"
     },
     {
@@ -7134,6 +7588,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/prd-development/examples/sample-industrial.md"
     },
     {
@@ -7142,6 +7599,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/prd-development/template.md"
     },
     {
@@ -7150,6 +7610,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/press-release/SKILL.md"
     },
     {
@@ -7158,6 +7621,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/press-release/examples/sample.md"
     },
     {
@@ -7166,6 +7632,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/press-release/examples/sample-industrial.md"
     },
     {
@@ -7174,6 +7643,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/press-release/template.md"
     },
     {
@@ -7182,6 +7654,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pricing-packaging-tracker/SKILL.md"
     },
     {
@@ -7190,6 +7665,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pricing-packaging-tracker/examples/sample.md"
     },
     {
@@ -7198,6 +7676,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pricing-packaging-tracker/examples/sample-industrial.md"
     },
     {
@@ -7206,6 +7687,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/pricing-packaging-tracker/template.md"
     },
     {
@@ -7216,6 +7700,15 @@
         "prioritization"
       ],
       "decision_stage": "prioritize_framework_selection",
+      "selection_cues": [
+        "team keeps arguing about how to prioritize, not just what to prioritize",
+        "unsure whether RICE/ICE/value-effort/other fits this team/stage"
+      ],
+      "anti_cues": [
+        "a framework is already agreed and just needs to be applied (use prioritization-comparison)",
+        "only one option exists — no prioritization decision to make"
+      ],
+      "cost_profile": "low",
       "source_reference": "methodology/skills/prioritization-advisor/SKILL.md"
     },
     {
@@ -7227,6 +7720,16 @@
         "discovery"
       ],
       "decision_stage": "framing",
+      "selection_cues": [
+        "a solution is being proposed before the problem is established",
+        "team may be solving the wrong problem or missing overlooked stakeholders"
+      ],
+      "anti_cues": [
+        "problem is already well-understood and validated",
+        "tactical bug fix or technical debt with no framing ambiguity",
+        "stakeholders already committed to a solution (address alignment first)"
+      ],
+      "cost_profile": "medium",
       "source_reference": "methodology/skills/problem-framing-canvas/SKILL.md"
     },
     {
@@ -7235,6 +7738,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/problem-framing-canvas/examples/sample.md"
     },
     {
@@ -7243,6 +7749,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/problem-framing-canvas/template.md"
     },
     {
@@ -7251,6 +7760,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/problem-statement/SKILL.md"
     },
     {
@@ -7259,6 +7771,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/problem-statement/examples/sample.md"
     },
     {
@@ -7267,6 +7782,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/problem-statement/examples/sample-industrial.md"
     },
     {
@@ -7275,6 +7793,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/problem-statement/template.md"
     },
     {
@@ -7283,6 +7804,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-lifecycle-plays/SKILL.md"
     },
     {
@@ -7291,6 +7815,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-lifecycle-plays/examples/sample.md"
     },
     {
@@ -7299,6 +7826,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-lifecycle-plays/examples/sample-industrial.md"
     },
     {
@@ -7307,6 +7837,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-lifecycle-plays/template.md"
     },
     {
@@ -7315,6 +7848,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-sense-interview-answer/SKILL.md"
     },
     {
@@ -7323,6 +7859,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-sense-interview-answer/examples/diagnose-metric-drop.md"
     },
     {
@@ -7331,6 +7870,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-sense-interview-answer/examples/improve-youtube.md"
     },
     {
@@ -7339,6 +7881,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-sense-interview-answer/template.md"
     },
     {
@@ -7347,6 +7892,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-strategy-session/SKILL.md"
     },
     {
@@ -7355,6 +7903,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-strategy-session/examples/sample.md"
     },
     {
@@ -7363,6 +7914,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-strategy-session/examples/sample-lifesciences.md"
     },
     {
@@ -7371,6 +7925,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/product-strategy-session/template.md"
     },
     {
@@ -7379,6 +7936,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/proto-persona/SKILL.md"
     },
     {
@@ -7387,6 +7947,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/proto-persona/examples/sample.md"
     },
     {
@@ -7395,6 +7958,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/proto-persona/examples/sample-industrial.md"
     },
     {
@@ -7403,6 +7969,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/proto-persona/template.md"
     },
     {
@@ -7411,6 +7980,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/recommendation-canvas/SKILL.md"
     },
     {
@@ -7419,6 +7991,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/recommendation-canvas/examples/sample.md"
     },
     {
@@ -7427,6 +8002,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/recommendation-canvas/examples/sample-lifesciences.md"
     },
     {
@@ -7435,6 +8013,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/recommendation-canvas/template.md"
     },
     {
@@ -7443,6 +8024,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/roadmap-planning/SKILL.md"
     },
     {
@@ -7451,6 +8035,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/roadmap-planning/examples/sample.md"
     },
     {
@@ -7459,6 +8046,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/roadmap-planning/examples/sample-industrial.md"
     },
     {
@@ -7467,6 +8057,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/roadmap-planning/template.md"
     },
     {
@@ -7475,6 +8068,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/saas-economics-efficiency-metrics/SKILL.md"
     },
     {
@@ -7483,6 +8079,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/saas-economics-efficiency-metrics/examples/cash-trap.md"
     },
     {
@@ -7491,6 +8090,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/saas-economics-efficiency-metrics/examples/healthy-unit-economics.md"
     },
     {
@@ -7499,6 +8101,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/saas-economics-efficiency-metrics/template.md"
     },
     {
@@ -7507,6 +8112,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/saas-revenue-growth-metrics/SKILL.md"
     },
     {
@@ -7515,6 +8123,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/saas-revenue-growth-metrics/examples/healthy-saas.md"
     },
     {
@@ -7523,6 +8134,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/saas-revenue-growth-metrics/examples/warning-signs.md"
     },
     {
@@ -7531,6 +8145,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/saas-revenue-growth-metrics/template.md"
     },
     {
@@ -7539,6 +8156,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/skill-authoring-workflow/SKILL.md"
     },
     {
@@ -7547,6 +8167,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/skill-authoring-workflow/examples/sample.md"
     },
     {
@@ -7555,6 +8178,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/skill-authoring-workflow/template.md"
     },
     {
@@ -7563,6 +8189,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/stakeholder-engagement-advisor/SKILL.md"
     },
     {
@@ -7571,6 +8200,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/stakeholder-identification/SKILL.md"
     },
     {
@@ -7579,6 +8211,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/stakeholder-identification/examples/sample.md"
     },
     {
@@ -7587,6 +8222,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/stakeholder-identification/examples/sample-industrial.md"
     },
     {
@@ -7595,6 +8233,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/stakeholder-identification/template.md"
     },
     {
@@ -7603,6 +8244,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/stakeholder-mapping/SKILL.md"
     },
     {
@@ -7611,6 +8255,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/stakeholder-mapping/examples/sample.md"
     },
     {
@@ -7619,6 +8266,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/stakeholder-mapping/examples/sample-industrial.md"
     },
     {
@@ -7627,6 +8277,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/stakeholder-mapping/template.md"
     },
     {
@@ -7635,6 +8288,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/storyboard/SKILL.md"
     },
     {
@@ -7643,6 +8299,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/storyboard/examples/sample.md"
     },
     {
@@ -7651,6 +8310,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/storyboard/examples/sample-industrial.md"
     },
     {
@@ -7659,6 +8321,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/storyboard/template.md"
     },
     {
@@ -7667,6 +8332,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/swot-analysis/SKILL.md"
     },
     {
@@ -7675,6 +8343,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/swot-analysis/examples/sample.md"
     },
     {
@@ -7683,6 +8354,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/swot-analysis/examples/sample-industrial.md"
     },
     {
@@ -7691,6 +8365,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/swot-analysis/template.md"
     },
     {
@@ -7699,6 +8376,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/tam-sam-som-calculator/SKILL.md"
     },
     {
@@ -7707,6 +8387,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/tam-sam-som-calculator/examples/sample.md"
     },
     {
@@ -7715,6 +8398,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/tam-sam-som-calculator/scripts/market-sizing.py"
     },
     {
@@ -7723,6 +8409,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/tam-sam-som-calculator/template.md"
     },
     {
@@ -7731,6 +8420,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story/SKILL.md"
     },
     {
@@ -7739,6 +8431,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-mapping/SKILL.md"
     },
     {
@@ -7747,6 +8442,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-mapping-workshop/SKILL.md"
     },
     {
@@ -7755,6 +8453,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-mapping-workshop/template.md"
     },
     {
@@ -7763,6 +8464,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-mapping/examples/sample.md"
     },
     {
@@ -7771,6 +8475,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-mapping/examples/sample-industrial.md"
     },
     {
@@ -7779,6 +8486,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-mapping/template.md"
     },
     {
@@ -7787,6 +8497,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-splitting/SKILL.md"
     },
     {
@@ -7795,6 +8508,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-splitting/examples/sample.md"
     },
     {
@@ -7803,6 +8519,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-splitting/examples/sample-industrial.md"
     },
     {
@@ -7811,6 +8530,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story-splitting/template.md"
     },
     {
@@ -7819,6 +8541,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story/examples/sample.md"
     },
     {
@@ -7827,6 +8552,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story/examples/sample-industrial.md"
     },
     {
@@ -7835,6 +8563,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story/scripts/user-story-template.py"
     },
     {
@@ -7843,6 +8574,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/user-story/template.md"
     },
     {
@@ -7851,6 +8585,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/voice-of-customer-miner/SKILL.md"
     },
     {
@@ -7859,6 +8596,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/voice-of-customer-miner/examples/sample.md"
     },
     {
@@ -7867,6 +8607,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/voice-of-customer-miner/examples/sample-industrial.md"
     },
     {
@@ -7875,6 +8618,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/voice-of-customer-miner/template.md"
     },
     {
@@ -7883,6 +8629,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/vp-cpo-readiness-advisor/SKILL.md"
     },
     {
@@ -7891,6 +8640,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/vp-cpo-readiness-advisor/examples/conversation-flow.md"
     },
     {
@@ -7899,6 +8651,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/workshop-facilitation/SKILL.md"
     },
     {
@@ -7907,6 +8662,9 @@
       "type": "skill",
       "primary_intents": [],
       "decision_stage": null,
+      "selection_cues": [],
+      "anti_cues": [],
+      "cost_profile": null,
       "source_reference": "methodology/skills/workshop-facilitation/examples/inline-input-flow.md"
     }
   ]
