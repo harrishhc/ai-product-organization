@@ -3,12 +3,19 @@
     "_template": {
       "repository": { "type": "local_path", "location": "./products/_template" },
       "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
       "metadata": {}
     },
     "_path-traversal-test": {
       "repository": { "type": "local_path", "location": "./products/_template" },
       "context_entry": "../escaped-context.json",
       "metadata": { "purpose": "security regression fixture — see tests/context.test.js; must always be rejected, never resolved" }
+    },
+    "_work-state-path-traversal-test": {
+      "repository": { "type": "local_path", "location": "./products/_template" },
+      "context_entry": "context.json",
+      "work_state_entry": "../escaped-workstate.json",
+      "metadata": { "purpose": "security regression fixture — see tests/workState.test.js; must always be rejected, never resolved" }
     }
   }
 }

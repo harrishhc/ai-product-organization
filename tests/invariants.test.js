@@ -169,6 +169,34 @@ test('invariant: writeProductContext only ever writes inside the resolved produc
   assert.match(contextSrc, /resolveProductRepository\(productId\)/);
 });
 
+test('invariant: writeWorkState only ever writes inside the resolved product repository, never elsewhere', () => {
+  const workStateSrc = readFileSync(path.join(RUNTIME_DIR, 'workState.js'), 'utf8');
+  assert.match(workStateSrc, /writeFileSync\(\s*workStatePath/);
+  assert.match(workStateSrc, /resolveProductRepository\(productId\)/);
+});
+
+// Work State must never assert a decision on its own authority — it may
+// only reference a Product Context decision id, never restate content.
+// renderActiveBrief has no field to read decision *content* from, so the
+// only way a decision's substance reaches the brief is via Product Context
+// (passed in explicitly by the caller), not via Work State's decision_refs.
+test('invariant: renderActiveBrief cannot surface decision content from Work State alone', async () => {
+  const { renderActiveBrief } = await import('../runtime/workState.js');
+  const ws = {
+    current_focus: 'x',
+    dominant_uncertainty: 'y',
+    in_progress: [],
+    next_actions: [],
+    blocked: [],
+    recently_completed: [],
+    open_questions: [],
+    last_session: { date: '2026-09-11', summary: 's', decision_refs: ['dec_1'] },
+  };
+  const brief = renderActiveBrief(ws);
+  assert.match(brief, /- dec_1/);
+  assert.doesNotMatch(brief, /decision_refs/);
+});
+
 // 8. Specialist delegation has a bounded purpose.
 test('invariant: methodologyEvolution requires explicit HH initiation and an injected fetcher', async () => {
   await assert.rejects(() => reviewExternalMethodology({ initiatedByHH: false, fetchUpstream: async () => ({}) }));

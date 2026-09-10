@@ -20,8 +20,9 @@ agents/          reusable functional capabilities (cross-product)
   evolution/     PDM Evolution Agent (independent evolution plane)
 runtime/         executable PDM Core: identity/governance, capability
                  registry+resolver, Product Registry resolver, Product
-                 Context boundary, orchestrator, decision-state model,
-                 instrumentation, methodology-evolution boundary (see runtime/*.js)
+                 Context boundary, Work State + Active Brief boundary,
+                 orchestrator, decision-state model, instrumentation,
+                 methodology-evolution boundary (see runtime/*.js)
 methodology/     HH-owned methodology baseline (operational source of truth)
   registry/      compact capability metadata (registry.json, 7 capabilities)
   capabilities/  detailed capability instructions, lazily loaded

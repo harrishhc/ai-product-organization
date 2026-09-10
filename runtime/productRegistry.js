@@ -62,6 +62,9 @@ export function resolveProductRepository(productId) {
     repositoryType: entry.repository.type,
     repositoryPath,
     contextEntry: entry.context_entry,
+    // Optional: Work State (runtime/workState.js) is opt-in per product.
+    // Absent means the product has not adopted Work State yet.
+    workStateEntry: entry.work_state_entry ?? null,
     // Optional per-product metadata (e.g. owner, tags) — not product context
     // content, just registry-level bookkeeping. Defaults to {} when absent.
     metadata: entry.metadata ?? {},
