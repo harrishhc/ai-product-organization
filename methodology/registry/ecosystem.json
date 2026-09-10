@@ -1,6 +1,5 @@
 {
-  "schema_version": "1.0.0",
-  "generated_at": "2026-09-10T11:43:50.049Z",
+  "schema_version": "1.1.0",
   "source": "HH-owned methodology genesis baseline",
   "assets": [
     {
@@ -10,8 +9,48 @@
       "source_reference": "methodology/capabilities/discovery-process.md",
       "relative_path": "capabilities/discovery-process.md",
       "summary": "Run a full discovery cycle from problem hypothesis to validated solution. Use when a team needs a structured path through framing, interviews, synthesis, and experiments.",
-      "related_skills": [],
-      "size_bytes": 20652
+      "related_skills": [
+        "skills:customer-journey-mapping-workshop",
+        "skills:discovery-interview-prep",
+        "skills:discovery-process",
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:lean-ux-canvas",
+        "skills:opportunity-solution-tree",
+        "skills:prd-development",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:workshop-facilitation"
+      ],
+      "size_bytes": 20652,
+      "routing": {
+        "primary_intents": [
+          "discovery",
+          "research"
+        ],
+        "decision_stage": "discovery_execution",
+        "selection_cues": [
+          "a full discovery cycle is warranted, not just a targeted question",
+          "setting up continuous discovery as an ongoing practice",
+          "investigating a metric drop systematically"
+        ],
+        "anti_cues": [
+          "the dominant uncertainty is narrow enough for discovery-question-set alone",
+          "no time/access for interviews or experiments — use the lighter capability instead"
+        ],
+        "cost_profile": "high"
+      },
+      "provenance": {
+        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
+        "upstream_skill": "discovery-process",
+        "upstream_path": "skills/discovery-process/SKILL.md",
+        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
+        "branch": "main",
+        "imported_at": "2026-09-10",
+        "license": "CC BY-NC-SA 4.0",
+        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
+      }
     },
     {
       "id": "capabilities:discovery-question-set",
@@ -21,7 +60,25 @@
       "relative_path": "capabilities/discovery-question-set.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 1332
+      "size_bytes": 1332,
+      "routing": {
+        "primary_intents": [
+          "discovery",
+          "research"
+        ],
+        "decision_stage": "identify_unknowns",
+        "selection_cues": [
+          "it is unclear who or what should be studied",
+          "multiple plausible next steps exist and the right one is not obvious"
+        ],
+        "anti_cues": [
+          "the dominant uncertainty is already known",
+          "the decision is purely about UX/interaction, not user/need evidence",
+          "a full discovery cycle is clearly warranted (use discovery-process instead)"
+        ],
+        "cost_profile": "low"
+      },
+      "provenance": null
     },
     {
       "id": "capabilities:prd-development",
@@ -30,8 +87,48 @@
       "source_reference": "methodology/capabilities/prd-development.md",
       "relative_path": "capabilities/prd-development.md",
       "summary": "Build a structured PRD that connects problem, users, solution, and success criteria. Use when turning discovery notes into an engineering-ready document for a major initiative.",
-      "related_skills": [],
-      "size_bytes": 25850
+      "related_skills": [
+        "skills:customer-journey-mapping-workshop",
+        "skills:discovery-process",
+        "skills:epic-breakdown-advisor",
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:prd-development",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:tam-sam-som-calculator",
+        "skills:user-story",
+        "skills:user-story-mapping-workshop",
+        "skills:workshop-facilitation"
+      ],
+      "size_bytes": 25850,
+      "routing": {
+        "primary_intents": [
+          "prd",
+          "document"
+        ],
+        "decision_stage": "document",
+        "selection_cues": [
+          "prd-readiness-gate has passed and the actual PRD document needs to be written",
+          "moving from scattered discovery notes to an engineering-ready spec"
+        ],
+        "anti_cues": [
+          "discovery is not yet mature (run prd-readiness-gate first)",
+          "only a lightweight requirements note is needed, not a full PRD"
+        ],
+        "cost_profile": "high"
+      },
+      "provenance": {
+        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
+        "upstream_skill": "prd-development",
+        "upstream_path": "skills/prd-development/SKILL.md",
+        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
+        "branch": "main",
+        "imported_at": "2026-09-10",
+        "license": "CC BY-NC-SA 4.0",
+        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
+      }
     },
     {
       "id": "capabilities:prd-readiness-gate",
@@ -40,8 +137,27 @@
       "source_reference": "methodology/capabilities/prd-readiness-gate.md",
       "relative_path": "capabilities/prd-readiness-gate.md",
       "summary": null,
-      "related_skills": [],
-      "size_bytes": 1350
+      "related_skills": [
+        "skills:problem-framing-canvas"
+      ],
+      "size_bytes": 1350,
+      "routing": {
+        "primary_intents": [
+          "prd",
+          "execution_gate"
+        ],
+        "decision_stage": "validate",
+        "selection_cues": [
+          "HH or PDM is about to write a PRD or delegate to Engineering",
+          "there is doubt about whether discovery is actually finished"
+        ],
+        "anti_cues": [
+          "still in early problem framing",
+          "no candidate direction has been selected yet"
+        ],
+        "cost_profile": "low"
+      },
+      "provenance": null
     },
     {
       "id": "capabilities:prioritization-advisor",
@@ -50,8 +166,36 @@
       "source_reference": "methodology/capabilities/prioritization-advisor.md",
       "relative_path": "capabilities/prioritization-advisor.md",
       "summary": "Choose a prioritization framework based on stage, team context, and stakeholder needs. Use when deciding between RICE, ICE, value/effort, or another scoring approach.",
-      "related_skills": [],
-      "size_bytes": 18057
+      "related_skills": [
+        "skills:prioritization-advisor",
+        "skills:workshop-facilitation"
+      ],
+      "size_bytes": 18057,
+      "routing": {
+        "primary_intents": [
+          "prioritization"
+        ],
+        "decision_stage": "prioritize_framework_selection",
+        "selection_cues": [
+          "team keeps arguing about how to prioritize, not just what to prioritize",
+          "unsure whether RICE/ICE/value-effort/other fits this team/stage"
+        ],
+        "anti_cues": [
+          "a framework is already agreed and just needs to be applied (use prioritization-comparison)",
+          "only one option exists — no prioritization decision to make"
+        ],
+        "cost_profile": "low"
+      },
+      "provenance": {
+        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
+        "upstream_skill": "prioritization-advisor",
+        "upstream_path": "skills/prioritization-advisor/SKILL.md",
+        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
+        "branch": "main",
+        "imported_at": "2026-09-10",
+        "license": "CC BY-NC-SA 4.0",
+        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
+      }
     },
     {
       "id": "capabilities:prioritization-comparison",
@@ -61,7 +205,24 @@
       "relative_path": "capabilities/prioritization-comparison.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 1231
+      "size_bytes": 1231,
+      "routing": {
+        "primary_intents": [
+          "prioritization"
+        ],
+        "decision_stage": "prioritize",
+        "selection_cues": [
+          "multiple credible options exist and it is unclear what to do first",
+          "HH asks what should be prioritized"
+        ],
+        "anti_cues": [
+          "only one viable option exists",
+          "the problem itself is not yet established",
+          "the team hasn't yet picked a scoring framework (use prioritization-advisor first)"
+        ],
+        "cost_profile": "medium"
+      },
+      "provenance": null
     },
     {
       "id": "capabilities:problem-framing-canvas",
@@ -70,8 +231,41 @@
       "source_reference": "methodology/capabilities/problem-framing-canvas.md",
       "relative_path": "capabilities/problem-framing-canvas.md",
       "summary": "Guide teams through MITRE's Problem Framing Canvas. Use when you need a clearer problem statement before jumping to solutions.",
-      "related_skills": [],
-      "size_bytes": 19796
+      "related_skills": [
+        "skills:discovery-interview-prep",
+        "skills:opportunity-solution-tree",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:workshop-facilitation"
+      ],
+      "size_bytes": 19796,
+      "routing": {
+        "primary_intents": [
+          "problem_framing",
+          "discovery"
+        ],
+        "decision_stage": "framing",
+        "selection_cues": [
+          "a solution is being proposed before the problem is established",
+          "team may be solving the wrong problem or missing overlooked stakeholders"
+        ],
+        "anti_cues": [
+          "problem is already well-understood and validated",
+          "tactical bug fix or technical debt with no framing ambiguity",
+          "stakeholders already committed to a solution (address alignment first)"
+        ],
+        "cost_profile": "medium"
+      },
+      "provenance": {
+        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
+        "upstream_skill": "problem-framing-canvas",
+        "upstream_path": "skills/problem-framing-canvas/SKILL.md",
+        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
+        "branch": "main",
+        "imported_at": "2026-09-10",
+        "license": "CC BY-NC-SA 4.0",
+        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
+      }
     },
     {
       "id": "catalog",
@@ -90,7 +284,33 @@
       "source_reference": "methodology/catalog/commands.md",
       "relative_path": "catalog/commands.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:acquisition-channel-advisor",
+        "skills:altitude-horizon-framework",
+        "skills:director-readiness-advisor",
+        "skills:discovery-interview-prep",
+        "skills:discovery-process",
+        "skills:epic-breakdown-advisor",
+        "skills:epic-hypothesis",
+        "skills:executive-onboarding-playbook",
+        "skills:feature-investment-advisor",
+        "skills:finance-based-pricing-advisor",
+        "skills:opportunity-solution-tree",
+        "skills:pol-probe-advisor",
+        "skills:positioning-workshop",
+        "skills:prd-development",
+        "skills:prioritization-advisor",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:product-strategy-session",
+        "skills:proto-persona",
+        "skills:recommendation-canvas",
+        "skills:roadmap-planning",
+        "skills:user-story",
+        "skills:user-story-mapping",
+        "skills:user-story-splitting",
+        "skills:vp-cpo-readiness-advisor"
+      ],
       "size_bytes": 2895
     },
     {
@@ -110,7 +330,85 @@
       "source_reference": "methodology/catalog/skills-by-type.md",
       "relative_path": "catalog/skills-by-type.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:acquisition-channel-advisor",
+        "skills:agent-orchestration-advisor",
+        "skills:ai-shaped-readiness-advisor",
+        "skills:altitude-horizon-framework",
+        "skills:ansoff-matrix",
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:business-health-diagnostic",
+        "skills:company-intel",
+        "skills:company-research",
+        "skills:competitive-analysis-process",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:context-engineering-advisor",
+        "skills:customer-journey-map",
+        "skills:customer-journey-mapping-workshop",
+        "skills:derisk-measurement-advisor",
+        "skills:director-readiness-advisor",
+        "skills:discovery-interview-prep",
+        "skills:discovery-process",
+        "skills:eol-checklist",
+        "skills:eol-internal-enablement",
+        "skills:eol-message",
+        "skills:eol-process",
+        "skills:eol-readiness-advisor",
+        "skills:eol-stakeholder-sequence",
+        "skills:epic-breakdown-advisor",
+        "skills:epic-hypothesis",
+        "skills:executive-onboarding-playbook",
+        "skills:feature-investment-advisor",
+        "skills:finance-based-pricing-advisor",
+        "skills:finance-metrics-quickref",
+        "skills:incoming-request-advisor",
+        "skills:intel-discipline-advisor",
+        "skills:intelligence-collection-disciplines",
+        "skills:jobs-to-be-done",
+        "skills:lean-ux-canvas",
+        "skills:lifecycle-play-advisor",
+        "skills:market-landscape-scan",
+        "skills:opportunity-solution-tree",
+        "skills:organic-growth-advisor",
+        "skills:pestel-analysis",
+        "skills:pestel-delta-monitor",
+        "skills:pm-skill-creator",
+        "skills:pol-probe",
+        "skills:pol-probe-advisor",
+        "skills:porters-five-forces",
+        "skills:positioning-statement",
+        "skills:positioning-workshop",
+        "skills:prd-development",
+        "skills:press-release",
+        "skills:pricing-packaging-tracker",
+        "skills:prioritization-advisor",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:product-lifecycle-plays",
+        "skills:product-sense-interview-answer",
+        "skills:product-strategy-session",
+        "skills:proto-persona",
+        "skills:recommendation-canvas",
+        "skills:roadmap-planning",
+        "skills:saas-economics-efficiency-metrics",
+        "skills:saas-revenue-growth-metrics",
+        "skills:skill-authoring-workflow",
+        "skills:stakeholder-engagement-advisor",
+        "skills:stakeholder-identification",
+        "skills:stakeholder-mapping",
+        "skills:storyboard",
+        "skills:swot-analysis",
+        "skills:tam-sam-som-calculator",
+        "skills:user-story",
+        "skills:user-story-mapping",
+        "skills:user-story-mapping-workshop",
+        "skills:user-story-splitting",
+        "skills:voice-of-customer-miner",
+        "skills:vp-cpo-readiness-advisor",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 18475
     },
     {
@@ -120,7 +418,85 @@
       "source_reference": "methodology/catalog/skills-index.yaml",
       "relative_path": "catalog/skills-index.yaml",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:acquisition-channel-advisor",
+        "skills:agent-orchestration-advisor",
+        "skills:ai-shaped-readiness-advisor",
+        "skills:altitude-horizon-framework",
+        "skills:ansoff-matrix",
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:business-health-diagnostic",
+        "skills:company-intel",
+        "skills:company-research",
+        "skills:competitive-analysis-process",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:context-engineering-advisor",
+        "skills:customer-journey-map",
+        "skills:customer-journey-mapping-workshop",
+        "skills:derisk-measurement-advisor",
+        "skills:director-readiness-advisor",
+        "skills:discovery-interview-prep",
+        "skills:discovery-process",
+        "skills:eol-checklist",
+        "skills:eol-internal-enablement",
+        "skills:eol-message",
+        "skills:eol-process",
+        "skills:eol-readiness-advisor",
+        "skills:eol-stakeholder-sequence",
+        "skills:epic-breakdown-advisor",
+        "skills:epic-hypothesis",
+        "skills:executive-onboarding-playbook",
+        "skills:feature-investment-advisor",
+        "skills:finance-based-pricing-advisor",
+        "skills:finance-metrics-quickref",
+        "skills:incoming-request-advisor",
+        "skills:intel-discipline-advisor",
+        "skills:intelligence-collection-disciplines",
+        "skills:jobs-to-be-done",
+        "skills:lean-ux-canvas",
+        "skills:lifecycle-play-advisor",
+        "skills:market-landscape-scan",
+        "skills:opportunity-solution-tree",
+        "skills:organic-growth-advisor",
+        "skills:pestel-analysis",
+        "skills:pestel-delta-monitor",
+        "skills:pm-skill-creator",
+        "skills:pol-probe",
+        "skills:pol-probe-advisor",
+        "skills:porters-five-forces",
+        "skills:positioning-statement",
+        "skills:positioning-workshop",
+        "skills:prd-development",
+        "skills:press-release",
+        "skills:pricing-packaging-tracker",
+        "skills:prioritization-advisor",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:product-lifecycle-plays",
+        "skills:product-sense-interview-answer",
+        "skills:product-strategy-session",
+        "skills:proto-persona",
+        "skills:recommendation-canvas",
+        "skills:roadmap-planning",
+        "skills:saas-economics-efficiency-metrics",
+        "skills:saas-revenue-growth-metrics",
+        "skills:skill-authoring-workflow",
+        "skills:stakeholder-engagement-advisor",
+        "skills:stakeholder-identification",
+        "skills:stakeholder-mapping",
+        "skills:storyboard",
+        "skills:swot-analysis",
+        "skills:tam-sam-som-calculator",
+        "skills:user-story",
+        "skills:user-story-mapping",
+        "skills:user-story-mapping-workshop",
+        "skills:user-story-splitting",
+        "skills:voice-of-customer-miner",
+        "skills:vp-cpo-readiness-advisor",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 53489
     },
     {
@@ -140,7 +516,13 @@
       "source_reference": "methodology/commands/discover.md",
       "relative_path": "commands/discover.md",
       "summary": "Run a structured discovery flow from problem framing through opportunity mapping and validation planning.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:discovery-interview-prep",
+        "skills:discovery-process",
+        "skills:opportunity-solution-tree",
+        "skills:pol-probe-advisor",
+        "skills:problem-framing-canvas"
+      ],
       "size_bytes": 1256
     },
     {
@@ -150,7 +532,12 @@
       "source_reference": "methodology/commands/leadership-transition.md",
       "relative_path": "commands/leadership-transition.md",
       "summary": "Guide PM to Director to VP/CPO transition planning with role-fit diagnostics and onboarding guidance.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:altitude-horizon-framework",
+        "skills:director-readiness-advisor",
+        "skills:executive-onboarding-playbook",
+        "skills:vp-cpo-readiness-advisor"
+      ],
       "size_bytes": 1274
     },
     {
@@ -160,7 +547,13 @@
       "source_reference": "methodology/commands/plan-roadmap.md",
       "relative_path": "commands/plan-roadmap.md",
       "summary": "Turn strategy and validated opportunities into a sequenced roadmap with clear tradeoffs.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:epic-breakdown-advisor",
+        "skills:epic-hypothesis",
+        "skills:prioritization-advisor",
+        "skills:roadmap-planning",
+        "skills:user-story-mapping"
+      ],
       "size_bytes": 1166
     },
     {
@@ -170,7 +563,13 @@
       "source_reference": "methodology/commands/prioritize.md",
       "relative_path": "commands/prioritize.md",
       "summary": "Select what to work on next using the right prioritization method for your context.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:acquisition-channel-advisor",
+        "skills:feature-investment-advisor",
+        "skills:finance-based-pricing-advisor",
+        "skills:prioritization-advisor",
+        "skills:recommendation-canvas"
+      ],
       "size_bytes": 1259
     },
     {
@@ -180,7 +579,13 @@
       "source_reference": "methodology/commands/strategy.md",
       "relative_path": "commands/strategy.md",
       "summary": "Build product strategy from positioning through opportunity and roadmap decisions.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:opportunity-solution-tree",
+        "skills:positioning-workshop",
+        "skills:problem-statement",
+        "skills:product-strategy-session",
+        "skills:roadmap-planning"
+      ],
       "size_bytes": 1169
     },
     {
@@ -190,7 +595,13 @@
       "source_reference": "methodology/commands/write-prd.md",
       "relative_path": "commands/write-prd.md",
       "summary": "Create a decision-ready PRD by chaining problem framing, requirements definition, and story scaffolding.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:prd-development",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:user-story",
+        "skills:user-story-splitting"
+      ],
       "size_bytes": 1539
     },
     {
@@ -2220,7 +2631,59 @@
       "source_reference": "methodology/README.md",
       "relative_path": "README.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:agent-orchestration-advisor",
+        "skills:ai-shaped-readiness-advisor",
+        "skills:ansoff-matrix",
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:business-health-diagnostic",
+        "skills:company-intel",
+        "skills:competitive-analysis-process",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:context-engineering-advisor",
+        "skills:director-readiness-advisor",
+        "skills:discovery-interview-prep",
+        "skills:discovery-process",
+        "skills:eol-checklist",
+        "skills:eol-internal-enablement",
+        "skills:eol-message",
+        "skills:eol-process",
+        "skills:eol-readiness-advisor",
+        "skills:eol-stakeholder-sequence",
+        "skills:epic-breakdown-advisor",
+        "skills:executive-onboarding-playbook",
+        "skills:feature-investment-advisor",
+        "skills:incoming-request-advisor",
+        "skills:intel-discipline-advisor",
+        "skills:lifecycle-play-advisor",
+        "skills:market-landscape-scan",
+        "skills:opportunity-solution-tree",
+        "skills:organic-growth-advisor",
+        "skills:pestel-delta-monitor",
+        "skills:pm-skill-creator",
+        "skills:pol-probe",
+        "skills:pol-probe-advisor",
+        "skills:porters-five-forces",
+        "skills:positioning-statement",
+        "skills:prd-development",
+        "skills:press-release",
+        "skills:pricing-packaging-tracker",
+        "skills:prioritization-advisor",
+        "skills:problem-framing-canvas",
+        "skills:product-lifecycle-plays",
+        "skills:product-strategy-session",
+        "skills:roadmap-planning",
+        "skills:stakeholder-engagement-advisor",
+        "skills:stakeholder-identification",
+        "skills:stakeholder-mapping",
+        "skills:swot-analysis",
+        "skills:tam-sam-som-calculator",
+        "skills:user-story",
+        "skills:voice-of-customer-miner",
+        "skills:vp-cpo-readiness-advisor"
+      ],
       "size_bytes": 30389
     },
     {
@@ -2270,7 +2733,14 @@
       "source_reference": "methodology/skills/acquisition-channel-advisor/SKILL.md",
       "relative_path": "skills/acquisition-channel-advisor/SKILL.md",
       "summary": "Evaluate acquisition channels using unit economics, customer quality, and scalability. Use when deciding whether to scale, test, or kill a growth channel.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:business-health-diagnostic",
+        "skills:feature-investment-advisor",
+        "skills:finance-metrics-quickref",
+        "skills:saas-economics-efficiency-metrics",
+        "skills:saas-revenue-growth-metrics",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 22183
     },
     {
@@ -2290,7 +2760,10 @@
       "source_reference": "methodology/skills/agent-orchestration-advisor/SKILL.md",
       "relative_path": "skills/agent-orchestration-advisor/SKILL.md",
       "summary": "Design multi-agent AI workflows with clear boundaries, handoffs, and monitoring. Use when a complex PM task should run as parallel specialized agents instead of one linear process.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:context-engineering-advisor",
+        "skills:pol-probe-advisor"
+      ],
       "size_bytes": 34567
     },
     {
@@ -2300,7 +2773,10 @@
       "source_reference": "methodology/skills/ai-shaped-readiness-advisor/SKILL.md",
       "relative_path": "skills/ai-shaped-readiness-advisor/SKILL.md",
       "summary": "Assess whether your product work is AI-first or AI-shaped. Use when evaluating AI maturity and choosing the next team capability to build.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:context-engineering-advisor",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 43516
     },
     {
@@ -2310,7 +2786,9 @@
       "source_reference": "methodology/skills/altitude-horizon-framework/SKILL.md",
       "relative_path": "skills/altitude-horizon-framework/SKILL.md",
       "summary": "Understand the PM-to-Director transition through altitude and horizon thinking. Use when diagnosing scope, time-horizon, or leadership-level gaps.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:director-readiness-advisor"
+      ],
       "size_bytes": 15403
     },
     {
@@ -2350,7 +2828,17 @@
       "source_reference": "methodology/skills/ansoff-matrix/SKILL.md",
       "relative_path": "skills/ansoff-matrix/SKILL.md",
       "summary": "Map evidence-backed growth options across the Ansoff Matrix with risk-rated sequencing. Use when the question is where the next tranche of growth comes from, and at what risk.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:company-intel",
+        "skills:feature-investment-advisor",
+        "skills:intelligence-collection-disciplines",
+        "skills:opportunity-solution-tree",
+        "skills:organic-growth-advisor",
+        "skills:porters-five-forces",
+        "skills:tam-sam-som-calculator",
+        "skills:voice-of-customer-miner"
+      ],
       "size_bytes": 11438
     },
     {
@@ -2360,7 +2848,9 @@
       "source_reference": "methodology/skills/ansoff-matrix/examples/sample.md",
       "relative_path": "skills/ansoff-matrix/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:tam-sam-som-calculator"
+      ],
       "size_bytes": 5648
     },
     {
@@ -2380,7 +2870,9 @@
       "source_reference": "methodology/skills/ansoff-matrix/template.md",
       "relative_path": "skills/ansoff-matrix/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:tam-sam-som-calculator"
+      ],
       "size_bytes": 2456
     },
     {
@@ -2390,7 +2882,15 @@
       "source_reference": "methodology/skills/autonomous-investigation/SKILL.md",
       "relative_path": "skills/autonomous-investigation/SKILL.md",
       "summary": "The protocol behind every investigation skill. Use when AI research must proceed without you: search-plan gate, Fact/Inference/Assumption labels, confidence stacking, diffable outputs.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:intelligence-collection-disciplines",
+        "skills:market-landscape-scan",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 12400
     },
     {
@@ -2400,7 +2900,9 @@
       "source_reference": "methodology/skills/autonomous-investigation/examples/protocol-in-action.md",
       "relative_path": "skills/autonomous-investigation/examples/protocol-in-action.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:competitive-intel-watch"
+      ],
       "size_bytes": 5062
     },
     {
@@ -2430,7 +2932,13 @@
       "source_reference": "methodology/skills/battle-card-builder/SKILL.md",
       "relative_path": "skills/battle-card-builder/SKILL.md",
       "summary": "Research and draft a competitive battle card from public evidence — every claim labeled and sourced. Use when a rep needs a field-action card, not a research report.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:intelligence-collection-disciplines",
+        "skills:positioning-statement"
+      ],
       "size_bytes": 10364
     },
     {
@@ -2440,7 +2948,9 @@
       "source_reference": "methodology/skills/battle-card-builder/examples/sample.md",
       "relative_path": "skills/battle-card-builder/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:competitive-intel-watch"
+      ],
       "size_bytes": 6012
     },
     {
@@ -2460,7 +2970,9 @@
       "source_reference": "methodology/skills/battle-card-builder/template.md",
       "relative_path": "skills/battle-card-builder/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:competitive-intel-watch"
+      ],
       "size_bytes": 2301
     },
     {
@@ -2470,7 +2982,15 @@
       "source_reference": "methodology/skills/business-health-diagnostic/SKILL.md",
       "relative_path": "skills/business-health-diagnostic/SKILL.md",
       "summary": "Diagnose SaaS business health across growth, retention, efficiency, and capital. Use when preparing a business review or prioritizing urgent fixes.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:acquisition-channel-advisor",
+        "skills:feature-investment-advisor",
+        "skills:finance-based-pricing-advisor",
+        "skills:finance-metrics-quickref",
+        "skills:saas-economics-efficiency-metrics",
+        "skills:saas-revenue-growth-metrics",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 23249
     },
     {
@@ -2480,7 +3000,19 @@
       "source_reference": "methodology/skills/company-intel/SKILL.md",
       "relative_path": "skills/company-intel/SKILL.md",
       "summary": "Research a company, industry, or competitor set using web search and seven analytical lenses. Use when you need structured intel that feeds downstream PM skills.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:business-health-diagnostic",
+        "skills:company-intel",
+        "skills:competitive-intel-watch",
+        "skills:derisk-measurement-advisor",
+        "skills:feature-investment-advisor",
+        "skills:jobs-to-be-done",
+        "skills:pestel-analysis",
+        "skills:positioning-statement",
+        "skills:proto-persona",
+        "skills:tam-sam-som-calculator"
+      ],
       "size_bytes": 32609
     },
     {
@@ -2490,7 +3022,9 @@
       "source_reference": "methodology/skills/company-intel/examples/executive-signal-refresh.md",
       "relative_path": "skills/company-intel/examples/executive-signal-refresh.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:company-intel"
+      ],
       "size_bytes": 4711
     },
     {
@@ -2520,7 +3054,11 @@
       "source_reference": "methodology/skills/company-research/SKILL.md",
       "relative_path": "skills/company-research/SKILL.md",
       "summary": "Create a company research brief with executive quotes, product strategy, and org context. Use when preparing for interviews, competitive analysis, partnerships, or market-entry work.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:pestel-analysis",
+        "skills:positioning-statement",
+        "skills:proto-persona"
+      ],
       "size_bytes": 15154
     },
     {
@@ -2560,7 +3098,18 @@
       "source_reference": "methodology/skills/competitive-analysis-process/SKILL.md",
       "relative_path": "skills/competitive-analysis-process/SKILL.md",
       "summary": "Orchestrate a complete competitive analysis across six steps, from landscape to strategic direction. Use when you need the full picture, not a single scan or card.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:company-intel",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:discovery-process",
+        "skills:intelligence-collection-disciplines",
+        "skills:market-landscape-scan",
+        "skills:positioning-statement",
+        "skills:voice-of-customer-miner"
+      ],
       "size_bytes": 13500
     },
     {
@@ -2570,7 +3119,15 @@
       "source_reference": "methodology/skills/competitive-analysis-process/examples/sample.md",
       "relative_path": "skills/competitive-analysis-process/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:company-intel",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:market-landscape-scan",
+        "skills:positioning-statement",
+        "skills:pricing-packaging-tracker",
+        "skills:voice-of-customer-miner"
+      ],
       "size_bytes": 5737
     },
     {
@@ -2580,7 +3137,14 @@
       "source_reference": "methodology/skills/competitive-analysis-process/examples/sample-industrial.md",
       "relative_path": "skills/competitive-analysis-process/examples/sample-industrial.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:company-intel",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:market-landscape-scan",
+        "skills:pricing-packaging-tracker",
+        "skills:voice-of-customer-miner"
+      ],
       "size_bytes": 5802
     },
     {
@@ -2590,7 +3154,14 @@
       "source_reference": "methodology/skills/competitive-analysis-process/template.md",
       "relative_path": "skills/competitive-analysis-process/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:company-intel",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:market-landscape-scan",
+        "skills:positioning-statement",
+        "skills:voice-of-customer-miner"
+      ],
       "size_bytes": 3435
     },
     {
@@ -2600,7 +3171,13 @@
       "source_reference": "methodology/skills/competitive-intel-watch/SKILL.md",
       "relative_path": "skills/competitive-intel-watch/SKILL.md",
       "summary": "Scheduled delta monitoring against a prior competitive snapshot. Use when tracking competitors on a cadence: material shifts only, cited evidence, battle-card update flags, runs unattended.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:competitive-research-snapshot",
+        "skills:intelligence-collection-disciplines",
+        "skills:pestel-analysis"
+      ],
       "size_bytes": 10632
     },
     {
@@ -2610,7 +3187,10 @@
       "source_reference": "methodology/skills/competitive-intel-watch/examples/sample.md",
       "relative_path": "skills/competitive-intel-watch/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:battle-card-builder",
+        "skills:competitive-research-snapshot"
+      ],
       "size_bytes": 4667
     },
     {
@@ -2620,7 +3200,9 @@
       "source_reference": "methodology/skills/competitive-intel-watch/examples/sample-industrial.md",
       "relative_path": "skills/competitive-intel-watch/examples/sample-industrial.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:company-intel"
+      ],
       "size_bytes": 5150
     },
     {
@@ -2640,7 +3222,16 @@
       "source_reference": "methodology/skills/competitive-research-snapshot/SKILL.md",
       "relative_path": "skills/competitive-research-snapshot/SKILL.md",
       "summary": "Research a competitive landscape with cited snapshots, a comparison matrix, and so-what implications. Use when a product decision needs competitive grounding, not a market report.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:company-intel",
+        "skills:company-research",
+        "skills:competitive-intel-watch",
+        "skills:intelligence-collection-disciplines",
+        "skills:market-landscape-scan",
+        "skills:tam-sam-som-calculator"
+      ],
       "size_bytes": 9957
     },
     {
@@ -2650,7 +3241,9 @@
       "source_reference": "methodology/skills/competitive-research-snapshot/examples/sample.md",
       "relative_path": "skills/competitive-research-snapshot/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:competitive-intel-watch"
+      ],
       "size_bytes": 7277
     },
     {
@@ -2660,7 +3253,9 @@
       "source_reference": "methodology/skills/competitive-research-snapshot/examples/sample-industrial.md",
       "relative_path": "skills/competitive-research-snapshot/examples/sample-industrial.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:competitive-intel-watch"
+      ],
       "size_bytes": 7425
     },
     {
@@ -2670,7 +3265,10 @@
       "source_reference": "methodology/skills/competitive-research-snapshot/template.md",
       "relative_path": "skills/competitive-research-snapshot/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:battle-card-builder",
+        "skills:competitive-intel-watch"
+      ],
       "size_bytes": 2635
     },
     {
@@ -2680,7 +3278,9 @@
       "source_reference": "methodology/skills/context-engineering-advisor/SKILL.md",
       "relative_path": "skills/context-engineering-advisor/SKILL.md",
       "summary": "Diagnose context stuffing vs. context engineering. Use when an AI workflow feels bloated, brittle, or hard to steer reliably.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 32560
     },
     {
@@ -2690,7 +3290,12 @@
       "source_reference": "methodology/skills/customer-journey-map/SKILL.md",
       "relative_path": "skills/customer-journey-map/SKILL.md",
       "summary": "Create a customer journey map across stages, touchpoints, actions, emotions, and metrics. Use when diagnosing a broken experience or aligning a team on the full customer flow.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:jobs-to-be-done",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:user-story-mapping"
+      ],
       "size_bytes": 14937
     },
     {
@@ -2730,7 +3335,9 @@
       "source_reference": "methodology/skills/customer-journey-mapping-workshop/SKILL.md",
       "relative_path": "skills/customer-journey-mapping-workshop/SKILL.md",
       "summary": "Run a customer journey mapping workshop with adaptive questions and outputs. Use when you need to map stages, actions, emotions, pain points, and opportunities for a persona and scenario.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 18818
     },
     {
@@ -2740,7 +3347,12 @@
       "source_reference": "methodology/skills/derisk-measurement-advisor/SKILL.md",
       "relative_path": "skills/derisk-measurement-advisor/SKILL.md",
       "summary": "Identify what to measure, test, or track to de-risk a product or AI idea. Use when stress-testing an idea across internal (DUFV) and external (PESTEL) dimensions.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:pestel-analysis",
+        "skills:pol-probe-advisor",
+        "skills:problem-framing-canvas",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 23651
     },
     {
@@ -2750,7 +3362,10 @@
       "source_reference": "methodology/skills/director-readiness-advisor/SKILL.md",
       "relative_path": "skills/director-readiness-advisor/SKILL.md",
       "summary": "Guide the PM-to-Director transition across preparing, interviewing, landing, and recalibrating. Use when leadership scope is changing and you need practical coaching.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:altitude-horizon-framework",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 19510
     },
     {
@@ -2770,7 +3385,9 @@
       "source_reference": "methodology/skills/discovery-interview-prep/SKILL.md",
       "relative_path": "skills/discovery-interview-prep/SKILL.md",
       "summary": "Plan customer discovery interviews with the right goal, segment, constraints, and method. Use when preparing interviews for problem validation, churn research, or new product ideas.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 19123
     },
     {
@@ -2780,8 +3397,47 @@
       "source_reference": "methodology/skills/discovery-process/SKILL.md",
       "relative_path": "skills/discovery-process/SKILL.md",
       "summary": "Run a full discovery cycle from problem hypothesis to validated solution. Use when a team needs a structured path through framing, interviews, synthesis, and experiments.",
-      "related_skills": [],
-      "size_bytes": 19607
+      "related_skills": [
+        "skills:customer-journey-mapping-workshop",
+        "skills:discovery-interview-prep",
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:lean-ux-canvas",
+        "skills:opportunity-solution-tree",
+        "skills:prd-development",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:workshop-facilitation"
+      ],
+      "size_bytes": 19607,
+      "routing": {
+        "primary_intents": [
+          "discovery",
+          "research"
+        ],
+        "decision_stage": "discovery_execution",
+        "selection_cues": [
+          "a full discovery cycle is warranted, not just a targeted question",
+          "setting up continuous discovery as an ongoing practice",
+          "investigating a metric drop systematically"
+        ],
+        "anti_cues": [
+          "the dominant uncertainty is narrow enough for discovery-question-set alone",
+          "no time/access for interviews or experiments — use the lighter capability instead"
+        ],
+        "cost_profile": "high"
+      },
+      "provenance": {
+        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
+        "upstream_skill": "discovery-process",
+        "upstream_path": "skills/discovery-process/SKILL.md",
+        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
+        "branch": "main",
+        "imported_at": "2026-09-10",
+        "license": "CC BY-NC-SA 4.0",
+        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
+      }
     },
     {
       "id": "skills:discovery-process:examples:sample",
@@ -2800,7 +3456,9 @@
       "source_reference": "methodology/skills/discovery-process/examples/sample-lifesciences.md",
       "relative_path": "skills/discovery-process/examples/sample-lifesciences.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:problem-framing-canvas"
+      ],
       "size_bytes": 6078
     },
     {
@@ -2820,7 +3478,12 @@
       "source_reference": "methodology/skills/eol-checklist/SKILL.md",
       "relative_path": "skills/eol-checklist/SKILL.md",
       "summary": "Build a phase-gated EOL checklist sized to the sunset, with a named owner on every item. Use when the decision to retire is made and you need the operational plan.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:eol-internal-enablement",
+        "skills:eol-message",
+        "skills:eol-readiness-advisor",
+        "skills:eol-stakeholder-sequence"
+      ],
       "size_bytes": 12687
     },
     {
@@ -2860,7 +3523,13 @@
       "source_reference": "methodology/skills/eol-internal-enablement/SKILL.md",
       "relative_path": "skills/eol-internal-enablement/SKILL.md",
       "summary": "Build the support FAQ, sales talking points, and objection handling teams need before an EOL announcement. Use when customer-facing teams must be ready before customers hear.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:eol-checklist",
+        "skills:eol-message",
+        "skills:eol-readiness-advisor",
+        "skills:eol-stakeholder-sequence",
+        "skills:incoming-request-advisor"
+      ],
       "size_bytes": 12536
     },
     {
@@ -2900,7 +3569,12 @@
       "source_reference": "methodology/skills/eol-message/SKILL.md",
       "relative_path": "skills/eol-message/SKILL.md",
       "summary": "Write a right-sized EOL announcement — brief notice through full phased comms — with rationale, customer impact, and next steps. Use when retiring a product, feature, or plan.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:eol-readiness-advisor",
+        "skills:positioning-statement",
+        "skills:problem-statement",
+        "skills:proto-persona"
+      ],
       "size_bytes": 17721
     },
     {
@@ -2940,7 +3614,15 @@
       "source_reference": "methodology/skills/eol-process/SKILL.md",
       "relative_path": "skills/eol-process/SKILL.md",
       "summary": "Run a product sunset end to end — decide, align, plan, prepare, announce, close. Use when you need the whole EOL process, not just one artifact.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:eol-checklist",
+        "skills:eol-internal-enablement",
+        "skills:eol-message",
+        "skills:eol-readiness-advisor",
+        "skills:eol-stakeholder-sequence",
+        "skills:positioning-statement",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 21361
     },
     {
@@ -2980,7 +3662,13 @@
       "source_reference": "methodology/skills/eol-readiness-advisor/SKILL.md",
       "relative_path": "skills/eol-readiness-advisor/SKILL.md",
       "summary": "Run a go/no-go assessment for retiring a product or feature, then right-size the effort. Use when someone says \\\"we should probably kill this\\\" and nobody has made the call.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:business-health-diagnostic",
+        "skills:eol-message",
+        "skills:incoming-request-advisor",
+        "skills:lifecycle-play-advisor",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 21696
     },
     {
@@ -2990,7 +3678,12 @@
       "source_reference": "methodology/skills/eol-stakeholder-sequence/SKILL.md",
       "relative_path": "skills/eol-stakeholder-sequence/SKILL.md",
       "summary": "Plan who to talk to about a sunset, in what order, and what each conversation must cover. Use when an EOL decision is made and you want the landmines found before the announcement.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:eol-checklist",
+        "skills:eol-internal-enablement",
+        "skills:eol-message",
+        "skills:eol-readiness-advisor"
+      ],
       "size_bytes": 12393
     },
     {
@@ -3030,7 +3723,9 @@
       "source_reference": "methodology/skills/epic-breakdown-advisor/SKILL.md",
       "relative_path": "skills/epic-breakdown-advisor/SKILL.md",
       "summary": "Break down epics into user stories with Humanizing Work split patterns. Use when a backlog item is too large to estimate, sequence, or deliver safely.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 24301
     },
     {
@@ -3040,7 +3735,13 @@
       "source_reference": "methodology/skills/epic-hypothesis/SKILL.md",
       "relative_path": "skills/epic-hypothesis/SKILL.md",
       "summary": "Frame an epic as a testable hypothesis with target user, expected outcome, and validation method. Use when defining a major initiative before roadmap, discovery, or delivery planning.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:jobs-to-be-done",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:user-story",
+        "skills:user-story-splitting"
+      ],
       "size_bytes": 12657
     },
     {
@@ -3080,7 +3781,11 @@
       "source_reference": "methodology/skills/executive-onboarding-playbook/SKILL.md",
       "relative_path": "skills/executive-onboarding-playbook/SKILL.md",
       "summary": "Plan a VP or CPO 30-60-90 day diagnostic onboarding path. Use when entering a new executive product role and avoiding premature change.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:altitude-horizon-framework",
+        "skills:director-readiness-advisor",
+        "skills:vp-cpo-readiness-advisor"
+      ],
       "size_bytes": 19454
     },
     {
@@ -3110,7 +3815,9 @@
       "source_reference": "methodology/skills/executive-onboarding-playbook/template.md",
       "relative_path": "skills/executive-onboarding-playbook/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:altitude-horizon-framework"
+      ],
       "size_bytes": 5953
     },
     {
@@ -3120,7 +3827,14 @@
       "source_reference": "methodology/skills/feature-investment-advisor/SKILL.md",
       "relative_path": "skills/feature-investment-advisor/SKILL.md",
       "summary": "Evaluate feature investments using revenue impact, cost structure, ROI, and strategy. Use when deciding whether a feature deserves investment.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:acquisition-channel-advisor",
+        "skills:finance-based-pricing-advisor",
+        "skills:finance-metrics-quickref",
+        "skills:saas-economics-efficiency-metrics",
+        "skills:saas-revenue-growth-metrics",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 22530
     },
     {
@@ -3140,7 +3854,14 @@
       "source_reference": "methodology/skills/finance-based-pricing-advisor/SKILL.md",
       "relative_path": "skills/finance-based-pricing-advisor/SKILL.md",
       "summary": "Evaluate pricing changes using ARPU, conversion, churn risk, NRR, and payback. Use when deciding whether a pricing move should ship.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:business-health-diagnostic",
+        "skills:feature-investment-advisor",
+        "skills:finance-metrics-quickref",
+        "skills:saas-economics-efficiency-metrics",
+        "skills:saas-revenue-growth-metrics",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 23836
     },
     {
@@ -3150,7 +3871,14 @@
       "source_reference": "methodology/skills/finance-metrics-quickref/SKILL.md",
       "relative_path": "skills/finance-metrics-quickref/SKILL.md",
       "summary": "Look up SaaS finance metrics, formulas, and benchmarks fast. Use when you need a quick metric definition, formula, or benchmark during analysis.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:acquisition-channel-advisor",
+        "skills:business-health-diagnostic",
+        "skills:feature-investment-advisor",
+        "skills:finance-based-pricing-advisor",
+        "skills:saas-economics-efficiency-metrics",
+        "skills:saas-revenue-growth-metrics"
+      ],
       "size_bytes": 16410
     },
     {
@@ -3170,7 +3898,13 @@
       "source_reference": "methodology/skills/incoming-request-advisor/SKILL.md",
       "relative_path": "skills/incoming-request-advisor/SKILL.md",
       "summary": "Decode an incoming message into a structured breakdown separating the literal ask from the job-to-be-done. Use when a loaded Slack ping, email, mandate, or escalation needs a reply.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:jobs-to-be-done",
+        "skills:opportunity-solution-tree",
+        "skills:problem-statement",
+        "skills:stakeholder-mapping",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 13221
     },
     {
@@ -3200,7 +3934,23 @@
       "source_reference": "methodology/skills/intel-discipline-advisor/SKILL.md",
       "relative_path": "skills/intel-discipline-advisor/SKILL.md",
       "summary": "Triage a competitive or market question into the right intelligence disciplines, cadence, and executing skill. Use when you know something needs researching but not which channel to run.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:company-intel",
+        "skills:competitive-analysis-process",
+        "skills:competitive-intel-watch",
+        "skills:discovery-interview-prep",
+        "skills:intelligence-collection-disciplines",
+        "skills:pestel-delta-monitor",
+        "skills:porters-five-forces",
+        "skills:positioning-statement",
+        "skills:pricing-packaging-tracker",
+        "skills:swot-analysis",
+        "skills:tam-sam-som-calculator",
+        "skills:voice-of-customer-miner",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 12406
     },
     {
@@ -3210,7 +3960,13 @@
       "source_reference": "methodology/skills/intel-discipline-advisor/examples/conversation-flow.md",
       "relative_path": "skills/intel-discipline-advisor/examples/conversation-flow.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:battle-card-builder",
+        "skills:competitive-intel-watch",
+        "skills:discovery-interview-prep",
+        "skills:voice-of-customer-miner",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 4972
     },
     {
@@ -3240,7 +3996,16 @@
       "source_reference": "methodology/skills/intelligence-collection-disciplines/SKILL.md",
       "relative_path": "skills/intelligence-collection-disciplines/SKILL.md",
       "summary": "Run competitive research like an intelligence agency: eight collection disciplines (OSINT to MASINT), signal-to-inference chains, and fusion. Use when one-source research isn't enough.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:company-intel",
+        "skills:company-research",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot",
+        "skills:market-landscape-scan",
+        "skills:tam-sam-som-calculator"
+      ],
       "size_bytes": 26451
     },
     {
@@ -3250,7 +4015,9 @@
       "source_reference": "methodology/skills/intelligence-collection-disciplines/examples/sample.md",
       "relative_path": "skills/intelligence-collection-disciplines/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:competitive-analysis-process"
+      ],
       "size_bytes": 4878
     },
     {
@@ -3280,7 +4047,12 @@
       "source_reference": "methodology/skills/jobs-to-be-done/SKILL.md",
       "relative_path": "skills/jobs-to-be-done/SKILL.md",
       "summary": "Uncover customer jobs, pains, and gains in a structured JTBD format. Use when clarifying unmet needs, repositioning a product, or improving discovery and messaging.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:epic-hypothesis",
+        "skills:positioning-statement",
+        "skills:problem-statement",
+        "skills:proto-persona"
+      ],
       "size_bytes": 13957
     },
     {
@@ -3320,7 +4092,16 @@
       "source_reference": "methodology/skills/lean-ux-canvas/SKILL.md",
       "relative_path": "skills/lean-ux-canvas/SKILL.md",
       "summary": "Guide teams through Lean UX Canvas v2. Use when framing a business problem, surfacing assumptions, and defining what to learn next.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:discovery-interview-prep",
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:pol-probe-advisor",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 26250
     },
     {
@@ -3350,7 +4131,14 @@
       "source_reference": "methodology/skills/lifecycle-play-advisor/SKILL.md",
       "relative_path": "skills/lifecycle-play-advisor/SKILL.md",
       "summary": "Diagnose where a product sits in its lifecycle and which play fits — extend, replace, or retire. Use when a product is fading and you need the call, not just the worry.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:ansoff-matrix",
+        "skills:eol-process",
+        "skills:eol-readiness-advisor",
+        "skills:organic-growth-advisor",
+        "skills:product-lifecycle-plays",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 17554
     },
     {
@@ -3360,7 +4148,13 @@
       "source_reference": "methodology/skills/market-landscape-scan/SKILL.md",
       "relative_path": "skills/market-landscape-scan/SKILL.md",
       "summary": "Map a market's segments, players, substitutes, and whitespace with cited evidence. Use when entering or re-evaluating a market before sizing, positioning, or picking competitors to study.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:competitive-research-snapshot",
+        "skills:intelligence-collection-disciplines",
+        "skills:positioning-statement",
+        "skills:tam-sam-som-calculator"
+      ],
       "size_bytes": 10273
     },
     {
@@ -3370,7 +4164,11 @@
       "source_reference": "methodology/skills/market-landscape-scan/examples/sample.md",
       "relative_path": "skills/market-landscape-scan/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:battle-card-builder",
+        "skills:competitive-intel-watch",
+        "skills:competitive-research-snapshot"
+      ],
       "size_bytes": 7739
     },
     {
@@ -3380,7 +4178,9 @@
       "source_reference": "methodology/skills/market-landscape-scan/examples/sample-industrial.md",
       "relative_path": "skills/market-landscape-scan/examples/sample-industrial.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:competitive-research-snapshot"
+      ],
       "size_bytes": 8102
     },
     {
@@ -3390,7 +4190,10 @@
       "source_reference": "methodology/skills/market-landscape-scan/template.md",
       "relative_path": "skills/market-landscape-scan/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:competitive-research-snapshot",
+        "skills:tam-sam-som-calculator"
+      ],
       "size_bytes": 2722
     },
     {
@@ -3400,7 +4203,14 @@
       "source_reference": "methodology/skills/opportunity-solution-tree/SKILL.md",
       "relative_path": "skills/opportunity-solution-tree/SKILL.md",
       "summary": "Build an Opportunity Solution Tree from outcomes to opportunities, solutions, and tests. Use when a stakeholder request needs problem framing before you decide what to build.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:discovery-interview-prep",
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:problem-statement",
+        "skills:user-story",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 18041
     },
     {
@@ -3430,7 +4240,14 @@
       "source_reference": "methodology/skills/organic-growth-advisor/SKILL.md",
       "relative_path": "skills/organic-growth-advisor/SKILL.md",
       "summary": "Identify which organic growth path to pursue — new segments, geographies, channels, or products. Use when diagnosing where a growth constraint lives and which McKinsey growth level to act on next.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:acquisition-channel-advisor",
+        "skills:discovery-interview-prep",
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:pol-probe",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 20981
     },
     {
@@ -3460,7 +4277,11 @@
       "source_reference": "methodology/skills/pestel-analysis/SKILL.md",
       "relative_path": "skills/pestel-analysis/SKILL.md",
       "summary": "Analyze political, economic, social, technological, environmental, and legal forces. Use when external market shifts could materially affect a product, roadmap, or strategy.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:positioning-statement",
+        "skills:problem-statement",
+        "skills:recommendation-canvas"
+      ],
       "size_bytes": 14472
     },
     {
@@ -3500,7 +4321,13 @@
       "source_reference": "methodology/skills/pestel-delta-monitor/SKILL.md",
       "relative_path": "skills/pestel-delta-monitor/SKILL.md",
       "summary": "Quarterly re-scan of a prior PESTEL analysis. Use when checking which macro factors moved, which assumptions broke, and what's new — turning PESTEL from a workshop artifact into a radar.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:competitive-intel-watch",
+        "skills:derisk-measurement-advisor",
+        "skills:intelligence-collection-disciplines",
+        "skills:pestel-analysis"
+      ],
       "size_bytes": 9929
     },
     {
@@ -3530,7 +4357,9 @@
       "source_reference": "methodology/skills/pestel-delta-monitor/template.md",
       "relative_path": "skills/pestel-delta-monitor/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:pestel-analysis"
+      ],
       "size_bytes": 2409
     },
     {
@@ -3540,7 +4369,15 @@
       "source_reference": "methodology/skills/pm-skill-creator/SKILL.md",
       "relative_path": "skills/pm-skill-creator/SKILL.md",
       "summary": "Design a new PM skill through guided conversation. Use when you have raw content or an idea and want to shape it into a compliant skill.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:discovery-process",
+        "skills:feature-investment-advisor",
+        "skills:prioritization-advisor",
+        "skills:roadmap-planning",
+        "skills:skill-authoring-workflow",
+        "skills:user-story",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 16987
     },
     {
@@ -3550,7 +4387,12 @@
       "source_reference": "methodology/skills/pol-probe/SKILL.md",
       "relative_path": "skills/pol-probe/SKILL.md",
       "summary": "Define a Proof of Life probe to test a risky hypothesis cheaply. Use when you need harsh truth before building real product.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:discovery-process",
+        "skills:epic-hypothesis",
+        "skills:pol-probe-advisor",
+        "skills:problem-statement"
+      ],
       "size_bytes": 10856
     },
     {
@@ -3560,7 +4402,10 @@
       "source_reference": "methodology/skills/pol-probe-advisor/SKILL.md",
       "relative_path": "skills/pol-probe-advisor/SKILL.md",
       "summary": "Select the right Proof of Life (PoL) probe based on hypothesis, risk, and resources. Use this to match the validation method to the real learning goal, not tooling comfort.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:pol-probe",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 21211
     },
     {
@@ -3600,7 +4445,13 @@
       "source_reference": "methodology/skills/porters-five-forces/SKILL.md",
       "relative_path": "skills/porters-five-forces/SKILL.md",
       "summary": "Read an industry's structure through Porter's Five Forces with documented signals per rating, ending at the profit pool. Use when weighing market entry or when margins erode and nobody can say why.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:ansoff-matrix",
+        "skills:autonomous-investigation",
+        "skills:intelligence-collection-disciplines",
+        "skills:market-landscape-scan",
+        "skills:swot-analysis"
+      ],
       "size_bytes": 10800
     },
     {
@@ -3640,7 +4491,12 @@
       "source_reference": "methodology/skills/positioning-statement/SKILL.md",
       "relative_path": "skills/positioning-statement/SKILL.md",
       "summary": "Create a Geoffrey Moore-style positioning statement. Use when clarifying who you serve, what problem you solve, your category, and why you're different from alternatives.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:jobs-to-be-done",
+        "skills:press-release",
+        "skills:problem-statement",
+        "skills:proto-persona"
+      ],
       "size_bytes": 10335
     },
     {
@@ -3680,7 +4536,9 @@
       "source_reference": "methodology/skills/positioning-workshop/SKILL.md",
       "relative_path": "skills/positioning-workshop/SKILL.md",
       "summary": "Run a positioning workshop that surfaces target customer, unmet need, category, benefits, and differentiation. Use when your product messaging feels fuzzy, generic, or misaligned.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 18387
     },
     {
@@ -3690,8 +4548,47 @@
       "source_reference": "methodology/skills/prd-development/SKILL.md",
       "relative_path": "skills/prd-development/SKILL.md",
       "summary": "Build a structured PRD that connects problem, users, solution, and success criteria. Use when turning discovery notes into an engineering-ready document for a major initiative.",
-      "related_skills": [],
-      "size_bytes": 24915
+      "related_skills": [
+        "skills:customer-journey-mapping-workshop",
+        "skills:discovery-process",
+        "skills:epic-breakdown-advisor",
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:tam-sam-som-calculator",
+        "skills:user-story",
+        "skills:user-story-mapping-workshop",
+        "skills:workshop-facilitation"
+      ],
+      "size_bytes": 24915,
+      "routing": {
+        "primary_intents": [
+          "prd",
+          "document"
+        ],
+        "decision_stage": "document",
+        "selection_cues": [
+          "prd-readiness-gate has passed and the actual PRD document needs to be written",
+          "moving from scattered discovery notes to an engineering-ready spec"
+        ],
+        "anti_cues": [
+          "discovery is not yet mature (run prd-readiness-gate first)",
+          "only a lightweight requirements note is needed, not a full PRD"
+        ],
+        "cost_profile": "high"
+      },
+      "provenance": {
+        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
+        "upstream_skill": "prd-development",
+        "upstream_path": "skills/prd-development/SKILL.md",
+        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
+        "branch": "main",
+        "imported_at": "2026-09-10",
+        "license": "CC BY-NC-SA 4.0",
+        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
+      }
     },
     {
       "id": "skills:prd-development:examples:sample",
@@ -3700,7 +4597,9 @@
       "source_reference": "methodology/skills/prd-development/examples/sample.md",
       "relative_path": "skills/prd-development/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:pol-probe"
+      ],
       "size_bytes": 5724
     },
     {
@@ -3720,7 +4619,32 @@
       "source_reference": "methodology/skills/prd-development/template.md",
       "relative_path": "skills/prd-development/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:business-health-diagnostic",
+        "skills:customer-journey-map",
+        "skills:discovery-interview-prep",
+        "skills:discovery-process",
+        "skills:epic-breakdown-advisor",
+        "skills:epic-hypothesis",
+        "skills:feature-investment-advisor",
+        "skills:jobs-to-be-done",
+        "skills:opportunity-solution-tree",
+        "skills:organic-growth-advisor",
+        "skills:pestel-analysis",
+        "skills:pol-probe-advisor",
+        "skills:positioning-statement",
+        "skills:prioritization-advisor",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:recommendation-canvas",
+        "skills:saas-revenue-growth-metrics",
+        "skills:stakeholder-mapping",
+        "skills:tam-sam-som-calculator",
+        "skills:user-story",
+        "skills:user-story-mapping-workshop",
+        "skills:user-story-splitting"
+      ],
       "size_bytes": 40106
     },
     {
@@ -3730,7 +4654,12 @@
       "source_reference": "methodology/skills/press-release/SKILL.md",
       "relative_path": "skills/press-release/SKILL.md",
       "summary": "Write an Amazon-style press release that defines customer value before building. Use when aligning stakeholders on a new product, feature, or strategic bet.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:jobs-to-be-done",
+        "skills:positioning-statement",
+        "skills:problem-statement",
+        "skills:proto-persona"
+      ],
       "size_bytes": 11727
     },
     {
@@ -3770,7 +4699,14 @@
       "source_reference": "methodology/skills/pricing-packaging-tracker/SKILL.md",
       "relative_path": "skills/pricing-packaging-tracker/SKILL.md",
       "summary": "Track competitor pricing and packaging as a diffable time series. Use when monitoring tiers, gates, limits, and price moves on a monthly or quarterly cadence.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:competitive-intel-watch",
+        "skills:finance-based-pricing-advisor",
+        "skills:intelligence-collection-disciplines",
+        "skills:voice-of-customer-miner"
+      ],
       "size_bytes": 9371
     },
     {
@@ -3780,7 +4716,9 @@
       "source_reference": "methodology/skills/pricing-packaging-tracker/examples/sample.md",
       "relative_path": "skills/pricing-packaging-tracker/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:competitive-intel-watch"
+      ],
       "size_bytes": 5085
     },
     {
@@ -3790,7 +4728,9 @@
       "source_reference": "methodology/skills/pricing-packaging-tracker/examples/sample-industrial.md",
       "relative_path": "skills/pricing-packaging-tracker/examples/sample-industrial.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:finance-based-pricing-advisor"
+      ],
       "size_bytes": 5546
     },
     {
@@ -3810,8 +4750,35 @@
       "source_reference": "methodology/skills/prioritization-advisor/SKILL.md",
       "relative_path": "skills/prioritization-advisor/SKILL.md",
       "summary": "Choose a prioritization framework based on stage, team context, and stakeholder needs. Use when deciding between RICE, ICE, value/effort, or another scoring approach.",
-      "related_skills": [],
-      "size_bytes": 17069
+      "related_skills": [
+        "skills:workshop-facilitation"
+      ],
+      "size_bytes": 17069,
+      "routing": {
+        "primary_intents": [
+          "prioritization"
+        ],
+        "decision_stage": "prioritize_framework_selection",
+        "selection_cues": [
+          "team keeps arguing about how to prioritize, not just what to prioritize",
+          "unsure whether RICE/ICE/value-effort/other fits this team/stage"
+        ],
+        "anti_cues": [
+          "a framework is already agreed and just needs to be applied (use prioritization-comparison)",
+          "only one option exists — no prioritization decision to make"
+        ],
+        "cost_profile": "low"
+      },
+      "provenance": {
+        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
+        "upstream_skill": "prioritization-advisor",
+        "upstream_path": "skills/prioritization-advisor/SKILL.md",
+        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
+        "branch": "main",
+        "imported_at": "2026-09-10",
+        "license": "CC BY-NC-SA 4.0",
+        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
+      }
     },
     {
       "id": "skills:problem-framing-canvas",
@@ -3820,8 +4787,40 @@
       "source_reference": "methodology/skills/problem-framing-canvas/SKILL.md",
       "relative_path": "skills/problem-framing-canvas/SKILL.md",
       "summary": "Guide teams through MITRE's Problem Framing Canvas. Use when you need a clearer problem statement before jumping to solutions.",
-      "related_skills": [],
-      "size_bytes": 18868
+      "related_skills": [
+        "skills:discovery-interview-prep",
+        "skills:opportunity-solution-tree",
+        "skills:problem-statement",
+        "skills:workshop-facilitation"
+      ],
+      "size_bytes": 18868,
+      "routing": {
+        "primary_intents": [
+          "problem_framing",
+          "discovery"
+        ],
+        "decision_stage": "framing",
+        "selection_cues": [
+          "a solution is being proposed before the problem is established",
+          "team may be solving the wrong problem or missing overlooked stakeholders"
+        ],
+        "anti_cues": [
+          "problem is already well-understood and validated",
+          "tactical bug fix or technical debt with no framing ambiguity",
+          "stakeholders already committed to a solution (address alignment first)"
+        ],
+        "cost_profile": "medium"
+      },
+      "provenance": {
+        "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
+        "upstream_skill": "problem-framing-canvas",
+        "upstream_path": "skills/problem-framing-canvas/SKILL.md",
+        "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
+        "branch": "main",
+        "imported_at": "2026-09-10",
+        "license": "CC BY-NC-SA 4.0",
+        "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
+      }
     },
     {
       "id": "skills:problem-framing-canvas:examples:sample",
@@ -3850,7 +4849,12 @@
       "source_reference": "methodology/skills/problem-statement/SKILL.md",
       "relative_path": "skills/problem-statement/SKILL.md",
       "summary": "Write a user-centered problem statement with who is blocked, what they are trying to do, why it matters, and how it feels. Use when framing discovery, prioritization, or a PRD.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:jobs-to-be-done",
+        "skills:positioning-statement",
+        "skills:proto-persona",
+        "skills:user-story"
+      ],
       "size_bytes": 10949
     },
     {
@@ -3890,7 +4894,14 @@
       "source_reference": "methodology/skills/product-lifecycle-plays/SKILL.md",
       "relative_path": "skills/product-lifecycle-plays/SKILL.md",
       "summary": "Map a product's lifecycle stage and choose between extension, replacement, and retirement plays. Use when a product is maturing or declining and the next move isn't obvious.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:ansoff-matrix",
+        "skills:eol-process",
+        "skills:eol-readiness-advisor",
+        "skills:lifecycle-play-advisor",
+        "skills:organic-growth-advisor",
+        "skills:roadmap-planning"
+      ],
       "size_bytes": 16955
     },
     {
@@ -3900,7 +4911,10 @@
       "source_reference": "methodology/skills/product-lifecycle-plays/examples/sample.md",
       "relative_path": "skills/product-lifecycle-plays/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:eol-message",
+        "skills:eol-process"
+      ],
       "size_bytes": 7291
     },
     {
@@ -3930,7 +4944,12 @@
       "source_reference": "methodology/skills/product-sense-interview-answer/SKILL.md",
       "relative_path": "skills/product-sense-interview-answer/SKILL.md",
       "summary": "Structure a spoken PM product-sense answer with assumptions, segmentation, pain-point prioritization, and MVP tradeoffs. Use when practicing design, improve, or build-next interview questions.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:customer-journey-map",
+        "skills:opportunity-solution-tree",
+        "skills:problem-statement",
+        "skills:proto-persona"
+      ],
       "size_bytes": 11845
     },
     {
@@ -3970,7 +4989,25 @@
       "source_reference": "methodology/skills/product-strategy-session/SKILL.md",
       "relative_path": "skills/product-strategy-session/SKILL.md",
       "summary": "Run an end-to-end product strategy session across positioning, discovery, and roadmap planning. Use when a team needs validated direction before committing to execution.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:customer-journey-mapping-workshop",
+        "skills:discovery-interview-prep",
+        "skills:epic-breakdown-advisor",
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:lean-ux-canvas",
+        "skills:opportunity-solution-tree",
+        "skills:positioning-workshop",
+        "skills:press-release",
+        "skills:prioritization-advisor",
+        "skills:problem-framing-canvas",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:tam-sam-som-calculator",
+        "skills:user-story",
+        "skills:user-story-mapping-workshop",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 16832
     },
     {
@@ -3990,7 +5027,11 @@
       "source_reference": "methodology/skills/product-strategy-session/examples/sample-lifesciences.md",
       "relative_path": "skills/product-strategy-session/examples/sample-lifesciences.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:positioning-workshop",
+        "skills:problem-framing-canvas",
+        "skills:roadmap-planning"
+      ],
       "size_bytes": 5527
     },
     {
@@ -4010,7 +5051,12 @@
       "source_reference": "methodology/skills/proto-persona/SKILL.md",
       "relative_path": "skills/proto-persona/SKILL.md",
       "summary": "Create a proto-persona from current research, market signals, and team knowledge. Use when you need a working customer profile before deeper validation.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:jobs-to-be-done",
+        "skills:positioning-statement",
+        "skills:problem-statement",
+        "skills:user-story"
+      ],
       "size_bytes": 13153
     },
     {
@@ -4050,7 +5096,13 @@
       "source_reference": "methodology/skills/recommendation-canvas/SKILL.md",
       "relative_path": "skills/recommendation-canvas/SKILL.md",
       "summary": "Evaluate an AI product idea across outcomes, hypotheses, risks, and positioning. Use when deciding whether an AI solution deserves investment or recommendation.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:positioning-statement",
+        "skills:problem-statement",
+        "skills:proto-persona"
+      ],
       "size_bytes": 14999
     },
     {
@@ -4090,7 +5142,14 @@
       "source_reference": "methodology/skills/roadmap-planning/SKILL.md",
       "relative_path": "skills/roadmap-planning/SKILL.md",
       "summary": "Plan a strategic roadmap across prioritization, epic definition, stakeholder alignment, and sequencing. Use when turning strategy into a release plan that teams can execute.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:discovery-process",
+        "skills:epic-hypothesis",
+        "skills:prioritization-advisor",
+        "skills:product-strategy-session",
+        "skills:user-story-mapping-workshop",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 19184
     },
     {
@@ -4110,7 +5169,10 @@
       "source_reference": "methodology/skills/roadmap-planning/examples/sample-industrial.md",
       "relative_path": "skills/roadmap-planning/examples/sample-industrial.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:eol-checklist",
+        "skills:prioritization-advisor"
+      ],
       "size_bytes": 5501
     },
     {
@@ -4130,7 +5192,13 @@
       "source_reference": "methodology/skills/saas-economics-efficiency-metrics/SKILL.md",
       "relative_path": "skills/saas-economics-efficiency-metrics/SKILL.md",
       "summary": "Evaluate SaaS unit economics and capital efficiency. Use when deciding whether the business can scale efficiently or needs correction.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:acquisition-channel-advisor",
+        "skills:business-health-diagnostic",
+        "skills:feature-investment-advisor",
+        "skills:finance-metrics-quickref",
+        "skills:saas-revenue-growth-metrics"
+      ],
       "size_bytes": 25902
     },
     {
@@ -4170,7 +5238,13 @@
       "source_reference": "methodology/skills/saas-revenue-growth-metrics/SKILL.md",
       "relative_path": "skills/saas-revenue-growth-metrics/SKILL.md",
       "summary": "Calculate SaaS revenue, retention, and growth metrics. Use when diagnosing momentum, churn, expansion, or product-market-fit signals.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:business-health-diagnostic",
+        "skills:feature-investment-advisor",
+        "skills:finance-based-pricing-advisor",
+        "skills:finance-metrics-quickref",
+        "skills:saas-economics-efficiency-metrics"
+      ],
       "size_bytes": 23150
     },
     {
@@ -4180,7 +5254,9 @@
       "source_reference": "methodology/skills/saas-revenue-growth-metrics/examples/healthy-saas.md",
       "relative_path": "skills/saas-revenue-growth-metrics/examples/healthy-saas.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:saas-economics-efficiency-metrics"
+      ],
       "size_bytes": 3404
     },
     {
@@ -4210,7 +5286,9 @@
       "source_reference": "methodology/skills/skill-authoring-workflow/SKILL.md",
       "relative_path": "skills/skill-authoring-workflow/SKILL.md",
       "summary": "Turn raw PM content into a compliant, publish-ready skill. Use when creating or updating a repo skill without breaking standards.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 7917
     },
     {
@@ -4220,7 +5298,15 @@
       "source_reference": "methodology/skills/skill-authoring-workflow/examples/sample.md",
       "relative_path": "skills/skill-authoring-workflow/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:ansoff-matrix",
+        "skills:discovery-process",
+        "skills:eol-process",
+        "skills:eol-readiness-advisor",
+        "skills:lifecycle-play-advisor",
+        "skills:organic-growth-advisor",
+        "skills:product-lifecycle-plays"
+      ],
       "size_bytes": 5174
     },
     {
@@ -4290,7 +5376,9 @@
       "source_reference": "methodology/skills/stakeholder-mapping/SKILL.md",
       "relative_path": "skills/stakeholder-mapping/SKILL.md",
       "summary": "Prioritize stakeholders using two complementary grids. Use when setting engagement strategy and surfacing whose voice needs elevating after stakeholder identification.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:stakeholder-identification"
+      ],
       "size_bytes": 14096
     },
     {
@@ -4300,7 +5388,9 @@
       "source_reference": "methodology/skills/stakeholder-mapping/examples/sample.md",
       "relative_path": "skills/stakeholder-mapping/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:stakeholder-identification"
+      ],
       "size_bytes": 4373
     },
     {
@@ -4310,7 +5400,9 @@
       "source_reference": "methodology/skills/stakeholder-mapping/examples/sample-industrial.md",
       "relative_path": "skills/stakeholder-mapping/examples/sample-industrial.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:stakeholder-identification"
+      ],
       "size_bytes": 5448
     },
     {
@@ -4331,7 +5423,10 @@
       "relative_path": "skills/storyboard/SKILL.md",
       "summary": "Create a six-frame storyboard that shows a user's journey from problem to solution. Use when you need a fast narrative for alignment, concept reviews, or demos.",
       "related_skills": [
-        "2-3"
+        "skills:jobs-to-be-done",
+        "skills:positioning-statement",
+        "skills:problem-statement",
+        "skills:proto-persona"
       ],
       "size_bytes": 12208
     },
@@ -4372,7 +5467,16 @@
       "source_reference": "methodology/skills/swot-analysis/SKILL.md",
       "relative_path": "skills/swot-analysis/SKILL.md",
       "summary": "Build an evidence-cited SWOT of one company — yours or a competitor's — from public sources, ending with the S-O/W-T crossings. Use for strategy reviews, board prep, or competitor depth.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:company-intel",
+        "skills:competitive-research-snapshot",
+        "skills:intelligence-collection-disciplines",
+        "skills:porters-five-forces",
+        "skills:positioning-statement",
+        "skills:voice-of-customer-miner"
+      ],
       "size_bytes": 10258
     },
     {
@@ -4382,7 +5486,10 @@
       "source_reference": "methodology/skills/swot-analysis/examples/sample.md",
       "relative_path": "skills/swot-analysis/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:battle-card-builder",
+        "skills:market-landscape-scan"
+      ],
       "size_bytes": 5890
     },
     {
@@ -4412,7 +5519,16 @@
       "source_reference": "methodology/skills/tam-sam-som-calculator/SKILL.md",
       "relative_path": "skills/tam-sam-som-calculator/SKILL.md",
       "summary": "Calculate TAM, SAM, and SOM with explicit assumptions, methods, and caveats. Use when sizing a market for a product idea, business case, or executive review.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:intelligence-collection-disciplines",
+        "skills:market-landscape-scan",
+        "skills:positioning-statement",
+        "skills:problem-statement",
+        "skills:recommendation-canvas",
+        "skills:tam-sam-som-calculator",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 19112
     },
     {
@@ -4452,7 +5568,13 @@
       "source_reference": "methodology/skills/user-story/SKILL.md",
       "relative_path": "skills/user-story/SKILL.md",
       "summary": "Create user stories with Mike Cohn format and Gherkin acceptance criteria. Use when turning user needs into development-ready work with clear outcomes and testable conditions.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:epic-hypothesis",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:user-story",
+        "skills:user-story-splitting"
+      ],
       "size_bytes": 11457
     },
     {
@@ -4462,7 +5584,12 @@
       "source_reference": "methodology/skills/user-story-mapping/SKILL.md",
       "relative_path": "skills/user-story-mapping/SKILL.md",
       "summary": "Create a user story map that lays out activities, steps, tasks, and release slices. Use when planning a workflow, backlog, or MVP around the user journey.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:jobs-to-be-done",
+        "skills:problem-statement",
+        "skills:proto-persona",
+        "skills:user-story"
+      ],
       "size_bytes": 11522
     },
     {
@@ -4472,7 +5599,14 @@
       "source_reference": "methodology/skills/user-story-mapping-workshop/SKILL.md",
       "relative_path": "skills/user-story-mapping-workshop/SKILL.md",
       "summary": "Run a user story mapping workshop with adaptive questions and a structured map output. Use when you need backbone activities, tasks, and release slices for a workflow.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:jobs-to-be-done",
+        "skills:proto-persona",
+        "skills:user-story",
+        "skills:user-story-mapping",
+        "skills:user-story-splitting",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 17477
     },
     {
@@ -4482,7 +5616,11 @@
       "source_reference": "methodology/skills/user-story-mapping-workshop/template.md",
       "relative_path": "skills/user-story-mapping-workshop/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:user-story",
+        "skills:user-story-mapping",
+        "skills:user-story-splitting"
+      ],
       "size_bytes": 1070
     },
     {
@@ -4522,7 +5660,11 @@
       "source_reference": "methodology/skills/user-story-splitting/SKILL.md",
       "relative_path": "skills/user-story-splitting/SKILL.md",
       "summary": "Break a large story or epic into smaller deliverable stories using proven split patterns. Use when backlog items are too big for estimation, sequencing, or independent release.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:epic-hypothesis",
+        "skills:jobs-to-be-done",
+        "skills:user-story"
+      ],
       "size_bytes": 12806
     },
     {
@@ -4552,7 +5694,9 @@
       "source_reference": "methodology/skills/user-story-splitting/template.md",
       "relative_path": "skills/user-story-splitting/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:user-story"
+      ],
       "size_bytes": 1152
     },
     {
@@ -4562,7 +5706,9 @@
       "source_reference": "methodology/skills/user-story/examples/sample.md",
       "relative_path": "skills/user-story/examples/sample.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:user-story-splitting"
+      ],
       "size_bytes": 3300
     },
     {
@@ -4592,7 +5738,9 @@
       "source_reference": "methodology/skills/user-story/template.md",
       "relative_path": "skills/user-story/template.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:user-story-splitting"
+      ],
       "size_bytes": 1247
     },
     {
@@ -4602,7 +5750,14 @@
       "source_reference": "methodology/skills/voice-of-customer-miner/SKILL.md",
       "relative_path": "skills/voice-of-customer-miner/SKILL.md",
       "summary": "Mine public reviews, app stores, and forums for unmet needs, competitor weaknesses, and switching triggers — with quoted evidence. Use when you want customer voice without waiting on interviews.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:autonomous-investigation",
+        "skills:battle-card-builder",
+        "skills:discovery-interview-prep",
+        "skills:intelligence-collection-disciplines",
+        "skills:jobs-to-be-done",
+        "skills:opportunity-solution-tree"
+      ],
       "size_bytes": 9929
     },
     {
@@ -4642,7 +5797,12 @@
       "source_reference": "methodology/skills/vp-cpo-readiness-advisor/SKILL.md",
       "relative_path": "skills/vp-cpo-readiness-advisor/SKILL.md",
       "summary": "Guide the transition to VP or CPO across preparing, interviewing, landing, and recalibrating. Use when executive product scope is changing fast.",
-      "related_skills": [],
+      "related_skills": [
+        "skills:altitude-horizon-framework",
+        "skills:director-readiness-advisor",
+        "skills:executive-onboarding-playbook",
+        "skills:workshop-facilitation"
+      ],
       "size_bytes": 25819
     },
     {
@@ -4672,7 +5832,9 @@
       "source_reference": "methodology/skills/workshop-facilitation/examples/inline-input-flow.md",
       "relative_path": "skills/workshop-facilitation/examples/inline-input-flow.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:discovery-interview-prep"
+      ],
       "size_bytes": 4288
     },
     {
@@ -4682,7 +5844,9 @@
       "source_reference": "methodology/START_HERE.md",
       "relative_path": "START_HERE.md",
       "summary": null,
-      "related_skills": [],
+      "related_skills": [
+        "skills:prioritization-advisor"
+      ],
       "size_bytes": 4244
     },
     {
@@ -5419,8 +6583,11 @@
       "id": "skills:discovery-process",
       "name": "discovery-process",
       "type": "skill",
-      "primary_intents": [],
-      "decision_stage": null,
+      "primary_intents": [
+        "discovery",
+        "research"
+      ],
+      "decision_stage": "discovery_execution",
       "source_reference": "methodology/skills/discovery-process/SKILL.md"
     },
     {
@@ -6147,8 +7314,11 @@
       "id": "skills:prd-development",
       "name": "prd-development",
       "type": "skill",
-      "primary_intents": [],
-      "decision_stage": null,
+      "primary_intents": [
+        "prd",
+        "document"
+      ],
+      "decision_stage": "document",
       "source_reference": "methodology/skills/prd-development/SKILL.md"
     },
     {
@@ -6243,16 +7413,21 @@
       "id": "skills:prioritization-advisor",
       "name": "prioritization-advisor",
       "type": "skill",
-      "primary_intents": [],
-      "decision_stage": null,
+      "primary_intents": [
+        "prioritization"
+      ],
+      "decision_stage": "prioritize_framework_selection",
       "source_reference": "methodology/skills/prioritization-advisor/SKILL.md"
     },
     {
       "id": "skills:problem-framing-canvas",
       "name": "problem-framing-canvas",
       "type": "skill",
-      "primary_intents": [],
-      "decision_stage": null,
+      "primary_intents": [
+        "problem_framing",
+        "discovery"
+      ],
+      "decision_stage": "framing",
       "source_reference": "methodology/skills/problem-framing-canvas/SKILL.md"
     },
     {
