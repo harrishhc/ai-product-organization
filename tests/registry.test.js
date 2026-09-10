@@ -69,3 +69,24 @@ test('existing narrow queries still resolve to the original HH-original capabili
   const candidates = filterCandidates({ intents: ['prioritization'], decisionStage: 'prioritize' });
   assert.equal(selectSmallestSufficient(candidates).id, 'prioritization-comparison');
 });
+
+test('the reverse dominant uncertainty (choosing a framework) resolves to prioritization-advisor, not the HH-original', () => {
+  const candidates = filterCandidates({ intents: ['prioritization'], decisionStage: 'prioritize_framework_selection' });
+  assert.equal(candidates[0].fit, 'strong_fit');
+  assert.equal(selectSmallestSufficient(candidates).id, 'prioritization-advisor');
+});
+
+test('routing is a single-candidate selection, never a multi-capability load, even when intent alone ties two capabilities', () => {
+  // Intent-only query (no decisionStage) is a genuine tie between the two
+  // prioritization capabilities at the metadata-filter stage — but
+  // selectSmallestSufficient still returns exactly one, deterministically
+  // (registry order, both being equal fit/tier). PDM is expected to supply
+  // decisionStage once it knows which uncertainty it's resolving; this test
+  // documents the fallback behavior rather than asserting it as ideal.
+  const candidates = filterCandidates({ intents: ['prioritization'] });
+  const tied = candidates.filter((c) => c.id.startsWith('prioritization-'));
+  assert.equal(tied.length, 2, 'sanity: intent-only query does tie both prioritization capabilities');
+  const selected = selectSmallestSufficient(candidates);
+  assert.equal(typeof selected.id, 'string');
+  assert.ok(['prioritization-comparison', 'prioritization-advisor'].includes(selected.id));
+});

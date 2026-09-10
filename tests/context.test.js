@@ -1,6 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { loadProductContext, getBoundedContext, writeProductContext } from '../runtime/context.js';
+
+const REPO_ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 test('loadProductContext reads the template product context', () => {
   const ctx = loadProductContext('_template');
@@ -47,4 +52,25 @@ test('writeProductContext writes to the resolved product repository and round-tr
 
 test('writeProductContext refuses an unregistered product, same as the read path', () => {
   assert.throws(() => writeProductContext('nonexistent-product', {}));
+});
+
+// Security regression: products/registry.json registers "_path-traversal-test"
+// with context_entry "../escaped-context.json", which — if resolved naively
+// via path.join(repositoryPath, contextEntry) — would land one directory
+// above the product's repository root (products/escaped-context.json,
+// outside products/_template/). Both read and write must refuse this.
+test('loadProductContext refuses a context_entry that escapes the repository root', () => {
+  assert.throws(
+    () => loadProductContext('_path-traversal-test'),
+    /resolves outside its repository root/
+  );
+});
+
+test('writeProductContext refuses a context_entry that escapes the repository root, and creates nothing', () => {
+  const escapedPath = path.join(REPO_ROOT, 'products', 'escaped-context.json');
+  assert.throws(
+    () => writeProductContext('_path-traversal-test', { malicious: true }),
+    /resolves outside its repository root/
+  );
+  assert.equal(existsSync(escapedPath), false, 'the escape target must never actually be created');
 });

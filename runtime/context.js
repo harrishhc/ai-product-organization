@@ -14,6 +14,26 @@ import { resolveProductRepository } from './productRegistry.js';
 const VALID_SECTIONS = Object.freeze(['strategy', 'users', 'evidence', 'decisions', 'experiments', 'roadmap']);
 
 /**
+ * Joins a resolved repository root with its registered context_entry and
+ * verifies the result cannot escape that root — e.g. via a `context_entry`
+ * of `../secret.json` or a deep `../../..` sequence. Both read and write
+ * must go through this so neither can be tricked into touching a path
+ * outside the product's own resolved repository.
+ */
+function resolveContextPath(productId) {
+  const { repositoryPath, contextEntry } = resolveProductRepository(productId);
+  const root = path.resolve(repositoryPath);
+  const contextPath = path.join(root, contextEntry);
+  const rootWithSep = root.endsWith(path.sep) ? root : root + path.sep;
+  if (contextPath !== root && !contextPath.startsWith(rootWithSep)) {
+    throw new Error(
+      `Product "${productId}"'s registered context_entry ("${contextEntry}") resolves outside its repository root (${root}); refusing to read/write.`
+    );
+  }
+  return contextPath;
+}
+
+/**
  * Loads a product's full context by resolving its repository through the
  * Product Registry, then reading that repository's context entry file. This
  * is the only place in the runtime that touches product content. Callers
@@ -21,8 +41,7 @@ const VALID_SECTIONS = Object.freeze(['strategy', 'users', 'evidence', 'decision
  * full object.
  */
 export function loadProductContext(productId) {
-  const { repositoryPath, contextEntry } = resolveProductRepository(productId);
-  const contextPath = path.join(repositoryPath, contextEntry);
+  const contextPath = resolveContextPath(productId);
   if (!existsSync(contextPath)) {
     throw new Error(`No Product Context found for "${productId}" at ${contextPath} (resolved via Product Registry).`);
   }
@@ -66,8 +85,7 @@ export function getBoundedContext(productId, sections) {
  * @param {object} updatedContext - full context object (see products/_template/context.json shape)
  */
 export function writeProductContext(productId, updatedContext) {
-  const { repositoryPath, contextEntry } = resolveProductRepository(productId);
-  const contextPath = path.join(repositoryPath, contextEntry);
+  const contextPath = resolveContextPath(productId);
   writeFileSync(contextPath, `${JSON.stringify(updatedContext, null, 2)}\n`, 'utf8');
   return { productId, contextPath };
 }

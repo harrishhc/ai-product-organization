@@ -14,5 +14,5 @@ test('resolveProductRepository refuses an unregistered product rather than guess
 });
 
 test('listRegisteredProductIds reflects the registry, not the filesystem', () => {
-  assert.deepEqual(listRegisteredProductIds(), ['_template']);
+  assert.deepEqual(listRegisteredProductIds(), ['_template', '_path-traversal-test']);
 });

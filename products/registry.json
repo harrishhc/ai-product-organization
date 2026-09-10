@@ -4,6 +4,11 @@
       "repository": { "type": "local_path", "location": "./products/_template" },
       "context_entry": "context.json",
       "metadata": {}
+    },
+    "_path-traversal-test": {
+      "repository": { "type": "local_path", "location": "./products/_template" },
+      "context_entry": "../escaped-context.json",
+      "metadata": { "purpose": "security regression fixture — see tests/context.test.js; must always be rejected, never resolved" }
     }
   }
 }
