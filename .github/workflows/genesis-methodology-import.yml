@@ -29,9 +29,10 @@ jobs:
           git clone --filter=blob:none https://github.com/deanpeters/product-manager-prompts.git /tmp/pm-prompts
           git -C /tmp/pm-prompts checkout --detach "$PROMPTS_SHA"
 
+          # Rebuild the imported source areas so this genesis import is reproducible.
           rm -rf methodology/skills methodology/commands methodology/catalog
-          rm -rf methodology/prompts methodology/workshops methodology/flows methodology/loops methodology/market-intelligence methodology/skeletons methodology/vibes methodology/storytelling methodology/prompt-generators methodology/patterns
-          mkdir -p methodology
+          rm -rf methodology/prompts
+          mkdir -p methodology/prompts
 
           # Product Manager Skills: preserve methodology-bearing source structure;
           # exclude repository/application/release tooling.
@@ -42,12 +43,13 @@ jobs:
             if [ -f "/tmp/pm-skills/$f" ]; then cp "/tmp/pm-skills/$f" "methodology/$f"; fi
           done
 
-          # Product Manager Prompts: preserve the prompt ecosystem's source layout.
-          for d in prompts workshops flows loops market-intelligence skeletons vibes storytelling prompt-generators patterns skills; do
-            if [ -d "/tmp/pm-prompts/$d" ]; then cp -a "/tmp/pm-prompts/$d" "methodology/$d"; fi
+          # Product Manager Prompts: keep the entire prompt ecosystem namespaced
+          # under methodology/prompts to prevent collisions with Product Manager Skills.
+          for d in prompts workshops flows loops market-intelligence skeletons vibes storytelling prompt-generators patterns skills catalog; do
+            if [ -d "/tmp/pm-prompts/$d" ]; then cp -a "/tmp/pm-prompts/$d" "methodology/prompts/$d"; fi
           done
-          for f in README.md LICENSE generative-guidance-pattern.md interaction-modes.md jinja2-prompt-structures.md; do
-            if [ -f "/tmp/pm-prompts/$f" ]; then cp "/tmp/pm-prompts/$f" "methodology/$f.prompts"; fi
+          for f in README.md LICENSE LICENSING.md CHANGELOG.md generative-guidance-pattern.md interaction-modes.md jinja2-prompt-structures.md; do
+            if [ -f "/tmp/pm-prompts/$f" ]; then cp "/tmp/pm-prompts/$f" "methodology/prompts/$f"; fi
           done
 
           mkdir -p methodology/provenance
@@ -67,6 +69,8 @@ jobs:
 
           The import intentionally excludes upstream repository/application tooling
           such as `.github`, `app`, `dist`, release packaging, and CI machinery.
+          The prompt ecosystem is namespaced under `methodology/prompts` to preserve
+          both source ecosystems without overwriting files with the same names.
           EOF
 
           node scripts/build-methodology-registry.mjs
