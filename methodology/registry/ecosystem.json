@@ -655,16 +655,6 @@
       "size_bytes": 20850
     },
     {
-      "id": "license",
-      "name": "LICENSE.prompts",
-      "type": "reference",
-      "source_reference": "methodology/LICENSE.prompts",
-      "relative_path": "LICENSE.prompts",
-      "summary": null,
-      "related_skills": [],
-      "size_bytes": 20850
-    },
-    {
       "id": "loops",
       "name": "Loops",
       "type": "loop",
@@ -2685,16 +2675,6 @@
         "skills:vp-cpo-readiness-advisor"
       ],
       "size_bytes": 30389
-    },
-    {
-      "id": "readme-md",
-      "name": "Product Manager Prompts for Generative AI",
-      "type": "reference",
-      "source_reference": "methodology/README.md.prompts",
-      "relative_path": "README.md.prompts",
-      "summary": null,
-      "related_skills": [],
-      "size_bytes": 17063
     },
     {
       "id": "skeletons",
