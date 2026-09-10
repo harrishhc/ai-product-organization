@@ -1,82 +1,14 @@
 name: Methodology Genesis Import
 
-on:
-  push:
-    branches: [phase-3-methodology-genesis]
+# Retired after the one-time genesis import. The HH repository is now the
+# canonical methodology source of truth; methodology is maintained manually.
 
-permissions:
-  contents: write
+on:
+  workflow_dispatch:
 
 jobs:
-  import:
-    if: ${{ !contains(github.event.head_commit.message, '[genesis-import]') }}
+  retired:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout HH repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Import pinned methodology ecosystem
-        env:
-          SKILLS_SHA: 1b5a524ebb95e9497fa3f25002d8b8ec528d4444
-          PROMPTS_SHA: c3b91dba8f7782fac72c7aa340b98d6554b1f3ec
-        run: |
-          set -euo pipefail
-          rm -rf /tmp/pm-skills /tmp/pm-prompts
-          git clone --filter=blob:none https://github.com/deanpeters/Product-Manager-Skills.git /tmp/pm-skills
-          git -C /tmp/pm-skills checkout --detach "$SKILLS_SHA"
-          git clone --filter=blob:none https://github.com/deanpeters/product-manager-prompts.git /tmp/pm-prompts
-          git -C /tmp/pm-prompts checkout --detach "$PROMPTS_SHA"
-
-          # Rebuild the imported source areas so this genesis import is reproducible.
-          rm -rf methodology/skills methodology/commands methodology/catalog
-          rm -rf methodology/prompts
-          mkdir -p methodology/prompts
-
-          # Product Manager Skills: preserve methodology-bearing source structure;
-          # exclude repository/application/release tooling.
-          for d in skills commands catalog; do
-            if [ -d "/tmp/pm-skills/$d" ]; then cp -a "/tmp/pm-skills/$d" "methodology/$d"; fi
-          done
-          for f in README.md START_HERE.md LICENSE; do
-            if [ -f "/tmp/pm-skills/$f" ]; then cp "/tmp/pm-skills/$f" "methodology/$f"; fi
-          done
-
-          # Product Manager Prompts: keep the entire prompt ecosystem namespaced
-          # under methodology/prompts to prevent collisions with Product Manager Skills.
-          for d in prompts workshops flows loops market-intelligence skeletons vibes storytelling prompt-generators patterns skills catalog; do
-            if [ -d "/tmp/pm-prompts/$d" ]; then cp -a "/tmp/pm-prompts/$d" "methodology/prompts/$d"; fi
-          done
-          for f in README.md LICENSE LICENSING.md CHANGELOG.md generative-guidance-pattern.md interaction-modes.md jinja2-prompt-structures.md; do
-            if [ -f "/tmp/pm-prompts/$f" ]; then cp "/tmp/pm-prompts/$f" "methodology/prompts/$f"; fi
-          done
-
-          mkdir -p methodology/provenance
-          cat > methodology/provenance/GENESIS.md <<EOF
-          # Methodology Genesis
-
-          This directory is the HH-owned methodology baseline.
-
-          ## Initial genetic sources
-
-          - Product Manager Skills: deanpeters/Product-Manager-Skills @ ${SKILLS_SHA}
-          - Product Manager Prompts: deanpeters/product-manager-prompts @ ${PROMPTS_SHA}
-
-          These snapshots are the initial seed only. HH's repository is the runtime
-          source of truth after import. External repositories are not runtime
-          dependencies and are not consulted during ordinary product work.
-
-          The import intentionally excludes upstream repository/application tooling
-          such as `.github`, `app`, `dist`, release packaging, and CI machinery.
-          The prompt ecosystem is namespaced under `methodology/prompts` to preserve
-          both source ecosystems without overwriting files with the same names.
-          EOF
-
-          node scripts/build-methodology-registry.mjs
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add methodology
-          git commit -m "feat: import methodology genesis baseline [genesis-import]"
-          git push origin HEAD:phase-3-methodology-genesis
+      - run: echo "Genesis import retired; HH-owned methodology is canonical."
