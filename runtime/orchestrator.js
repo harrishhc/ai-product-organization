@@ -39,15 +39,25 @@ export function runStage(stageName, session) {
 }
 
 /**
- * Metadata-first capability selection. Never loads capability detail files;
- * that only happens in loadSelectedCapability(), after a candidate is
- * chosen.
+ * Metadata-first capability selection. Requires an explicit statement of the
+ * dominant uncertainty being resolved (Capability Integration Spec §5,
+ * Registry Spec §2/§5) — selection must be anchored to "what decision
+ * bottleneck are we reducing", not to intents/decisionStage alone or a raw
+ * keyword/name match. `intents`/`decisionStage` are how that already-
+ * identified uncertainty gets operationalized into a registry query; they do
+ * not replace stating it. Never loads capability detail files; that only
+ * happens in loadSelectedCapability(), after a candidate is chosen.
  */
-export function selectCapability({ intents, decisionStage }, session) {
+export function selectCapability({ dominantUncertainty, intents, decisionStage }, session) {
+  if (!dominantUncertainty) {
+    throw new Error(
+      'selectCapability requires an explicit dominantUncertainty (the decision bottleneck this selection is meant to reduce) — routing must not be intent/stage matching alone.'
+    );
+  }
   const candidates = filterCandidates({ intents, decisionStage });
   session?.recordCapabilitySelection?.(candidates.map((c) => c.id));
   const selected = selectSmallestSufficient(candidates);
-  return { selected, candidates };
+  return { selected, candidates, dominantUncertainty };
 }
 
 export function loadSelectedCapability(selected, session) {

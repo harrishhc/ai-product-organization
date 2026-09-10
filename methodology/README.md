@@ -5,16 +5,24 @@ PDM runtime at decision-making time. See [`docs/ARCHITECTURE.md`](../docs/ARCHIT
 §13, §15 and the `PDM_Skill_Capability_Registry_and_Selection_Specification`
 and `Upstream_Methodology_Governance_and_Sync_Specification` for full context.
 
-- Upstream methodology (`../vendor/`) is a governed dependency, not a live
-  runtime dependency. It is currently empty — nothing has been vendored yet.
+- Upstream methodology (`../vendor/`) is meant as **initial seed material**
+  for HH methodology — imported/adapted once or deliberately, not depended on
+  live. "No live runtime dependency on upstream" does not mean "never import
+  the seed"; it means the PDM runtime never queries, checks, or requires
+  upstream availability during ordinary sessions. See
+  [`../vendor/README.md`](../vendor/README.md) for the distinction between
+  the (expected, normal) one-time seed import and the (deliberate,
+  governance-gated) ongoing sync of later upstream changes.
+- It is currently empty because the seed import hasn't happened yet in this
+  bootstrap, not because it's architecturally disallowed.
 - Only the locally approved HH methodology baseline (this directory) is
-  loaded into active context. No network access is required, or performed,
-  during ordinary PDM/product sessions.
-- Evolution path: upstream change → diff → classify → validate → impact
-  review → HH approval → vendor update → registry update → evaluation. This
-  path runs only via `runtime/methodologyEvolution.js`'s explicit,
-  separately-invoked maintenance entry point — never as a side effect of
-  ordinary orchestration.
+  loaded into active context at runtime. No network access is required, or
+  performed, during ordinary PDM/product sessions.
+- Sync/re-review path for *later* upstream changes: upstream change → diff →
+  classify → validate → impact review → HH approval → vendor update →
+  registry update → evaluation. This path runs only via
+  `runtime/methodologyEvolution.js`'s explicit, separately-invoked
+  maintenance entry point — never as a side effect of ordinary orchestration.
 
 ## Layout
 

@@ -19,17 +19,21 @@ agents/          reusable functional capabilities (cross-product)
   engineering/   Engineering / Coding agent
   evolution/     PDM Evolution Agent (independent evolution plane)
 runtime/         executable PDM Core: identity/governance, capability
-                 registry+resolver, Product Context boundary, orchestrator,
-                 decision-state model, instrumentation, methodology-evolution
-                 boundary (see runtime/*.js)
+                 registry+resolver, Product Registry resolver, Product
+                 Context boundary, orchestrator, decision-state model,
+                 instrumentation, methodology-evolution boundary (see runtime/*.js)
 methodology/     HH-owned methodology baseline (operational source of truth)
   registry/      compact capability metadata (registry.json)
   capabilities/  detailed capability instructions, lazily loaded
   provenance/    provenance records for any adopted external material
-vendor/          reserved for pinned external methodology snapshots — empty
-                 until an explicit HH-approved maintenance task populates it
-products/        product-specific context (one folder per product)
-  _template/     shape for onboarding a new product's Product Context
+vendor/          reserved for a one-time/deliberate seed import of external
+                 methodology (e.g. Dean Peters' skills/prompts) — empty until
+                 HH decides to perform that import; not a live dependency
+products/        Product Registry only (registry.json) — a pointer index to
+                 each product's OWN repository, never a copy of its content
+  registry.json  maps product id -> repository location + context entry
+  _template/     local fixture standing in as a "product repository" for
+                 bootstrap/dev/testing
 governance/      role boundaries, decision model, delegation logic, governance principles
 docs/            architecture records
 tests/           node:test suite covering behavior + architectural invariants

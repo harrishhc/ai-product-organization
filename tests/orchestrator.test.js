@@ -26,7 +26,10 @@ test('a minimal interaction can skip most of the twelve stages', () => {
 
 test('end-to-end: select a capability, load only its detail, retrieve bounded context', () => {
   const session = createSession();
-  const { selected } = selectCapability({ intents: ['prioritization'], decisionStage: 'prioritize' }, session);
+  const { selected } = selectCapability(
+    { dominantUncertainty: 'unclear which option to do first', intents: ['prioritization'], decisionStage: 'prioritize' },
+    session
+  );
   assert.equal(selected.id, 'prioritization-comparison');
 
   const { detail } = loadSelectedCapability(selected, session);
@@ -36,6 +39,11 @@ test('end-to-end: select a capability, load only its detail, retrieve bounded co
   const ctx = retrieveContext('_template', ['strategy'], session);
   assert.ok('strategy' in ctx);
   assert.equal(session.summary().contextSectionsLoaded, 1);
+});
+
+test('selectCapability refuses to route without an explicit dominant uncertainty', () => {
+  const session = createSession();
+  assert.throws(() => selectCapability({ intents: ['prioritization'], decisionStage: 'prioritize' }, session));
 });
 
 test('delegation requires an explicit question, output, and decision it informs', () => {

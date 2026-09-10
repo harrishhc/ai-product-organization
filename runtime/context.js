@@ -1,26 +1,28 @@
-// Product Context boundary: product-specific facts live under products/<id>/
-// and are never baked into PDM Core, methodology, or governance. Retrieval is
-// bounded by requested sections rather than dumping the full product context
-// into every task (Runtime Architecture §8-9, Constitution §12).
+// Product Context boundary: product-specific facts live in each product's
+// OWN repository, never centrally copied into the PDM repo, and never baked
+// into PDM Core, methodology, or governance. This module resolves a
+// product's repository via the Product Registry (productRegistry.js) and
+// then retrieves only the bounded sections a task actually needs — never the
+// whole product, and never by scanning multiple products at once.
 
 import { readFileSync, existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PRODUCTS_DIR = path.join(__dirname, '..', 'products');
+import { resolveProductRepository } from './productRegistry.js';
 
 const VALID_SECTIONS = Object.freeze(['strategy', 'users', 'evidence', 'decisions', 'experiments', 'roadmap']);
 
 /**
- * Loads a product's full context.json. This is the only place in the runtime
- * that touches products/. Callers should almost always use
- * getBoundedContext() instead of holding onto the full object.
+ * Loads a product's full context by resolving its repository through the
+ * Product Registry, then reading that repository's context entry file. This
+ * is the only place in the runtime that touches product content. Callers
+ * should almost always use getBoundedContext() instead of holding onto the
+ * full object.
  */
 export function loadProductContext(productId) {
-  const contextPath = path.join(PRODUCTS_DIR, productId, 'context.json');
+  const { repositoryPath, contextEntry } = resolveProductRepository(productId);
+  const contextPath = path.join(repositoryPath, contextEntry);
   if (!existsSync(contextPath)) {
-    throw new Error(`No Product Context found for "${productId}" at ${contextPath}`);
+    throw new Error(`No Product Context found for "${productId}" at ${contextPath} (resolved via Product Registry).`);
   }
   return JSON.parse(readFileSync(contextPath, 'utf8'));
 }
@@ -48,4 +50,4 @@ export function getBoundedContext(productId, sections) {
   return bounded;
 }
 
-export { VALID_SECTIONS, PRODUCTS_DIR };
+export { VALID_SECTIONS };

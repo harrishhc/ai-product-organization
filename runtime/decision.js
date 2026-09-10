@@ -2,6 +2,15 @@
 // Architecture §15). PDM recommendation and HH's founder_decision are kept
 // as permanently distinct fields — recording a Founder decision never
 // overwrites or erases the PDM's recommendation, even under override.
+//
+// Memory-layer boundary: this module produces plain, disposable JS objects.
+// It is NOT a durable store — nothing here writes to disk. It is the
+// "durable product/decision record" *shape*, distinct from: session state
+// (runtime/instrumentation.js — in-memory counters, cleared per run),
+// Product Context (runtime/context.js + productRegistry.js — lives in the
+// product's own repository), and specialist outputs (handed back through
+// runtime/orchestrator.js). Wiring an actual durable store for decision
+// records is a future, separate persistence decision — not made here.
 
 export const STATES = Object.freeze([
   'IDEA',

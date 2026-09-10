@@ -10,10 +10,12 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 import { filterCandidates, loadCapabilityDetail } from '../runtime/registry.js';
-import { getBoundedContext } from '../runtime/context.js';
+import { getBoundedContext, loadProductContext } from '../runtime/context.js';
+import { resolveProductRepository } from '../runtime/productRegistry.js';
 import { createDecision, setRecommendation, recordFounderDecision } from '../runtime/decision.js';
 import { pdmStatement, evaluateChallengeGate } from '../runtime/pdmCore.js';
 import { createSession } from '../runtime/instrumentation.js';
+import { selectCapability } from '../runtime/orchestrator.js';
 import { reviewExternalMethodology, requiresExplicitApproval } from '../runtime/methodologyEvolution.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -87,6 +89,26 @@ test('invariant: methodology registry entries carry no product-specific fields',
   assert.doesNotMatch(text, /product_id/);
 });
 
+// Ownership model: Product Context lives in each product's own repository,
+// resolved on demand via the Product Registry — never scanned, never
+// centrally copied into this repo.
+test('invariant: product resolution is a registry lookup, not a directory scan', () => {
+  const contextSrc = readFileSync(path.join(RUNTIME_DIR, 'context.js'), 'utf8');
+  const productRegistrySrc = readFileSync(path.join(RUNTIME_DIR, 'productRegistry.js'), 'utf8');
+  assert.doesNotMatch(contextSrc, /readdirSync/);
+  assert.doesNotMatch(productRegistrySrc, /readdirSync/);
+});
+
+test('invariant: an unregistered product cannot be resolved, even if a same-named folder exists', () => {
+  assert.throws(() => loadProductContext('some-folder-that-is-not-registered'));
+});
+
+test('invariant: Product Registry resolves a product to its own repository path, not a hardcoded PDM-repo path', () => {
+  const resolved = resolveProductRepository('_template');
+  assert.equal(resolved.repositoryType, 'local_path');
+  assert.match(resolved.repositoryPath, /products[\\/]_template$/);
+});
+
 // 5. PDM recommendation is distinct from HH decision.
 test('invariant: recommendation and founder_decision remain separate fields after an override', () => {
   let d = createDecision({ context: 'c', problem: 'p' });
@@ -95,6 +117,18 @@ test('invariant: recommendation and founder_decision remain separate fields afte
   assert.notEqual(d.recommendation, d.founder_decision.hhDecision);
   assert.equal(d.recommendation, 'A');
   assert.equal(d.founder_decision.hhDecision, 'B');
+});
+
+// Capability selection must be anchored to the dominant uncertainty, not
+// merely to intent/stage/keyword matching.
+test('invariant: capability selection requires an explicit dominant uncertainty', () => {
+  const session = createSession();
+  assert.throws(() => selectCapability({ intents: ['prioritization'], decisionStage: 'prioritize' }, session));
+  const result = selectCapability(
+    { dominantUncertainty: 'unclear which option to do first', intents: ['prioritization'], decisionStage: 'prioritize' },
+    session
+  );
+  assert.equal(result.dominantUncertainty, 'unclear which option to do first');
 });
 
 // 6. PDM can disagree with HH.

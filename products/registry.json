@@ -1,0 +1,8 @@
+{
+  "products": {
+    "_template": {
+      "repository": { "type": "local_path", "location": "./products/_template" },
+      "context_entry": "context.json"
+    }
+  }
+}
