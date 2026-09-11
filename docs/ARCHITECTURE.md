@@ -13,7 +13,9 @@ v0.3 - HH AI Product Organization
 | Layer | Purpose | Scope |
 |---|---|---|
 | PDM Core | 產品管理能力、判斷框架、workflow、governance、evaluation | 跨產品 reusable |
+| Active Brief | PDM session 啟動用的精簡 bootstrap 文件，由 Work State + Product Context 衍生產生 | product-specific，derived only |
 | Product Context | 單一產品的 strategy、users、research、decisions、roadmap、current state | product-specific |
+| Work State | PDM 目前做到哪裡、下一步是什麼、session 之間的延續性 — 不是產品事實 | product-specific，PDM operational memory |
 | Functional Agents | Research / Design / QA / Engineering 的專業執行能力 | 跨產品 reusable |
 | Evolution System | 評估並改善 agent 能力與 workflow | agent-specific，不污染產品 context |
 
@@ -61,6 +63,10 @@ HH - Founder / CEO
 PDM Core must contain no product-specific assumptions. Each product owns its own context, including product strategy, users, research, decisions, roadmap, experiments, and current state.
 
 When PDM works on a product, the effective working context is: PDM Core + the selected Product Context. The existence of one product must not cause its conclusions to become universal PDM rules.
+
+### 6.1 Work State and Active Brief
+
+Product Context answers "what is true about the product." It does not answer "where did PDM leave off." That is Work State's job — a separate, product-specific record of PDM's own operational memory (current focus, dominant uncertainty, next actions, blockers, open questions), distinct from product facts and never itself a source of decisions. Active Brief is a small, disposable document rendered from Work State + Product Context so a new session can bootstrap from one short file instead of re-reading everything. Full rules, including why Work State must never become a second source of truth for decisions, are in [`governance/WORK_STATE_BOUNDARY.md`](../governance/WORK_STATE_BOUNDARY.md).
 
 ## 7. Product Evolution vs Agent Evolution
 

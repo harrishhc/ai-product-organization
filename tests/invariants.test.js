@@ -60,6 +60,23 @@ test('invariant: registry.js never imports the methodology-evolution module', ()
   assert.doesNotMatch(registrySrc, IMPORTS_METHODOLOGY_EVOLUTION);
 });
 
+// 2b. Same boundary, product side: resolving/reading a git_remote product
+// must never itself trigger a sync. Syncing is a deliberate, separate,
+// HH-initiated maintenance action (runtime/productSync.js).
+const IMPORTS_PRODUCT_SYNC = /from\s+['"]\.\/productSync\.js['"]/;
+
+test('invariant: orchestrator never imports the product-sync module', () => {
+  const orchestratorSrc = readFileSync(path.join(RUNTIME_DIR, 'orchestrator.js'), 'utf8');
+  assert.doesNotMatch(orchestratorSrc, IMPORTS_PRODUCT_SYNC);
+});
+
+test('invariant: context.js and workState.js never import the product-sync module', () => {
+  for (const file of ['context.js', 'workState.js']) {
+    const src = readFileSync(path.join(RUNTIME_DIR, file), 'utf8');
+    assert.doesNotMatch(src, IMPORTS_PRODUCT_SYNC, `${file} should not import productSync.js`);
+  }
+});
+
 // 3. Registry routing does not require loading every capability.
 test('invariant: selecting a candidate does not load any capability detail file', () => {
   const session = createSession();
@@ -154,6 +171,7 @@ test('invariant: PDM Core, registry, product registry, decision, and evaluation 
     'instrumentation.js',
     'methodologyEvolution.js',
     'orchestrator.js',
+    'productSync.js',
   ];
   for (const { file, text } of runtimeSourceFiles()) {
     if (!mustNeverWrite.includes(file)) continue;
@@ -167,6 +185,34 @@ test('invariant: writeProductContext only ever writes inside the resolved produc
   // a hardcoded or PDM-repo-relative path.
   assert.match(contextSrc, /writeFileSync\(\s*contextPath/);
   assert.match(contextSrc, /resolveProductRepository\(productId\)/);
+});
+
+test('invariant: writeWorkState only ever writes inside the resolved product repository, never elsewhere', () => {
+  const workStateSrc = readFileSync(path.join(RUNTIME_DIR, 'workState.js'), 'utf8');
+  assert.match(workStateSrc, /writeFileSync\(\s*workStatePath/);
+  assert.match(workStateSrc, /resolveProductRepository\(productId\)/);
+});
+
+// Work State must never assert a decision on its own authority — it may
+// only reference a Product Context decision id, never restate content.
+// renderActiveBrief has no field to read decision *content* from, so the
+// only way a decision's substance reaches the brief is via Product Context
+// (passed in explicitly by the caller), not via Work State's decision_refs.
+test('invariant: renderActiveBrief cannot surface decision content from Work State alone', async () => {
+  const { renderActiveBrief } = await import('../runtime/workState.js');
+  const ws = {
+    current_focus: 'x',
+    dominant_uncertainty: 'y',
+    in_progress: [],
+    next_actions: [],
+    blocked: [],
+    recently_completed: [],
+    open_questions: [],
+    last_session: { date: '2026-09-11', summary: 's', decision_refs: ['dec_1'] },
+  };
+  const brief = renderActiveBrief(ws);
+  assert.match(brief, /- dec_1/);
+  assert.doesNotMatch(brief, /decision_refs/);
 });
 
 // 8. Specialist delegation has a bounded purpose.

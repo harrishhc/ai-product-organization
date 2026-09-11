@@ -4,6 +4,14 @@
 Architecture spec §9: strategy, users, evidence, decisions, experiments,
 roadmap.
 
+`work-state.json` is a separate, optional fixture (registered via
+`work_state_entry` in `../registry.json`) for PDM's own operational memory —
+see [`../../governance/WORK_STATE_BOUNDARY.md`](../../governance/WORK_STATE_BOUNDARY.md)
+for why it is kept distinct from `context.json`. `active-brief.md` is never
+checked in here: it is disposable, derived output (`renderActiveBrief()` in
+`runtime/workState.js`), regenerated on demand rather than committed as a
+fixture.
+
 This directory is a **local fixture**, not "where product context lives."
 Product Context is product-owned: a real product should have its own
 repository (which may live anywhere — it does not need to be nested in this
