@@ -21,10 +21,12 @@ agents/          reusable functional capabilities (cross-product)
 runtime/         executable PDM Core: identity/governance, capability
                  registry+resolver, Product Registry resolver (local_path and
                  git_remote products), Product Sync (deliberate, HH-gated
-                 clone/pull for git_remote products), Product Context
-                 boundary, Work State + Active Brief boundary, orchestrator,
-                 decision-state model, instrumentation, methodology-evolution
-                 boundary (see runtime/*.js)
+                 clone/pull AND publish — commit+push a new branch back to a
+                 git_remote product's own repository; never opens a PR
+                 itself), Product Context boundary, Work State + Active
+                 Brief boundary, orchestrator, decision-state model,
+                 instrumentation, methodology-evolution boundary (see
+                 runtime/*.js)
 methodology/     HH-owned methodology baseline (operational source of truth)
   registry/      compact capability metadata (registry.json, 7 capabilities)
   capabilities/  detailed capability instructions, lazily loaded
