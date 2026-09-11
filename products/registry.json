@@ -16,6 +16,39 @@
       "context_entry": "context.json",
       "work_state_entry": "../escaped-workstate.json",
       "metadata": { "purpose": "security regression fixture — see tests/workState.test.js; must always be rejected, never resolved" }
+    },
+    "_git-remote-fixture": {
+      "repository": {
+        "type": "git_remote",
+        "remote_url": "https://example.invalid/not-a-real-remote.git",
+        "local_clone_path": "./products/_template"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "test fixture simulating an ALREADY-CLONED git_remote product (points at the _template fixture so resolution can be tested with zero real network access) — see tests/productRegistry.test.js"
+      }
+    },
+    "_git-remote-not-cloned-yet": {
+      "repository": {
+        "type": "git_remote",
+        "remote_url": "https://example.invalid/not-a-real-remote.git",
+        "local_clone_path": "./products/_not-actually-cloned"
+      },
+      "context_entry": "context.json",
+      "metadata": {
+        "purpose": "test fixture simulating a git_remote product whose local clone has not been synced yet — see tests/productRegistry.test.js"
+      }
+    },
+    "colon-biopsy-ai-app": {
+      "repository": {
+        "type": "git_remote",
+        "remote_url": "git@github.com:harrishhc/colon-biopsy-ai-app.git",
+        "local_clone_path": "./.product-clones/colon-biopsy-ai-app"
+      },
+      "context_entry": "product-context/context.json",
+      "work_state_entry": "product-context/work-state.json",
+      "metadata": { "owner": "harris.chen@aetherai.com" }
     }
   }
 }

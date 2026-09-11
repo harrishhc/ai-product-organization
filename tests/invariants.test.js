@@ -60,6 +60,23 @@ test('invariant: registry.js never imports the methodology-evolution module', ()
   assert.doesNotMatch(registrySrc, IMPORTS_METHODOLOGY_EVOLUTION);
 });
 
+// 2b. Same boundary, product side: resolving/reading a git_remote product
+// must never itself trigger a sync. Syncing is a deliberate, separate,
+// HH-initiated maintenance action (runtime/productSync.js).
+const IMPORTS_PRODUCT_SYNC = /from\s+['"]\.\/productSync\.js['"]/;
+
+test('invariant: orchestrator never imports the product-sync module', () => {
+  const orchestratorSrc = readFileSync(path.join(RUNTIME_DIR, 'orchestrator.js'), 'utf8');
+  assert.doesNotMatch(orchestratorSrc, IMPORTS_PRODUCT_SYNC);
+});
+
+test('invariant: context.js and workState.js never import the product-sync module', () => {
+  for (const file of ['context.js', 'workState.js']) {
+    const src = readFileSync(path.join(RUNTIME_DIR, file), 'utf8');
+    assert.doesNotMatch(src, IMPORTS_PRODUCT_SYNC, `${file} should not import productSync.js`);
+  }
+});
+
 // 3. Registry routing does not require loading every capability.
 test('invariant: selecting a candidate does not load any capability detail file', () => {
   const session = createSession();
@@ -154,6 +171,7 @@ test('invariant: PDM Core, registry, product registry, decision, and evaluation 
     'instrumentation.js',
     'methodologyEvolution.js',
     'orchestrator.js',
+    'productSync.js',
   ];
   for (const { file, text } of runtimeSourceFiles()) {
     if (!mustNeverWrite.includes(file)) continue;
