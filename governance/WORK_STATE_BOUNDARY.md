@@ -31,3 +31,15 @@ Same treatment as the methodology registry (`ARCHITECTURE.md` §14: "derived met
 | A new product fact, piece of evidence, hypothesis, or decision | `context.json` (Product Context), correctly classified |
 | PDM's own progress, next step, or an open question about *how to proceed* | `work-state.json` (Work State) |
 | Neither of the above — just a readable snapshot for next time | `active-brief.md`, regenerated from the two files above |
+
+## Decision persistence protocol (git_remote products)
+
+The session boundary is not a reliable durability boundary — a conversation can end without an orderly close. Local writes (`writeProductContext`, `writeWorkState`, `writeActiveBrief`) only touch the product's local clone (`runtime/productSync.js#syncGitRemoteProduct`); nothing durable happens until that clone is pushed to the product's real remote (`runtime/productSync.js#publishProductRepositoryChanges`).
+
+**Publish immediately after every `recordFounderDecision` — and only then.** Work State updates and evidence/hypothesis-only Product Context writes stay local; they are not worth the cost of an immediate push on their own. They ride along automatically the next time a real decision triggers a publish (or at session close), because `publishProductRepositoryChanges` commits whatever is currently in the clone, not just the decision.
+
+**Reuse one branch per session**, not one branch per decision — `publishProductRepositoryChanges` reuses `branchName` if it already exists locally, so calling it once per decision with the same `branchName` accumulates commits on a single branch instead of spawning a branch/PR per decision. Suggested naming: `pdm/<product>/<session-start-date>`.
+
+**On publish failure, retry only the publish — never redo the write.** `writeProductContext` already succeeded locally (it's a synchronous file write; it does not fail the way a network push can), so the decision is not lost. Treat a failed `publishProductRepositoryChanges` call as retryable on its own.
+
+**Opening a pull request stays a separate, deliberate step** at the true end of a session (or whenever HH wants a checkpoint reviewed) — not automatic, and not per decision.

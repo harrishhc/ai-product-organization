@@ -66,11 +66,19 @@ export async function syncGitRemoteProduct(productId, { initiatedByHH, runGitCom
 /**
  * Commits and pushes whatever changes exist in a git_remote product's local
  * clone (e.g. from writeProductContext / writeWorkState / writeActiveBrief)
- * to a NEW branch on that product's own remote — never to main/its default
+ * to a branch on that product's own remote — never to main/its default
  * branch directly. This is the only way a change reaches the product's real
  * repository history. Deliberately does not open a pull request itself —
  * that is a separate, caller-level step (e.g. `gh pr create`), not a
  * runtime primitive.
+ *
+ * Reuses `branchName` if it already exists locally (falls back to creating
+ * it otherwise), so a caller can call this repeatedly across one PDM
+ * session — e.g. once per recordFounderDecision — and accumulate commits on
+ * a single branch instead of spawning one branch/PR per decision. See
+ * governance/WORK_STATE_BOUNDARY.md for the intended trigger: publish on
+ * every recorded Founder decision, not on every Work State or evidence-only
+ * Product Context write.
  *
  * @param {string} productId
  * @param {{
@@ -97,7 +105,15 @@ export async function publishProductRepositoryChanges(
   }
 
   session?.recordNetworkCall?.('product_publish');
-  await runGitCommand(['-C', clonePath, 'checkout', '-b', branchName]);
+  try {
+    await runGitCommand(['-C', clonePath, 'checkout', branchName]);
+  } catch {
+    // Branch doesn't exist locally yet — create it. A caller that wants to
+    // distinguish "switched to an existing branch" from "created a new one"
+    // should check git state itself; this function only guarantees it ends
+    // up on `branchName` either way.
+    await runGitCommand(['-C', clonePath, 'checkout', '-b', branchName]);
+  }
   await runGitCommand(['-C', clonePath, 'add', '-A']);
   await runGitCommand(['-C', clonePath, 'commit', '-m', commitMessage]);
   await runGitCommand(['-C', clonePath, 'push', '-u', 'origin', branchName]);
