@@ -1,0 +1,18 @@
+{
+  "current_focus": "Awaiting wedge decision",
+  "dominant_uncertainty": null,
+  "in_progress": [],
+  "next_actions": [
+    "Start wedge build"
+  ],
+  "blocked": [],
+  "recently_completed": [],
+  "open_questions": [],
+  "last_session": {
+    "date": "2026-09-11",
+    "summary": "raised checkpoint",
+    "decision_refs": [
+      "dec_pending_1"
+    ]
+  }
+}
