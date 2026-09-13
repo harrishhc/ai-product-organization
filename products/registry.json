@@ -40,6 +40,13 @@
         "purpose": "test fixture simulating a git_remote product whose local clone has not been synced yet — see tests/productRegistry.test.js"
       }
     },
+    "_decision-fixture": {
+      "repository": { "type": "local_path", "location": "./products/_decision-fixture" },
+      "context_entry": "context.json",
+      "metadata": {
+        "purpose": "dedicated fixture for tests/decisionRecord.test.js — kept separate from _template so decision-record writes do not contend with the suites that read _template's context.json"
+      }
+    },
     "colon-biopsy-ai-app": {
       "repository": {
         "type": "git_remote",

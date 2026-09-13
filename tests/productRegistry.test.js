@@ -18,15 +18,14 @@ test('resolveProductRepository refuses an unregistered product rather than guess
   assert.throws(() => resolveProductRepository('not-registered'));
 });
 
+// The "not the filesystem" half of this guarantee is enforced structurally in
+// invariants.test.js (productRegistry.js never calls readdirSync). Here we
+// only assert the list is exactly what the registry declares, without
+// restating the id list — otherwise every new fixture churns this test.
 test('listRegisteredProductIds reflects the registry, not the filesystem', () => {
-  assert.deepEqual(listRegisteredProductIds(), [
-    '_template',
-    '_path-traversal-test',
-    '_work-state-path-traversal-test',
-    '_git-remote-fixture',
-    '_git-remote-not-cloned-yet',
-    'colon-biopsy-ai-app',
-  ]);
+  const { products } = JSON.parse(readFileSync(path.join(REPO_ROOT, 'products', 'registry.json'), 'utf8'));
+  assert.deepEqual(listRegisteredProductIds(), Object.keys(products));
+  assert.ok(!listRegisteredProductIds().includes('never-registered-product'));
 });
 
 test('resolveProductRepository resolves a "git_remote" product whose local clone already exists', () => {
