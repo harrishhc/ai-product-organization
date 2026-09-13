@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { resolveProductRepository, listRegisteredProductIds } from '../runtime/productRegistry.js';
+import { resolveProductRepository, listRegisteredProductIds, listActiveProductIds, PRODUCT_STATUSES } from '../runtime/productRegistry.js';
 
 const REPO_ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -50,4 +50,34 @@ test('colon-biopsy-ai-app is registered as a git_remote product with both contex
   assert.match(entry.repository.remote_url, /colon-biopsy-ai-app/);
   assert.equal(entry.context_entry, 'product-context/context.json');
   assert.equal(entry.work_state_entry, 'product-context/work-state.json');
+});
+
+test('resolveProductRepository returns portfolio policy: status and priority', () => {
+  const resolved = resolveProductRepository('_portfolio-paused-fixture');
+  assert.equal(resolved.status, 'paused');
+  assert.equal(resolved.priority, 2);
+});
+
+test('status defaults to active and priority defaults to unranked when absent', () => {
+  const { products } = JSON.parse(readFileSync(path.join(REPO_ROOT, 'products', 'registry.json'), 'utf8'));
+  assert.ok(!('priority' in products._template), 'fixture precondition: _template declares no priority');
+  assert.equal(resolveProductRepository('_template').priority, null);
+});
+
+test('an unknown status is refused rather than silently treated as active', () => {
+  assert.throws(() => resolveProductRepository('_invalid-status-fixture'), /which is not one of/);
+});
+
+test('listActiveProductIds excludes fixtures and paused products, and is the portfolio membership list', () => {
+  const active = listActiveProductIds();
+  assert.ok(active.includes('colon-biopsy-ai-app'));
+  assert.ok(!active.some((id) => id.startsWith('_')), 'test fixtures are not portfolio members');
+  assert.ok(!active.includes('_portfolio-paused-fixture'), 'paused products are not selectable');
+  assert.ok(active.length < listRegisteredProductIds().length);
+});
+
+test('colon-biopsy-ai-app declares its portfolio policy in the registry', () => {
+  const { products } = JSON.parse(readFileSync(path.join(REPO_ROOT, 'products', 'registry.json'), 'utf8'));
+  assert.equal(products['colon-biopsy-ai-app'].status, 'active');
+  assert.equal(products['colon-biopsy-ai-app'].priority, 1);
 });

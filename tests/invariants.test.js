@@ -158,10 +158,12 @@ test('invariant: PDM can issue "disagree" and "dont_build_yet" without being for
 
 // 7. PDM does not silently self-modify.
 test('invariant: PDM Core, registry, product registry, decision, and evaluation never write to disk (governance/methodology/registry are never auto-mutated)', () => {
-  // context.js is the one intentional exception: it may write back to a
-  // PRODUCT's own repository via an explicit writeProductContext() call
-  // (the "optionally write/update product artifacts when authorized" step)
-  // — that is product data, not PDM/governance/methodology self-modification.
+  // Three modules are intentional exceptions, and only via explicit calls:
+  // context.js (writeProductContext) and workState.js (writeWorkState /
+  // writeActiveBrief) write a PRODUCT's own data back to that product's
+  // repository, and portfolio.js (writePortfolioIndex) writes a derived,
+  // disposable index. None of them modifies PDM governance or methodology,
+  // which is what this invariant protects.
   const mustNeverWrite = [
     'pdmCore.js',
     'registry.js',

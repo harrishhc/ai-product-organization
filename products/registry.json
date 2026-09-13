@@ -1,21 +1,37 @@
 {
   "products": {
     "_template": {
-      "repository": { "type": "local_path", "location": "./products/_template" },
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_template"
+      },
       "context_entry": "context.json",
       "work_state_entry": "work-state.json",
-      "metadata": {}
+      "metadata": {},
+      "status": "fixture"
     },
     "_path-traversal-test": {
-      "repository": { "type": "local_path", "location": "./products/_template" },
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_template"
+      },
       "context_entry": "../escaped-context.json",
-      "metadata": { "purpose": "security regression fixture — see tests/context.test.js; must always be rejected, never resolved" }
+      "metadata": {
+        "purpose": "security regression fixture — see tests/context.test.js; must always be rejected, never resolved"
+      },
+      "status": "fixture"
     },
     "_work-state-path-traversal-test": {
-      "repository": { "type": "local_path", "location": "./products/_template" },
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_template"
+      },
       "context_entry": "context.json",
       "work_state_entry": "../escaped-workstate.json",
-      "metadata": { "purpose": "security regression fixture — see tests/workState.test.js; must always be rejected, never resolved" }
+      "metadata": {
+        "purpose": "security regression fixture — see tests/workState.test.js; must always be rejected, never resolved"
+      },
+      "status": "fixture"
     },
     "_git-remote-fixture": {
       "repository": {
@@ -27,7 +43,8 @@
       "work_state_entry": "work-state.json",
       "metadata": {
         "purpose": "test fixture simulating an ALREADY-CLONED git_remote product (points at the _template fixture so resolution can be tested with zero real network access) — see tests/productRegistry.test.js"
-      }
+      },
+      "status": "fixture"
     },
     "_git-remote-not-cloned-yet": {
       "repository": {
@@ -38,7 +55,19 @@
       "context_entry": "context.json",
       "metadata": {
         "purpose": "test fixture simulating a git_remote product whose local clone has not been synced yet — see tests/productRegistry.test.js"
-      }
+      },
+      "status": "fixture"
+    },
+    "_decision-fixture": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_decision-fixture"
+      },
+      "context_entry": "context.json",
+      "metadata": {
+        "purpose": "dedicated fixture for tests/decisionRecord.test.js — kept separate from _template so decision-record writes do not contend with the suites that read _template's context.json"
+      },
+      "status": "fixture"
     },
     "_decision-fixture": {
       "repository": { "type": "local_path", "location": "./products/_decision-fixture" },
@@ -55,7 +84,112 @@
       },
       "context_entry": "product-context/context.json",
       "work_state_entry": "product-context/work-state.json",
-      "metadata": { "owner": "harris.chen@aetherai.com" }
+      "metadata": {
+        "owner": "harris.chen@aetherai.com"
+      },
+      "status": "active",
+      "priority": 1
+    },
+    "_portfolio-paused-fixture": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_template"
+      },
+      "context_entry": "context.json",
+      "metadata": {
+        "purpose": "portfolio-policy fixture — see tests/productRegistry.test.js"
+      },
+      "status": "paused",
+      "priority": 2
+    },
+    "_invalid-status-fixture": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_template"
+      },
+      "context_entry": "context.json",
+      "metadata": {
+        "purpose": "validation fixture — an unknown status must be refused, never defaulted; see tests/productRegistry.test.js"
+      },
+      "status": "not-a-real-status"
+    },
+    "_pf-ready-a": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-ready-a"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 2
+    },
+    "_pf-ready-b": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-ready-b"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 2
+    },
+    "_pf-ready-c": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-ready-c"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 1
+    },
+    "_pf-blocked": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-blocked"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 1
+    },
+    "_pf-waiting": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-waiting"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 1
+    },
+    "_pf-idle": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-idle"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 3
     }
   }
 }

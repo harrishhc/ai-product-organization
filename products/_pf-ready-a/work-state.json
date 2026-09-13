@@ -1,0 +1,16 @@
+{
+  "current_focus": "Draft the PRD",
+  "dominant_uncertainty": "Which buyer signs off",
+  "in_progress": [],
+  "next_actions": [
+    "Draft PRD section 1"
+  ],
+  "blocked": [],
+  "recently_completed": [],
+  "open_questions": [],
+  "last_session": {
+    "date": "2026-09-01",
+    "summary": "framing",
+    "decision_refs": []
+  }
+}
