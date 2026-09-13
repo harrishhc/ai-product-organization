@@ -1,0 +1,25 @@
+{
+  "product_id": "_decision-fixture",
+  "strategy": {
+    "vision": null,
+    "goals": [],
+    "non_goals": []
+  },
+  "users": {
+    "segments": [],
+    "customer_knowledge": []
+  },
+  "evidence": {
+    "research": [],
+    "confidence_notes": []
+  },
+  "decisions": [],
+  "experiments": {
+    "active": [],
+    "learnings": []
+  },
+  "roadmap": {
+    "current_state": null,
+    "items": []
+  }
+}
