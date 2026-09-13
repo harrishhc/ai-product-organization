@@ -4,13 +4,18 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-13T17:03:25.357Z
+Generated: 2026-09-13T17:47:25.570Z
 
-Products: 1 · READY 1 · WAITING_FOR_FOUNDER 0 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
+Products: 1 · READY 0 · WAITING_FOR_FOUNDER 1 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
 
 | Product | Priority | Status | Next action / why not | Last activity |
 |---|---|---|---|---|
-| colon-biopsy-ai-app | 1 | READY | Review knowledge/colon-drive/PoV_colon biopsy.md and the Keio University (Sekine) consultation material against the 'review throughput' hypothesis already recorded in context.json | 2026-09-11 |
+| colon-biopsy-ai-app | 1 | WAITING_FOR_FOUNDER | awaiting HH: dec_1789321602255_h32ovb | 2026-09-13 |
 
 ## Next selected work
-**colon-biopsy-ai-app** — Review knowledge/colon-drive/PoV_colon biopsy.md and the Keio University (Sekine) consultation material against the 'review throughput' hypothesis already recorded in context.json
+_(nothing runnable)_
+
+## Waiting on HH
+- colon-biopsy-ai-app: dec_1789321602255_h32ovb
+
+These block only their own product. They never stop the loop.
