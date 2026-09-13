@@ -1,0 +1,14 @@
+{
+  "current_focus": null,
+  "dominant_uncertainty": null,
+  "in_progress": [],
+  "next_actions": [],
+  "blocked": [],
+  "recently_completed": [],
+  "open_questions": [],
+  "last_session": {
+    "date": "2026-07-01",
+    "summary": "nothing queued",
+    "decision_refs": []
+  }
+}

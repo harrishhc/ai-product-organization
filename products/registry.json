@@ -105,6 +105,84 @@
         "purpose": "validation fixture — an unknown status must be refused, never defaulted; see tests/productRegistry.test.js"
       },
       "status": "not-a-real-status"
+    },
+    "_pf-ready-a": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-ready-a"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 2
+    },
+    "_pf-ready-b": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-ready-b"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 2
+    },
+    "_pf-ready-c": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-ready-c"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 1
+    },
+    "_pf-blocked": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-blocked"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 1
+    },
+    "_pf-waiting": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-waiting"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 1
+    },
+    "_pf-idle": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/_pf-idle"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "purpose": "portfolio selection fixture — see tests/portfolio.test.js"
+      },
+      "status": "fixture",
+      "priority": 3
     }
   }
 }

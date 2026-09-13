@@ -1,0 +1,36 @@
+{
+  "product_id": "_pf-waiting",
+  "strategy": {
+    "vision": null,
+    "goals": [],
+    "non_goals": []
+  },
+  "users": {
+    "segments": [],
+    "customer_knowledge": []
+  },
+  "evidence": {
+    "research": [],
+    "confidence_notes": []
+  },
+  "decisions": [
+    {
+      "id": "dec_pending_1",
+      "state": "RECOMMENDATION",
+      "problem": "Which wedge?",
+      "recommendation": "Throughput",
+      "confidence": "medium",
+      "founder_decision": null,
+      "recorded_at": "2026-09-11T00:00:00.000Z",
+      "updated_at": "2026-09-11T00:00:00.000Z"
+    }
+  ],
+  "experiments": {
+    "active": [],
+    "learnings": []
+  },
+  "roadmap": {
+    "current_state": null,
+    "items": []
+  }
+}

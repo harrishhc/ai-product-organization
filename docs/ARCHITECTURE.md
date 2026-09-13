@@ -68,6 +68,16 @@ When PDM works on a product, the effective working context is: PDM Core + the se
 
 Product Context answers "what is true about the product." It does not answer "where did PDM leave off." That is Work State's job — a separate, product-specific record of PDM's own operational memory (current focus, dominant uncertainty, next actions, blockers, open questions), distinct from product facts and never itself a source of decisions. Active Brief is a small, disposable document rendered from Work State + Product Context so a new session can bootstrap from one short file instead of re-reading everything. Full rules, including why Work State must never become a second source of truth for decisions, are in [`governance/WORK_STATE_BOUNDARY.md`](../governance/WORK_STATE_BOUNDARY.md).
 
+### 6.2 Portfolio
+
+PDM is responsible for several products at once, so "which product next" is a real question with a real failure mode: one product waiting on HH must never stop work on the others.
+
+Portfolio state is **derived, never stored**. Each product's status (`READY` / `WAITING_FOR_FOUNDER` / `BLOCKED` / `IDLE` / `UNINITIALIZED`) is recomputed from that product's own Work State and its own pending checkpoints on every refresh (`runtime/portfolio.js`). Only two portfolio facts are stored, in `products/registry.json`, because no single product can know them: `priority` and `status`.
+
+Refresh is cheap by contract — one small Work State file and one bounded `decisions` section per product, never a full Product Context. `portfolio-index.md` is a derived artifact under the same rule as Active Brief: regenerate it, never hand-edit it.
+
+Work selection is lexicographic, not a weighted score: portfolio priority, then least-recently-worked (so equal-priority products cannot starve), then product id for determinism. A weighted model would rest on effort and value estimates that are guesses, and could not explain a week later why a given product was chosen.
+
 ## 7. Product Evolution vs Agent Evolution
 
 **Product Evolution Loop**
