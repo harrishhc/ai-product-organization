@@ -15,6 +15,24 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
 const PRODUCT_REGISTRY_PATH = path.join(REPO_ROOT, 'products', 'registry.json');
 
+/**
+ * Portfolio policy, and the only portfolio-level truth that exists: a product
+ * cannot know its own priority relative to other products, so `priority` and
+ * `status` live here, in the index HH owns — never copied down into any
+ * product's own context, and never duplicating anything a product already
+ * knows about itself.
+ *
+ * - `active`   — a portfolio member PDM may select work from
+ * - `paused`   — deliberately not worked right now; skipped by selection
+ * - `archived` — kept resolvable for history, never selected
+ * - `fixture`  — exists for this repository's tests, not a real product
+ *
+ * `priority` is a rank where lower runs first. Absent means unranked, which
+ * sorts last.
+ */
+export const PRODUCT_STATUSES = Object.freeze(['active', 'paused', 'archived', 'fixture']);
+const DEFAULT_STATUS = 'active';
+
 let cachedRegistry = null;
 
 /** Cached for the process lifetime — this is small, stable metadata, not product content. */
@@ -79,11 +97,20 @@ export function resolveProductRepository(productId) {
     );
   }
   const repositoryPath = resolveRepositoryPath(productId, entry.repository);
+  const status = entry.status ?? DEFAULT_STATUS;
+  if (!PRODUCT_STATUSES.includes(status)) {
+    throw new Error(
+      `Product "${productId}" has status "${status}", which is not one of: ${PRODUCT_STATUSES.join(', ')}.`
+    );
+  }
   return {
     productId,
     repositoryType: entry.repository.type,
     repositoryPath,
     contextEntry: entry.context_entry,
+    // Portfolio policy (see PRODUCT_STATUSES). Not product truth.
+    status,
+    priority: entry.priority ?? null,
     // Optional: Work State (runtime/workState.js) is opt-in per product.
     // Absent means the product has not adopted Work State yet.
     workStateEntry: entry.work_state_entry ?? null,
@@ -95,4 +122,14 @@ export function resolveProductRepository(productId) {
 
 export function listRegisteredProductIds() {
   return Object.keys(loadProductRegistry().products);
+}
+
+/**
+ * The portfolio's membership list: registered products PDM may currently
+ * select work from. Paused, archived, and test-fixture entries are excluded
+ * here rather than filtered out by every caller.
+ */
+export function listActiveProductIds() {
+  const { products } = loadProductRegistry();
+  return Object.keys(products).filter((id) => (products[id].status ?? DEFAULT_STATUS) === 'active');
 }
