@@ -45,6 +45,11 @@ products/        Product Registry only (registry.json) — a pointer index to
                  never automatically during ordinary product work
   _template/     local fixture standing in as a "product repository" for
                  bootstrap/dev/testing
+bin/             the one place runtime/'s injected process/network
+                 dependencies are actually implemented — pdm-git.mjs provides
+                 the real `runGitCommand` for sync/publish. Nothing in
+                 runtime/ can reach bin/, so ordinary PDM reads and writes
+                 still cannot trigger git as a side effect
 governance/      role boundaries, decision model, delegation logic, governance principles
 docs/            architecture records
 tests/           node:test suite covering behavior + architectural invariants
