@@ -17,6 +17,8 @@
 2. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — 完整架構記錄,五層(PDM Core / Active Brief / Product Context / Work State / Methodology)+ Portfolio(§6.2)。
 3. [`governance/ROLE_BOUNDARIES.md`](governance/ROLE_BOUNDARIES.md)、[`governance/DELEGATION_LOGIC.md`](governance/DELEGATION_LOGIC.md)、[`governance/EVIDENCE_DISCIPLINE.md`](governance/EVIDENCE_DISCIPLINE.md)、[`governance/GOVERNANCE_PRINCIPLES.md`](governance/GOVERNANCE_PRINCIPLES.md)。
 4. [`governance/WORK_STATE_BOUNDARY.md`](governance/WORK_STATE_BOUNDARY.md) — Product Context / Work State / Active Brief 的邊界,session 協定,Decision persistence protocol(何時必須 publish)。
+5. [`governance/AUTONOMY_BOUNDARY.md`](governance/AUTONOMY_BOUNDARY.md) — **哪些動作可以不問就做,哪些必須停下來等 HH**。預設是繼續工作;停下來是例外。可以用分析回答的問題,不是 checkpoint。
+6. [`governance/COLLABORATION_PROTOCOL.md`](governance/COLLABORATION_PROTOCOL.md) — PDM Worker 的運轉迴圈、Founder Decision Brief、review surface 規則。
 
 不要因為文件講了某件事就假設 runtime 已經強制執行——`runtime/` 底下的程式碼才是實際行為,文件是規則,兩者要對照。
 
@@ -32,6 +34,8 @@
 
 ## 核心紀律(不要違反)
 
+- **用 `bin/pdm-run.mjs` 驅動迴圈**:`node bin/pdm-run.mjs next` 會 refresh portfolio、選出下一個該做的產品、印出它的 Active Brief 與 dominant uncertainty,並讓 Runtime Governor 決定還能不能繼續。做完一個 work unit 後帶 `--done N` 再跑一次。不要憑記憶自己決定「還要不要繼續」。
+- **每個 work unit 都要先選 methodology capability**:`runtime/orchestrator.js#selectCapability({ dominantUncertainty, intents, decisionStage })` → `loadSelectedCapability()`。registry 裡有 244 個 capabilities;不先路由就直接用純推理做產品工作,是浪費這一層。`selectCapability` 會強制你講出 dominant uncertainty,那是刻意的。
 - **Bounded context 優先**:讀一個產品的狀態,先讀 `active-brief.md`,不夠才讀 `context.json`(依 section),再不夠才進 `knowledge/`。不要一次載入整個 methodology library 或整個產品歷史。
 - **Work State ≠ Product Context**:PDM 做到哪裡(Work State)跟產品是什麼(Product Context)分開存,前者不能單獨主張任何 decision。
 - **Pending checkpoint 一定要 persist**:PDM 提出建議、正在等 HH 回覆時,立刻 `upsertDecisionRecord()` 並 publish——不要等 HH 回覆才寫,否則對話意外中斷會讓下一個 session(不管是哪個模型)忘記這個產品在等人。

@@ -39,12 +39,15 @@ test('refreshPortfolio derives each product\'s status from its own state', () =>
 });
 
 test('a product that cannot be resolved yet becomes UNINITIALIZED instead of breaking the loop', () => {
-  // colon-biopsy-ai-app is a git_remote product with no local clone in a
-  // fresh checkout — exactly the real-world case.
-  const portfolio = refreshPortfolio({ productIds: ['colon-biopsy-ai-app', '_pf-ready-a'] });
-  const colon = byId(portfolio, 'colon-biopsy-ai-app');
-  assert.equal(colon.status, 'UNINITIALIZED');
-  assert.match(colon.note, /local clone does not exist yet/);
+  // Uses the dedicated _git-remote-not-cloned-yet fixture, never a real
+  // product. This assertion previously pointed at colon-biopsy-ai-app and so
+  // passed only while that product happened to be unsynced — meaning the first
+  // worker to do its job and sync it broke an architectural invariant test.
+  // An invariant must not depend on a real product's transient local state.
+  const portfolio = refreshPortfolio({ productIds: ['_git-remote-not-cloned-yet', '_pf-ready-a'] });
+  const unsynced = byId(portfolio, '_git-remote-not-cloned-yet');
+  assert.equal(unsynced.status, 'UNINITIALIZED');
+  assert.match(unsynced.note, /local clone does not exist yet/);
   assert.equal(byId(portfolio, '_pf-ready-a').status, 'READY', 'the other product still refreshed');
 });
 

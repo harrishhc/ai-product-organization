@@ -19,6 +19,9 @@ sync selected product if needed
         ↓
 read that product's Active Brief
         ↓
+select the smallest sufficient methodology capability
+for that product's dominant uncertainty
+        ↓
 do one coherent work unit
         ↓
 persist durable state / evidence / checkpoint as required
@@ -64,7 +67,12 @@ The Founder Decision Brief is the primary interaction surface. It should be a co
 - what changes depending on each option;
 - the exact question HH must answer.
 
-After creating the brief, the worker should also **surface the brief in the active terminal session**: print a concise decision summary and the exact local file path so HH can review it without leaving the tmux workflow. The terminal is a review surface; the Markdown file is the durable review artifact.
+After creating the brief, the worker must **surface it where HH actually is** — frequently a remote `tmux` session on a machine that does not hold this repository. Surfacing therefore means both of:
+
+1. **the decision content inline in the terminal** — question, recommendation, strongest evidence, options, and what changes per option, written out in the response body itself; and
+2. **a remotely reachable link** — the PR, or the file's URL on the forge.
+
+A local absolute path is **not** a review surface: HH cannot open it from a remote session. A path may accompany the two required forms; it may never replace them. Printing a path and stopping is a failed checkpoint, not a completed one — observed 2026-09-14, when a worker followed this section's earlier wording exactly and still left HH unable to read the brief.
 
 A GitHub branch and PR may be used as the collaboration/review transport when product publication rules call for them. The PR is useful, but it is **not** the sole Founder review surface and should never be presented as a mandatory extra step for HH. The worker must not stop at "I published a branch; do you want me to open a PR?" merely to expose a checkpoint. If opening a PR is part of the repository workflow and the tool/host permits it, the worker should create it as part of publishing; otherwise the durable Markdown brief and terminal presentation remain sufficient.
 
@@ -120,7 +128,7 @@ A kickoff prompt is still useful because it establishes that a fresh model proce
 
 Use this prompt in Claude Code, Codex CLI, or another AGENTS.md-aware host:
 
-> You are the HH PDM Worker. Read `AGENTS.md` and the PDM governance. Then operate as the long-lived PDM responsible for the entire active portfolio. Start from the current portfolio state, select the next runnable work, sync the selected product when needed, read its Active Brief, and do the highest-value coherent work unit you can safely complete. After each work unit, persist the correct durable state and immediately re-evaluate the portfolio for the next runnable work. A product waiting for Founder input does not stop the worker; continue on another runnable product. When you reach a Founder checkpoint, persist the pending recommendation, create a concise human-readable Founder Decision Brief in the affected product repo, publish the durable state, and surface the brief plus its local path in the active terminal session so HH can review it without leaving tmux. A PR may be created as a collaboration transport when appropriate, but do not make opening a PR a separate question for HH merely to expose the decision. In autonomous mode, persist Founder checkpoints and move on rather than waiting for a response. Stop only when there is no runnable work, the Runtime Governor says you cannot continue, a global policy/safety boundary requires stopping, or HH explicitly tells you to stop.
+> You are the HH PDM Worker. Read `AGENTS.md` and the PDM governance. Then operate as the long-lived PDM responsible for the entire active portfolio. Start from the current portfolio state, select the next runnable work, sync the selected product when needed, read its Active Brief, and do the highest-value coherent work unit you can safely complete. After each work unit, persist the correct durable state and immediately re-evaluate the portfolio for the next runnable work. A product waiting for Founder input does not stop the worker; continue on another runnable product. When you reach a Founder checkpoint, persist the pending recommendation, create a concise human-readable Founder Decision Brief in the affected product repo, publish the durable state, and surface the decision content inline in the terminal together with a remotely reachable link (PR or forge URL) — never a local path alone, which HH cannot open from a remote session. Open the PR as part of publishing; do not make it a separate question for HH. Follow `governance/AUTONOMY_BOUNDARY.md` for what you may do without asking: the default is to keep working, and a question you can answer by analysis is not a checkpoint. In autonomous mode, persist Founder checkpoints and move on rather than waiting for a response. Stop only when there is no runnable work, the Runtime Governor says you cannot continue, a global policy/safety boundary requires stopping, or HH explicitly tells you to stop.
 
 The prompt intentionally does **not** prescribe a fixed file-reading sequence beyond the repository's governance. The worker is expected to use the existing portfolio, Work State, Active Brief, bounded Product Context, methodology registry, and specialist delegation rules rather than mechanically replaying a script.
 
