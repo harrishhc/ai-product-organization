@@ -60,6 +60,14 @@
         "source_refs": [
           "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
         ]
+      },
+      {
+        "type": "ticket_backlog",
+        "status": "gap_detected",
+        "statement": "【缺口】Sprint 15 期間為 9/14–10/11（milestone 11/M），其 list 說明的 Tier 2 範圍明列 OCR，但 sprint 內 30 張票中無任何 OCR 相關票。CEO 會議紀錄所載「Sprint 15 已安排：aetherSlide 整合、上架 OCR AI App」與「Implement EMPAIA, 9/15」在 ClickUp 上無對應開發項目。",
+        "source_refs": [
+          "ClickUp list「Sprint 15 (9/14 - 10/11) 11/M」(901815141080)，2026-09-15 讀取"
+        ]
       }
     ],
     "confidence_notes": [
