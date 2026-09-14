@@ -1,0 +1,115 @@
+{
+  "product_id": "slide-quality-control",
+  "context_version": "0.1.0",
+  "strategy": {
+    "vision": {
+      "classification": "EVIDENCE",
+      "statement": "Slide Quality Control：玻片數位化品質控制（QC-Macro / QC-WSI），支援實驗室品質紀錄與趨勢分析。",
+      "source_refs": [
+        "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+      ]
+    },
+    "known_goals": [
+      {
+        "classification": "EVIDENCE",
+        "statement": "定位區分為 Hardware QC（Scan Digitalize，Failure < 1%）與 Software QC（Diagnostic Viability）；前者涵蓋 Tissue Detection / Focus Mapping，後者涵蓋 Physical Artifacts / Stain Quality。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "規劃提供 quality record 與 trend-analysis 系統，以支援 CAP / ISO 15189 / TAF 實驗室認證需求 — 此為與認證掛鉤的價值主張。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      }
+    ],
+    "non_goals": [],
+    "open_strategy_questions": [
+      "與 Hamamatsu 掃片機內建 QC 功能是否重複開發？（2026-07-06 已提出此疑慮，未見結論）"
+    ]
+  },
+  "users": {
+    "segments": [],
+    "customer_knowledge": [],
+    "open_user_questions": []
+  },
+  "evidence": {
+    "research": [
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "2026-08-10 記錄：「Postpone dev priority」— 開發優先序已被明確延後。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "測試集不足：WSI 僅 79 張 HE slides (TCGA)，記錄為 not representative；GTEx 跑 1000 張後 wsi-app 回報 74 張，其中 Fold FP 71 張（Fold DP model 需 refine）、Blur 3 張、Bubble FP 1 張。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "QC requirement 訪談對象規劃為北榮、長庚、有明。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "2026-09-09：WSI app 2.0.3 更新，輸出 OOF ROI 與 focus points 以測試 rescan 效能。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      }
+    ],
+    "confidence_notes": [
+      {
+        "classification": "ASSUMPTION",
+        "statement": "Product Context 目前僅由 CEO biweekly meeting note 的該產品 tab 播種，尚未與該產品的 PRD / 規格 / ClickUp 交叉確認。所有條目分類為 EVIDENCE（有出處的會議紀錄），不得當作 FACT 使用。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      }
+    ]
+  },
+  "decisions": [],
+  "experiments": {
+    "active": [],
+    "learnings": [],
+    "available_validation_artifacts": []
+  },
+  "roadmap": {
+    "current_state": {
+      "classification": "EVIDENCE",
+      "statement": "開發優先序已延後；模型偽陽性問題明顯（Fold FP 71/74），測試集代表性不足。",
+      "source_refs": [
+        "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+      ]
+    },
+    "items": [
+      {
+        "status": "now",
+        "item": "Fold DP model refine（Fold FP 71/74 為主要品質問題）",
+        "classification": "HYPOTHESIS"
+      },
+      {
+        "status": "next",
+        "item": "QC requirement 訪談：北榮、長庚、有明",
+        "classification": "HYPOTHESIS"
+      },
+      {
+        "status": "next",
+        "item": "CAP / ISO 15189 / TAF 認證支援之 quality record 與 trend-analysis 系統",
+        "classification": "HYPOTHESIS"
+      }
+    ]
+  }
+}

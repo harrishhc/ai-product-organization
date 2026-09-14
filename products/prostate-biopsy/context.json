@@ -1,0 +1,108 @@
+{
+  "product_id": "prostate-biopsy",
+  "context_version": "0.1.0",
+  "strategy": {
+    "vision": {
+      "classification": "EVIDENCE",
+      "statement": "Prostate Biopsy AI：攝護腺生檢病理影像 AI 輔助，目標為商業化模型（Nous）。",
+      "source_refs": [
+        "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+      ]
+    },
+    "known_goals": [
+      {
+        "classification": "EVIDENCE",
+        "statement": "2026-08-10 記錄：「年底標案開始，開發優先序高」— 為目前 portfolio 中明確被標註高開發優先序的產品。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "產品於 2026-07-27 交接（handover-chenchc_P26001_Prostate_Biopsy_20260727）。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      }
+    ],
+    "non_goals": [],
+    "open_strategy_questions": [
+      "年底標案的具體時程與投標要求為何？",
+      "標案所需的模型效能門檻是否已定義？"
+    ]
+  },
+  "users": {
+    "segments": [],
+    "customer_knowledge": [],
+    "open_user_questions": []
+  },
+  "evidence": {
+    "research": [
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "模型泛化能力強化中，等待 CROPath 資料；UKE slides 運送回台灣中。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "2026-09-09：待 CROPath 資料確認匯入數量與各器官數量。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "RD 進行 Nous 商業化模型開發；需解決標註不一致與影像品質問題。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      }
+    ],
+    "confidence_notes": [
+      {
+        "classification": "ASSUMPTION",
+        "statement": "Product Context 目前僅由 CEO biweekly meeting note 的該產品 tab 播種，尚未與該產品的 PRD / 規格 / ClickUp 交叉確認。所有條目分類為 EVIDENCE（有出處的會議紀錄），不得當作 FACT 使用。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      }
+    ]
+  },
+  "decisions": [],
+  "experiments": {
+    "active": [],
+    "learnings": [],
+    "available_validation_artifacts": []
+  },
+  "roadmap": {
+    "current_state": {
+      "classification": "EVIDENCE",
+      "statement": "等待 CROPath 資料以強化模型泛化能力；年底標案為主要時程驅動力。",
+      "source_refs": [
+        "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+      ]
+    },
+    "items": [
+      {
+        "status": "now",
+        "item": "等待並確認 CROPath 資料匯入數量與各器官數量",
+        "classification": "HYPOTHESIS"
+      },
+      {
+        "status": "next",
+        "item": "年底標案準備",
+        "classification": "HYPOTHESIS"
+      },
+      {
+        "status": "next",
+        "item": "Nous 商業化模型開發：解決標註不一致與影像品質問題",
+        "classification": "HYPOTHESIS"
+      }
+    ]
+  }
+}

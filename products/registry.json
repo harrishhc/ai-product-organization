@@ -183,6 +183,48 @@
       },
       "status": "fixture",
       "priority": 3
+    },
+    "ocr-slide-label-reader": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/ocr-slide-label-reader"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "owner": "harris.chen@aetherai.com",
+        "bootstrap_note": "本地 bootstrap：此產品尚無自有 repository。Product Context 暫存於 PDM Core 之下，應在取得自有 repo 後遷移為 git_remote（見 products/README.md）。"
+      },
+      "status": "active",
+      "priority": 2
+    },
+    "prostate-biopsy": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/prostate-biopsy"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "owner": "harris.chen@aetherai.com",
+        "bootstrap_note": "本地 bootstrap：此產品尚無自有 repository。Product Context 暫存於 PDM Core 之下，應在取得自有 repo 後遷移為 git_remote（見 products/README.md）。"
+      },
+      "status": "active",
+      "priority": 1
+    },
+    "slide-quality-control": {
+      "repository": {
+        "type": "local_path",
+        "location": "./products/slide-quality-control"
+      },
+      "context_entry": "context.json",
+      "work_state_entry": "work-state.json",
+      "metadata": {
+        "owner": "harris.chen@aetherai.com",
+        "bootstrap_note": "本地 bootstrap：此產品尚無自有 repository。Product Context 暫存於 PDM Core 之下，應在取得自有 repo 後遷移為 git_remote（見 products/README.md）。"
+      },
+      "status": "active",
+      "priority": 3
     }
   }
 }

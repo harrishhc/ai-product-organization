@@ -1,0 +1,102 @@
+{
+  "product_id": "ocr-slide-label-reader",
+  "context_version": "0.1.0",
+  "strategy": {
+    "vision": {
+      "classification": "EVIDENCE",
+      "statement": "Slide Label Reader：以 OCR 讀取玻片標籤進行 study identification 與 metadata 擷取，整合進 aetherSlide。",
+      "source_refs": [
+        "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+      ]
+    },
+    "known_goals": [
+      {
+        "classification": "EVIDENCE",
+        "statement": "產品已於 2026-08 重新定義為 Slide Label Reader，範圍為 study identification 與其他 metadata，並採 human-in-the-loop（院所自行 review）。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "開發結構已確認：Input 由 RD 定義 scope（FAE 可調整）；App output 為 list[str]；Match rules 由 RD 定義 scope（FAE 可調整）。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      }
+    ],
+    "non_goals": [],
+    "open_strategy_questions": [
+      "human-in-the-loop 的 review 介面由誰定義？院所自行 review 的操作負擔是否已評估？"
+    ]
+  },
+  "users": {
+    "segments": [],
+    "customer_knowledge": [],
+    "open_user_questions": []
+  },
+  "evidence": {
+    "research": [
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "Sprint 15 (Nov) 已安排：aetherSlide 整合、運算完後匯入、上架 OCR AI App。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "App config update 期限為 9/15（2026-09-09 記錄）。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "type": "meeting_minutes",
+        "status": "reviewed",
+        "statement": "RD 目標 Sprint 15：實作 EMPAIA 架構，9/15。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      }
+    ],
+    "confidence_notes": [
+      {
+        "classification": "ASSUMPTION",
+        "statement": "Product Context 目前僅由 CEO biweekly meeting note 的該產品 tab 播種，尚未與該產品的 PRD / 規格 / ClickUp 交叉確認。所有條目分類為 EVIDENCE（有出處的會議紀錄），不得當作 FACT 使用。",
+        "source_refs": [
+          "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      }
+    ]
+  },
+  "decisions": [],
+  "experiments": {
+    "active": [],
+    "learnings": [],
+    "available_validation_artifacts": []
+  },
+  "roadmap": {
+    "current_state": {
+      "classification": "EVIDENCE",
+      "statement": "已完成產品重新定義與開發結構確認，進入 Sprint 15 開發排程。",
+      "source_refs": [
+        "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+      ]
+    },
+    "items": [
+      {
+        "status": "now",
+        "item": "Sprint 15 (Nov)：aetherSlide 整合、上架 OCR AI App",
+        "classification": "HYPOTHESIS"
+      },
+      {
+        "status": "next",
+        "item": "EMPAIA 架構實作",
+        "classification": "HYPOTHESIS"
+      }
+    ]
+  }
+}
