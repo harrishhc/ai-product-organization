@@ -28,7 +28,9 @@
     "non_goals": [],
     "open_strategy_questions": [
       "年底標案的具體時程與投標要求為何？",
-      "標案所需的模型效能門檻是否已定義？"
+      "標案所需的模型效能門檻是否已定義？",
+      "年底標案在交接文件中完全無紀錄（零次提及標案/tender/RFP/投標要求/效能門檻/競標者）。該訊號來自 2026-08-10 CEO 會議紀錄，比交接文件晚兩週，必須向 Adam Yen 或 CEO 直接取得。",
+      "成熟度與標案時程的落差風險：模型架構尚未建置、無任何效能數值、UI/UX 未開始、且本產品無任何法規定位，而已知競品 (Paige / Ibex / DeepDx) 均已取得 FDA 或 CE 認證。若標案要求法規認證或可驗證效能，需先確認我方是否具投標資格 — 此判斷在取得標案要求前無法做出。"
     ]
   },
   "users": {
@@ -61,6 +63,46 @@
         "source_refs": [
           "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
         ]
+      },
+      {
+        "type": "handover_document",
+        "status": "reviewed",
+        "statement": "產品範圍：攝護腺粗針穿刺切片 (CNB)。輸出為 Benign/Malignant 分類、經 Gleason pattern 分割推導之 Gleason score、以及標示 AI 關注區域之 heatmap/ROI。PNI 偵測已延後：「因公開資料集缺乏相關標註，可能列為下一階段的開發目標。」",
+        "source_refs": [
+          "handover-chenchc_P26001_Prostate_Biopsy_20260727「Prostate Cancer AI 專案交接文件 (V4)」(Google Drive 1nvYUPSOl8OimW6j04ZXEaAD_eZgc5E0N，建立與最後修改皆為 2026-07-27)"
+        ]
+      },
+      {
+        "type": "handover_document",
+        "status": "reviewed",
+        "statement": "模型架構為「預計將採用 GigaPixel algorithm 結合 Gaia foundation model 來進行開發」— 尚未建置。交接文件通篇無任何 AUC / sensitivity / specificity / kappa 數值。已知限制為質性描述：以 ISUP score 訓練分類最佳但「會犧牲模型對 Gleason patterns 的空間定位能力 (CAM 無法準確標示病理區域)」，且「現有模型架構在區分 3+4、4+3 及 4+4 上仍有困難」。",
+        "source_refs": [
+          "handover-chenchc_P26001_Prostate_Biopsy_20260727「Prostate Cancer AI 專案交接文件 (V4)」(Google Drive 1nvYUPSOl8OimW6j04ZXEaAD_eZgc5E0N，建立與最後修改皆為 2026-07-27)"
+        ]
+      },
+      {
+        "type": "handover_document",
+        "status": "reviewed",
+        "statement": "資料現況：pilot 使用 PANDA（僅限非商業）；商業路線資料集為 SICAPv2、Digital Pathology Dataset for Prostate Cancer Diagnosis、TCGA-PRAD。商業資料集導致效能明顯下降：「不同資料集的影像品質、標註一致性差異過大，且部分資料集 (如 TCGA-PRAD) 的良性 (Benign) 標註可能存在雜訊。」另有 SICAPv2 pixel spacing 標錯之解析度 bug（10x downsample 被標為 0.25 µm），以標準化前處理加 ImageSuperResolution 10x→40x 補償，效能僅部分回復。國內臨床資料來源為北榮臨床計畫 A21024。",
+        "source_refs": [
+          "handover-chenchc_P26001_Prostate_Biopsy_20260727「Prostate Cancer AI 專案交接文件 (V4)」(Google Drive 1nvYUPSOl8OimW6j04ZXEaAD_eZgc5E0N，建立與最後修改皆為 2026-07-27)"
+        ]
+      },
+      {
+        "type": "handover_document",
+        "status": "reviewed",
+        "statement": "法規現況：本產品無任何 TFDA/CE/FDA 定位、無 intended use 陳述、無宣稱範圍。文件中的法規內容僅為競品調查：Paige Prostate (FDA + CE-IVD)、Ibex Galen Prostate (CE-IVDR + FDA RUO)、DeepDx Prostate/Deep Bio (Korea MFDS + CE-IVD + FDA De Novo)。臨床效益陳述為期望性質（減少 IHC、降低二次會診、縮短病理報告產出時間、提高一致性與可重複性），非已驗證主張。",
+        "source_refs": [
+          "handover-chenchc_P26001_Prostate_Biopsy_20260727「Prostate Cancer AI 專案交接文件 (V4)」(Google Drive 1nvYUPSOl8OimW6j04ZXEaAD_eZgc5E0N，建立與最後修改皆為 2026-07-27)"
+        ]
+      },
+      {
+        "type": "handover_document",
+        "status": "reviewed",
+        "statement": "海外夥伴：UKF (Frankfurt) 與 UKE 均表達強烈合作意願，商業/臨床模式由 Adam Yen 定義。UKF 原訂 2026 上半年交付時程已逾期：「由於原訂 2026 年上半年的 UKF 交付時程已過，需盡快確立新的產品交付時程與技術需求。」交接文件完全未提及 UKE 玻片運送。臨床端期待為 3+3 /(3+4 & 4+3)/ 4+4 之定位，現行產品僅能提供 Grade 3 與 Grade 4 區域區分。UI/UX 尚未開始討論。",
+        "source_refs": [
+          "handover-chenchc_P26001_Prostate_Biopsy_20260727「Prostate Cancer AI 專案交接文件 (V4)」(Google Drive 1nvYUPSOl8OimW6j04ZXEaAD_eZgc5E0N，建立與最後修改皆為 2026-07-27)"
+        ]
       }
     ],
     "confidence_notes": [
@@ -69,6 +111,13 @@
         "statement": "Product Context 目前僅由 CEO biweekly meeting note 的該產品 tab 播種，尚未與該產品的 PRD / 規格 / ClickUp 交叉確認。所有條目分類為 EVIDENCE（有出處的會議紀錄），不得當作 FACT 使用。",
         "source_refs": [
           "CEO biweekly meeting note (Google Drive 1txFbhliZLuXFEPb2BNNvKlhl7Hh_BiYt5eW5Ouz_qDk)"
+        ]
+      },
+      {
+        "classification": "FACT",
+        "statement": "更正：先前依 CEO 會議紀錄將 CROPath 資料記為阻擋項。交接文件（2026-07-27）明確將其定位為「可利用近期向 CROPath 採購的資料…以進一步擴充資料庫」— 是資料庫擴充選項，不是阻擋項。真正被點名的短缺是臨床標註：「極度缺乏 Grade 5+ 及良性 (Benign) 組織的標註資料」。",
+        "source_refs": [
+          "handover-chenchc_P26001_Prostate_Biopsy_20260727「Prostate Cancer AI 專案交接文件 (V4)」(Google Drive 1nvYUPSOl8OimW6j04ZXEaAD_eZgc5E0N，建立與最後修改皆為 2026-07-27)"
         ]
       }
     ]

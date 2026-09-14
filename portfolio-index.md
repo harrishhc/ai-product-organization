@@ -4,19 +4,19 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-14T16:37:48.101Z
+Generated: 2026-09-14T16:45:06.107Z
 
 Products: 4 · READY 3 · WAITING_FOR_FOUNDER 1 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
 
 | Product | Priority | Status | Next action / why not | Last activity |
 |---|---|---|---|---|
-| colon-biopsy-ai-app | 1 | WAITING_FOR_FOUNDER | awaiting HH: dec_1789385929903_f7l86k | 2026-09-14 |
+| colon-biopsy-ai-app | 1 | WAITING_FOR_FOUNDER | awaiting HH: dec_1789385929903_f7l86k | 2026-09-15 |
 | ocr-slide-label-reader | 2 | READY | 確認 9/15 的 app config update 是否已完成（期限就在明天，2026-09-09 記錄後無更新） | 2026-09-14 |
-| prostate-biopsy | 1 | READY | 向 HH 或相關窗口取得年底標案的時程與投標要求（目前完全無紀錄，但它是此產品的主要時程驅動力） | 2026-09-14 |
+| prostate-biopsy | 1 | READY | 向 Adam Yen 或 CEO 取得年底標案的時程、投標要求與效能/法規門檻（交接文件完全無紀錄，是目前最大單一缺口） | 2026-09-15 |
 | slide-quality-control | 3 | READY | 確認 Fold DP model refine 進度與偽陽性根因（模型 vs 測試集代表性） | 2026-09-14 |
 
 ## Next selected work
-**prostate-biopsy** — 向 HH 或相關窗口取得年底標案的時程與投標要求（目前完全無紀錄，但它是此產品的主要時程驅動力）
+**prostate-biopsy** — 向 Adam Yen 或 CEO 取得年底標案的時程、投標要求與效能/法規門檻（交接文件完全無紀錄，是目前最大單一缺口）
 
 ## Waiting on HH
 - colon-biopsy-ai-app: dec_1789385929903_f7l86k
