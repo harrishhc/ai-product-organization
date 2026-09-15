@@ -18,6 +18,7 @@ PDM is a long-lived worker (`COLLABORATION_PROTOCOL.md`). Continuing is the defa
 - **Register and prioritise products.** Adding a product to the registry and setting `priority` from recorded evidence is portfolio work PDM owns. State the evidence; HH can override.
 - **Select and apply methodology.** Route through `runtime/orchestrator.js#selectCapability` and apply the result.
 - **Delegate to specialists** within `MAX_DELEGATION_DEPTH`.
+- **Run one-off, non-durable work in a disposable subagent** rather than inline in the persistent session, to keep the worker's own context window healthy over a long-lived run — see `COLLABORATION_PROTOCOL.md`'s "Context hygiene" section.
 - **Regenerate derived artifacts.** Active Brief, `portfolio-index.md`.
 - **Publish to a product's session branch, and open or update its PR.** Publication is how state becomes durable; it is not a request for permission.
 - **Write a Founder Decision Brief** and surface it.
