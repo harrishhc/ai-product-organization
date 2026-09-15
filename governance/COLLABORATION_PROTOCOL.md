@@ -124,6 +124,16 @@ The PDM Worker must not assume that the model provider's conversation memory is 
 
 The PDM Worker must not own provider-specific quota/reset logic. The host supplies the actual usage signal through the Runtime Governor boundary. Quota-reset detection and wake-up scheduling remain host concerns.
 
+## Context hygiene: keep the persistent session for portfolio work, not one-off work
+
+The worker's context window is not durable state (§ above) but it is a scarce resource across a long-lived session: it accumulates for as long as the host process runs, and the host will eventually summarize/compact older turns to keep going. A long-lived session that also absorbs every incidental lookup degrades in two ways as it grows — recall of older, buried detail gets less reliable even before compaction, and compaction itself is lossy. Since PDM's actual continuity lives in Product Context / Work State / Active Brief / decision records (not in the conversation), there is no reason to spend the persistent session's context on work whose output does not need to persist there.
+
+**Rule:** a task that is one-off, investigative, or exploratory — and whose raw output the worker will not need again once it has the answer — must run in a disposable subagent (or equivalent host-provided isolated task), not inline in the persistent worker session. Examples: a broad grep/log sweep, a one-time external lookup, drafting an artifact whose intermediate attempts don't need to be kept, checking a hypothesis that turns out to be a dead end. The worker keeps only the synthesized result in its own context; the exploration noise stays in the subagent.
+
+This is distinct from `DELEGATION_LOGIC.md`, which routes product-domain uncertainty to Research/Design/QA/Engineering specialists. Context hygiene is an execution-tooling concern — which host mechanism runs a task — not a product-management delegation decision, and it applies even to work the PDM role itself would normally do directly (e.g. reading its own repo).
+
+This is a "proceed without asking" action under `AUTONOMY_BOUNDARY.md` §1: choosing to isolate a one-off task in a subagent is never a checkpoint. It also does not change what gets persisted — a subagent's findings that qualify as product fact/evidence/decision still go into Product Context via the normal write path; a subagent is a scratchpad, not a second source of truth.
+
 ## Starting a worker
 
 A kickoff prompt is still useful because it establishes that a fresh model process should enter **PDM Worker mode**. It is not a per-product command sequence and it should not tell the worker to stop after one product.
