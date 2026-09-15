@@ -4,14 +4,14 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-14T16:45:06.107Z
+Generated: 2026-09-14T16:47:49.177Z
 
 Products: 4 · READY 3 · WAITING_FOR_FOUNDER 1 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
 
 | Product | Priority | Status | Next action / why not | Last activity |
 |---|---|---|---|---|
 | colon-biopsy-ai-app | 1 | WAITING_FOR_FOUNDER | awaiting HH: dec_1789385929903_f7l86k | 2026-09-15 |
-| ocr-slide-label-reader | 2 | READY | 確認 9/15 的 app config update 是否已完成（期限就在明天，2026-09-09 記錄後無更新） | 2026-09-14 |
+| ocr-slide-label-reader | 2 | READY | Sprint 15 內無任何 OCR 票（sprint 已於 9/14 開跑）— 向 RD 或 sprint owner 釐清是未拉入、記錄有誤或已改期 | 2026-09-15 |
 | prostate-biopsy | 1 | READY | 向 Adam Yen 或 CEO 取得年底標案的時程、投標要求與效能/法規門檻（交接文件完全無紀錄，是目前最大單一缺口） | 2026-09-15 |
 | slide-quality-control | 3 | READY | 確認 Fold DP model refine 進度與偽陽性根因（模型 vs 測試集代表性） | 2026-09-14 |
 
