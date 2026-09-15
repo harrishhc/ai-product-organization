@@ -4,7 +4,7 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-15T09:45:18.061Z
+Generated: 2026-09-15T09:46:27.010Z
 
 Products: 4 · READY 3 · WAITING_FOR_FOUNDER 1 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
 
