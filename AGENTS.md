@@ -42,6 +42,7 @@
 - **Priority 是唯一的 portfolio 級別事實**,只存在 `products/registry.json`;`READY`/`BLOCKED` 這類狀態永遠是推導,不要存進任何檔案。
 - **一個產品卡住,不擋住整個 portfolio**:`WAITING_FOR_FOUNDER` 只影響那一個產品,PDM 應該換去做其他 `READY` 的產品。
 - **git 操作只能透過 `bin/pdm-git.mjs`**,不要繞過去手動下 git 指令改產品的 clone。
+- **不要只憑「查詢工具說沒有」就記成 gap**:外部資料來源的查詢方法可能有結構性盲點(例如 ClickUp list 查詢預設漏掉透過「Tasks in Multiple Lists」加入的票)。記錄「不存在」之前,先確認查詢方法真的看得到它宣稱查過的全部範圍——見 [`governance/EVIDENCE_DISCIPLINE.md`](governance/EVIDENCE_DISCIPLINE.md)「Known Source Limitations」。
 
 ## 不要自己發明的東西
 

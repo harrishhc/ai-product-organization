@@ -18,3 +18,11 @@ Encoded in [`runtime/pdmCore.js`](../runtime/pdmCore.js) as `EVIDENCE_LADDER`.
 | 5 | Strong causal evidence / controlled test | High |
 
 Opinion is not evidence. Anecdote can be evidence but should be labeled as weak evidence. The PDM must not turn repeated assumptions into facts simply because they appear in older documents.
+
+## Known Source Limitations (negative evidence is only as good as the query)
+
+A source returning "nothing found" is not the same as "nothing exists." Before recording an absence as a gap (`status: "gap_detected"` or similar), confirm the query method can actually see everything it claims to have checked.
+
+**ClickUp: list-scoped queries silently exclude "Tasks in Multiple Lists."** ClickUp's `GET /list/{list_id}/task` endpoint returns only tasks whose *home list* is that list. A task added to a list via ClickUp's "Tasks in Multiple Lists" feature — visible in the ClickUp UI when browsing that list — is **not** returned unless the request passes `include_timl=true` ([ClickUp API docs](https://developer.clickup.com/reference/gettasks); confirmed via [ClickUp's own public tracker](https://feedback.clickup.com/public-api/p/get-tasks-parameter-to-retrieve-linked-tasks)). The ClickUp MCP tool available in this environment does not expose `include_timl`, so any "list X has no Y" conclusion drawn from a list-scoped query has a structural blind spot, not just a chance of human error.
+
+**How to apply:** Never conclude "ticket/work doesn't exist in list L" from a list query alone. Before recording it as a gap, either look up the specific task directly (its `list` field always reflects its *current* home list, regardless of other memberships) or search by keyword across the workspace. If a "gap" evidence entry turns out to be a query-method miss rather than a real gap, correct the entry and note the mechanism, not just the wrong conclusion — see `ocr-slide-label-reader`'s `context.json` (2026-09-15) for a worked example: a ticket titled `[OCR]...` was reported "missing" from Sprint 15 while it was in fact visible in that Sprint from the ClickUp side (via multiple-list membership) prior to a home-list change confirming it — the list-scoped query never returned it.
