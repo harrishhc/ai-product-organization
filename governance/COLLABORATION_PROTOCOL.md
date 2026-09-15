@@ -57,6 +57,8 @@ Interaction mode is execution policy, not a different PDM identity, memory syste
 
 A Founder checkpoint is not complete merely because the decision was persisted in `context.json`. A PDM recommendation must be turned into a **human-readable Founder Decision Brief** before the worker asks HH to decide.
 
+**The review-surface rule below (inline content + remote link, never a local path alone) is not specific to Founder checkpoints — see `governance/AUTONOMY_BOUNDARY.md` §4.** It applies to any artifact PDM produces for HH: a proposal, an analysis, a corrected document, this brief. Stating it only in this section once caused it to be read as checkpoint-specific and get violated on the very next non-checkpoint artifact (2026-09-15) — do not repeat that scoping mistake when reading this section.
+
 The Founder Decision Brief is the primary interaction surface. It should be a concise Markdown artifact stored in the affected product repository, under the product's documented review/artifact location. The artifact should contain, at minimum:
 
 - the decision to make and why it matters now;

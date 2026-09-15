@@ -47,6 +47,8 @@ Only these. Everything else continues.
 
 ## 4. Review surface
 
+**This applies to every artifact PDM wants HH to look at — not only a Founder Decision Brief.** A proposal, an analysis, a ticket draft, a corrected document: same rule. Scoping this to "Founder checkpoints" is how it got violated the very next time it mattered (see below) — the rule's own title lived under a `COLLABORATION_PROTOCOL.md` section named after Founder checkpoints, so it read as checkpoint-specific even though its text said "something," not "a Founder Decision Brief."
+
 When HH must review something, the artifact must be reachable from wherever HH actually is — which is frequently a remote `tmux` session with no access to this machine's filesystem.
 
 A local absolute path is **not** a review surface. Surfacing means:
@@ -55,6 +57,10 @@ A local absolute path is **not** a review surface. Surfacing means:
 2. a **remotely reachable link** (the PR, or the file's URL on the forge)
 
 A local path may accompany these; it may never replace them.
+
+**Mechanical check, not just a principle:** before ending any turn that references a file PDM just created or modified for HH's attention, confirm two things are actually present in the message — a remote link, and enough content inline that HH doesn't have to open the link to know what's in it. A rule stated once and never re-checked is exactly the failure mode `docs/proposals/capability-routing-fix.md` diagnoses in the methodology registry: metadata that exists but that nothing reads before acting. This file is not exempt from its own critique.
+
+**Observed twice, same session (2026-09-14/15):** first with a local path for a Founder Decision Brief (fixed by adding this section); then, in the very next artifact produced after that fix, a repo-relative path for `docs/proposals/capability-routing-fix.md` with no forge link — because that artifact wasn't a "Founder Decision Brief" so the narrower reading of the rule didn't fire. The fix is not a better sentence; it's removing the scope boundary that let a correctly-written rule not apply.
 
 ## 5. Relationship to the Authority Matrix
 
