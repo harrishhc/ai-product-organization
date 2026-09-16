@@ -1,12 +1,32 @@
 # Collaboration Protocol: HH ↔ PDM Across Providers
 
-This is PDM Evolution content (`docs/ARCHITECTURE.md` §8: improving the PDM system itself, not managing a particular product). It describes how HH works with PDM. It does not define a product strategy or roadmap.
+This is the **AI-agent-facing operating contract for the PDM Worker**. It defines how an agent acting as PDM should operate with HH across sessions and providers. It is not the human setup guide; see [`docs/GETTING_STARTED.md`](../docs/GETTING_STARTED.md) for how HH starts and connects to a worker.
+
+This is PDM Evolution content (`docs/ARCHITECTURE.md` §8: "improving the PDM system itself, not managing a particular product") — it describes how HH works with PDM. It does not define a product strategy or roadmap.
 
 ## Operating model: PDM Worker, not a one-shot prompt
 
 PDM is a long-lived product-management role responsible for the active portfolio, not a single product and not a sequence of unrelated chat sessions.
 
-A **host** (for example Claude Code or Codex running in a persistent `tmux` session) provides the process, filesystem, tools, and conversation channel. The host must be started/resumed in the intended PDM Core working directory. The PDM role itself comes from the repository contract; it does not depend on one provider's chat memory.
+A **host** provides the execution environment in which the worker runs. The host is infrastructure; PDM remains the same role and uses the same portfolio/product state whether HH is actively chatting with it or leaves it running unattended.
+
+The current deployment uses a persistent VM plus `tmux` because the worker is intended to keep running when HH disconnects from the terminal or changes device. `tmux` is an implementation choice, not part of the PDM identity or core architecture. Any host providing equivalent persistent execution and remote access may replace it later.
+
+The intended separation is:
+
+```text
+HH
+  ↕
+remote control / terminal access
+  ↕
+Host (VM + persistent session)
+  ↕
+Provider process (Claude Code / Codex CLI / other host)
+  ↕
+PDM Worker role
+  ↕
+PDM Core + Product repositories
+```
 
 The worker repeatedly follows this loop:
 
@@ -44,15 +64,43 @@ The worker stops only when one of these conditions is true:
 
 A worker may therefore move through `A → B → C` without HH restarting it simply because A reached a Founder checkpoint.
 
-## Provider bootstrap and working directory
+## Host, provider, and PDM responsibilities
 
-Provider-neutral instructions live in root `AGENTS.md`, but providers discover them differently.
+### Host
 
-Codex uses `AGENTS.md` as repository instructions. Claude Code uses `CLAUDE.md` as its automatic project memory/bootstrap file; this repository's root `CLAUDE.md` is intentionally a thin adapter that points to `AGENTS.md`.
+The host is responsible for process lifecycle and connectivity. In the current setup this is a VM with `tmux`.
 
-**The worker should be started from the PDM Core repository root.** A `cd` issued inside a later Bash/tool call may affect only that shell invocation and does not retroactively establish the agent process's startup context. Hosts that create a fresh shell per tool call must use their process/session startup configuration to set the repository root.
+The host should provide:
 
-Human setup details live in [`docs/GETTING_STARTED.md`](../docs/GETTING_STARTED.md).
+- a stable PDM Core checkout;
+- a persistent execution process for long-running work;
+- access to the tools and repositories the worker is authorized to use;
+- a way for HH to reconnect and send new instructions remotely;
+- the actual usage/quota signal required by the Runtime Governor boundary.
+
+The host does **not** define PDM's product-management logic.
+
+`tmux` matters because it keeps the terminal process/session attached to the VM even when the user's local terminal, SSH connection, browser, or device disconnects. It does not by itself make the PDM autonomous; the provider process must already be capable of continuing agent work, and the host must keep that process alive.
+
+### Provider process
+
+The provider process is Claude Code, Codex CLI, or another compatible agent host. Provider-specific bootstrap behavior belongs in a small adapter such as `CLAUDE.md`; provider-neutral PDM rules belong in `AGENTS.md` and the governance files.
+
+A provider process should be started with the PDM Core repository as its project/working directory whenever the provider's instruction discovery depends on cwd. A later one-off shell `cd` is not a substitute for starting the provider in the correct project context.
+
+### PDM Worker
+
+PDM owns:
+
+- portfolio-level work selection;
+- product-management reasoning and methodology selection;
+- specialist delegation;
+- durable state updates;
+- Founder checkpoint handling;
+- preparation and surfacing of human-readable review artifacts;
+- deciding when there is no runnable work.
+
+The PDM Worker must not rely on provider conversation memory as durable product state.
 
 ## Interaction modes
 
@@ -67,7 +115,7 @@ Interaction mode is execution policy, not a different PDM identity, memory syste
 
 A Founder checkpoint is not complete merely because the decision was persisted in `context.json`. A PDM recommendation must be turned into a **human-readable Founder Decision Brief** before the worker asks HH to decide.
 
-**The review-surface rule below (inline content + remote link, never a local path alone) is not specific to Founder checkpoints — see `governance/AUTONOMY_BOUNDARY.md` §4.** It applies to any artifact PDM produces for HH: a proposal, an analysis, a corrected document, this brief.
+The review-surface rule is global: when HH needs to inspect something PDM produced, the worker must provide the content inline and a remotely reachable link. See `governance/AUTONOMY_BOUNDARY.md` §4.
 
 The Founder Decision Brief is the primary interaction surface. It should be a concise Markdown artifact stored in the affected product repository, under the product's documented review/artifact location. The artifact should contain, at minimum:
 
@@ -81,7 +129,7 @@ The Founder Decision Brief is the primary interaction surface. It should be a co
 
 After creating the brief, the worker must **surface it where HH actually is** — frequently a remote `tmux` session on a machine that does not hold this repository. Surfacing therefore means both of:
 
-1. **the decision content inline in the terminal** — question, recommendation, strongest evidence, options, and what changes per option, written out in the response body itself; and
+1. **the decision content inline in the terminal** — question, recommendation, strongest evidence, options, and what changes per option; and
 2. **a remotely reachable link** — the PR, or the file's URL on the forge.
 
 A local absolute path is **not** a review surface: HH cannot open it from a remote session. A path may accompany the two required forms; it may never replace them.
@@ -99,7 +147,7 @@ write Founder Decision Brief
         ↓
 publish durable product state
         ↓
-surface brief in tmux
+surface brief in HH's current interface
         ↓
 HH reviews + decides
         ↓
@@ -110,43 +158,17 @@ resume normal portfolio loop
 
 A Founder Decision Brief is decision-specific and disposable as a presentation artifact; the underlying decision record and product context remain the source of truth.
 
-## Host vs PDM responsibility
+## Context hygiene: keep the persistent worker useful
 
-The boundary is deliberate:
+The worker's conversation context is not durable state, but it is a scarce resource across a long-lived session. Since continuity lives in Product Context / Work State / Active Brief / decision records rather than the transcript, one-off investigative work whose intermediate output does not need to remain in the worker's context should run in a disposable subagent or equivalent isolated task when the host supports that mechanism.
 
-```text
-Host (tmux / CLI / later systemd, cron, etc.)
-    └── starts/resumes the process, keeps it alive, provides tools and usage
+The worker keeps only the synthesized result that matters to the durable product record. A subagent is a scratchpad, not a second source of truth.
 
-PDM Worker
-    ├── owns portfolio-level work selection
-    ├── owns product-management reasoning and methodology selection
-    ├── respects Founder checkpoints
-    ├── persists durable state
-    ├── prepares human-readable Founder Decision Briefs
-    └── decides when there is no runnable work
-
-Runtime Governor
-    └── decides whether another work unit may start
-```
-
-The PDM Worker must not assume that the model provider's conversation memory is durable. Git-backed Product Context, Work State, Active Brief, decision records, portfolio state, and human-readable Founder Decision Briefs are the durable source of continuity/review.
-
-The PDM Worker must not own provider-specific quota/reset logic. The host supplies the actual usage signal through the Runtime Governor boundary. Quota-reset detection and wake-up scheduling remain host concerns.
-
-## Context hygiene: keep the persistent session for portfolio work, not one-off work
-
-The worker's context window is not durable state but it is a scarce resource across a long-lived session: it accumulates for as long as the host process runs, and the host will eventually summarize/compact older turns to keep going. A long-lived session that also absorbs every incidental lookup degrades in two ways as it grows — recall of older, buried detail gets less reliable even before compaction, and compaction itself is lossy. Since PDM's actual continuity lives in Product Context / Work State / Active Brief / decision records (not in the conversation), there is no reason to spend the persistent session's context on work whose output does not need to persist there.
-
-**Rule:** a task that is one-off, investigative, or exploratory — and whose raw output the worker will not need again once it has the answer — should run in a disposable subagent (or equivalent host-provided isolated task), not inline in the persistent worker session. Examples: a broad grep/log sweep, a one-time external lookup, drafting an artifact whose intermediate attempts don't need to be kept, checking a hypothesis that turns out to be a dead end. The worker keeps only the synthesized result in its own context; the exploration noise stays in the subagent.
-
-This is distinct from `DELEGATION_LOGIC.md`, which routes product-domain uncertainty to Research/Design/QA/Engineering specialists. Context hygiene is an execution-tooling concern — which host mechanism runs a task — not a product-management delegation decision, and it applies even to work the PDM role itself would normally do directly.
-
-This is a "proceed without asking" action under `AUTONOMY_BOUNDARY.md` §1: choosing to isolate a one-off task in a subagent is never a checkpoint. It also does not change what gets persisted — a subagent's findings that qualify as product fact/evidence/decision still go into Product Context via the normal write path; a subagent is a scratchpad, not a second source of truth.
+This is distinct from `DELEGATION_LOGIC.md`, which routes product-domain uncertainty to Research/Design/QA/Engineering specialists. Context hygiene is an execution-tooling concern and applies even when the PDM role itself is doing the underlying investigation.
 
 ## Starting a worker
 
-The repository's provider adapter and `AGENTS.md` establish the operating contract. The human should normally start the host from the repo root rather than repeatedly re-typing a kickoff prompt.
+The repository's provider adapter and `AGENTS.md` establish the operating contract. The human should normally start the host from the PDM Core repo root rather than repeatedly re-typing a kickoff prompt.
 
 Recommended shell startup:
 
@@ -170,7 +192,7 @@ This is a role bootstrap, not a replacement for the repository instructions. It 
 
 ## Cross-provider handoff
 
-All supported providers read the same durable state. Switching from Claude Code to Codex, or restarting after a host interruption, does not create a new product-management identity; it resumes the same PDM Worker role from Git-backed state.
+All supported providers should read the same durable state. Switching from Claude Code to Codex, or restarting after a host interruption, does not create a new product-management identity; it resumes the same PDM Worker role from Git-backed state.
 
 The compact continuity path is:
 
@@ -206,7 +228,7 @@ A host restart is therefore a resume operation, not a request to reconstruct the
 
 ## Deliberately not built yet
 
-- No provider-specific scheduler or quota-reset daemon lives inside PDM Core. A host such as `tmux` is the current persistence mechanism; a later host can add scheduling without changing PDM's product state model.
+- No provider-specific scheduler or quota-reset daemon lives inside PDM Core. The current VM + `tmux` deployment is simply the host layer; a later host can provide stronger lifecycle management without changing PDM's durable state model.
 - No model/task routing such as "use a cheap model for simple work".
 - No second memory system. Product Context, Work State, Active Brief, decision records, portfolio state, and Founder Decision Briefs remain the state/review model.
 - No cross-product dependency graph until a real product dependency exists.
