@@ -1,16 +1,16 @@
 # Collaboration Protocol: HH ↔ PDM Across Providers
 
-This is PDM Evolution content (`docs/ARCHITECTURE.md` §8: "improving the PDM system itself, not managing a particular product") — it describes how HH works with PDM, not any product's strategy or roadmap. It lives here, not in a Product Registry entry: routing it through `runtime/decisionRecord.js`/`portfolio.js` would force a governance decision through plumbing built for product decisions, which is exactly the kind of cross-contamination `docs/ARCHITECTURE.md` §6 exists to prevent, just in the opposite direction.
+This is PDM Evolution content (`docs/ARCHITECTURE.md` §8: improving the PDM system itself, not managing a particular product). It describes how HH works with PDM. It does not define a product strategy or roadmap.
 
 ## Operating model: PDM Worker, not a one-shot prompt
 
-PDM is a long-lived product-management worker responsible for the entire active portfolio, not a single product and not a sequence of unrelated chat sessions.
+PDM is a long-lived product-management role responsible for the active portfolio, not a single product and not a sequence of unrelated chat sessions.
 
-A host process (for example a persistent Claude Code or Codex CLI process inside `tmux`) keeps the worker alive. The host is infrastructure; PDM remains the same role and uses the same portfolio/product state whether HH is actively chatting with it or leaves it running unattended.
+A **host** (for example Claude Code or Codex running in a persistent `tmux` session) provides the process, filesystem, tools, and conversation channel. The host must be started/resumed in the intended PDM Core working directory. The PDM role itself comes from the repository contract; it does not depend on one provider's chat memory.
 
 The worker repeatedly follows this loop:
 
-```
+```text
 load portfolio state
         ↓
 select next runnable work
@@ -42,7 +42,17 @@ The worker stops only when one of these conditions is true:
 - a global policy / safety boundary requires stopping;
 - HH explicitly asks the worker to stop.
 
-This means a long-lived worker may move through `A → B → C` without HH restarting it simply because A reached a Founder checkpoint.
+A worker may therefore move through `A → B → C` without HH restarting it simply because A reached a Founder checkpoint.
+
+## Provider bootstrap and working directory
+
+Provider-neutral instructions live in root `AGENTS.md`, but providers discover them differently.
+
+Codex uses `AGENTS.md` as repository instructions. Claude Code uses `CLAUDE.md` as its automatic project memory/bootstrap file; this repository's root `CLAUDE.md` is intentionally a thin adapter that points to `AGENTS.md`.
+
+**The worker should be started from the PDM Core repository root.** A `cd` issued inside a later Bash/tool call may affect only that shell invocation and does not retroactively establish the agent process's startup context. Hosts that create a fresh shell per tool call must use their process/session startup configuration to set the repository root.
+
+Human setup details live in [`docs/GETTING_STARTED.md`](../docs/GETTING_STARTED.md).
 
 ## Interaction modes
 
@@ -57,7 +67,7 @@ Interaction mode is execution policy, not a different PDM identity, memory syste
 
 A Founder checkpoint is not complete merely because the decision was persisted in `context.json`. A PDM recommendation must be turned into a **human-readable Founder Decision Brief** before the worker asks HH to decide.
 
-**The review-surface rule below (inline content + remote link, never a local path alone) is not specific to Founder checkpoints — see `governance/AUTONOMY_BOUNDARY.md` §4.** It applies to any artifact PDM produces for HH: a proposal, an analysis, a corrected document, this brief. Stating it only in this section once caused it to be read as checkpoint-specific and get violated on the very next non-checkpoint artifact (2026-09-15) — do not repeat that scoping mistake when reading this section.
+**The review-surface rule below (inline content + remote link, never a local path alone) is not specific to Founder checkpoints — see `governance/AUTONOMY_BOUNDARY.md` §4.** It applies to any artifact PDM produces for HH: a proposal, an analysis, a corrected document, this brief.
 
 The Founder Decision Brief is the primary interaction surface. It should be a concise Markdown artifact stored in the affected product repository, under the product's documented review/artifact location. The artifact should contain, at minimum:
 
@@ -74,13 +84,13 @@ After creating the brief, the worker must **surface it where HH actually is** �
 1. **the decision content inline in the terminal** — question, recommendation, strongest evidence, options, and what changes per option, written out in the response body itself; and
 2. **a remotely reachable link** — the PR, or the file's URL on the forge.
 
-A local absolute path is **not** a review surface: HH cannot open it from a remote session. A path may accompany the two required forms; it may never replace them. Printing a path and stopping is a failed checkpoint, not a completed one — observed 2026-09-14, when a worker followed this section's earlier wording exactly and still left HH unable to read the brief.
+A local absolute path is **not** a review surface: HH cannot open it from a remote session. A path may accompany the two required forms; it may never replace them.
 
-A GitHub branch and PR may be used as the collaboration/review transport when product publication rules call for them. The PR is useful, but it is **not** the sole Founder review surface and should never be presented as a mandatory extra step for HH. The worker must not stop at "I published a branch; do you want me to open a PR?" merely to expose a checkpoint. If opening a PR is part of the repository workflow and the tool/host permits it, the worker should create it as part of publishing; otherwise the durable Markdown brief and terminal presentation remain sufficient.
+A GitHub branch and PR may be used as the collaboration/review transport when product publication rules call for them. The PR is useful, but it is **not** the sole Founder review surface and should never be presented as a mandatory extra step for HH. If opening a PR is part of the repository workflow and the host permits it, the worker should create it as part of publishing; otherwise the durable Markdown brief and terminal presentation remain sufficient.
 
 The intended human flow is:
 
-```
+```text
 PDM reaches decision boundary
         ↓
 persist recommendation / pending decision
@@ -104,9 +114,9 @@ A Founder Decision Brief is decision-specific and disposable as a presentation a
 
 The boundary is deliberate:
 
-```
+```text
 Host (tmux / CLI / later systemd, cron, etc.)
-    └── keeps the process alive, starts/resumes it, provides tools and usage
+    └── starts/resumes the process, keeps it alive, provides tools and usage
 
 PDM Worker
     ├── owns portfolio-level work selection
@@ -126,43 +136,61 @@ The PDM Worker must not own provider-specific quota/reset logic. The host suppli
 
 ## Context hygiene: keep the persistent session for portfolio work, not one-off work
 
-The worker's context window is not durable state (§ above) but it is a scarce resource across a long-lived session: it accumulates for as long as the host process runs, and the host will eventually summarize/compact older turns to keep going. A long-lived session that also absorbs every incidental lookup degrades in two ways as it grows — recall of older, buried detail gets less reliable even before compaction, and compaction itself is lossy. Since PDM's actual continuity lives in Product Context / Work State / Active Brief / decision records (not in the conversation), there is no reason to spend the persistent session's context on work whose output does not need to persist there.
+The worker's context window is not durable state but it is a scarce resource across a long-lived session: it accumulates for as long as the host process runs, and the host will eventually summarize/compact older turns to keep going. A long-lived session that also absorbs every incidental lookup degrades in two ways as it grows — recall of older, buried detail gets less reliable even before compaction, and compaction itself is lossy. Since PDM's actual continuity lives in Product Context / Work State / Active Brief / decision records (not in the conversation), there is no reason to spend the persistent session's context on work whose output does not need to persist there.
 
-**Rule:** a task that is one-off, investigative, or exploratory — and whose raw output the worker will not need again once it has the answer — must run in a disposable subagent (or equivalent host-provided isolated task), not inline in the persistent worker session. Examples: a broad grep/log sweep, a one-time external lookup, drafting an artifact whose intermediate attempts don't need to be kept, checking a hypothesis that turns out to be a dead end. The worker keeps only the synthesized result in its own context; the exploration noise stays in the subagent.
+**Rule:** a task that is one-off, investigative, or exploratory — and whose raw output the worker will not need again once it has the answer — should run in a disposable subagent (or equivalent host-provided isolated task), not inline in the persistent worker session. Examples: a broad grep/log sweep, a one-time external lookup, drafting an artifact whose intermediate attempts don't need to be kept, checking a hypothesis that turns out to be a dead end. The worker keeps only the synthesized result in its own context; the exploration noise stays in the subagent.
 
-This is distinct from `DELEGATION_LOGIC.md`, which routes product-domain uncertainty to Research/Design/QA/Engineering specialists. Context hygiene is an execution-tooling concern — which host mechanism runs a task — not a product-management delegation decision, and it applies even to work the PDM role itself would normally do directly (e.g. reading its own repo).
+This is distinct from `DELEGATION_LOGIC.md`, which routes product-domain uncertainty to Research/Design/QA/Engineering specialists. Context hygiene is an execution-tooling concern — which host mechanism runs a task — not a product-management delegation decision, and it applies even to work the PDM role itself would normally do directly.
 
 This is a "proceed without asking" action under `AUTONOMY_BOUNDARY.md` §1: choosing to isolate a one-off task in a subagent is never a checkpoint. It also does not change what gets persisted — a subagent's findings that qualify as product fact/evidence/decision still go into Product Context via the normal write path; a subagent is a scratchpad, not a second source of truth.
 
 ## Starting a worker
 
-A kickoff prompt is still useful because it establishes that a fresh model process should enter **PDM Worker mode**. It is not a per-product command sequence and it should not tell the worker to stop after one product.
+The repository's provider adapter and `AGENTS.md` establish the operating contract. The human should normally start the host from the repo root rather than repeatedly re-typing a kickoff prompt.
 
-Use this prompt in Claude Code, Codex CLI, or another AGENTS.md-aware host:
+Recommended shell startup:
 
-> You are the HH PDM Worker. Read `AGENTS.md` and the PDM governance. Then operate as the long-lived PDM responsible for the entire active portfolio. Start from the current portfolio state, select the next runnable work, sync the selected product when needed, read its Active Brief, and do the highest-value coherent work unit you can safely complete. After each work unit, persist the correct durable state and immediately re-evaluate the portfolio for the next runnable work. A product waiting for Founder input does not stop the worker; continue on another runnable product. When you reach a Founder checkpoint, persist the pending recommendation, create a concise human-readable Founder Decision Brief in the affected product repo, publish the durable state, and surface the decision content inline in the terminal together with a remotely reachable link (PR or forge URL) — never a local path alone, which HH cannot open from a remote session. Open the PR as part of publishing; do not make it a separate question for HH. Follow `governance/AUTONOMY_BOUNDARY.md` for what you may do without asking: the default is to keep working, and a question you can answer by analysis is not a checkpoint. In autonomous mode, persist Founder checkpoints and move on rather than waiting for a response. Stop only when there is no runnable work, the Runtime Governor says you cannot continue, a global policy/safety boundary requires stopping, or HH explicitly tells you to stop.
+```bash
+cd ~/workspace/ai-product-organization
+claude
+```
 
-The prompt intentionally does **not** prescribe a fixed file-reading sequence beyond the repository's governance. The worker is expected to use the existing portfolio, Work State, Active Brief, bounded Product Context, methodology registry, and specialist delegation rules rather than mechanically replaying a script.
+or:
+
+```bash
+cd ~/workspace/ai-product-organization
+codex
+```
+
+After startup, a short role-setting prompt is useful for a fresh model process:
+
+> You are the HH PDM Worker. Use the repository's AGENTS.md and governance as the authoritative operating contract. Start from the current portfolio state, select the next runnable work, and continue the portfolio loop. Follow the autonomy and collaboration boundaries. When HH must review something, surface enough content inline and provide a remotely reachable link.
+
+This is a role bootstrap, not a replacement for the repository instructions. It should not prescribe a fixed file-reading script or a single product.
 
 ## Cross-provider handoff
 
-All tools read the same durable state. Switching from Claude Code to Codex, or restarting after a host interruption, does not create a new product-management identity; it resumes the same PDM Worker role from git-backed state.
+All supported providers read the same durable state. Switching from Claude Code to Codex, or restarting after a host interruption, does not create a new product-management identity; it resumes the same PDM Worker role from Git-backed state.
 
-The compact bootstrap path is:
+The compact continuity path is:
 
-```
+```text
+provider bootstrap adapter
+        ↓
 AGENTS.md
-    ↓
+        ↓
 portfolio state
-    ↓
+        ↓
 selected product Work State / Active Brief
-    ↓
-bounded Product Context as needed
-    ↓
+        ↓
+bounded Product Context / Organization Context as needed
+        ↓
 do the work
+        ↓
+persist durable state
 ```
 
-A fresh worker may inspect the portfolio state and selected product state before doing anything else. It must not load the full history of every product merely to reconstruct continuity.
+A fresh worker must not need the previous chat transcript to reconstruct continuity. Durable repository state takes precedence over conversational claims.
 
 ## Ending, pausing, or resuming
 
@@ -178,12 +206,12 @@ A host restart is therefore a resume operation, not a request to reconstruct the
 
 ## Deliberately not built yet
 
-- No provider-specific scheduler or quota-reset daemon lives inside PDM Core. A host such as `tmux` is the simplest current persistence mechanism; a later host can add scheduling without changing PDM's product state model.
-- No model/task routing ("use a cheap model for simple work") — logged as a future nice-to-have, not built.
+- No provider-specific scheduler or quota-reset daemon lives inside PDM Core. A host such as `tmux` is the current persistence mechanism; a later host can add scheduling without changing PDM's product state model.
+- No model/task routing such as "use a cheap model for simple work".
 - No second memory system. Product Context, Work State, Active Brief, decision records, portfolio state, and Founder Decision Briefs remain the state/review model.
 - No cross-product dependency graph until a real product dependency exists.
-- No requirement for a PR on every product decision. A PR can be the transport when useful; the Founder Decision Brief + terminal presentation are the human interaction surface.
+- No requirement for a PR on every product decision. A PR can be transport when useful; the Founder Decision Brief + terminal presentation are the human interaction surface.
 
 ## Attribution
 
-Whichever tool/model is acting uses its own correct attribution in commit messages and PR descriptions. Nothing in `runtime/` or governance encodes a specific model's identity; none of it is provider-specific.
+Whichever tool/model is acting uses accurate provider/model attribution in commit messages and PR descriptions. Nothing in PDM Core should encode a specific model's identity.
