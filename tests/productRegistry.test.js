@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { resolveProductRepository, listRegisteredProductIds, listActiveProductIds, PRODUCT_STATUSES } from '../runtime/productRegistry.js';
+import { resolveProductRepository, listRegisteredProductIds, listActiveProductIds, PRODUCT_STATUSES, resolveOrganizationRepository, resolveProductOrganization } from '../runtime/productRegistry.js';
 
 const REPO_ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -80,4 +80,44 @@ test('colon-biopsy-ai-app declares its portfolio policy in the registry', () => 
   const { products } = JSON.parse(readFileSync(path.join(REPO_ROOT, 'products', 'registry.json'), 'utf8'));
   assert.equal(products['colon-biopsy-ai-app'].status, 'active');
   assert.equal(products['colon-biopsy-ai-app'].priority, 1);
+});
+
+test('resolveOrganizationRepository resolves a registered organization by explicit id', () => {
+  const resolved = resolveOrganizationRepository('_org-fixture');
+  assert.equal(resolved.organizationId, '_org-fixture');
+  assert.equal(resolved.repositoryType, 'local_path');
+  assert.equal(resolved.contextEntry, 'org-context.json');
+});
+
+test('resolveOrganizationRepository refuses an unregistered organization rather than guessing a path', () => {
+  assert.throws(() => resolveOrganizationRepository('not-registered'), /is not in the Product Registry/);
+});
+
+test('resolveOrganizationRepository refuses a "git_remote" organization whose local clone has not been synced yet', () => {
+  assert.throws(
+    () => resolveOrganizationRepository('_org-git-remote-not-cloned-yet'),
+    /local clone does not exist yet/
+  );
+});
+
+test('aetherai is registered as a git_remote organization', () => {
+  const { organizations } = JSON.parse(readFileSync(path.join(REPO_ROOT, 'products', 'registry.json'), 'utf8'));
+  const entry = organizations.aetherai;
+  assert.equal(entry.repository.type, 'git_remote');
+  assert.match(entry.repository.remote_url, /aetherai-organization-context/);
+  assert.equal(entry.context_entry, 'org-context.json');
+});
+
+test('resolveProductOrganization returns the declared organization for the four active aetherAI products', () => {
+  for (const id of ['colon-biopsy-ai-app', 'ocr-slide-label-reader', 'prostate-biopsy', 'slide-quality-control']) {
+    assert.equal(resolveProductOrganization(id), 'aetherai');
+  }
+});
+
+test('resolveProductOrganization returns null for a product with no declared organization — the escape hatch requires no opt-out flag', () => {
+  assert.equal(resolveProductOrganization('_template'), null);
+});
+
+test('resolveProductOrganization refuses an unregistered product rather than guessing', () => {
+  assert.throws(() => resolveProductOrganization('not-registered'), /is not in the Product Registry/);
 });

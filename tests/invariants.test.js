@@ -77,6 +77,26 @@ test('invariant: context.js and workState.js never import the product-sync modul
   }
 });
 
+test('invariant: organizationContext.js never imports the product-sync module', () => {
+  const src = readFileSync(path.join(RUNTIME_DIR, 'organizationContext.js'), 'utf8');
+  assert.doesNotMatch(src, IMPORTS_PRODUCT_SYNC);
+});
+
+// 2c. Organization Context is resolved after product selection, for the
+// sections a work unit needs — never during the cheap portfolio refresh
+// pass (docs/proposals/organization-context-layer.md §2.3, approved
+// 2026-09-16). Mirrors the existing "portfolio.js never loads a full
+// Product Context" invariant in tests/portfolio.test.js.
+test('invariant: portfolio.js never imports organizationContext.js', () => {
+  const portfolioSrc = readFileSync(path.join(RUNTIME_DIR, 'portfolio.js'), 'utf8');
+  assert.doesNotMatch(portfolioSrc, /from\s+['"]\.\/organizationContext\.js['"]/);
+});
+
+test('invariant: orchestrator never imports organizationContext.js', () => {
+  const orchestratorSrc = readFileSync(path.join(RUNTIME_DIR, 'orchestrator.js'), 'utf8');
+  assert.doesNotMatch(orchestratorSrc, /from\s+['"]\.\/organizationContext\.js['"]/);
+});
+
 // 3. Registry routing does not require loading every capability.
 test('invariant: selecting a candidate does not load any capability detail file', () => {
   const session = createSession();

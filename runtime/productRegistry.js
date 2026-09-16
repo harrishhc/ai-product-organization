@@ -56,7 +56,7 @@ export function _resetProductRegistryCache() {
  * this function only checks that it's there, matching the "an ordinary pass
  * needs no network call" invariant (tests/invariants.test.js).
  */
-function resolveRepositoryPath(productId, repository) {
+function resolveRepositoryPath(id, repository, label = 'Product') {
   if (repository.type === 'local_path') {
     return path.resolve(REPO_ROOT, repository.location);
   }
@@ -64,7 +64,7 @@ function resolveRepositoryPath(productId, repository) {
     const clonePath = path.resolve(REPO_ROOT, repository.local_clone_path);
     if (!existsSync(clonePath)) {
       throw new Error(
-        `Product "${productId}" uses repository.type "git_remote" but its local clone does not exist yet at ${clonePath}. ` +
+        `${label} "${id}" uses repository.type "git_remote" but its local clone does not exist yet at ${clonePath}. ` +
           'Run the deliberate sync step first: runtime/productSync.js#syncGitRemoteProduct (never performed automatically).'
       );
     }
@@ -74,7 +74,7 @@ function resolveRepositoryPath(productId, repository) {
   // point. Only local_path and git_remote are wired up in this bootstrap, to
   // avoid overbuilding a resolver for kinds nothing uses yet.
   throw new Error(
-    `Product "${productId}" uses repository.type "${repository.type}", which this bootstrap does not yet resolve. Supported: "local_path", "git_remote".`
+    `${label} "${id}" uses repository.type "${repository.type}", which this bootstrap does not yet resolve. Supported: "local_path", "git_remote".`
   );
 }
 
@@ -132,4 +132,53 @@ export function listRegisteredProductIds() {
 export function listActiveProductIds() {
   const { products } = loadProductRegistry();
   return Object.keys(products).filter((id) => (products[id].status ?? DEFAULT_STATUS) === 'active');
+}
+
+/**
+ * Resolves a registered organization's repository location by explicit id —
+ * same discipline as resolveProductRepository: no auto-discovery, no
+ * filesystem scan. An organization is a top-level registry.json entry
+ * distinct from products (docs/proposals/organization-context-layer.md,
+ * approved 2026-09-16).
+ *
+ * @param {string} organizationId
+ * @returns {{ organizationId: string, repositoryType: string, repositoryPath: string, contextEntry: string }}
+ */
+export function resolveOrganizationRepository(organizationId) {
+  const { organizations = {} } = loadProductRegistry();
+  const entry = organizations[organizationId];
+  if (!entry) {
+    throw new Error(
+      `Organization "${organizationId}" is not in the Product Registry (products/registry.json "organizations" map). ` +
+        'Organizations are not auto-discovered; register the repository location explicitly before use.'
+    );
+  }
+  const repositoryPath = resolveRepositoryPath(organizationId, entry.repository, 'Organization');
+  return {
+    organizationId,
+    repositoryType: entry.repository.type,
+    repositoryPath,
+    contextEntry: entry.context_entry,
+  };
+}
+
+/**
+ * The organization a product declares, or null. A product with no
+ * `organization` field applies no organizational process — this is the
+ * "product following a different process" escape hatch, and it requires no
+ * opt-out flag: absence is the default.
+ *
+ * @param {string} productId
+ * @returns {string|null}
+ */
+export function resolveProductOrganization(productId) {
+  const { products } = loadProductRegistry();
+  const entry = products[productId];
+  if (!entry) {
+    throw new Error(
+      `Product "${productId}" is not in the Product Registry (products/registry.json). ` +
+        'Products are not auto-discovered; register the repository location explicitly before use.'
+    );
+  }
+  return entry.organization ?? null;
 }
