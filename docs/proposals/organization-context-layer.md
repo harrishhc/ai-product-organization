@@ -4,6 +4,7 @@
 **Authority:** Material PDM evolution → HH review required (`PDM_CONSTITUTION.md` Authority Matrix)
 **Raised:** 2026-09-14
 **Updated:** 2026-09-15
+**Note:** this revision switched from Chinese to English with no stated reason, while `capability-routing-fix.md` (same day) stayed Chinese. Unexplained — flagging rather than guessing at intent; tell PDM if this should be a deliberate per-document or per-audience convention.
 
 ---
 
@@ -14,6 +15,8 @@ The original proposal was intentionally conditional because there was only one r
 The proposal also keeps an important correction from the original analysis: the first live-pilot failure was not evidence that an Organization Context layer was required. It was a Product Context completeness problem. That product-level issue was fixable with the existing architecture and must not be used to justify a new organizational layer.
 
 The case for Organization Context is now structural **and operationally relevant**: multiple real products share organization-specific delivery conventions, while PDM Core must remain organization-agnostic.
+
+**This rewrite also changes the evidence bar the original version used, and that change was not previously flagged.** The original recommendation (§5 of the 2026-09-14 version) was explicitly conditional and leaned toward *not* building this layer yet, for a stated reason: `GOVERNANCE_PRINCIPLES.md`'s discipline against justifying a new layer on structural argument alone — it required an observed failure case, which did not exist. That version's own words: "結構論證很清楚,但結構論證正是該文件說不夠的那種論證" ("the structural argument is clear, but a structural argument is exactly the kind this document says is insufficient"). This rewrite recommends building the layer now, on product count (1→4) alone, with no new observed failure. That is a reversal of the bar, not a new application of the same bar. See §8.1 for the explicit confirmation this requires before HH approval is meaningful.
 
 ## 1. Problem: three scopes, only two existing homes
 
@@ -190,14 +193,22 @@ Do not make the runtime change before the context itself exists.
 
 This sequence deliberately separates **content migration** from **runtime abstraction**. If the content does not demonstrate a stable cross-product scope, stop before adding runtime machinery.
 
-## 8. Open decisions for HH
+## 8. Risks (restored from the 2026-09-14 version; not superseded by §0)
 
-1. Approve the Organization Context abstraction for implementation now that multiple real products exist.
-2. Confirm the dedicated repository name before it is created.
-3. Confirm whether all current aetherAI products should declare `organization: "aetherai"`, or whether any intentionally follow a different process.
-4. Approve the initial bounded sections above.
+- **Junk-drawer risk.** Mitigated only if the §3 boundary test is actually applied at content-migration time, not retrofitted after the drawer already exists.
+- **Runtime surface area.** One more resolution path is one more thing to test and keep bounded (§2.3, §5.2).
+- **Premature abstraction.** If aetherAI ends up being the only organization this PDM Core ever serves, this layer is infrastructure built for a single instance — the exact cost this repository has repeatedly refused to pay elsewhere (`GOVERNANCE_PRINCIPLES.md`, "Deliberately Not Built"). Four products under one organization does not by itself rule this out; it is a real risk being accepted, not a risk that four products makes go away.
 
-## 9. Non-goals
+## 9. Open decisions for HH
+
+**9.1 — the bar change itself.** The original version declined to recommend building this now, specifically because `GOVERNANCE_PRINCIPLES.md` requires an observed failure and none existed; it recommended an interim (a marked, duplicated document) until one did. This version recommends building now, on product count alone. **Confirm you're OK building on the reversed bar** — product-count-crossed-a-threshold, not an observed failure this layer would have prevented — before treating the rest of this proposal as approved. If you are not OK with that, the original interim recommendation (a marked `org-conventions.md` per product, accepting visible duplication) is still available and requires no runtime change.
+
+**9.2** — Approve the Organization Context abstraction for implementation, on the basis confirmed in 9.1.
+**9.3** — Confirm the dedicated repository name before it is created.
+**9.4** — Confirm whether all current aetherAI products should declare `organization: "aetherai"`, or whether any intentionally follow a different process.
+**9.5** — Approve the initial bounded sections above.
+
+## 10. Non-goals
 
 This proposal does not introduce:
 

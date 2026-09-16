@@ -1,8 +1,9 @@
 # Proposal — PDM Operating Model v2
 
-**Status:** PROPOSAL — review requested; no runtime behavior changed by this document.
+**Status:** PARTIALLY ADOPTED — see §2. Kept as the historical proposal record; `governance/COLLABORATION_PROTOCOL.md` and `governance/AUTONOMY_BOUNDARY.md` are the live specification, not this document.
 **Authority:** Material PDM evolution → HH review required.
 **Raised:** 2026-09-15
+**Revised:** 2026-09-16 — trimmed after review found ~2/3 of this document restating content already in the two governance files above. See the review note in §2.
 
 ## 1. Why this proposal exists
 
@@ -10,217 +11,48 @@ The first live pilot exposed an interaction failure that was not visible in the 
 
 The current protocol has since been corrected: the Founder Decision Brief is the primary human-readable artifact, its decision content must be shown inline in the terminal, and a remotely reachable forge link should accompany it. The PR is transport, not the decision itself.
 
-This proposal goes one step further and defines the intended **PDM ↔ Founder interaction contract** so that future implementation does not drift back toward chat-by-chat confirmation.
+This proposal's original draft went further and tried to define the full PDM ↔ Founder interaction contract in a new document. A review before merge found that most of that contract already existed in two other governance files, and that standing up a third document describing the same interaction contract was the exact single-source-of-truth drift this repo's own philosophy warns against. §2 records what actually happened as a result.
 
-## 2. Core interaction principle
+## 2. Disposition of the original sections
 
-PDM should consume HH's **decision bandwidth**, not HH's execution bandwidth.
+| Original section | What it proposed | Disposition |
+|---|---|---|
+| §2 Core interaction principle | PDM consumes decision bandwidth, not execution bandwidth | Already the substance of `governance/AUTONOMY_BOUNDARY.md` in full. Not duplicated here. |
+| §3.1 Routine work | Don't ask for confirmation merely because an action is consequential | Already `AUTONOMY_BOUNDARY.md` §1's opening rule. Not duplicated here. |
+| §3.2 Founder checkpoint (brief contents, inline + link) | Brief must contain decision/recommendation/evidence/alternatives/risks; must surface inline + remote link | Already `COLLABORATION_PROTOCOL.md`'s "Founder checkpoints" section and `AUTONOMY_BOUNDARY.md` §4, near word-for-word. Not duplicated here. |
+| **§3.3 HH's response (new)** | Response taxonomy: decision / more evidence / defer / challenge / stop; classify before recording | **Genuinely new. Merged into `COLLABORATION_PROTOCOL.md`, "Founder checkpoints" section, subsection "HH's response."** |
+| §3.4 After HH decides | Record decision, update state, publish, resume loop | Already the decision-persistence protocol in `WORK_STATE_BOUNDARY.md` + `COLLABORATION_PROTOCOL.md`'s human-flow diagram. Not duplicated here. |
+| §4 Portfolio interaction (waiting is local) | A→checkpoint→WAITING; continue on B, C | Already `COLLABORATION_PROTOCOL.md`'s operating model and `AUTONOMY_BOUNDARY.md` §2. Not duplicated here. |
+| **§4 "don't repeatedly surface" (new)** | Don't re-present the same pending checkpoint every loop pass | **Genuinely new. Merged into `COLLABORATION_PROTOCOL.md`, "Founder checkpoints" section, subsection "Don't re-raise a checkpoint every loop pass."** |
+| §5–§6 Organization Context | Full proposal for an Organization Context layer | Duplicated `docs/proposals/organization-context-layer.md`, the dedicated proposal for this exact topic, in less detail. Removed from here; that document is authoritative. |
+| **§8 Resume/handoff conflict rule (new)** | Durable record outranks a prior conversation's unpersisted claim | **Genuinely new. Merged into `COLLABORATION_PROTOCOL.md`, "Cross-provider handoff" section.** |
 
-PDM owns analysis, routine execution, documentation maintenance, methodology selection, delegation, durable persistence, product publication, and portfolio continuation within its authority. HH is interrupted only when the decision itself belongs to HH or an external/high-blast-radius action requires explicit approval.
-
-The default worker behavior is therefore:
-
-```text
-observe → reason → act → persist → continue
-                         ↓
-                decision boundary?
-                         ↓ yes
-              prepare review surface
-                         ↓
-                  ask HH once
-                         ↓
-              record decision → continue
-```
-
-## 3. Founder interaction contract
-
-### 3.1 Routine work
-
-Do not ask HH for confirmation merely because an action is consequential to the product. If the action is inside PDM authority, execute it and persist the result.
-
-At the end of a work stretch, provide a compact progress report only when useful. Do not turn every work unit into an approval request.
-
-### 3.2 Founder checkpoint
-
-When a genuine Founder decision is reached, PDM must create a Founder Decision Brief containing:
-
-- decision ID;
-- exact decision question;
-- why the decision matters now;
-- PDM recommendation;
-- strongest evidence and source references;
-- alternatives considered;
-- material risks and opportunity costs;
-- what changes under each option;
-- unresolved uncertainty that HH should know about;
-- exact response expected from HH.
-
-The worker must surface the essential contents **inline in the terminal** and provide a remotely reachable link to the durable artifact/PR. A local filesystem path alone is never sufficient.
-
-### 3.3 HH response
-
-HH should be able to answer in natural language. The worker should map the response to the pending decision record rather than require a special command syntax.
-
-Examples:
-
-```text
-「選 report generation，先不做 triage。」
-「我不同意，先驗證 diagnostic accuracy。」
-「照你的建議做。」
-「這個先不要決定，繼續收集 evidence。」
-```
-
-The worker must distinguish:
-
-- explicit decision;
-- request for more analysis/evidence;
-- request to defer;
-- challenge to the recommendation;
-- request to stop the worker.
-
-Ambiguous replies should be clarified rather than silently converted into a decision.
-
-### 3.4 After HH decides
-
-PDM records the Founder decision as the durable source of truth, updates affected Work State / Product Context, publishes according to the existing decision-persistence protocol, and resumes the portfolio loop.
-
-A Founder decision is not complete merely because HH typed a response in the terminal; it is complete when the durable record has been updated.
-
-## 4. Portfolio interaction
-
-The PDM is portfolio-level. A product waiting for HH is a local wait state.
-
-```text
-A → Founder checkpoint → WAITING_FOR_FOUNDER
-                         ↓
-                    continue
-                         ↓
-B → work
-                         ↓
-C → work
-```
-
-When HH later responds to A, PDM resolves A's checkpoint and re-evaluates the portfolio. It should not require restarting a product-specific session.
-
-The worker should not repeatedly surface the same pending checkpoint on every loop iteration. The checkpoint is durable and should be surfaced again only when entering a human-interaction session, when its status materially changes, or when HH asks about it.
-
-## 5. Organization Context
-
-The portfolio now contains multiple real products belonging to the same organization, so the previously conditional Organization Context proposal has crossed its practical trigger.
-
-Organization Context should represent **organization-specific facts that remain true when the product changes**, but are not universal PDM methodology.
-
-Recommended scope:
-
-- delivery process;
-- roles and decision boundaries;
-- artifact conventions;
-- reporting obligations;
-- systems of record;
-- organization-specific regulatory / quality gates when they are process facts rather than product claims.
-
-It must not contain:
-
-- product strategy;
-- product hypotheses;
-- product-specific user evidence;
-- product roadmap;
-- PDM operational state;
-- generic PM methodology.
-
-Boundary test:
-
-> Replace Product A with Product B. If the statement remains true because the same organization governs both products, it is a candidate for Organization Context. If it stops being true, it belongs to Product Context.
-
-### 5.1 Recommended storage
-
-Organization Context should be independently durable from PDM Core and product repositories, so changing products or switching PDM providers does not erase it.
-
-For the current case, an organization-level repository such as `harrishhc/aetherai-organization-context` is preferable to keeping aetherAI process facts in the PDM Core repository or duplicating them across product repositories.
-
-The repository should contain a bounded `org-context.json` and human-readable supporting source/evidence files. PDM Core's registry should point to it; PDM Core should not copy its contents.
-
-This also leaves room for a future organization to use a different process without contaminating the aetherAI context.
-
-### 5.2 Runtime integration
-
-The effective context for a selected product becomes:
-
-```text
-PDM Core
-   + Organization Context (if product declares one)
-   + Product Context
-   + Work State / Active Brief
-```
-
-Organization Context should be loaded only after product selection and only for sections needed by the current work unit. It must never be included in portfolio refresh, which remains a cheap operation over Work State + bounded decision state.
-
-The organization resolver should mirror Product Context's safety properties: registry-based resolution, path traversal protection, bounded reads, and explicit writes only.
-
-## 6. Organization Context governance
-
-Organization Context is a source of organizational facts, not an authority layer above HH.
-
-If organization context says "all sprint tickets require X" but HH explicitly decides that a product follows another process, the product's explicit organizational assignment/process configuration must determine the applicable context. Organization Context must never silently override Founder authority or product-specific governance.
-
-Changes to Organization Context should carry provenance. A practical entry shape is:
-
-```text
-FACT / EVIDENCE
-source_ref
-observed_at
-applies_to: organization
-confidence
-```
-
-A proposed organization-wide policy change should be treated as an organizational decision and escalated according to the Authority Matrix rather than silently changing the context because PDM inferred it from one product.
+Only §7 (below) and §9's first step remain here as live proposal content; everything else in the original draft is superseded by the merges above and has been removed from this document rather than kept as a second copy. (Section numbers below skip 3–6 and 8 deliberately — they preserve the original draft's numbering for traceability against the table above, rather than renumbering after deletion.)
 
 ## 7. PDM self-observation / evaluation
 
-The PDM should not evaluate itself by document count or number of completed tickets. The useful signals are:
+**Status: aspirational goals, not yet instrumented — except where marked.** `runtime/instrumentation.js` currently measures context-load volume and tool-call count (labelled below); nothing else in this list has a defined measurement mechanism anywhere in the runtime today. Listing them together previously made the unmeasured majority look as concrete as the measured minority — that was the reviewer's third finding on this PR.
 
-- decision quality;
-- learning velocity;
-- unnecessary Founder interruptions;
-- repeated work after resume;
-- context over-read / unnecessary tool use;
-- incorrect checkpoint classification;
-- evidence-to-recommendation traceability;
-- portfolio starvation;
-- state drift between Product Context, Work State, Active Brief, and registry.
+**Measurable today** (`runtime/instrumentation.js`):
+- context over-read / unnecessary tool use (`contextSectionsLoaded`, `toolCalls`, `estimatedTokens`)
 
-The PDM Evolution plane can use these observations later. Product outcomes must not automatically become PDM failures; there must be a causal hypothesis before changing PDM.
+**Aspirational — no instrumentation exists yet:**
+- decision quality
+- learning velocity
+- unnecessary Founder interruptions
+- repeated work after resume
+- incorrect checkpoint classification
+- evidence-to-recommendation traceability
+- portfolio starvation
+- state drift between Product Context, Work State, Active Brief, and registry
 
-## 8. Resume and handoff contract
-
-A fresh worker should be able to resume without knowing the previous model's conversation.
-
-Minimum resume sequence:
-
-```text
-AGENTS.md
-→ portfolio state
-→ selected product Active Brief / Work State
-→ bounded Organization Context if applicable
-→ bounded Product Context as needed
-→ work
-```
-
-The previous transcript is not a prerequisite for continuity.
-
-If the worker finds a discrepancy between a durable record and a previous conversational claim, the durable record wins unless HH explicitly corrects it.
+The PDM Evolution plane can use these once instrumented. Product outcomes must not automatically become PDM failures; there must be a causal hypothesis before changing PDM. Building measurement for the aspirational list is future work, not proposed by this document — a separate proposal should scope which signal to instrument first and why, rather than instrumenting all eight at once.
 
 ## 9. Implementation sequence
 
-Do not implement all of this as one architectural jump.
-
-1. **Now:** adopt the interaction contract in governance and use the current four-product portfolio as the live test.
-2. **Next:** create and validate the aetherAI Organization Context repository; migrate organization-level facts out of product-specific context where duplication exists.
-3. **Then:** add registry + bounded organization resolver with tests.
-4. **Then:** integrate organization context into selected-product context assembly, not portfolio refresh.
-5. **Finally:** evaluate whether actual sessions show a new failure before adding further runtime machinery.
-
-This keeps the runtime change small and gives us a real test case for the abstraction before adding more infrastructure.
+1. **Done:** the genuinely new interaction-contract content (§2's three merged items) is adopted directly into `governance/COLLABORATION_PROTOCOL.md`.
+2. Organization Context implementation follows `docs/proposals/organization-context-layer.md`'s own sequence, not a second one defined here.
+3. Instrumenting any §7 aspirational signal is future work requiring its own proposal.
 
 ## 10. Explicit non-goals
 
