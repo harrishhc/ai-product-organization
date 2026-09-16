@@ -9,3 +9,6 @@ node_modules/
 # product owns its own repository; these are working copies, never checked
 # into the PDM repo.
 /.product-clones/
+
+# Same for "git_remote" organizations (runtime/organizationContext.js).
+/.organization-clones/

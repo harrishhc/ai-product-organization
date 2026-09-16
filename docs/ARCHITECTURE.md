@@ -78,6 +78,16 @@ Refresh is cheap by contract — one small Work State file and one bounded `deci
 
 Work selection is lexicographic, not a weighted score: portfolio priority, then least-recently-worked (so equal-priority products cannot starve), then product id for determinism. A weighted model would rest on effort and value estimates that are guesses, and could not explain a week later why a given product was chosen.
 
+### 6.3 Organization Context
+
+A third scope exists alongside PDM Core (cross-product) and Product Context (one product): facts that stay true when the product changes because the same organization governs both, but are not universal PDM methodology — e.g. aetherAI's sprint process, ClickUp-as-source-of-truth, or its CEO/RA reporting structure. These belong in neither existing home: Product Context would duplicate and drift the moment a second product from the same organization registers; PDM Core would make one organization's process look universal and break the first product that follows a different one.
+
+Organization Context (`runtime/organizationContext.js`) mirrors Product Context's exact safety contract — registry-based resolution, path-traversal protection, bounded section reads, explicit writes only — and lives in its own repository per organization, resolved via `products/registry.json`'s `organizations` map and a product's optional `organization` field. Absence of that field is the default, not an opt-out flag: a product on a different organization's process, or none, declares nothing.
+
+It is resolved only after product selection, for the sections a work unit needs — never during portfolio refresh, which stays bounded to Work State and one decisions section per product.
+
+Full design, the boundary test, and the evidence-bar decision are in `docs/proposals/organization-context-layer.md` (approved by HH 2026-09-16) — that document is the living spec for this layer; this section is a pointer, not a second copy.
+
 ## 7. Product Evolution vs Agent Evolution
 
 **Product Evolution Loop**
