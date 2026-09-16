@@ -1,9 +1,10 @@
 # Proposal — Organization Context Layer
 
-**Status:** PROPOSAL — review requested; not implemented.
+**Status:** APPROVED by HH 2026-09-16 (§9.1–9.2). Implementation pending: repo creation needs an explicit go-ahead (§9.3), `runtime/` still unchanged.
 **Authority:** Material PDM evolution → HH review required (`PDM_CONSTITUTION.md` Authority Matrix)
 **Raised:** 2026-09-14
 **Updated:** 2026-09-15
+**Decided:** 2026-09-16
 **Note:** this revision switched from Chinese to English with no stated reason, while `capability-routing-fix.md` (same day) stayed Chinese. Unexplained — flagging rather than guessing at intent; tell PDM if this should be a deliberate per-document or per-audience convention.
 
 ---
@@ -201,12 +202,15 @@ This sequence deliberately separates **content migration** from **runtime abstra
 
 ## 9. Open decisions for HH
 
-**9.1 — the bar change itself.** The original version declined to recommend building this now, specifically because `GOVERNANCE_PRINCIPLES.md` requires an observed failure and none existed; it recommended an interim (a marked, duplicated document) until one did. This version recommends building now, on product count alone. **Confirm you're OK building on the reversed bar** — product-count-crossed-a-threshold, not an observed failure this layer would have prevented — before treating the rest of this proposal as approved. If you are not OK with that, the original interim recommendation (a marked `org-conventions.md` per product, accepting visible duplication) is still available and requires no runtime change.
+**9.1 — RESOLVED by HH, 2026-09-16.** HH confirmed building now, on the reversed bar (product count 1→4, not an observed failure) — quote: "aetherAI Organization Context 就是要做，現在就四個產品了為什麼不做". This is the Founder decision the proposal asked for in §0; it supersedes the original interim recommendation. Recorded here, in the proposal itself, per `docs/ARCHITECTURE.md` §8 — this is PDM Evolution content, not a product decision, so it is not routed through `runtime/decisionRecord.js`.
 
-**9.2** — Approve the Organization Context abstraction for implementation, on the basis confirmed in 9.1.
-**9.3** — Confirm the dedicated repository name before it is created.
-**9.4** — Confirm whether all current aetherAI products should declare `organization: "aetherai"`, or whether any intentionally follow a different process.
-**9.5** — Approve the initial bounded sections above.
+**9.2 — RESOLVED.** Approved by the same decision (9.1 was the operative question; approving the abstraction was not a separate ask).
+
+**9.3 — PDM proposes, pending explicit go-ahead to create it:** `harrishhc/aetherai-organization-context` (private). **Repository creation is a hard stop under `governance/AUTONOMY_BOUNDARY.md` §3 ("Creating or deleting repositories") regardless of 9.1's approval** — say go/no-go or a different name and PDM creates it.
+
+**9.4 — PDM proposes, proceeding unless corrected:** all 4 currently active products (`colon-biopsy-ai-app`, `ocr-slide-label-reader`, `prostate-biopsy`, `slide-quality-control`) declare `organization: "aetherai"` — all 4 are aetherAI products in `products/registry.json` today; no product on a different process has been registered yet.
+
+**9.5 — PDM proposes, proceeding unless corrected:** the initial bounded sections from §2.4 (`delivery_process`, `roles`, `artifact_conventions`, `reporting_obligations`, `systems_of_record`) as-is.
 
 ## 10. Non-goals
 
