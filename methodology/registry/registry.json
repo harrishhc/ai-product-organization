@@ -146,6 +146,25 @@
       "evaluation_signals": ["correctly blocks premature PRDs", "does not block once criteria are genuinely met"]
     },
     {
+      "id": "prd-structure-convention",
+      "name": "PRD Structure Convention",
+      "type": "component",
+      "source": "hh-original",
+      "source_reference": "methodology/capabilities/prd-structure-convention.md",
+      "version": "0.1.0",
+      "purpose": "Give every product repo's docs/PRD.md the same shared skeleton and evidence vocabulary (derived from, and subordinate to, that product's Product Context), instead of each product inventing its own structure or applying an ill-fitting external template.",
+      "primary_intents": ["prd", "documentation_maintenance"],
+      "decision_stage": "author_or_review_prd",
+      "inputs": ["product's context.json (evidence/decisions/roadmap)", "any prior PRD or spec being migrated", "product-specific artifacts (IFU, shared cross-product policy) if they exist"],
+      "outputs": ["docs/PRD.md following the shared skeleton", "explicit statement of its subordinate relationship to context.json"],
+      "selection_cues": ["creating a product's first docs/PRD.md", "migrating a stale/external PRD into the git-tracked repo", "reviewing an existing PRD for drift from Product Context"],
+      "anti_cues": ["the product has no real Product Context yet to narrate (do discovery first)", "a one-off ticket-level spec is needed, not a whole-product PRD (use prd-readiness-gate + the ticket directly)"],
+      "context_requirements": ["product's context.json", "prior PRD/spec if migrating"],
+      "cost_profile": "medium",
+      "composability": "follows prd-readiness-gate's go decision; supersedes applying the external prd-development skill's template directly to an already-shipping product",
+      "evaluation_signals": ["every Scope claim cites a context.json entry, ticket, or regulatory document", "no vocabulary mixing between EVIDENCE_DISCIPLINE labels and an imported skill's tagging scheme", "Open items link back to context.json rather than being introduced fresh in the PRD"]
+    },
+    {
       "id": "prd-development",
       "name": "PRD Development",
       "type": "workflow",
