@@ -70,6 +70,41 @@
       "provenance": null
     },
     {
+      "id": "capabilities:prd-structure-convention",
+      "name": "PRD Structure Convention",
+      "type": "capability",
+      "execution_type": "component",
+      "theme": null,
+      "intent": null,
+      "best_for": [],
+      "scenarios": [],
+      "source_reference": "methodology/capabilities/prd-structure-convention.md",
+      "relative_path": "capabilities/prd-structure-convention.md",
+      "summary": null,
+      "related_skills": [
+        "skills:prd-development"
+      ],
+      "size_bytes": 5356,
+      "routing": {
+        "primary_intents": [
+          "prd",
+          "documentation_maintenance"
+        ],
+        "decision_stage": "author_or_review_prd",
+        "selection_cues": [
+          "creating a product's first docs/PRD.md",
+          "migrating a stale/external PRD into the git-tracked repo",
+          "reviewing an existing PRD for drift from Product Context"
+        ],
+        "anti_cues": [
+          "the product has no real Product Context yet to narrate (do discovery first)",
+          "a one-off ticket-level spec is needed, not a whole-product PRD (use prd-readiness-gate + the ticket directly)"
+        ],
+        "cost_profile": "medium"
+      },
+      "provenance": null
+    },
+    {
       "id": "capabilities:prioritization-comparison",
       "name": "Prioritization Comparison",
       "type": "capability",
@@ -9015,6 +9050,29 @@
       "cost_profile": "low",
       "theme": null,
       "source_reference": "methodology/capabilities/prd-readiness-gate.md"
+    },
+    {
+      "id": "capabilities:prd-structure-convention",
+      "name": "PRD Structure Convention",
+      "type": "component",
+      "source_type": "capability",
+      "primary_intents": [
+        "prd",
+        "documentation_maintenance"
+      ],
+      "decision_stage": "author_or_review_prd",
+      "selection_cues": [
+        "creating a product's first docs/PRD.md",
+        "migrating a stale/external PRD into the git-tracked repo",
+        "reviewing an existing PRD for drift from Product Context"
+      ],
+      "anti_cues": [
+        "the product has no real Product Context yet to narrate (do discovery first)",
+        "a one-off ticket-level spec is needed, not a whole-product PRD (use prd-readiness-gate + the ticket directly)"
+      ],
+      "cost_profile": "medium",
+      "theme": null,
+      "source_reference": "methodology/capabilities/prd-structure-convention.md"
     },
     {
       "id": "capabilities:prioritization-comparison",
