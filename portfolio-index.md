@@ -4,21 +4,21 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-15T09:46:27.010Z
+Generated: 2026-09-17T03:17:43.367Z
 
 Products: 4 · READY 3 · WAITING_FOR_FOUNDER 1 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
 
 | Product | Priority | Status | Next action / why not | Last activity |
 |---|---|---|---|---|
-| colon-biopsy-ai-app | 1 | WAITING_FOR_FOUNDER | awaiting HH: dec_1789385929903_f7l86k | 2026-09-15 |
-| ocr-slide-label-reader | 2 | READY | 向 Jsaon Lin 確認 z9088252jn 的 9/21 交付期限是否該同步寫回 ClickUp due_date | 2026-09-15 |
-| prostate-biopsy | 1 | READY | 向 Adam Yen 或 CEO 取得年底標案的時程、投標要求與效能/法規門檻（交接文件完全無紀錄，是目前最大單一缺口） | 2026-09-15 |
-| slide-quality-control | 3 | READY | 確認 Fold DP model refine 進度與偽陽性根因（模型 vs 測試集代表性） | 2026-09-14 |
+| colon-biopsy-ai-app | 1 | READY | 與 RA 開會確認「Biopsy-Colon_AI-Panel-Copy流程建議」文件（Google Doc，2026-09-04）的適用範圍認定：Colon Biopsy 常用語句非 AI 生成，是否落在 verify 風險控管範圍外。分析本身已完整，唯一缺的是實際與 RA 開會確認，非分析缺口。確認後需同步 KJB。 | 2026-09-17 |
+| ocr-slide-label-reader | 2 | READY | 向 KenHsiao 或 Jsaon Lin 直接跟催 z9088252jn 的 config 定義進度（Harris Chen 本人即為該票 assignee，可直接在 ClickUp 留言或當面確認，不需透過第三方） | 2026-09-17 |
+| prostate-biopsy | 1 | WAITING_FOR_FOUNDER | awaiting HH: dec_1789614533481_88anf5 | 2026-09-17 |
+| slide-quality-control | 3 | READY | 向 I-Chu Hung 核實 Fold 的 threshold 政策是否已依 Specimen Artifact 的 PPV-first 原則調整，並在此原則下重新評估 71/74 FP 是否仍是問題 — ClickUp 查無相關票/留言記錄此決定，唯一相近的現行工作是他建立的 in-progress 票 z9088270hc（無描述可判讀），他是目前最接近答案的人 | 2026-09-17 |
 
 ## Next selected work
-**prostate-biopsy** — 向 Adam Yen 或 CEO 取得年底標案的時程、投標要求與效能/法規門檻（交接文件完全無紀錄，是目前最大單一缺口）
+**colon-biopsy-ai-app** — 與 RA 開會確認「Biopsy-Colon_AI-Panel-Copy流程建議」文件（Google Doc，2026-09-04）的適用範圍認定：Colon Biopsy 常用語句非 AI 生成，是否落在 verify 風險控管範圍外。分析本身已完整，唯一缺的是實際與 RA 開會確認，非分析缺口。確認後需同步 KJB。
 
 ## Waiting on HH
-- colon-biopsy-ai-app: dec_1789385929903_f7l86k
+- prostate-biopsy: dec_1789614533481_88anf5
 
 These block only their own product. They never stop the loop.
