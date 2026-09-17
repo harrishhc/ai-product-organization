@@ -84,7 +84,7 @@
       "related_skills": [
         "skills:prd-development"
       ],
-      "size_bytes": 5356,
+      "size_bytes": 4786,
       "routing": {
         "primary_intents": [
           "prd",
@@ -92,15 +92,13 @@
         ],
         "decision_stage": "author_or_review_prd",
         "selection_cues": [
-          "creating a product's first docs/PRD.md",
-          "migrating a stale/external PRD into the git-tracked repo",
-          "reviewing an existing PRD for drift from Product Context"
+          "immediately after running prd-development for a product in this repo"
         ],
         "anti_cues": [
-          "the product has no real Product Context yet to narrate (do discovery first)",
-          "a one-off ticket-level spec is needed, not a whole-product PRD (use prd-readiness-gate + the ticket directly)"
+          "prd-development has not been applied yet (apply it first, skipping inapplicable phases; do not reach for this instead of it)",
+          "the product has no real Product Context yet to narrate (do discovery first)"
         ],
-        "cost_profile": "medium"
+        "cost_profile": "low"
       },
       "provenance": null
     },
@@ -6543,13 +6541,14 @@
         "decision_stage": "document",
         "selection_cues": [
           "prd-readiness-gate has passed and the actual PRD document needs to be written",
-          "moving from scattered discovery notes to an engineering-ready spec"
+          "moving from scattered discovery notes to an engineering-ready spec",
+          "writing or reconciling a PRD for a product that is already shipping, citing tickets/IFU/context.json instead of new discovery"
         ],
         "anti_cues": [
           "discovery is not yet mature (run prd-readiness-gate first)",
           "only a lightweight requirements note is needed, not a full PRD"
         ],
-        "cost_profile": "high"
+        "cost_profile": "scales with phases actually run — low when most phases are skipped as inapplicable, high for a full from-scratch pass"
       },
       "provenance": {
         "upstream_repository": "https://github.com/deanpeters/Product-Manager-Skills",
@@ -9062,15 +9061,13 @@
       ],
       "decision_stage": "author_or_review_prd",
       "selection_cues": [
-        "creating a product's first docs/PRD.md",
-        "migrating a stale/external PRD into the git-tracked repo",
-        "reviewing an existing PRD for drift from Product Context"
+        "immediately after running prd-development for a product in this repo"
       ],
       "anti_cues": [
-        "the product has no real Product Context yet to narrate (do discovery first)",
-        "a one-off ticket-level spec is needed, not a whole-product PRD (use prd-readiness-gate + the ticket directly)"
+        "prd-development has not been applied yet (apply it first, skipping inapplicable phases; do not reach for this instead of it)",
+        "the product has no real Product Context yet to narrate (do discovery first)"
       ],
-      "cost_profile": "medium",
+      "cost_profile": "low",
       "theme": null,
       "source_reference": "methodology/capabilities/prd-structure-convention.md"
     },
@@ -10964,13 +10961,14 @@
       "decision_stage": "document",
       "selection_cues": [
         "prd-readiness-gate has passed and the actual PRD document needs to be written",
-        "moving from scattered discovery notes to an engineering-ready spec"
+        "moving from scattered discovery notes to an engineering-ready spec",
+        "writing or reconciling a PRD for a product that is already shipping, citing tickets/IFU/context.json instead of new discovery"
       ],
       "anti_cues": [
         "discovery is not yet mature (run prd-readiness-gate first)",
         "only a lightweight requirements note is needed, not a full PRD"
       ],
-      "cost_profile": "high",
+      "cost_profile": "scales with phases actually run — low when most phases are skipped as inapplicable, high for a full from-scratch pass",
       "theme": "pm-artifacts",
       "source_reference": "methodology/skills/prd-development/SKILL.md"
     },
