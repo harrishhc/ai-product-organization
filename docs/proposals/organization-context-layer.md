@@ -51,16 +51,15 @@ A product explicitly declares its organization. A product with no organization d
 
 ### 2.1 Registry
 
-`products/registry.json` should eventually support:
+`products/registry.json` supports:
 
 ```json
 {
   "organizations": {
     "aetherai": {
       "repository": {
-        "type": "git_remote",
-        "remote_url": "git@github.com:harrishhc/aetherai-organization-context.git",
-        "local_clone_path": "./.organization-clones/aetherai"
+        "type": "local_path",
+        "location": "./organizations/aetherai"
       },
       "context_entry": "org-context.json"
     }
@@ -139,19 +138,20 @@ Organization Context should be independently *addressable* from PDM Core and pro
 
 **Superseded 2026-09-18 for the aetherAI case.** The original recommendation here was a dedicated private organization-context repository. Its stated rationale was that another organization could then reuse PDM Core without inheriting aetherAI's process assumptions — and HH has since ruled that out: PDM Core is his alone and is not shared. With that premise gone, and with both repositories private and same-owner, separation bought no confidentiality boundary and no durability PDM Core's own remote does not already provide. It cost a `org-sync` clone before the first read in any fresh environment, a second PR cycle for every content change, and content invisible in PDM Core's own review surface. `aetherai` is now a `local_path` organization at `organizations/aetherai/`, which needs no sync step at all — `syncOrganizationContext` correctly refuses a non-`git_remote` entry, so the step disappears rather than being bypassed.
 
-**The choice rule going forward:** an organization gets its own repository only when its context must be access-isolated from PDM Core's own audience — a different company, a different confidentiality boundary. Otherwise it is a directory under `organizations/`. Both are supported by the same registry shape and the same `runtime/organizationContext.js`; neither requires new machinery. Do not let one precedent make the heavier option the default.
+**Going forward, organizations live under `organizations/`.** Access isolation was the only thing a separate repository could have bought, and it cannot arise here: PDM Core is HH's alone and is not shared, so there is no audience to isolate an organization's context from. Adding a second organization is three edits — a directory, an `organizations` entry, and `organization` on the product — with no repository, no clone, and no sync.
 
-The repository should contain:
+The registry's `git_remote` form is not removed, because products use it and the resolution code is shared. It is simply not how organizations are stored here. Reintroducing it for an organization would need the premise above to change first.
+
+An organization's directory contains:
 
 ```text
-org-context.json
-README.md
-knowledge/        # supporting source/evidence when needed
+organizations/<id>/
+  org-context.json
+  README.md
+  knowledge/        # supporting source/evidence when needed
 ```
 
-PDM Core stores only the registry pointer and routing metadata; it does not copy the organization's facts.
-
-This also means another organization can use the same PDM Core without inheriting aetherAI process assumptions.
+The separation that matters is not storage, it is scope. An organization's facts stay out of `runtime/` and `governance/`, are reached only through the registry indirection, and are classified and provenance-tracked in their own file — none of which requires them to live in a different repository. Each organization's context is separately addressed, so one organization's process never reaches a product belonging to another.
 
 ## 5. Governance
 
