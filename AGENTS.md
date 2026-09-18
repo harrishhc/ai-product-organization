@@ -137,6 +137,44 @@ A persistent PDM worker session is useful for portfolio continuity, but its conv
 
 A subagent is not a second memory system. Product facts, evidence, hypotheses, decisions, and other durable outputs still go through the normal Product Context / decision-record write paths.
 
+## Concurrent sessions: one worker, one worktree
+
+Subagents share this working tree, so they are for reading and analysis. Anything that **writes** — edits, commits, branch changes — needs its own worktree when more than one worker is active on this repository. Two workers in one checkout share a single HEAD and a single index: a `git checkout` by one discards or strands the other's work, and a commit lands on whatever branch the other happens to be on.
+
+**Assume this is happening rather than assuming it is not.** On 2026-09-18 a second worker committed onto the branch this one was using, then switched to `main` and cherry-picked it across. Nothing warned either side.
+
+**Detect it.** Any of these means another worker is in this checkout:
+
+- `git branch --show-current` returns a branch you did not switch to;
+- a commit on your branch you did not author;
+- working-tree changes you did not make.
+
+`git reflog --date=iso` attributes every HEAD move and settles it.
+
+**Act on it — do not work around it.** Move to your own worktree and continue there:
+
+```bash
+git worktree add .claude/worktrees/<task-slug> -b <branch-name>
+```
+
+Hosts may expose this natively; the mechanism is the same. Do not "just be careful" in a shared checkout, and do not switch the shared checkout back to your branch — that is the collision, not the fix.
+
+**Git prevents the confusing case for you.** The same branch cannot be checked out in two worktrees:
+
+```text
+fatal: '<branch>' is already used by worktree at '<path>'
+```
+
+That error means another worker already holds that work. Find out what it is doing; never force past it.
+
+**Cost, so this is not used wastefully.** Worktrees share one `.git`, so a worktree for PDM Core work (runtime, governance, methodology, docs) is nearly free. Product work is not: `REPO_ROOT` resolves from the runtime's own location, so `.product-clones/` and `.organization-clones/` resolve *inside each worktree* and product repositories are re-synced there (~12MB today). That is the price of isolation and it is correct — two workers must not share one product clone — but it means:
+
+- Do not create a worktree for a read-only question. Use a subagent.
+- Reuse the worktree already open for a task instead of starting another.
+- Remove it once its PR merges: `git worktree remove <path>` and delete the branch. A worktree left behind on a merged branch is stale state the next worker will mistake for live work.
+
+**What a worktree does not isolate.** `products/registry.json` is shared state — real coordination is required before two workers change it. `portfolio-index.md` is derived: regenerate it, never hand-merge a conflict in it.
+
 ## Deliberately not built
 
 Do not introduce architecture merely because it sounds more complete. Reconsider an explicitly rejected mechanism only when a concrete failure case justifies reopening it.
