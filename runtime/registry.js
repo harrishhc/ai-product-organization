@@ -45,16 +45,27 @@ function normalizeText(value) {
 }
 
 /**
- * The free-text self-description a methodology asset already carries in its own
- * frontmatter. Hand-authored routing metadata (primary_intents/decision_stage)
- * exists for only a handful of entrypoints, so without this the rest of the
- * ecosystem is present in the registry but invisible to routing. Cue matches
- * are always ranked below declared metadata — see fit assignment below.
+ * An entrypoint's self-description, split by evidential weight rather than
+ * lumped together. This IS the ecosystem's routing mechanism: every skill
+ * declares these fields, whereas hand-authored primary_intents/decision_stage
+ * exist for only a handful and have to be maintained per asset.
+ *
+ * `scenarios` are verbatim user utterances the author wrote down ("This story
+ * is too big for a sprint and splitting by frontend/backend isn't working"),
+ * `best_for` are concrete use cases, and `outputs` name the artifacts
+ * produced. They are in the same register as a real dominant uncertainty, so a
+ * match here is evidence that this entrypoint was written for this situation.
  */
-function cueCorpus(cap) {
+function situationCorpus(cap) {
   return normalizeText([
-    cap.name, cap.theme, cap.intent, cap.summary,
-    ...(cap.best_for ?? []), ...(cap.scenarios ?? []), ...(cap.selection_cues ?? []),
+    ...(cap.scenarios ?? []), ...(cap.best_for ?? []), ...(cap.outputs ?? []),
+  ].join(' | '));
+}
+
+/** Topical prose. A match here means the right subject area, not the right situation. */
+function descriptiveCorpus(cap) {
+  return normalizeText([
+    cap.name, cap.theme, cap.intent, cap.summary, ...(cap.selection_cues ?? []),
   ].filter(Boolean).join(' | '));
 }
 
@@ -63,17 +74,18 @@ function significantTerms(value) {
 }
 
 /**
- * Match signals are weighted, not counted. A declared intent is metadata the
- * methodology author committed to; a caller-supplied intent found in an
- * asset's self-description is weaker; a word that merely appears in the
- * dominant-uncertainty prose is weakest, because uncertainty is written as
- * free text and its incidental words collide easily. Counting all three
- * equally lets three incidental collisions outrank a real topical match.
+ * Match signals are weighted, not counted. Strongest is routing metadata the
+ * author wrote for routing; then a caller intent found anywhere in the
+ * self-description; then a word matching a declared situation or output; then
+ * a word that merely appears in topical prose, which collides easily because a
+ * dominant uncertainty is written as free text. Counting them equally lets
+ * incidental collisions outrank a real situational match.
  */
 function matchStrength(candidate) {
-  return (candidate.matchedIntents?.length ?? 0) * 3
+  return (candidate.matchedIntents?.length ?? 0) * 4
     + (candidate.cueIntents?.length ?? 0) * 2
-    + (candidate.cueTerms?.length ?? 0);
+    + (candidate.situationTerms?.length ?? 0) * 2
+    + (candidate.descriptiveTerms?.length ?? 0);
 }
 
 /**
@@ -100,18 +112,36 @@ export function filterCandidates({ intents = [], decisionStage, dominantUncertai
 
     if (uncertaintyMatch === 'mismatch') continue;
 
-    const corpus = cueCorpus(cap);
-    const cueIntents = intents.filter((i) => { const t = normalizeText(i); return t && corpus.includes(t); });
-    const cueTerms = uncertaintyTerms.filter((t) => corpus.includes(t));
+    const situation = situationCorpus(cap);
+    const descriptive = descriptiveCorpus(cap);
+    const cueIntents = intents.filter((i) => {
+      const t = normalizeText(i);
+      return t && (situation.includes(t) || descriptive.includes(t));
+    });
+    const situationTerms = uncertaintyTerms.filter((t) => situation.includes(t));
+    const descriptiveTerms = uncertaintyTerms.filter((t) => !situation.includes(t) && descriptive.includes(t));
+    const cueTerms = [...situationTerms, ...descriptiveTerms];
     const cueHits = [...new Set([...cueIntents, ...cueTerms])];
     const declared = matchedIntents.length > 0 || stageMatch;
     if (!declared && cueHits.length === 0) continue;
+
+    // A caller intent or two distinct uncertainty words landing in the declared
+    // situations/outputs means the query resembles a case the author wrote
+    // down, which is real evidence of fit — not the loose keyword collision
+    // that `weak_fit` is for. Only declared routing metadata reaches
+    // strong_fit, so hand-authored disambiguation still wins outright.
+    const situationMatch = intents.some((i) => {
+      const t = normalizeText(i);
+      return t && situation.includes(t);
+    }) || situationTerms.length >= 2;
 
     let fit = 'weak_fit';
     if (declared) {
       if (matchedIntents.length > 0 && stageMatch) fit = 'strong_fit';
       else fit = 'fit';
       if (uncertaintyMatch === 'matched' && fit === 'fit') fit = 'strong_fit';
+    } else if (situationMatch) {
+      fit = 'fit';
     }
 
     results.push({
@@ -122,6 +152,8 @@ export function filterCandidates({ intents = [], decisionStage, dominantUncertai
       matchBasis: declared ? 'declared' : 'cue',
       matchedIntents,
       cueIntents,
+      situationTerms,
+      descriptiveTerms,
       cueTerms,
       cueHits,
       composes: cap.composes ?? [],
@@ -136,12 +168,14 @@ export function filterCandidates({ intents = [], decisionStage, dominantUncertai
     });
   }
 
+  // Ordered exactly as selectSmallestSufficient resolves, so the candidate list
+  // PDM reads agrees with what selection returns. Ranking declared ahead of cue
+  // here would print a leader that selection does not pick; the fit ladder
+  // already reserves strong_fit for declared routing metadata.
   const fitRank = { strong_fit: 0, fit: 1, weak_fit: 2 };
-  const basisRank = { declared: 0, cue: 1 };
   const uncertaintyRank = { matched: 0, unknown: 1, mismatch: 2 };
   results.sort((a, b) =>
     (fitRank[a.fit] - fitRank[b.fit]) ||
-    (basisRank[a.matchBasis] - basisRank[b.matchBasis]) ||
     (uncertaintyRank[a.uncertaintyMatch] - uncertaintyRank[b.uncertaintyMatch]) ||
     (matchStrength(b) - matchStrength(a)) ||
     a.id.localeCompare(b.id),
