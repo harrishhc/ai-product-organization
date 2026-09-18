@@ -143,7 +143,7 @@ Subagents share this working tree, so they are for reading and analysis. Anythin
 
 **Assume this is happening rather than assuming it is not.** On 2026-09-18 a second worker committed onto the branch this one was using, then switched to `main` and cherry-picked it across. Nothing warned either side.
 
-**Detect it.** Any of these means another worker is in this checkout:
+**Detect it.** Before sustained write work, `git worktree list` shows whether concurrency is already in play. During work, any of these means another worker is in this checkout:
 
 - `git branch --show-current` returns a branch you did not switch to;
 - a commit on your branch you did not author;
@@ -157,6 +157,8 @@ Subagents share this working tree, so they are for reading and analysis. Anythin
 git worktree add .claude/worktrees/<task-slug> -b <branch-name>
 ```
 
+`.claude/` is gitignored, so a worktree there is never repository content. A new worktree does **not** carry uncommitted work across — commit it to your branch first, or stash it, before moving; otherwise it stays in the shared checkout where the other worker can discard it.
+
 Hosts may expose this natively; the mechanism is the same. Do not "just be careful" in a shared checkout, and do not switch the shared checkout back to your branch — that is the collision, not the fix.
 
 **Git prevents the confusing case for you.** The same branch cannot be checked out in two worktrees:
@@ -167,7 +169,7 @@ fatal: '<branch>' is already used by worktree at '<path>'
 
 That error means another worker already holds that work. Find out what it is doing; never force past it.
 
-**Cost, so this is not used wastefully.** Worktrees share one `.git`, so a worktree for PDM Core work (runtime, governance, methodology, docs) is nearly free. Product work is not: `REPO_ROOT` resolves from the runtime's own location, so `.product-clones/` and `.organization-clones/` resolve *inside each worktree* and product repositories are re-synced there (~12MB today). That is the price of isolation and it is correct — two workers must not share one product clone — but it means:
+**Cost, so this is not used wastefully.** Worktrees share one `.git`, so a worktree for PDM Core work (runtime, governance, methodology, docs) is nearly free — Organization Context is a `local_path` directory in the repository and costs nothing extra. Product work is the exception: `REPO_ROOT` resolves from the runtime's own location, so `.product-clones/` resolves *inside each worktree* and every registered product re-syncs there (~12MB today). That is the price of isolation and it is correct — two workers must not share one product clone — but it means:
 
 - Do not create a worktree for a read-only question. Use a subagent.
 - Reuse the worktree already open for a task instead of starting another.

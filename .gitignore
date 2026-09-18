@@ -12,3 +12,9 @@ node_modules/
 
 # Same for "git_remote" organizations (runtime/organizationContext.js).
 /.organization-clones/
+
+# Host-local worker state: per-session settings, and the worktrees the
+# concurrent-session rule in AGENTS.md tells workers to create here. A worktree
+# is a checkout, not repository content — without this, `git add -A` stages one
+# whole, `.git` file and all.
+/.claude/
