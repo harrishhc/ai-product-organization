@@ -158,6 +158,22 @@ resume normal portfolio loop
 
 A Founder Decision Brief is decision-specific and disposable as a presentation artifact; the underlying decision record and product context remain the source of truth.
 
+### HH's response
+
+HH answers in natural language — no special command syntax. The worker maps the reply to the pending decision record, and must first classify which of these it is:
+
+- an explicit decision;
+- a request for more analysis/evidence before deciding;
+- a request to defer (keep the checkpoint open, work elsewhere);
+- a challenge to the recommendation itself;
+- a request to stop the worker.
+
+An ambiguous reply must be clarified, never silently treated as a decision. Recording the wrong classification as a Founder decision is worse than asking one more question.
+
+### Don't re-raise a checkpoint every loop pass
+
+A pending checkpoint is durable state, not a nag. Once raised and surfaced, the worker does not re-present the same pending checkpoint on every subsequent portfolio pass. Re-surface it only when: HH starts a new interactive session, the checkpoint's status materially changes, or HH asks about it directly.
+
 ## Context hygiene: keep the persistent worker useful
 
 The worker's conversation context is not durable state, but it is a scarce resource across a long-lived session. Since continuity lives in Product Context / Work State / Active Brief / decision records rather than the transcript, one-off investigative work whose intermediate output does not need to remain in the worker's context should run in a disposable subagent or equivalent isolated task when the host supports that mechanism.
@@ -212,7 +228,9 @@ do the work
 persist durable state
 ```
 
-A fresh worker must not need the previous chat transcript to reconstruct continuity. Durable repository state takes precedence over conversational claims.
+A fresh worker must not need the previous chat transcript to reconstruct continuity.
+
+**On conflict, the durable record wins.** If a fresh worker finds a discrepancy between a durable record (Product Context, Work State, a decision record) and a claim that only exists in a previous conversation transcript it was handed, the durable record is authoritative unless HH explicitly corrects it. A prior model's unpersisted claim is not evidence about the product.
 
 ## Ending, pausing, or resuming
 
