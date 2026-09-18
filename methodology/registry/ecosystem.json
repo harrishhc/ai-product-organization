@@ -70,39 +70,6 @@
       "provenance": null
     },
     {
-      "id": "capabilities:prd-structure-convention",
-      "name": "PRD Structure Convention",
-      "type": "capability",
-      "execution_type": "component",
-      "theme": null,
-      "intent": null,
-      "best_for": [],
-      "scenarios": [],
-      "source_reference": "methodology/capabilities/prd-structure-convention.md",
-      "relative_path": "capabilities/prd-structure-convention.md",
-      "summary": null,
-      "related_skills": [
-        "skills:prd-development"
-      ],
-      "size_bytes": 4786,
-      "routing": {
-        "primary_intents": [
-          "prd",
-          "documentation_maintenance"
-        ],
-        "decision_stage": "author_or_review_prd",
-        "selection_cues": [
-          "immediately after running prd-development for a product in this repo"
-        ],
-        "anti_cues": [
-          "prd-development has not been applied yet (apply it first, skipping inapplicable phases; do not reach for this instead of it)",
-          "the product has no real Product Context yet to narrate (do discovery first)"
-        ],
-        "cost_profile": "low"
-      },
-      "provenance": null
-    },
-    {
       "id": "capabilities:prioritization-comparison",
       "name": "Prioritization Comparison",
       "type": "capability",
@@ -9049,27 +9016,6 @@
       "cost_profile": "low",
       "theme": null,
       "source_reference": "methodology/capabilities/prd-readiness-gate.md"
-    },
-    {
-      "id": "capabilities:prd-structure-convention",
-      "name": "PRD Structure Convention",
-      "type": "component",
-      "source_type": "capability",
-      "primary_intents": [
-        "prd",
-        "documentation_maintenance"
-      ],
-      "decision_stage": "author_or_review_prd",
-      "selection_cues": [
-        "immediately after running prd-development for a product in this repo"
-      ],
-      "anti_cues": [
-        "prd-development has not been applied yet (apply it first, skipping inapplicable phases; do not reach for this instead of it)",
-        "the product has no real Product Context yet to narrate (do discovery first)"
-      ],
-      "cost_profile": "low",
-      "theme": null,
-      "source_reference": "methodology/capabilities/prd-structure-convention.md"
     },
     {
       "id": "capabilities:prioritization-comparison",

@@ -18,6 +18,16 @@ This mirrors the existing rule in `runtime/decision.js`: `recommendation` and `f
 
 Same treatment as the methodology registry (`ARCHITECTURE.md` §14: "derived metadata, not a second source of truth"). `active-brief.md` is produced only by `renderActiveBrief()` from the current Work State and Product Context — it is regenerated, not authored. If something needs to change in the brief, change Work State or Product Context and re-render; do not hand-edit the brief directly. A Founder note meant to steer the next session belongs in Work State (e.g. as a `next_actions` entry or an explicit field), not scrawled into the brief.
 
+## `docs/PRD.md`, where a product has one, is a narrative view — not a fourth source of truth
+
+A product may additionally keep a human-readable `docs/PRD.md` (written with the `prd-development` skill — see `governance/AUTONOMY_BOUNDARY.md` §1 on using it via the `Skill` tool rather than reinventing its structure). That document has no concept of Product Context, because it's a general-purpose PM skill, not something built for this repo. So this repo adds the one thing it's missing: **the PRD is subordinate to Product Context, the same way Active Brief and Work State are.** State this explicitly at the top of any `docs/PRD.md`:
+
+> Canonical source: this document is a narrative view of the product's Product Context (`context.json`, path per the product's registry entry). If the two disagree, Product Context is authoritative. Real history is `git log`, not a hand-maintained changelog.
+
+A fact discovered while writing or reviewing a PRD goes into `context.json` first, through the normal write path (`writeProductContext()`); the PRD is updated afterward to reflect it — never the other way around, and never a new fact stated in the PRD without a `context.json` entry to back it.
+
+*(Corrected 2026-09-18: an earlier session authored a whole standalone `prd-structure-convention` methodology capability to say this, duplicating `prd-development`'s own skeleton in the process. This paragraph is the entire non-duplicate content that capability actually had — it belongs here, next to the other three layers' boundary rules, not as a separate "capability" someone has to separately discover and invoke.)*
+
 ## Session protocol
 
 **Session start:** read `active-brief.md` first. Only fall back to `context.json` (bounded, by section) or `knowledge/` (by specific source) when the brief is insufficient for the current question. Do not re-read the full product history at the start of every session.

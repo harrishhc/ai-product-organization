@@ -146,25 +146,6 @@
       "evaluation_signals": ["correctly blocks premature PRDs", "does not block once criteria are genuinely met"]
     },
     {
-      "id": "prd-structure-convention",
-      "name": "PRD Structure Convention (Product Context adapter)",
-      "type": "component",
-      "source": "hh-original",
-      "source_reference": "methodology/capabilities/prd-structure-convention.md",
-      "version": "0.2.0",
-      "purpose": "Thin adapter applied alongside prd-development: states how the resulting docs/PRD.md relates to this repo's own Product Context (context.json), which prd-development has no concept of. Does not define its own PRD skeleton — prd-development already provides one, with optional phases meant to be skipped per product.",
-      "primary_intents": ["prd", "documentation_maintenance"],
-      "decision_stage": "author_or_review_prd",
-      "inputs": ["output of prd-development for this product", "product's context.json"],
-      "outputs": ["a canonical-source statement added to docs/PRD.md", "confirmation that new findings were routed to context.json before the PRD was updated"],
-      "selection_cues": ["immediately after running prd-development for a product in this repo"],
-      "anti_cues": ["prd-development has not been applied yet (apply it first, skipping inapplicable phases; do not reach for this instead of it)", "the product has no real Product Context yet to narrate (do discovery first)"],
-      "context_requirements": ["product's context.json", "the PRD produced by prd-development"],
-      "cost_profile": "low",
-      "composability": "applied immediately after prd-development, never in place of it; corrected 2026-09-18 from a v0.1.0 that wrongly duplicated prd-development's skeleton",
-      "evaluation_signals": ["docs/PRD.md states its subordinate relationship to context.json", "no PRD-specific skeleton exists in this file that duplicates prd-development's"]
-    },
-    {
       "id": "prd-development",
       "name": "PRD Development",
       "type": "workflow",
