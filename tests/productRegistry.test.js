@@ -139,3 +139,25 @@ test('resolveProductOrganization returns null for a product with no declared org
 test('resolveProductOrganization refuses an unregistered product rather than guessing', () => {
   assert.throws(() => resolveProductOrganization('not-registered'), /is not in the Product Registry/);
 });
+
+test('every organization a product declares is registered, and every registered organization resolves', () => {
+  // Catches a typo at CI time rather than at the first bounded read.
+  // resolveProductOrganization only returns the declared string; nothing fails
+  // until resolveOrganizationRepository is reached, which can be much later.
+  const registry = JSON.parse(readFileSync(path.join(REPO_ROOT, 'products', 'registry.json'), 'utf8'));
+  const declared = Object.entries(registry.products)
+    .filter(([, entry]) => entry.organization)
+    .map(([id, entry]) => [id, entry.organization]);
+
+  assert.ok(declared.length > 0, 'at least one product should declare an organization');
+  for (const [productId, organizationId] of declared) {
+    assert.ok(
+      Object.hasOwn(registry.organizations ?? {}, organizationId),
+      `product "${productId}" declares organization "${organizationId}", which is not in the organizations map`,
+    );
+    assert.doesNotThrow(
+      () => resolveOrganizationRepository(organizationId),
+      `organization "${organizationId}" is registered but does not resolve`,
+    );
+  }
+});
