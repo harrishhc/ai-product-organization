@@ -64,6 +64,15 @@ export function loadOrganizationContext(organizationId) {
  * Bounded retrieval: returns only the requested sections, not the full
  * object. Same default-narrow rule as Product Context.
  *
+ * `confidence_notes` is the one exception, and is not a selectable section:
+ * it qualifies how far the other sections can be trusted, so it travels with
+ * every bounded read rather than being requested on its own. The aetherAI
+ * context records there that its statements came from an unverified memory
+ * dump and must be cross-checked before being relied on. Dropping that from a
+ * bounded read hands PDM organizational claims labelled EVIDENCE with nothing
+ * saying they are unverified — turning an assumption into a fact by omission,
+ * which `governance/EVIDENCE_DISCIPLINE.md` exists to prevent.
+ *
  * @param {string} organizationId
  * @param {string[]} sections - subset of VALID_SECTIONS
  */
@@ -78,6 +87,9 @@ export function getBoundedOrganizationContext(organizationId, sections) {
   const full = loadOrganizationContext(organizationId);
   const bounded = { organization_id: full.organization_id };
   for (const s of sections) bounded[s] = full[s];
+  if (Array.isArray(full.confidence_notes) && full.confidence_notes.length > 0) {
+    bounded.confidence_notes = full.confidence_notes;
+  }
   return bounded;
 }
 
