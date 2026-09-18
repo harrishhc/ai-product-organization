@@ -121,20 +121,52 @@ test('block-scalar frontmatter is folded, not captured as its block indicator', 
   assert.match(problemStatement.intent, /problem from the user's perspective/);
 });
 
-test('cue matching surfaces undeclared entrypoints but never outranks declared routing', () => {
+test('self-description routing reaches fit on a situational match, but only declared metadata reaches strong_fit', () => {
   const candidates = filterCandidates({
     intents: ['prioritization'],
     decisionStage: 'prioritize',
     dominantUncertainty: 'which option to sequence first',
   });
-  const declared = candidates.filter((c) => c.matchBasis === 'declared');
-  const cued = candidates.filter((c) => c.matchBasis === 'cue');
-  assert.ok(declared.length > 0);
-  assert.ok(cued.length > 0, 'self-described entrypoints should now be reachable');
-  for (const c of cued) assert.equal(c.fit, 'weak_fit');
-  // Ordering: every declared candidate precedes every cue-only candidate.
-  const firstCue = candidates.findIndex((c) => c.matchBasis === 'cue');
-  assert.ok(candidates.slice(0, firstCue).every((c) => c.matchBasis === 'declared'));
+  assert.ok(candidates.some((c) => c.matchBasis === 'declared'));
+  assert.ok(candidates.some((c) => c.matchBasis === 'cue'), 'self-described entrypoints must be reachable');
+  // Hand-authored routing metadata keeps an exclusive top tier: it is the only
+  // place disambiguation knowledge ("use prioritization-advisor first") lives.
+  for (const c of candidates.filter((c) => c.matchBasis === 'cue')) {
+    assert.notEqual(c.fit, 'strong_fit');
+  }
+  for (const c of candidates.filter((c) => c.fit === 'strong_fit')) {
+    assert.equal(c.matchBasis, 'declared');
+  }
+});
+
+test('a verbatim scenario match ranks as fit, not as a loose keyword collision', () => {
+  // user-story-splitting declares the scenario "This story is too big for a
+  // sprint and splitting by frontend/backend isn't working".
+  const candidates = filterCandidates({
+    dominantUncertainty: 'this story is too big for a sprint and splitting by frontend backend is not working',
+  });
+  const splitting = candidates.find((c) => c.id === 'skills:user-story-splitting');
+  assert.ok(splitting, 'the entrypoint written for this situation must be reachable');
+  assert.equal(splitting.fit, 'fit');
+  assert.ok(splitting.situationTerms.length >= 2, 'the match must come from declared scenarios/best_for');
+  assert.equal(candidates[0].id, 'skills:user-story-splitting');
+});
+
+test('a situational match outranks a same-tier topical-prose match', () => {
+  const [top] = filterCandidates({ dominantUncertainty: 'stakeholder wants a dashboard', intents: ['feature'] });
+  assert.equal(top.id, 'skills:incoming-request-advisor');
+  assert.ok(top.situationTerms.includes('dashboard'));
+});
+
+test('candidate order agrees with what selection resolves', () => {
+  for (const query of [
+    { intents: ['prd'], decisionStage: 'document', dominantUncertainty: 'no engineering-ready requirements document' },
+    { intents: ['feature'], decisionStage: 'framing', dominantUncertainty: 'stakeholder wants a dashboard' },
+    { intents: ['competitive'], dominantUncertainty: 'a competitor cut pricing and we must respond' },
+  ]) {
+    const candidates = filterCandidates(query);
+    assert.equal(selectSmallestSufficient(candidates).id, candidates[0].id, JSON.stringify(query));
+  }
 });
 
 test('an entrypoint with no declared and no cue match is not returned', () => {

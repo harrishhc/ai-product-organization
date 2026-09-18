@@ -99,6 +99,12 @@ const preliminary = walk(root).map((file) => {
     source_reference: `methodology/${rel}`,
     relative_path: rel,
     summary: frontmatter(text, 'description') || null,
+    // Dean's own routing-relevant frontmatter, uniform across all 77 skills.
+    // estimated_time is the ecosystem's native cost signal; outputs/argument_hint
+    // say what an entrypoint produces and what input it expects.
+    estimated_time: frontmatter(text, 'estimated_time'),
+    argument_hint: frontmatter(text, 'argument-hint'),
+    outputs: frontmatterList(text, 'outputs'),
     declared_uses: frontmatterList(text, 'uses'),
     composes: [],
     composes_unresolved: [],
@@ -188,6 +194,9 @@ const registry = {
     summary: s.summary,
     best_for: s.best_for,
     scenarios: s.scenarios,
+    estimated_time: s.estimated_time,
+    argument_hint: s.argument_hint,
+    outputs: s.outputs,
     composes: s.composes,
     source_reference: s.source_reference,
   })),
