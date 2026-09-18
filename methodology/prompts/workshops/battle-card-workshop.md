@@ -24,9 +24,6 @@ If the user arrives with enough context, reduce or skip questions.
 ## Attribution:
 Created by Dean Peters (Productside.com).
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: May 2026
 
 -->

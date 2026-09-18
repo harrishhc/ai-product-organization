@@ -44,9 +44,6 @@ Created by Dean Peters (Productside.com). Grounded in Power x
 Interest analysis (Mendelow) and stakeholder identification practice
 created by Dean Peters and adopted into the MITRE Innovation Toolkit.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 3, 2026
 -->
 

@@ -54,9 +54,6 @@ Created by Dean Peters (Productside.com), refined from his User
 Story Formatting Agent experiment. Structure per
 jinja2-prompt-structures.md.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 3, 2026
 -->
 

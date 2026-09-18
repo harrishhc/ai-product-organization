@@ -97,9 +97,6 @@ Created by Dean Peters (Productside.com). Collection and fusion
 doctrine from the Competitive Research Compendium in this directory's
 reference/ shelf.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 30, 2026
 -->
 

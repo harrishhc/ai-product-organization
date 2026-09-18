@@ -56,9 +56,6 @@ Created by Dean Peters (Productside.com), from the Competitive
 Research Compendium's fusion cadence. Loop discipline after Leen
 Ammeraal, Programs and Data Structures in C (Wiley, 1987).
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 16, 2026
 -->
 

@@ -63,9 +63,6 @@ If unanswered, proceed with labeled assumptions.
 Created by Dean Peters (Productside.com). Battle card structure per
 the battle card workshop's field-action criterion.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 3, 2026
 -->
 

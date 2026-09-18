@@ -49,9 +49,6 @@ Then proceed with clearly labeled assumptions.
 ## Attribution:
 Created by Dean Peters for AI-enhanced user story generation.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: March 2, 2026
 -->
 

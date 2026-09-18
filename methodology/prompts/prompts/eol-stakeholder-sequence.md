@@ -67,9 +67,6 @@ Created by Dean Peters (Productside.com), August 2026.
 Sequencing framework grounded in standard EOL communication
 practice: legal exposure first, then financial, then operational.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: August 9, 2026
 -->
 

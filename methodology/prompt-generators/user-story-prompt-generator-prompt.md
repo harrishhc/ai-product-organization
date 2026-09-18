@@ -39,9 +39,6 @@ assumption problems wearing a formatting complaint.
 Created by Dean Peters (Productside.com). Story format after Mike
 Cohn; jobs-to-be-done framing after Clayton Christensen.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 30, 2026
 -->
 
@@ -127,6 +124,5 @@ Ignore HTML-style comments; this is just for attribution.
 - **Prompt Name**: user-story-prompt-generator-prompt.md
 - **Prompt Description**: This prompt helps product managers and marketers create effective user stories using AI assistants. By asking targeted questions, it gathers essential information to generate customized user stories with clear acceptance criteria, saving time and ensuring AI-generated content aligns with their needs.
 - **Attribution**: Created by Dean Peters, 26 June, 2024
-- **Licensing**: CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
 
 -->

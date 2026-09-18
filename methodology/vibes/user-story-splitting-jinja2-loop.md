@@ -58,9 +58,6 @@ Created by Dean Peters (Productside.com). Splitting rubric from The
 Humanizing Work Guide to Splitting User Stories (Richard Lawrence).
 Structure per jinja2-prompt-structures.md.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 3, 2026
 -->
 

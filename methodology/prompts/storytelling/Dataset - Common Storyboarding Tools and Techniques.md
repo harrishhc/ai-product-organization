@@ -113,6 +113,3 @@ Each storyboard panel should show a **cause** (problem), **effect** (consequence
 
 ## Attribution:
 Created by Dean Peters (Productside.com).
-
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.

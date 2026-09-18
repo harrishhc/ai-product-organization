@@ -78,9 +78,6 @@ Created by Dean Peters (Productside.com), July 11, 2024.
 Revised August 2026 to add right-sizing, phase-gate definitions,
 and the no-replacement path.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: August 9, 2026
 -->
 

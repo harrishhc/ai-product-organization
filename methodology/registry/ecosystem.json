@@ -559,21 +559,6 @@
       "size_bytes": 7440
     },
     {
-      "id": "license",
-      "name": "LICENSE",
-      "type": "reference",
-      "execution_type": null,
-      "theme": null,
-      "intent": null,
-      "best_for": [],
-      "scenarios": [],
-      "source_reference": "methodology/LICENSE",
-      "relative_path": "LICENSE",
-      "summary": null,
-      "related_skills": [],
-      "size_bytes": 20850
-    },
-    {
       "id": "loops",
       "name": "Loops",
       "type": "loop",
@@ -601,7 +586,7 @@
       "relative_path": "loops/competitive-watch-routine.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6888
+      "size_bytes": 6754
     },
     {
       "id": "loops:epic-story-batch",
@@ -616,7 +601,7 @@
       "relative_path": "loops/epic-story-batch.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6345
+      "size_bytes": 6211
     },
     {
       "id": "loops:fusion-cadence-routine",
@@ -631,7 +616,7 @@
       "relative_path": "loops/fusion-cadence-routine.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7973
+      "size_bytes": 7839
     },
     {
       "id": "loops:market-sizing-loop",
@@ -646,7 +631,7 @@
       "relative_path": "loops/market-sizing-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6360
+      "size_bytes": 6226
     },
     {
       "id": "loops:prd-section-loop",
@@ -661,7 +646,7 @@
       "relative_path": "loops/prd-section-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8327
+      "size_bytes": 8193
     },
     {
       "id": "loops:research-synthesis-loop",
@@ -676,7 +661,7 @@
       "relative_path": "loops/research-synthesis-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6100
+      "size_bytes": 5966
     },
     {
       "id": "loops:story-splitting-loop",
@@ -691,7 +676,7 @@
       "relative_path": "loops/story-splitting-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6995
+      "size_bytes": 6861
     },
     {
       "id": "loops:swot-batch",
@@ -706,7 +691,7 @@
       "relative_path": "loops/swot-batch.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6214
+      "size_bytes": 6080
     },
     {
       "id": "market-intelligence",
@@ -736,7 +721,7 @@
       "relative_path": "market-intelligence/all-source-fusion-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8663
+      "size_bytes": 8529
     },
     {
       "id": "market-intelligence:ansoff-matrix-prompt",
@@ -751,7 +736,7 @@
       "relative_path": "market-intelligence/ansoff-matrix-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6027
+      "size_bytes": 5893
     },
     {
       "id": "market-intelligence:battle-card-builder-prompt",
@@ -766,7 +751,7 @@
       "relative_path": "market-intelligence/battle-card-builder-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5577
+      "size_bytes": 5443
     },
     {
       "id": "market-intelligence:competitive-intel-watch-prompt",
@@ -781,7 +766,7 @@
       "relative_path": "market-intelligence/competitive-intel-watch-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6302
+      "size_bytes": 6168
     },
     {
       "id": "market-intelligence:competitive-research-snapshot-prompt",
@@ -796,7 +781,7 @@
       "relative_path": "market-intelligence/competitive-research-snapshot-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5467
+      "size_bytes": 5333
     },
     {
       "id": "market-intelligence:earnings-executive-signal-refresh-prompt",
@@ -811,7 +796,7 @@
       "relative_path": "market-intelligence/earnings-executive-signal-refresh-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5323
+      "size_bytes": 5189
     },
     {
       "id": "market-intelligence:finint-collection-prompt",
@@ -826,7 +811,7 @@
       "relative_path": "market-intelligence/finint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7763
+      "size_bytes": 7629
     },
     {
       "id": "market-intelligence:full-spectrum-company-sweep-prompt",
@@ -841,7 +826,7 @@
       "relative_path": "market-intelligence/full-spectrum-company-sweep-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 16158
+      "size_bytes": 16024
     },
     {
       "id": "market-intelligence:geoint-demoint-collection-prompt",
@@ -856,7 +841,7 @@
       "relative_path": "market-intelligence/geoint-demoint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7941
+      "size_bytes": 7807
     },
     {
       "id": "market-intelligence:humint-collection-prompt",
@@ -871,7 +856,7 @@
       "relative_path": "market-intelligence/humint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8346
+      "size_bytes": 8212
     },
     {
       "id": "market-intelligence:market-landscape-scan-prompt",
@@ -886,7 +871,7 @@
       "relative_path": "market-intelligence/market-landscape-scan-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5325
+      "size_bytes": 5191
     },
     {
       "id": "market-intelligence:masint-collection-prompt",
@@ -901,7 +886,7 @@
       "relative_path": "market-intelligence/masint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8322
+      "size_bytes": 8188
     },
     {
       "id": "market-intelligence:osint-collection-prompt",
@@ -916,7 +901,7 @@
       "relative_path": "market-intelligence/osint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6850
+      "size_bytes": 6716
     },
     {
       "id": "market-intelligence:pestel-delta-monitor-prompt",
@@ -931,7 +916,7 @@
       "relative_path": "market-intelligence/pestel-delta-monitor-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4562
+      "size_bytes": 4428
     },
     {
       "id": "market-intelligence:porters-five-forces-prompt",
@@ -946,7 +931,7 @@
       "relative_path": "market-intelligence/porters-five-forces-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5736
+      "size_bytes": 5602
     },
     {
       "id": "market-intelligence:pricing-packaging-tracker-prompt",
@@ -961,7 +946,7 @@
       "relative_path": "market-intelligence/pricing-packaging-tracker-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4636
+      "size_bytes": 4502
     },
     {
       "id": "market-intelligence:reference:competitive-research-compendium",
@@ -1006,7 +991,7 @@
       "relative_path": "market-intelligence/sigint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7388
+      "size_bytes": 7254
     },
     {
       "id": "market-intelligence:swot-analysis-prompt",
@@ -1021,7 +1006,7 @@
       "relative_path": "market-intelligence/swot-analysis-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5585
+      "size_bytes": 5451
     },
     {
       "id": "market-intelligence:tam-sam-som-analysis-prompt",
@@ -1036,7 +1021,7 @@
       "relative_path": "market-intelligence/tam-sam-som-analysis-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6033
+      "size_bytes": 5899
     },
     {
       "id": "market-intelligence:techint-collection-prompt",
@@ -1051,7 +1036,7 @@
       "relative_path": "market-intelligence/techint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8082
+      "size_bytes": 7948
     },
     {
       "id": "market-intelligence:voice-of-customer-miner-prompt",
@@ -1066,7 +1051,7 @@
       "relative_path": "market-intelligence/voice-of-customer-miner-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5078
+      "size_bytes": 4944
     },
     {
       "id": "prompt-generators",
@@ -1096,7 +1081,7 @@
       "relative_path": "prompt-generators/a-generative-AI-prompt-builder-for-product-professionals.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3980
+      "size_bytes": 3844
     },
     {
       "id": "prompt-generators:artifact-first-context-intake",
@@ -1111,7 +1096,7 @@
       "relative_path": "prompt-generators/artifact-first-context-intake.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4025
+      "size_bytes": 3890
     },
     {
       "id": "prompt-generators:customer-journey-mapping-prompt-generator",
@@ -1126,7 +1111,7 @@
       "relative_path": "prompt-generators/customer-journey-mapping-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4635
+      "size_bytes": 4500
     },
     {
       "id": "prompt-generators:daci-chart-prompt-generator",
@@ -1141,7 +1126,7 @@
       "relative_path": "prompt-generators/daci-chart-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6713
+      "size_bytes": 6579
     },
     {
       "id": "prompt-generators:discovery-interview-prompt-generator",
@@ -1156,7 +1141,7 @@
       "relative_path": "prompt-generators/discovery-interview-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6454
+      "size_bytes": 6320
     },
     {
       "id": "prompt-generators:jobs-to-be-done-customer-circle",
@@ -1171,7 +1156,7 @@
       "relative_path": "prompt-generators/jobs-to-be-done customer circle.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3276
+      "size_bytes": 3146
     },
     {
       "id": "prompt-generators:market-requirements-generator-prompt",
@@ -1186,7 +1171,7 @@
       "relative_path": "prompt-generators/market-requirements-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8276
+      "size_bytes": 8142
     },
     {
       "id": "prompt-generators:memo-of-ai-existential-corporate-dread_prompt-generator-prompt",
@@ -1201,7 +1186,7 @@
       "relative_path": "prompt-generators/memo-of-AI-existential-corporate-dread_prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4632
+      "size_bytes": 4372
     },
     {
       "id": "prompt-generators:memo-of-ai-existential-corporate-dread---prompt-generator-prompt",
@@ -1216,7 +1201,7 @@
       "relative_path": "prompt-generators/Memo of AI Existential Corporate Dread — Prompt Generator Prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4636
+      "size_bytes": 4376
     },
     {
       "id": "prompt-generators:persona-first-decision-facilitation-loop",
@@ -1231,7 +1216,7 @@
       "relative_path": "prompt-generators/persona-first-decision-facilitation-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7652
+      "size_bytes": 7517
     },
     {
       "id": "prompt-generators:positioning-statement-prompt-generator",
@@ -1246,7 +1231,7 @@
       "relative_path": "prompt-generators/positioning-statement-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5146
+      "size_bytes": 5011
     },
     {
       "id": "prompt-generators:premortem-prompt-generator",
@@ -1261,7 +1246,7 @@
       "relative_path": "prompt-generators/premortem-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6298
+      "size_bytes": 6164
     },
     {
       "id": "prompt-generators:prioritization-framework-prompt-generator",
@@ -1276,7 +1261,7 @@
       "relative_path": "prompt-generators/prioritization-framework-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6614
+      "size_bytes": 6480
     },
     {
       "id": "prompt-generators:proto-persona-prompt-generator",
@@ -1291,7 +1276,7 @@
       "relative_path": "prompt-generators/proto-persona-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4858
+      "size_bytes": 4723
     },
     {
       "id": "prompt-generators:research-agent-prompt-generator",
@@ -1306,7 +1291,7 @@
       "relative_path": "prompt-generators/research-agent-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7071
+      "size_bytes": 6937
     },
     {
       "id": "prompt-generators:stakeholder-map-prompt-generator",
@@ -1321,7 +1306,7 @@
       "relative_path": "prompt-generators/stakeholder-map-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6026
+      "size_bytes": 5892
     },
     {
       "id": "prompt-generators:storyboarding-prompt-generator-prompt",
@@ -1336,7 +1321,7 @@
       "relative_path": "prompt-generators/storyboarding-prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5223
+      "size_bytes": 5086
     },
     {
       "id": "prompt-generators:storyline-to-prompt-generator-prompt",
@@ -1351,7 +1336,7 @@
       "relative_path": "prompt-generators/storyline-to-prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 9595
+      "size_bytes": 9461
     },
     {
       "id": "prompt-generators:tam-sam-som-prompt-generator",
@@ -1366,7 +1351,7 @@
       "relative_path": "prompt-generators/tam-sam-som-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6964
+      "size_bytes": 6696
     },
     {
       "id": "prompt-generators:user-story-prompt-generator-prompt",
@@ -1381,7 +1366,7 @@
       "relative_path": "prompt-generators/user-story-prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7332
+      "size_bytes": 7062
     },
     {
       "id": "prompts",
@@ -1396,7 +1381,7 @@
       "relative_path": "prompts/README.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 17063
+      "size_bytes": 16443
     },
     {
       "id": "prompts:catalog:index",
@@ -1441,7 +1426,7 @@
       "relative_path": "prompts/CHANGELOG.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 27482
+      "size_bytes": 25760
     },
     {
       "id": "prompts:flows:the-tam-sam-som-o-matic-4000-",
@@ -1504,36 +1489,6 @@
       "size_bytes": 7440
     },
     {
-      "id": "prompts:license",
-      "name": "LICENSE",
-      "type": "prompt",
-      "execution_type": null,
-      "theme": null,
-      "intent": null,
-      "best_for": [],
-      "scenarios": [],
-      "source_reference": "methodology/prompts/LICENSE",
-      "relative_path": "prompts/LICENSE",
-      "summary": null,
-      "related_skills": [],
-      "size_bytes": 20850
-    },
-    {
-      "id": "prompts:licensing",
-      "name": "Licensing, in Plain English",
-      "type": "prompt",
-      "execution_type": null,
-      "theme": null,
-      "intent": null,
-      "best_for": [],
-      "scenarios": [],
-      "source_reference": "methodology/prompts/LICENSING.md",
-      "relative_path": "prompts/LICENSING.md",
-      "summary": null,
-      "related_skills": [],
-      "size_bytes": 2860
-    },
-    {
       "id": "prompts:loops",
       "name": "Loops",
       "type": "prompt",
@@ -1561,7 +1516,7 @@
       "relative_path": "prompts/loops/competitive-watch-routine.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6888
+      "size_bytes": 6754
     },
     {
       "id": "prompts:loops:epic-story-batch",
@@ -1576,7 +1531,7 @@
       "relative_path": "prompts/loops/epic-story-batch.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6345
+      "size_bytes": 6211
     },
     {
       "id": "prompts:loops:fusion-cadence-routine",
@@ -1591,7 +1546,7 @@
       "relative_path": "prompts/loops/fusion-cadence-routine.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7973
+      "size_bytes": 7839
     },
     {
       "id": "prompts:loops:market-sizing-loop",
@@ -1606,7 +1561,7 @@
       "relative_path": "prompts/loops/market-sizing-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6360
+      "size_bytes": 6226
     },
     {
       "id": "prompts:loops:prd-section-loop",
@@ -1621,7 +1576,7 @@
       "relative_path": "prompts/loops/prd-section-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8327
+      "size_bytes": 8193
     },
     {
       "id": "prompts:loops:research-synthesis-loop",
@@ -1636,7 +1591,7 @@
       "relative_path": "prompts/loops/research-synthesis-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6100
+      "size_bytes": 5966
     },
     {
       "id": "prompts:loops:story-splitting-loop",
@@ -1651,7 +1606,7 @@
       "relative_path": "prompts/loops/story-splitting-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6995
+      "size_bytes": 6861
     },
     {
       "id": "prompts:loops:swot-batch",
@@ -1666,7 +1621,7 @@
       "relative_path": "prompts/loops/swot-batch.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6214
+      "size_bytes": 6080
     },
     {
       "id": "prompts:market-intelligence",
@@ -1696,7 +1651,7 @@
       "relative_path": "prompts/market-intelligence/all-source-fusion-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8663
+      "size_bytes": 8529
     },
     {
       "id": "prompts:market-intelligence:ansoff-matrix-prompt",
@@ -1711,7 +1666,7 @@
       "relative_path": "prompts/market-intelligence/ansoff-matrix-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6027
+      "size_bytes": 5893
     },
     {
       "id": "prompts:market-intelligence:battle-card-builder-prompt",
@@ -1726,7 +1681,7 @@
       "relative_path": "prompts/market-intelligence/battle-card-builder-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5577
+      "size_bytes": 5443
     },
     {
       "id": "prompts:market-intelligence:competitive-intel-watch-prompt",
@@ -1741,7 +1696,7 @@
       "relative_path": "prompts/market-intelligence/competitive-intel-watch-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6302
+      "size_bytes": 6168
     },
     {
       "id": "prompts:market-intelligence:competitive-research-snapshot-prompt",
@@ -1756,7 +1711,7 @@
       "relative_path": "prompts/market-intelligence/competitive-research-snapshot-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5467
+      "size_bytes": 5333
     },
     {
       "id": "prompts:market-intelligence:earnings-executive-signal-refresh-prompt",
@@ -1771,7 +1726,7 @@
       "relative_path": "prompts/market-intelligence/earnings-executive-signal-refresh-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5323
+      "size_bytes": 5189
     },
     {
       "id": "prompts:market-intelligence:finint-collection-prompt",
@@ -1786,7 +1741,7 @@
       "relative_path": "prompts/market-intelligence/finint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7763
+      "size_bytes": 7629
     },
     {
       "id": "prompts:market-intelligence:full-spectrum-company-sweep-prompt",
@@ -1801,7 +1756,7 @@
       "relative_path": "prompts/market-intelligence/full-spectrum-company-sweep-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 16158
+      "size_bytes": 16024
     },
     {
       "id": "prompts:market-intelligence:geoint-demoint-collection-prompt",
@@ -1816,7 +1771,7 @@
       "relative_path": "prompts/market-intelligence/geoint-demoint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7941
+      "size_bytes": 7807
     },
     {
       "id": "prompts:market-intelligence:humint-collection-prompt",
@@ -1831,7 +1786,7 @@
       "relative_path": "prompts/market-intelligence/humint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8346
+      "size_bytes": 8212
     },
     {
       "id": "prompts:market-intelligence:market-landscape-scan-prompt",
@@ -1846,7 +1801,7 @@
       "relative_path": "prompts/market-intelligence/market-landscape-scan-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5325
+      "size_bytes": 5191
     },
     {
       "id": "prompts:market-intelligence:masint-collection-prompt",
@@ -1861,7 +1816,7 @@
       "relative_path": "prompts/market-intelligence/masint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8322
+      "size_bytes": 8188
     },
     {
       "id": "prompts:market-intelligence:osint-collection-prompt",
@@ -1876,7 +1831,7 @@
       "relative_path": "prompts/market-intelligence/osint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6850
+      "size_bytes": 6716
     },
     {
       "id": "prompts:market-intelligence:pestel-delta-monitor-prompt",
@@ -1891,7 +1846,7 @@
       "relative_path": "prompts/market-intelligence/pestel-delta-monitor-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4562
+      "size_bytes": 4428
     },
     {
       "id": "prompts:market-intelligence:porters-five-forces-prompt",
@@ -1906,7 +1861,7 @@
       "relative_path": "prompts/market-intelligence/porters-five-forces-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5736
+      "size_bytes": 5602
     },
     {
       "id": "prompts:market-intelligence:pricing-packaging-tracker-prompt",
@@ -1921,7 +1876,7 @@
       "relative_path": "prompts/market-intelligence/pricing-packaging-tracker-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4636
+      "size_bytes": 4502
     },
     {
       "id": "prompts:market-intelligence:reference:competitive-research-compendium",
@@ -1966,7 +1921,7 @@
       "relative_path": "prompts/market-intelligence/sigint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7388
+      "size_bytes": 7254
     },
     {
       "id": "prompts:market-intelligence:swot-analysis-prompt",
@@ -1981,7 +1936,7 @@
       "relative_path": "prompts/market-intelligence/swot-analysis-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5585
+      "size_bytes": 5451
     },
     {
       "id": "prompts:market-intelligence:tam-sam-som-analysis-prompt",
@@ -1996,7 +1951,7 @@
       "relative_path": "prompts/market-intelligence/tam-sam-som-analysis-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6033
+      "size_bytes": 5899
     },
     {
       "id": "prompts:market-intelligence:techint-collection-prompt",
@@ -2011,7 +1966,7 @@
       "relative_path": "prompts/market-intelligence/techint-collection-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8082
+      "size_bytes": 7948
     },
     {
       "id": "prompts:market-intelligence:voice-of-customer-miner-prompt",
@@ -2026,7 +1981,7 @@
       "relative_path": "prompts/market-intelligence/voice-of-customer-miner-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5078
+      "size_bytes": 4944
     },
     {
       "id": "prompts:prompt-generators",
@@ -2056,7 +2011,7 @@
       "relative_path": "prompts/prompt-generators/a-generative-AI-prompt-builder-for-product-professionals.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3980
+      "size_bytes": 3844
     },
     {
       "id": "prompts:prompt-generators:artifact-first-context-intake",
@@ -2071,7 +2026,7 @@
       "relative_path": "prompts/prompt-generators/artifact-first-context-intake.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4025
+      "size_bytes": 3890
     },
     {
       "id": "prompts:prompt-generators:customer-journey-mapping-prompt-generator",
@@ -2086,7 +2041,7 @@
       "relative_path": "prompts/prompt-generators/customer-journey-mapping-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4635
+      "size_bytes": 4500
     },
     {
       "id": "prompts:prompt-generators:daci-chart-prompt-generator",
@@ -2101,7 +2056,7 @@
       "relative_path": "prompts/prompt-generators/daci-chart-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6713
+      "size_bytes": 6579
     },
     {
       "id": "prompts:prompt-generators:discovery-interview-prompt-generator",
@@ -2116,7 +2071,7 @@
       "relative_path": "prompts/prompt-generators/discovery-interview-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6454
+      "size_bytes": 6320
     },
     {
       "id": "prompts:prompt-generators:jobs-to-be-done-customer-circle",
@@ -2131,7 +2086,7 @@
       "relative_path": "prompts/prompt-generators/jobs-to-be-done customer circle.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3276
+      "size_bytes": 3146
     },
     {
       "id": "prompts:prompt-generators:market-requirements-generator-prompt",
@@ -2146,7 +2101,7 @@
       "relative_path": "prompts/prompt-generators/market-requirements-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8276
+      "size_bytes": 8142
     },
     {
       "id": "prompts:prompt-generators:memo-of-ai-existential-corporate-dread_prompt-generator-prompt",
@@ -2161,7 +2116,7 @@
       "relative_path": "prompts/prompt-generators/memo-of-AI-existential-corporate-dread_prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4632
+      "size_bytes": 4372
     },
     {
       "id": "prompts:prompt-generators:memo-of-ai-existential-corporate-dread---prompt-generator-prompt",
@@ -2176,7 +2131,7 @@
       "relative_path": "prompts/prompt-generators/Memo of AI Existential Corporate Dread — Prompt Generator Prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4636
+      "size_bytes": 4376
     },
     {
       "id": "prompts:prompt-generators:persona-first-decision-facilitation-loop",
@@ -2191,7 +2146,7 @@
       "relative_path": "prompts/prompt-generators/persona-first-decision-facilitation-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7652
+      "size_bytes": 7517
     },
     {
       "id": "prompts:prompt-generators:positioning-statement-prompt-generator",
@@ -2206,7 +2161,7 @@
       "relative_path": "prompts/prompt-generators/positioning-statement-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5146
+      "size_bytes": 5011
     },
     {
       "id": "prompts:prompt-generators:premortem-prompt-generator",
@@ -2221,7 +2176,7 @@
       "relative_path": "prompts/prompt-generators/premortem-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6298
+      "size_bytes": 6164
     },
     {
       "id": "prompts:prompt-generators:prioritization-framework-prompt-generator",
@@ -2236,7 +2191,7 @@
       "relative_path": "prompts/prompt-generators/prioritization-framework-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6614
+      "size_bytes": 6480
     },
     {
       "id": "prompts:prompt-generators:proto-persona-prompt-generator",
@@ -2251,7 +2206,7 @@
       "relative_path": "prompts/prompt-generators/proto-persona-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4858
+      "size_bytes": 4723
     },
     {
       "id": "prompts:prompt-generators:research-agent-prompt-generator",
@@ -2266,7 +2221,7 @@
       "relative_path": "prompts/prompt-generators/research-agent-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7071
+      "size_bytes": 6937
     },
     {
       "id": "prompts:prompt-generators:stakeholder-map-prompt-generator",
@@ -2281,7 +2236,7 @@
       "relative_path": "prompts/prompt-generators/stakeholder-map-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6026
+      "size_bytes": 5892
     },
     {
       "id": "prompts:prompt-generators:storyboarding-prompt-generator-prompt",
@@ -2296,7 +2251,7 @@
       "relative_path": "prompts/prompt-generators/storyboarding-prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5223
+      "size_bytes": 5086
     },
     {
       "id": "prompts:prompt-generators:storyline-to-prompt-generator-prompt",
@@ -2311,7 +2266,7 @@
       "relative_path": "prompts/prompt-generators/storyline-to-prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 9595
+      "size_bytes": 9461
     },
     {
       "id": "prompts:prompt-generators:tam-sam-som-prompt-generator",
@@ -2326,7 +2281,7 @@
       "relative_path": "prompts/prompt-generators/tam-sam-som-prompt-generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6964
+      "size_bytes": 6696
     },
     {
       "id": "prompts:prompt-generators:user-story-prompt-generator-prompt",
@@ -2341,7 +2296,7 @@
       "relative_path": "prompts/prompt-generators/user-story-prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7332
+      "size_bytes": 7062
     },
     {
       "id": "prompts:prompts",
@@ -2371,7 +2326,7 @@
       "relative_path": "prompts/prompts/a-generative-AI-prompt-builder-for-product-professionals.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4541
+      "size_bytes": 4407
     },
     {
       "id": "prompts:prompts:agent-strategy-canvas-prompt-template",
@@ -2386,7 +2341,7 @@
       "relative_path": "prompts/prompts/agent-strategy-canvas-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4441
+      "size_bytes": 4307
     },
     {
       "id": "prompts:prompts:backlog-epic-hypothesis",
@@ -2401,7 +2356,7 @@
       "relative_path": "prompts/prompts/backlog-epic-hypothesis.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 2967
+      "size_bytes": 2833
     },
     {
       "id": "prompts:prompts:company-profile-executive-insights-research",
@@ -2416,7 +2371,7 @@
       "relative_path": "prompts/prompts/company-profile-executive-insights-research.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5798
+      "size_bytes": 5664
     },
     {
       "id": "prompts:prompts:customer-journey-mapping-prompt-template",
@@ -2431,7 +2386,7 @@
       "relative_path": "prompts/prompts/customer-journey-mapping-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3935
+      "size_bytes": 3801
     },
     {
       "id": "prompts:prompts:dangerous-animals-of-product-management-beast-generator",
@@ -2446,7 +2401,7 @@
       "relative_path": "prompts/prompts/Dangerous Animals of Product Management Beast Generator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7129
+      "size_bytes": 6859
     },
     {
       "id": "prompts:prompts:discovery-interview-guide-prompt-template",
@@ -2461,7 +2416,7 @@
       "relative_path": "prompts/prompts/discovery-interview-guide-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5170
+      "size_bytes": 5036
     },
     {
       "id": "prompts:prompts:eol-checklist",
@@ -2476,7 +2431,7 @@
       "relative_path": "prompts/prompts/eol-checklist.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7052
+      "size_bytes": 6918
     },
     {
       "id": "prompts:prompts:eol-for-a-product-message",
@@ -2491,7 +2446,7 @@
       "relative_path": "prompts/prompts/eol-for-a-product-message.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 9210
+      "size_bytes": 9076
     },
     {
       "id": "prompts:prompts:eol-internal-enablement",
@@ -2506,7 +2461,7 @@
       "relative_path": "prompts/prompts/eol-internal-enablement.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8540
+      "size_bytes": 8406
     },
     {
       "id": "prompts:prompts:eol-readiness-assessment",
@@ -2521,7 +2476,7 @@
       "relative_path": "prompts/prompts/eol-readiness-assessment.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7998
+      "size_bytes": 7864
     },
     {
       "id": "prompts:prompts:eol-stakeholder-sequence",
@@ -2536,7 +2491,7 @@
       "relative_path": "prompts/prompts/eol-stakeholder-sequence.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7228
+      "size_bytes": 7094
     },
     {
       "id": "prompts:prompts:framing-the-problem-statement",
@@ -2551,7 +2506,7 @@
       "relative_path": "prompts/prompts/framing-the-problem-statement.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3075
+      "size_bytes": 2941
     },
     {
       "id": "prompts:prompts:futuristic-product-faq",
@@ -2566,7 +2521,7 @@
       "relative_path": "prompts/prompts/futuristic-product-faq.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4921
+      "size_bytes": 4787
     },
     {
       "id": "prompts:prompts:howto",
@@ -2581,7 +2536,7 @@
       "relative_path": "prompts/prompts/howto.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7831
+      "size_bytes": 7428
     },
     {
       "id": "prompts:prompts:incoming-request-breakdown",
@@ -2596,7 +2551,7 @@
       "relative_path": "prompts/prompts/incoming-request-breakdown.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5513
+      "size_bytes": 5379
     },
     {
       "id": "prompts:prompts:jobs-to-be-done",
@@ -2611,7 +2566,7 @@
       "relative_path": "prompts/prompts/jobs-to-be-done.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4035
+      "size_bytes": 3901
     },
     {
       "id": "prompts:prompts:lean-ux-canvas-prompt-template",
@@ -2626,7 +2581,7 @@
       "relative_path": "prompts/prompts/lean-ux-canvas-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4556
+      "size_bytes": 4422
     },
     {
       "id": "prompts:prompts:nightmares-of-product-management-movie-title-generator-prompt",
@@ -2641,7 +2596,7 @@
       "relative_path": "prompts/prompts/Nightmares of Product Management Movie Title Generator Prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5008
+      "size_bytes": 4740
     },
     {
       "id": "prompts:prompts:pestel-analysis-prompt-template",
@@ -2656,7 +2611,7 @@
       "relative_path": "prompts/prompts/pestel-analysis-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5353
+      "size_bytes": 5219
     },
     {
       "id": "prompts:prompts:positioning-statement",
@@ -2671,7 +2626,7 @@
       "relative_path": "prompts/prompts/positioning-statement.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3559
+      "size_bytes": 3425
     },
     {
       "id": "prompts:prompts:prd-prompt-template",
@@ -2686,7 +2641,7 @@
       "relative_path": "prompts/prompts/prd-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5252
+      "size_bytes": 5118
     },
     {
       "id": "prompts:prompts:premortem-prompt-template",
@@ -2701,7 +2656,7 @@
       "relative_path": "prompts/prompts/premortem-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4863
+      "size_bytes": 4729
     },
     {
       "id": "prompts:prompts:proto-persona-profile",
@@ -2716,7 +2671,7 @@
       "relative_path": "prompts/prompts/proto-persona-profile.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3718
+      "size_bytes": 3584
     },
     {
       "id": "prompts:prompts:recommendation-canvas-template",
@@ -2731,7 +2686,7 @@
       "relative_path": "prompts/prompts/recommendation-canvas-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5463
+      "size_bytes": 5329
     },
     {
       "id": "prompts:prompts:reverse-engineer-ieee830srs-to-prd-prompt-template",
@@ -2746,7 +2701,7 @@
       "relative_path": "prompts/prompts/reverse-engineer-IEEE830srs-to-PRD-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4607
+      "size_bytes": 4473
     },
     {
       "id": "prompts:prompts:reverse-engineer-iso29148-to-prd-prompt-template",
@@ -2761,7 +2716,7 @@
       "relative_path": "prompts/prompts/reverse-engineer-ISO29148-to-PRD-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4585
+      "size_bytes": 4451
     },
     {
       "id": "prompts:prompts:session-saver-prompt",
@@ -2776,7 +2731,7 @@
       "relative_path": "prompts/prompts/session-saver-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3813
+      "size_bytes": 3679
     },
     {
       "id": "prompts:prompts:stakeholder-map-prompt-template",
@@ -2791,7 +2746,7 @@
       "relative_path": "prompts/prompts/stakeholder-map-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4789
+      "size_bytes": 4655
     },
     {
       "id": "prompts:prompts:storyboard-storytelling-prompt",
@@ -2806,7 +2761,7 @@
       "relative_path": "prompts/prompts/storyboard-storytelling-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3309
+      "size_bytes": 3175
     },
     {
       "id": "prompts:prompts:strategic-scrum-team-session-kickoff",
@@ -2821,7 +2776,7 @@
       "relative_path": "prompts/prompts/strategic-scrum-team-session-kickoff.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3597
+      "size_bytes": 3463
     },
     {
       "id": "prompts:prompts:tam-sam-som-market-sizing",
@@ -2836,7 +2791,7 @@
       "relative_path": "prompts/prompts/tam-sam-som-market-sizing.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 18783
+      "size_bytes": 18649
     },
     {
       "id": "prompts:prompts:user-story_ai-enhanced_prompt-template",
@@ -2851,7 +2806,7 @@
       "relative_path": "prompts/prompts/user-story_ai-enhanced_prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5087
+      "size_bytes": 4953
     },
     {
       "id": "prompts:prompts:user-story-mapping",
@@ -2866,7 +2821,7 @@
       "relative_path": "prompts/prompts/user-story-mapping.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3477
+      "size_bytes": 3343
     },
     {
       "id": "prompts:prompts:user-story-prompt-template",
@@ -2881,7 +2836,7 @@
       "relative_path": "prompts/prompts/user-story-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3834
+      "size_bytes": 3700
     },
     {
       "id": "prompts:prompts:user-story-splitting-prompt-template",
@@ -2896,7 +2851,7 @@
       "relative_path": "prompts/prompts/user-story-splitting-prompt-template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4161
+      "size_bytes": 4027
     },
     {
       "id": "prompts:prompts:visionary-press-release",
@@ -2911,7 +2866,7 @@
       "relative_path": "prompts/prompts/visionary-press-release.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4294
+      "size_bytes": 4160
     },
     {
       "id": "prompts:prompts:win-loss-analysis-prompt",
@@ -2926,7 +2881,7 @@
       "relative_path": "prompts/prompts/win-loss-analysis-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8353
+      "size_bytes": 8219
     },
     {
       "id": "prompts:skeletons",
@@ -2956,7 +2911,7 @@
       "relative_path": "prompts/skeletons/A Prompt Skeleton Analysis Toolkit.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6061
+      "size_bytes": 5927
     },
     {
       "id": "prompts:skeletons:prompt-generator-prompt",
@@ -2971,7 +2926,7 @@
       "relative_path": "prompts/skeletons/prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 918
+      "size_bytes": 784
     },
     {
       "id": "prompts:skills:dangerous-animals-of-pm-generator",
@@ -2986,7 +2941,7 @@
       "relative_path": "prompts/skills/dangerous-animals-of-pm-generator/SKILL.md",
       "summary": "Generate creature acronyms that name PM dysfunctions, blockers, or winning strategies. Use when you want to give your team shared vocabulary for the animals hiding in your product work.",
       "related_skills": [],
-      "size_bytes": 19802
+      "size_bytes": 19525
     },
     {
       "id": "prompts:skills:dangerous-animals-of-pm-generator:acronym-craft",
@@ -3031,7 +2986,7 @@
       "relative_path": "prompts/skills/dangerous-animals-of-pm-generator/template.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 1625
+      "size_bytes": 1319
     },
     {
       "id": "prompts:storytelling",
@@ -3121,7 +3076,7 @@
       "relative_path": "prompts/storytelling/Dataset - 25 Common Story Arcs.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 13069
+      "size_bytes": 12935
     },
     {
       "id": "prompts:storytelling:dataset---bedtime-story-types-and-characteristics",
@@ -3151,7 +3106,7 @@
       "relative_path": "prompts/storytelling/Dataset - Common Storyboarding Tools and Techniques.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5123
+      "size_bytes": 4989
     },
     {
       "id": "prompts:storytelling:generator---16-frame-visual-product-storyline",
@@ -3166,7 +3121,7 @@
       "relative_path": "prompts/storytelling/Generator - 16-Frame Visual Product Storyline.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8103
+      "size_bytes": 7969
     },
     {
       "id": "prompts:storytelling:generator---6-scene-visual-product-storyboard-narrative",
@@ -3181,7 +3136,7 @@
       "relative_path": "prompts/storytelling/Generator - 6 Scene Visual Product Storyboard Narrative.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5076
+      "size_bytes": 4942
     },
     {
       "id": "prompts:storytelling:generator---create-your-own-sims-character-sheet",
@@ -3196,7 +3151,7 @@
       "relative_path": "prompts/storytelling/Generator – Create-Your-Own Sims Character Sheet.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4059
+      "size_bytes": 3925
     },
     {
       "id": "prompts:storytelling:generator---customer-journey-map-simulator",
@@ -3211,7 +3166,7 @@
       "relative_path": "prompts/storytelling/Generator – Customer Journey Map Simulator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7181
+      "size_bytes": 7047
     },
     {
       "id": "prompts:storytelling:generator---ikea-like-instruction-steps",
@@ -3226,7 +3181,7 @@
       "relative_path": "prompts/storytelling/Generator - IKEA-like instruction steps.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3923
+      "size_bytes": 3789
     },
     {
       "id": "prompts:storytelling:generator---image-prompts-for-12-scene-here-s-journey",
@@ -3241,7 +3196,7 @@
       "relative_path": "prompts/storytelling/Generator - Image Prompts for 12-Scene Here's Journey.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4840
+      "size_bytes": 4706
     },
     {
       "id": "prompts:storytelling:generator---pm-bedtime-story-builder",
@@ -3256,7 +3211,7 @@
       "relative_path": "prompts/storytelling/Generator – PM Bedtime Story Builder.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4797
+      "size_bytes": 4663
     },
     {
       "id": "prompts:storytelling:generator---product-manager-action-figure-builder",
@@ -3271,7 +3226,7 @@
       "relative_path": "prompts/storytelling/Generator – Product Manager Action Figure Builder.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3127
+      "size_bytes": 2993
     },
     {
       "id": "prompts:storytelling:generator---research-to-narrative-bridge",
@@ -3286,7 +3241,7 @@
       "relative_path": "prompts/storytelling/Generator - Research-to-Narrative Bridge.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4796
+      "size_bytes": 4662
     },
     {
       "id": "prompts:storytelling:generator---starts-with-why-4-slide-builder-narrative",
@@ -3301,7 +3256,7 @@
       "relative_path": "prompts/storytelling/Generator – Starts with Why 4-Slide Builder Narrative.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5658
+      "size_bytes": 5524
     },
     {
       "id": "prompts:storytelling:generator---what-people-think-i-do-product-manager-meme-builder",
@@ -3316,7 +3271,7 @@
       "relative_path": "prompts/storytelling/Generator - What People Think I Do Product Manager Meme Builder.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5394
+      "size_bytes": 5260
     },
     {
       "id": "prompts:vibes",
@@ -3346,7 +3301,7 @@
       "relative_path": "prompts/vibes/epic-to-stories-formatter-jinja2.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5340
+      "size_bytes": 5206
     },
     {
       "id": "prompts:vibes:user-story-splitting-jinja2-loop",
@@ -3361,7 +3316,7 @@
       "relative_path": "prompts/vibes/user-story-splitting-jinja2-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6020
+      "size_bytes": 5886
     },
     {
       "id": "prompts:vibes:vibe-prd-generated-via-search-and-agentic-simulation",
@@ -3376,7 +3331,7 @@
       "relative_path": "prompts/vibes/vibe.prd-generated-via-search-and-agentic-simulation.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6155
+      "size_bytes": 6019
     },
     {
       "id": "prompts:workshops",
@@ -3406,7 +3361,7 @@
       "relative_path": "prompts/workshops/battle-card-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6686
+      "size_bytes": 6552
     },
     {
       "id": "prompts:workshops:feature-investment-workshop",
@@ -3421,7 +3376,7 @@
       "relative_path": "prompts/workshops/feature-investment-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6432
+      "size_bytes": 6298
     },
     {
       "id": "prompts:workshops:lean-ux-canvas-workshop",
@@ -3436,7 +3391,7 @@
       "relative_path": "prompts/workshops/lean-ux-canvas-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5849
+      "size_bytes": 5715
     },
     {
       "id": "prompts:workshops:opportunity-solution-tree-workshop",
@@ -3451,7 +3406,7 @@
       "relative_path": "prompts/workshops/opportunity-solution-tree-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6214
+      "size_bytes": 6080
     },
     {
       "id": "prompts:workshops:painstorming-workshop",
@@ -3466,7 +3421,7 @@
       "relative_path": "prompts/workshops/painstorming-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6371
+      "size_bytes": 6182
     },
     {
       "id": "prompts:workshops:prd-workshop",
@@ -3481,7 +3436,7 @@
       "relative_path": "prompts/workshops/prd-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5594
+      "size_bytes": 5460
     },
     {
       "id": "prompts:workshops:problem-framing-canvas-workshop",
@@ -3496,7 +3451,7 @@
       "relative_path": "prompts/workshops/problem-framing-canvas-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7154
+      "size_bytes": 6965
     },
     {
       "id": "prompts:workshops:product-sunset-workshop",
@@ -3511,7 +3466,7 @@
       "relative_path": "prompts/workshops/product-sunset-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5246
+      "size_bytes": 5112
     },
     {
       "id": "readme",
@@ -3556,7 +3511,7 @@
       "relative_path": "skeletons/A Prompt Skeleton Analysis Toolkit.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6061
+      "size_bytes": 5927
     },
     {
       "id": "skeletons:prompt-generator-prompt",
@@ -3571,7 +3526,7 @@
       "relative_path": "skeletons/prompt-generator-prompt.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 918
+      "size_bytes": 784
     },
     {
       "id": "skills:acquisition-channel-advisor",
@@ -4694,7 +4649,6 @@
         "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
         "branch": "main",
         "imported_at": "2026-09-10",
-        "license": "CC BY-NC-SA 4.0",
         "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
       }
     },
@@ -5456,7 +5410,7 @@
         "skills:stakeholder-mapping",
         "skills:workshop-facilitation"
       ],
-      "size_bytes": 13221
+      "size_bytes": 13169
     },
     {
       "id": "skills:incoming-request-advisor:examples:conversation-flow",
@@ -6524,7 +6478,6 @@
         "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
         "branch": "main",
         "imported_at": "2026-09-10",
-        "license": "CC BY-NC-SA 4.0",
         "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
       }
     },
@@ -6796,7 +6749,6 @@
         "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
         "branch": "main",
         "imported_at": "2026-09-10",
-        "license": "CC BY-NC-SA 4.0",
         "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
       }
     },
@@ -6851,7 +6803,6 @@
         "commit": "1b5a524ebb95e9497fa3f25002d8b8ec528d4444",
         "branch": "main",
         "imported_at": "2026-09-10",
-        "license": "CC BY-NC-SA 4.0",
         "local_modifications": "none to skill body (verbatim); registry metadata is HH-authored"
       }
     },
@@ -8578,7 +8529,7 @@
       "relative_path": "storytelling/Dataset - 25 Common Story Arcs.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 13069
+      "size_bytes": 12935
     },
     {
       "id": "storytelling:dataset---bedtime-story-types-and-characteristics",
@@ -8608,7 +8559,7 @@
       "relative_path": "storytelling/Dataset - Common Storyboarding Tools and Techniques.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5123
+      "size_bytes": 4989
     },
     {
       "id": "storytelling:generator---16-frame-visual-product-storyline",
@@ -8623,7 +8574,7 @@
       "relative_path": "storytelling/Generator - 16-Frame Visual Product Storyline.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 8103
+      "size_bytes": 7969
     },
     {
       "id": "storytelling:generator---6-scene-visual-product-storyboard-narrative",
@@ -8638,7 +8589,7 @@
       "relative_path": "storytelling/Generator - 6 Scene Visual Product Storyboard Narrative.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5076
+      "size_bytes": 4942
     },
     {
       "id": "storytelling:generator---create-your-own-sims-character-sheet",
@@ -8653,7 +8604,7 @@
       "relative_path": "storytelling/Generator – Create-Your-Own Sims Character Sheet.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4059
+      "size_bytes": 3925
     },
     {
       "id": "storytelling:generator---customer-journey-map-simulator",
@@ -8668,7 +8619,7 @@
       "relative_path": "storytelling/Generator – Customer Journey Map Simulator.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7181
+      "size_bytes": 7047
     },
     {
       "id": "storytelling:generator---ikea-like-instruction-steps",
@@ -8683,7 +8634,7 @@
       "relative_path": "storytelling/Generator - IKEA-like instruction steps.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3923
+      "size_bytes": 3789
     },
     {
       "id": "storytelling:generator---image-prompts-for-12-scene-here-s-journey",
@@ -8698,7 +8649,7 @@
       "relative_path": "storytelling/Generator - Image Prompts for 12-Scene Here's Journey.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4840
+      "size_bytes": 4706
     },
     {
       "id": "storytelling:generator---pm-bedtime-story-builder",
@@ -8713,7 +8664,7 @@
       "relative_path": "storytelling/Generator – PM Bedtime Story Builder.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4797
+      "size_bytes": 4663
     },
     {
       "id": "storytelling:generator---product-manager-action-figure-builder",
@@ -8728,7 +8679,7 @@
       "relative_path": "storytelling/Generator – Product Manager Action Figure Builder.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 3127
+      "size_bytes": 2993
     },
     {
       "id": "storytelling:generator---research-to-narrative-bridge",
@@ -8743,7 +8694,7 @@
       "relative_path": "storytelling/Generator - Research-to-Narrative Bridge.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 4796
+      "size_bytes": 4662
     },
     {
       "id": "storytelling:generator---starts-with-why-4-slide-builder-narrative",
@@ -8758,7 +8709,7 @@
       "relative_path": "storytelling/Generator – Starts with Why 4-Slide Builder Narrative.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5658
+      "size_bytes": 5524
     },
     {
       "id": "storytelling:generator---what-people-think-i-do-product-manager-meme-builder",
@@ -8773,7 +8724,7 @@
       "relative_path": "storytelling/Generator - What People Think I Do Product Manager Meme Builder.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5394
+      "size_bytes": 5260
     },
     {
       "id": "vibes",
@@ -8803,7 +8754,7 @@
       "relative_path": "vibes/epic-to-stories-formatter-jinja2.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5340
+      "size_bytes": 5206
     },
     {
       "id": "vibes:user-story-splitting-jinja2-loop",
@@ -8818,7 +8769,7 @@
       "relative_path": "vibes/user-story-splitting-jinja2-loop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6020
+      "size_bytes": 5886
     },
     {
       "id": "vibes:vibe-prd-generated-via-search-and-agentic-simulation",
@@ -8833,7 +8784,7 @@
       "relative_path": "vibes/vibe.prd-generated-via-search-and-agentic-simulation.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6155
+      "size_bytes": 6019
     },
     {
       "id": "workshops",
@@ -8863,7 +8814,7 @@
       "relative_path": "workshops/battle-card-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6686
+      "size_bytes": 6552
     },
     {
       "id": "workshops:feature-investment-workshop",
@@ -8878,7 +8829,7 @@
       "relative_path": "workshops/feature-investment-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6432
+      "size_bytes": 6298
     },
     {
       "id": "workshops:lean-ux-canvas-workshop",
@@ -8893,7 +8844,7 @@
       "relative_path": "workshops/lean-ux-canvas-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5849
+      "size_bytes": 5715
     },
     {
       "id": "workshops:opportunity-solution-tree-workshop",
@@ -8908,7 +8859,7 @@
       "relative_path": "workshops/opportunity-solution-tree-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6214
+      "size_bytes": 6080
     },
     {
       "id": "workshops:painstorming-workshop",
@@ -8923,7 +8874,7 @@
       "relative_path": "workshops/painstorming-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 6371
+      "size_bytes": 6182
     },
     {
       "id": "workshops:prd-workshop",
@@ -8938,7 +8889,7 @@
       "relative_path": "workshops/prd-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5594
+      "size_bytes": 5460
     },
     {
       "id": "workshops:problem-framing-canvas-workshop",
@@ -8953,7 +8904,7 @@
       "relative_path": "workshops/problem-framing-canvas-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 7154
+      "size_bytes": 6965
     },
     {
       "id": "workshops:product-sunset-workshop",
@@ -8968,7 +8919,7 @@
       "relative_path": "workshops/product-sunset-workshop.md",
       "summary": null,
       "related_skills": [],
-      "size_bytes": 5246
+      "size_bytes": 5112
     }
   ],
   "capabilities": [

@@ -43,9 +43,6 @@ Then proceed with clearly labeled assumptions.
 Template adapted from Jeff Patton's user story mapping technique for
 AI-assisted integration by Dean Peters.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: March 2, 2026
 -->
 

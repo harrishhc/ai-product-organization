@@ -24,9 +24,6 @@ have the assistant propose options where structure is unclear.
 Created by Dean Peters and Codex. Inspired by Productside proto-persona
 approaches and enhanced with the Persona-First Decision Facilitation Loop.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: March 2, 2026
 -->
 
@@ -153,4 +150,3 @@ Offer exactly 4 next options:
 4. Convert output into a one-page stakeholder briefing
 
 Ask for `1`, `2`, `3`, `4`, `1 and 3`, or custom path.
-

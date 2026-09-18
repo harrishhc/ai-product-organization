@@ -17,9 +17,6 @@ exactly 3 context-aware options with one recommended first. Accept `1`, `2`,
 ## Attribution:
 Created by Dean Peters; facilitation-style enhancement for pedagogic use.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: March 1, 2026
 -->
 
