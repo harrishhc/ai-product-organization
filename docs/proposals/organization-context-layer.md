@@ -1,151 +1,229 @@
 # Proposal — Organization Context Layer
 
-**Status:** PROPOSAL — 未實作,未核可。`runtime/` 未更動一行。
-**Authority:** Material PDM evolution → Propose / Required approval(`PDM_CONSTITUTION.md` Authority Matrix)
+**Status:** IMPLEMENTED 2026-09-16 (#17). Approved by HH 2026-09-16 (§9.1–9.2); the registry shape, bounded sections, and `runtime/organizationContext.js` described below are live on `main`. This document remains the living spec for the layer and the record of the evidence-bar decision behind it (§0, §8).
+**Authority:** Material PDM evolution → HH review required (`PDM_CONSTITUTION.md` Authority Matrix)
 **Raised:** 2026-09-14
-**Requested by:** HH
+**Updated:** 2026-09-15
+**Decided:** 2026-09-16
+**Note:** this revision switched from Chinese to English with no stated reason, while `capability-routing-fix.md` (same day) stayed Chinese. Unexplained — flagging rather than guessing at intent; tell PDM if this should be a deliberate per-document or per-audience convention.
 
 ---
 
-## 0. 先講一件我重新檢查後修正的事
+## 0. Why this proposal is being revisited
 
-我原本打算用「本次 live pilot 的 wedge 失敗」當作這個提案的失敗案例佐證。**重新檢查後,那個論證不成立,我把它撤掉。**
+The original proposal was intentionally conditional because there was only one real product. The current portfolio now contains multiple real products belonging to the same organization, so that condition is satisfied.
 
-那次失敗(`dec_1789321602255_h32ovb`)的真正成因是 **Product Context 缺漏** —— IFU 與 PRD 的範圍邊界從來沒有被讀進 `context.json`。它已經在同一個 session 內用現有架構修好了,不需要任何新層級。
+The proposal also keeps an important correction from the original analysis: the first live-pilot failure was not evidence that an Organization Context layer was required. It was a Product Context completeness problem. That product-level issue was fixable with the existing architecture and must not be used to justify a new organizational layer.
 
-用它來論證 Organization Context,會是把一個產品層的失敗拿去正當化一個組織層的新架構 —— 正是 `GOVERNANCE_PRINCIPLES.md` 要防的那種論證。
+The case for Organization Context is now structural **and operationally relevant**: multiple real products share organization-specific delivery conventions, while PDM Core must remain organization-agnostic.
 
-所以下面的提案,誠實地建立在**結構論證**上,而不是已觀察到的失敗上。這一點直接影響我的建議(見 §5)。
+**This rewrite also changes the evidence bar the original version used, and that change was not previously flagged.** The original recommendation (§5 of the 2026-09-14 version) was explicitly conditional and leaned toward *not* building this layer yet, for a stated reason: `GOVERNANCE_PRINCIPLES.md`'s discipline against justifying a new layer on structural argument alone — it required an observed failure case, which did not exist. That version's own words: "結構論證很清楚,但結構論證正是該文件說不夠的那種論證" ("the structural argument is clear, but a structural argument is exactly the kind this document says is insufficient"). This rewrite recommends building the layer now, on product count (1→4) alone, with no new observed failure. That is a reversal of the bar, not a new application of the same bar. See §8.1 for the explicit confirmation this requires before HH approval is meaningful.
 
----
+## 1. Problem: three scopes, only two existing homes
 
-## 1. 問題:三種 scope,架構只有兩種
+`docs/ARCHITECTURE.md` separates:
 
-`docs/ARCHITECTURE.md` §2/§6 的核心切分是二分的:
-
-| Scope | 現有的家 |
+| Scope | Existing home |
 |---|---|
-| 跨產品 reusable | PDM Core / methodology / functional agents |
+| Cross-product reusable | PDM Core / methodology / functional agents |
 | Product-specific | Product Context / Work State / Active Brief |
 
-HH 交接的內容裡,有一類事實**兩邊都不屬於**:
+There is a third class of facts:
 
-> aetherAI 進 sprint 需要 ticket 完整(通常含 design 的 Figma 連結);流程為 sprint refinement → sprint plan meeting(RD 說明預計做法);PM 定義 WHAT、RD 自組織 HOW;產出文件應放 Drive 的 PDM 產品資料夾;ClickUp 為 ticket 的 live source of truth;需在 biweekly CEO meeting 報告手上產品。
+> facts that remain true when the product changes because the same organization governs both products, but are not universal PDM rules.
 
-這些**跨越 HH 的多個產品,但不普世於 PDM** —— HH 明確表示「我有可能會有不同產品但走不屬於此公司之開發流程」。
+Examples from the current aetherAI product work include sprint/refinement conventions, role boundaries, ClickUp/Drive source-of-truth conventions, and recurring reporting obligations.
 
-兩個現有的家都塞不進去:
+Putting these in Product Context duplicates them across products. Putting them in PDM Core makes an aetherAI-specific process look universal and breaks products that belong to another organization or follow a different process.
 
-- **塞進 Product Context** → 它不是關於該產品的事實。而且第二個 aetherAI 產品註冊的當下就開始複製與漂移。
-- **塞進 PDM Core** → 變成普世規則。HH 一有走別套流程的產品就壞掉,而他明講這會發生。
+## 2. Proposed shape
 
-## 2. 提議的形狀
+Add an **Organization Context** layer that mirrors the existing Product Context pattern without creating a second operational memory system.
 
-一個 **Organization Context**,解析方式與 Product Context **完全對稱** —— 不是新機制,是既有 pattern 的鏡像。
+```text
+PDM Core
+    + Organization Context (optional)
+    + Product Context
+    + Work State / Active Brief
+```
 
-### 2.1 Registry 差異
+A product explicitly declares its organization. A product with no organization declaration receives no Organization Context.
 
-`products/registry.json` 新增一個 top-level `organizations` 映射,產品 entry 新增**選填**的 `organization` 欄位:
+### 2.1 Registry
+
+`products/registry.json` should eventually support:
 
 ```json
 {
   "organizations": {
     "aetherai": {
-      "repository": { "type": "local_path", "location": "./organizations/aetherai" },
+      "repository": {
+        "type": "git_remote",
+        "remote_url": "git@github.com:harrishhc/aetherai-organization-context.git",
+        "local_clone_path": "./.organization-clones/aetherai"
+      },
       "context_entry": "org-context.json"
     }
   },
   "products": {
     "colon-biopsy-ai-app": {
-      "repository": { "...": "unchanged" },
-      "organization": "aetherai",
-      "status": "active",
-      "priority": 1
+      "organization": "aetherai"
     }
   }
 }
 ```
 
-`organization` 未宣告 = 該產品不套用任何組織流程。這正是「走非公司流程的產品」的支援方式 —— 不需要 opt-out 旗標,預設就是不套用。
+The exact remote repository name is illustrative and should be confirmed before creation.
 
-### 2.2 解析流程
+### 2.2 Resolution
 
+```text
+PDM → Product Registry → selected product
+                         ├── Product Context
+                         └── Organization Context (if declared)
 ```
-PDM → Product Registry → 選定產品
-                          ├── resolve product repository → bounded Product Context
-                          └── 若宣告 organization → resolve org repository → bounded Organization Context
-```
 
-有效工作 context: `PDM Core + Organization Context(若宣告)+ Product Context`
+Resolution remains metadata-first and bounded. Organization Context is never loaded during portfolio refresh.
 
 ### 2.3 Runtime
 
-新增 `runtime/organizationContext.js`,鏡像 `context.js`:同樣的 path-traversal 防護、同樣的 bounded section 讀取、同樣的「絕不自動寫入」規則。
+Add a small `runtime/organizationContext.js` only after the repository and registry shape are approved.
 
-**關鍵約束:`portfolio.js` 的 refresh 絕不得載入它。** Portfolio refresh 的 cheapness contract(一個小 work-state 檔 + 一個 bounded section)不能因此變貴。
+It should mirror the Product Context safety contract:
 
-### 2.4 Bounded sections(建議)
+- registry-based resolution;
+- path-traversal protection;
+- bounded section reads;
+- explicit writes only;
+- no network side effects during ordinary resolution.
 
-`delivery_process` · `roles` · `artifact_conventions` · `reporting_obligations` · `systems_of_record`
+Do not introduce a generic "memory" abstraction that merges Product Context, Organization Context, and Work State. Their different scopes are the reason the layers exist.
 
-## 3. Boundary test — 防止它變成雜物抽屜
+### 2.4 Bounded sections
 
-這是這個提案能不能站得住的關鍵。用 colon 實際套一遍:
+Initial sections should remain deliberately narrow:
 
-| 事實 | 歸屬 | 理由 |
-|---|---|---|
-| sprint refinement → plan meeting 流程 | **Org** | 跨 aetherAI 所有產品 |
-| ticket 需含 Figma 連結才進 sprint | **Org** | 同上 |
-| PM 定義 WHAT、RD 自組織 HOW | **Org** | 同上 |
-| ClickUp 為 live source of truth | **Org** | 同上 |
-| Drive PDM 資料夾為產出目的地 | **Org** | 同上 |
-| biweekly CEO 報告義務 | **Org** | 同上 |
-| Inform-level CADx 定位、不產生敘述內容 | **Product** | 只關於 colon 的法規宣稱 |
-| 三模型並行推論、11 判型 | **Product** | 只關於 colon |
-| N=300 驗證設計、國泰雙盲讀片 | **Product** | 只關於 colon |
-| TFDA/CDE 分類未決 | **Product** | 只關於 colon 的未決事項 |
-| 「送件前要過 RA」這件事本身 | **Org** | 跨產品的流程約束 |
+- `delivery_process`
+- `roles`
+- `artifact_conventions`
+- `reporting_obligations`
+- `systems_of_record`
+- `quality_or_regulatory_process_gates` when the statement is genuinely organizational rather than product-specific
 
-**判準一句話:** 換掉產品之後這句話還成立嗎?成立 → Org;不成立 → Product。
+## 3. Boundary test
 
-## 4. 與「Deliberately Not Built」的關係
+Use one test before moving a statement into Organization Context:
 
-`GOVERNANCE_PRINCIPLES.md` 明確拒絕過 **"A second memory/state system alongside Work State + Active Brief"**。
+> Replace Product A with Product B. If the statement remains true because the same organization governs both, it is a candidate for Organization Context. If it stops being true, it belongs to Product Context.
 
-這個提案**不是**那一項。被拒絕的是「同一個東西的第二份持久化」—— 再開一個地方存 PDM 對某產品的操作狀態。Organization Context 存的是**不同 scope 的不同事實**,它不重複 Work State、不重複 Product Context,也不能主張任何產品事實。
+Examples:
 
-但我承認兩者相鄰,而且相鄰到值得你直接壓力測試,而不是由我自己判定通過。
-
-## 5. PDM 建議(conditional)
-
-**我的建議取決於一個我不知道的事實:你接下來要註冊幾個 aetherAI 產品?**
-
-| 情境 | 建議 |
+| Statement | Scope |
 |---|---|
-| 這個週期內會註冊 **≥2 個** aetherAI 產品 | **現在就建這一層。** 重複與漂移會在第二個產品註冊當下實際發生,屆時再搬成本更高。 |
-| colon 在可見未來仍是**唯一**註冊產品 | **先不要建。** 改用下面的 interim,等真實失敗出現再升級。 |
+| Sprint refinement → sprint plan meeting | Organization |
+| Ticket must contain a Figma link before sprint | Organization |
+| PM defines WHAT; RD self-organizes HOW | Organization |
+| ClickUp is live source of truth for tickets | Organization |
+| Drive PDM folder is the document destination | Organization |
+| Biweekly CEO product reporting | Organization |
+| Inform-level CADx positioning for colon | Product |
+| Three-model inference / 11 classifications | Product |
+| N=300 validation design | Product |
+| TFDA/CDE classification for colon | Product |
 
-**Interim(不需要任何架構變更):** 把 aetherAI 流程寫成 colon repo 裡一份獨立文件(例如 `product-context/org-conventions.md`),並在 `context.json` 明確標註它是組織層事實、暫時寄居於此。接受重複,但把重複**標記出來** —— 這樣第二個產品註冊時,漂移是可見的,而不是靜默的。
+The same statement may need qualification if an organization policy has explicit product-level exceptions. Organization Context should express the policy and exception mechanism, not silently erase the exception.
 
-我傾向 interim,理由是這個 repo 自己的紀律:`GOVERNANCE_PRINCIPLES.md` 要求新層級需要「一個這條規則本來會擋下的真實失敗案例」。**目前還沒有。** 結構論證很清楚,但結構論證正是該文件說不夠的那種論證。
+## 4. Storage recommendation
 
-## 6. 其他選項(已考慮並排除)
+Organization Context should be independently durable from PDM Core and product repositories. For the current aetherAI case, the preferred end state is a dedicated private organization-context repository owned by HH.
 
-| 選項 | 排除理由 |
-|---|---|
-| 放進 methodology 層 | 類別錯誤。Methodology 是可重用的**產品方法**(Double Diamond 之類),不是特定公司的流程。 |
-| 放進 PDM Core governance | 變成普世規則,對非 aetherAI 產品即錯誤。 |
-| 放進 Claude Code / 模型端 memory | **違反 `COLLABORATION_PROTOCOL.md`** —— worker 不得假設 provider 對話記憶是 durable。放那裡等於換到 Codex 就消失。 |
-| 每個產品各存一份 | 即 §5 的 interim。可接受作為過渡,不可接受作為終局。 |
+The repository should contain:
 
-## 7. 風險
+```text
+org-context.json
+README.md
+knowledge/        # supporting source/evidence when needed
+```
 
-- **雜物抽屜化。** 緩解:§3 的 boundary test 必須與這層一起落地,不能事後補。
-- **Runtime 表面積增加。** 多一條解析路徑就多一條要維護、要測試的路徑。
-- **過早抽象。** 若最終只有一個 aetherAI 產品,這層就是為了一個實例而建的抽象 —— 正是本 repo 反覆拒絕的那種成本。
+PDM Core stores only the registry pointer and routing metadata; it does not copy the organization's facts.
 
-## 8. 需要你回答
+This also means another organization can use the same PDM Core without inheriting aetherAI process assumptions.
 
-1. **你接下來要註冊幾個 aetherAI 產品?**(決定 §5 走哪一條)
-2. 若走 interim:要我現在就把 aetherAI 流程寫進 colon repo 的 `org-conventions.md` 嗎?
-3. §4 的「這不是被拒絕的第二記憶體系統」論證,你買不買單?
+## 5. Governance
+
+Organization Context is **descriptive context, not authority**.
+
+It must never override the PDM Constitution or Founder authority. An organization-level policy change that requires a business/organizational decision should be surfaced as a decision rather than silently rewritten because PDM inferred a new norm from one product.
+
+Entries should carry provenance and applicability. A useful minimum is:
+
+```text
+classification: FACT | EVIDENCE | ASSUMPTION | HYPOTHESIS
+source_ref
+observed_at
+applies_to: organization
+confidence
+```
+
+A single product's behavior is not enough to silently promote a new rule to organization-wide fact.
+
+## 6. Relationship to the existing memory boundary
+
+This is not a second Work State.
+
+- **Organization Context:** what is true about the organization/process.
+- **Product Context:** what is true about one product.
+- **Work State:** what PDM is currently doing for one product.
+- **Active Brief:** compact derived bootstrap.
+- **Decision records:** durable product/Founder decisions.
+
+No layer should duplicate another layer's facts merely for convenience.
+
+## 7. Implementation sequence
+
+Completed in #17 (2026-09-16), in this order. Step 8 is the one still open: the four-product portfolio has to actually run before we know whether this layer earns its keep.
+
+Do not make the runtime change before the context itself exists.
+
+1. Create and validate the dedicated aetherAI Organization Context repository.
+2. Extract organization-level facts from existing product material into that repository, preserving provenance and uncertainty classification.
+3. Review the resulting context for boundary violations and duplication.
+4. Add organization registry metadata.
+5. Add bounded `organizationContext.js` with path and read-boundary tests.
+6. Integrate Organization Context into selected-product context assembly only.
+7. Verify that portfolio refresh still reads only its existing bounded inputs.
+8. Run the four-product live portfolio and observe whether organization context actually reduces duplication or incorrect assumptions.
+
+This sequence deliberately separates **content migration** from **runtime abstraction**. If the content does not demonstrate a stable cross-product scope, stop before adding runtime machinery.
+
+## 8. Risks (restored from the 2026-09-14 version; not superseded by §0)
+
+- **Junk-drawer risk.** Mitigated only if the §3 boundary test is actually applied at content-migration time, not retrofitted after the drawer already exists.
+- **Runtime surface area.** One more resolution path is one more thing to test and keep bounded (§2.3, §5.2).
+- **Premature abstraction.** If aetherAI ends up being the only organization this PDM Core ever serves, this layer is infrastructure built for a single instance — the exact cost this repository has repeatedly refused to pay elsewhere (`GOVERNANCE_PRINCIPLES.md`, "Deliberately Not Built"). Four products under one organization does not by itself rule this out; it is a real risk being accepted, not a risk that four products makes go away.
+
+## 9. Decisions
+
+All five are resolved; 9.3–9.5 record what actually shipped in #17 rather than what was proposed.
+
+**9.1 — RESOLVED by HH, 2026-09-16.** HH confirmed building now, on the reversed bar (product count 1→4, not an observed failure) — quote: "aetherAI Organization Context 就是要做，現在就四個產品了為什麼不做". This is the Founder decision the proposal asked for in §0; it supersedes the original interim recommendation. Recorded here, in the proposal itself, per `docs/ARCHITECTURE.md` §8 — this is PDM Evolution content, not a product decision, so it is not routed through `runtime/decisionRecord.js`.
+
+**9.2 — RESOLVED.** Approved by the same decision (9.1 was the operative question; approving the abstraction was not a separate ask).
+
+**9.3 — RESOLVED.** `harrishhc/aetherai-organization-context` (private) was approved and created, and is registered in `products/registry.json` under `organizations.aetherai` with `local_clone_path: ./.organization-clones/aetherai`. Repository creation remains a hard stop under `governance/AUTONOMY_BOUNDARY.md` §3 ("Creating or deleting repositories") — 9.1's approval of the layer did not by itself authorize it, and a future organization repository needs its own explicit go-ahead.
+
+**9.4 — RESOLVED as proposed.** All 4 active products (`colon-biopsy-ai-app`, `ocr-slide-label-reader`, `prostate-biopsy`, `slide-quality-control`) declare `organization: "aetherai"` in `products/registry.json`. Test fixtures deliberately declare no organization, which is what keeps the resolution path's "no organization" branch covered.
+
+**9.5 — RESOLVED, with one addition.** The five bounded sections from §2.4 (`delivery_process`, `roles`, `artifact_conventions`, `reporting_obligations`, `systems_of_record`) shipped as proposed, plus a sixth, `stakeholders`. The addition is not covered by the §3 boundary test above; it should be re-checked against that test, and dropped or moved if it turns out to hold product-specific facts.
+
+## 10. Non-goals
+
+This proposal does not introduce:
+
+- another Work State or general-purpose memory store;
+- a product workflow/node graph;
+- weighted portfolio scoring;
+- automatic organizational policy inference;
+- provider-specific memory;
+- provider-specific scheduling;
+- a mandatory PR for every decision.
