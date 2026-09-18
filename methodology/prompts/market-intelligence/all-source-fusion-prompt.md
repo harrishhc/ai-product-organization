@@ -93,9 +93,6 @@ Competitive Research Compendium in this directory's reference/
 shelf; confidence stacking after intelligence-community all-source
 analysis practice.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 16, 2026
 -->
 

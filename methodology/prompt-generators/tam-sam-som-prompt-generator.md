@@ -39,9 +39,6 @@ re-run when you enter a new region or move upmarket.
 Created by Dean Peters (Productside.com). TAM/SAM/SOM framework as
 popularized in venture and product strategy practice.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 30, 2026
 -->
 
@@ -137,6 +134,3 @@ Please generate a TAM/SAM/SOM analysis based on the following details. Ensure th
 ### Post-Generation Question to the User
 
 Would you like to make any modifications to this analysis, or are you satisfied with it?
-
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.

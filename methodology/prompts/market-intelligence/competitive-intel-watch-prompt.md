@@ -67,9 +67,6 @@ materiality bar otherwise.
 Created by Dean Peters (Productside.com). Builds on the Competitive
 Research Snapshot workflow's schema and evidence rules.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 3, 2026
 -->
 

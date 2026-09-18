@@ -103,9 +103,6 @@ the Competitive Research Compendium
 (market-intelligence/reference/competitive-research-compendium.md),
 HUMINT discipline.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 17, 2026
 -->
 

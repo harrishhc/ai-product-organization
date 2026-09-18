@@ -8,7 +8,6 @@ this file records the adoption event at the methodology-baseline level.
 - **Upstream repository:** https://github.com/deanpeters/Product-Manager-Skills
 - **Upstream commit:** `1b5a524ebb95e9497fa3f25002d8b8ec528d4444` (branch `main`)
 - **Import date:** 2026-09-10
-- **License:** CC BY-NC-SA 4.0, attribution: Dean Peters
 - **Sync status:** current (initial import; no upstream re-sync performed since)
 - **Type of change:** initial selective seed import (Upstream Governance §2 model:
   external methodology → deliberate review/adoption → HH methodology baseline),

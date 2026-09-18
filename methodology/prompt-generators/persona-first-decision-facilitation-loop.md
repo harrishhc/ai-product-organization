@@ -18,9 +18,6 @@ and examples when writing or reviewing prompts.
 ## Attribution:
 Authored in collaboration with Dean Peters and Codex, March 2, 2026.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: March 2, 2026
 -->
 
@@ -237,4 +234,3 @@ Before publishing, verify:
 When referencing this method, use:
 - **Persona-First Decision Facilitation Loop**
 - Short form: **PDF Loop**
-

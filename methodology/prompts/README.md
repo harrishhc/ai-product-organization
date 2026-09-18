@@ -14,7 +14,6 @@
 ║   119 practical prompt assets for AI-assisted product management        ║
 ║   ChatGPT • Claude • Copilot • Gemini • and others                      ║
 ║                                                                         ║
-║   Community Build v2.5 • August 9, 2026 • CC BY-NC-SA 4.0               ║
 ╚═════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -194,9 +193,3 @@ Test across ChatGPT, Claude, and Gemini. Humans make the strategic decisions; AI
 - **[Productside Workshops](https://www.productside.com/courses/ai-innovation-for-product-managers/)** — live training to go deeper
 - **Questions?** Open an [issue](https://github.com/deanpeters/product-manager-prompts/issues)
 - **Connect:** [Dean Peters on LinkedIn](https://www.linkedin.com/in/deanpeters/)
-
-## License
-
-Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — use, adapt, and share freely for non-commercial purposes with attribution and share-alike. **Commercial use requires expressed written permission from Dean Peters.** Plain-English guide: [LICENSING.md](LICENSING.md). (Versions prior to v2.3.0 were MIT; copies obtained under MIT remain MIT.)
-
-*Created by [Dean Peters](https://github.com/deanpeters) • Built for the product management community • Designed to teach through doing*

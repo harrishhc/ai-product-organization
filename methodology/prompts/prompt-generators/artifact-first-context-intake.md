@@ -15,9 +15,6 @@ Treat this document as a reusable operating standard and teaching artifact.
 ## Attribution:
 Created in collaboration with Dean Peters and Codex, March 2, 2026.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: March 2, 2026
 -->
 
@@ -148,4 +145,3 @@ Before publishing prompts:
 Use this term in docs/reviews:
 - **Artifact-First Context Intake**
 - Short form: **AFCI**
-

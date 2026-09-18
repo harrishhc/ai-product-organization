@@ -233,6 +233,3 @@ Then: "Is the board meeting date fixed? Do they need working software or a credi
 
 ### Source Material
 - Original prompt "Incoming Request Breakdown" by Dean Peters (July 8, 2026)
-
-### License
-- CC BY-NC-SA 4.0 (repository license)
