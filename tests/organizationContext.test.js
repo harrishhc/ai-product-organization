@@ -68,3 +68,25 @@ test('writeOrganizationContext refuses a context_entry that escapes the reposito
   );
   assert.equal(existsSync(escapedPath), false, 'the escape target must never actually be created');
 });
+
+test('confidence_notes travels with every bounded read and is not selectable on its own', () => {
+  // It qualifies the other sections rather than being one of them. A bounded
+  // read that dropped it would present unverified organizational claims as
+  // settled EVIDENCE.
+  const bounded = getBoundedOrganizationContext('_org-qualified-fixture', ['roles']);
+  assert.ok('roles' in bounded);
+  assert.ok(!('systems_of_record' in bounded), 'still bounded to the requested sections');
+  assert.deepEqual(bounded.confidence_notes, [
+    { classification: 'ASSUMPTION', statement: 'Sections here are unverified until cross-checked.' },
+  ]);
+
+  assert.throws(
+    () => getBoundedOrganizationContext('_org-qualified-fixture', ['confidence_notes']),
+    /Unknown Organization Context section/,
+  );
+});
+
+test('a context without confidence_notes does not grow an empty one', () => {
+  const bounded = getBoundedOrganizationContext('_org-fixture', ['roles']);
+  assert.ok(!('confidence_notes' in bounded));
+});

@@ -1,0 +1,15 @@
+{
+  "organization_id": "_org-qualified-fixture",
+  "delivery_process": [],
+  "roles": [],
+  "artifact_conventions": [],
+  "reporting_obligations": [],
+  "systems_of_record": [],
+  "stakeholders": [],
+  "confidence_notes": [
+    {
+      "classification": "ASSUMPTION",
+      "statement": "Sections here are unverified until cross-checked."
+    }
+  ]
+}

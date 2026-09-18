@@ -37,6 +37,13 @@
         "location": "./organizations/_org-fixture"
       },
       "context_entry": "../escaped-org-context.json"
+    },
+    "_org-qualified-fixture": {
+      "repository": {
+        "type": "local_path",
+        "location": "./organizations/_org-qualified-fixture"
+      },
+      "context_entry": "org-context.json"
     }
   },
   "products": {
