@@ -19,6 +19,14 @@ Encoded in [`runtime/pdmCore.js`](../runtime/pdmCore.js) as `EVIDENCE_LADDER`.
 
 Opinion is not evidence. Anecdote can be evidence but should be labeled as weak evidence. The PDM must not turn repeated assumptions into facts simply because they appear in older documents.
 
+## Check Product Context before any judgment that touches a ticket or spec
+
+This applies beyond formally writing a PRD (`governance/WORK_STATE_BOUNDARY.md`'s "PRD is subordinate to Product Context" rule) — it applies to any product judgment made in conversation that will end up changing a ticket, an acceptance criterion, or a spec, however small the ask feels. Before answering, check `context.json` for existing evidence/decisions on the topic. Conversational memory of "a document I read earlier" is not a substitute — it can be wrong, stale, or about a different question than the one actually recorded.
+
+**Why this matters more than it looks like it should:** a judgment that skips this check doesn't just risk being *unsupported* — it can be *actively wrong* against evidence that was already sitting in the repo. On 2026-09-18, asked to judge whether a Usage Log ticket's three tracked interactions should collapse to one, the answer was reasoned from a half-remembered, only tangentially related Google Doc instead of checking `context.json` — which already had the actual authoritative answer (an IFU clause mapped to a specific regulatory audit requirement) recorded from three days earlier. The proposed simplification would have directly violated it. It was caught before reaching ClickUp only because the person asking happened to ask "did you actually use the repo's process for that."
+
+**How to apply:** Before giving a product judgment that will change a real artifact — not only before writing a formal PRD or Founder Decision Brief — search `context.json`'s `evidence`/`decisions` for the topic first. If reasoning from an external document (a Google Doc, an old conversation, a file read earlier in the session), re-verify it's the *actually relevant* one and check whether its conclusions are already captured (possibly more precisely, or since superseded) in Product Context. When the judgment is non-trivial enough to be worth stating a rationale for, that rationale and its sources belong in `context.json` afterward, not only in the conversation — otherwise the next session repeats the same ungrounded judgment with no way to know it already happened.
+
 ## Known Source Limitations (negative evidence is only as good as the query)
 
 A source returning "nothing found" is not the same as "nothing exists." Before recording an absence as a gap (`status: "gap_detected"` or similar), confirm the query method can actually see everything it claims to have checked.
