@@ -142,17 +142,16 @@ Organization Context should be independently *addressable* from PDM Core and pro
 
 The registry's `git_remote` form is not removed, because products use it and the resolution code is shared. It is simply not how organizations are stored here. Reintroducing it for an organization would need the premise above to change first.
 
-The repository should contain:
+An organization's directory contains:
 
 ```text
-org-context.json
-README.md
-knowledge/        # supporting source/evidence when needed
+organizations/<id>/
+  org-context.json
+  README.md
+  knowledge/        # supporting source/evidence when needed
 ```
 
-PDM Core stores only the registry pointer and routing metadata; it does not copy the organization's facts.
-
-This also means another organization can use the same PDM Core without inheriting aetherAI process assumptions.
+The separation that matters is not storage, it is scope. An organization's facts stay out of `runtime/` and `governance/`, are reached only through the registry indirection, and are classified and provenance-tracked in their own file — none of which requires them to live in a different repository. Each organization's context is separately addressed, so one organization's process never reaches a product belonging to another.
 
 ## 5. Governance
 
