@@ -182,9 +182,21 @@ The decision flow is: capability → analysis/method → PDM synthesis and recom
 
 The registry indexes the methodology ecosystem, including skills, workflows, prompts, workshops, flows, loops, patterns, generators, and HH-authored capabilities.
 
+Not every indexed asset is selectable. Only **entrypoints** are routable: a skill's `SKILL.md`, an HH-authored `capabilities/` asset, and a `commands/` workflow. A template, worked example, or README belongs to an entrypoint and stays indexed as an asset, reachable by explicit id, but never offered as a choice. Indexing supporting material as a capability let selection resolve to a worked example as though it were a method.
+
+Entrypoints form three tiers, declared by the methodology itself rather than invented by the runtime: `workflow` (sequences other entrypoints), `interactive` (facilitates a session), and `component` (produces one artifact).
+
 Selection is metadata-first:
 
-`intent + decision stage + dominant uncertainty -> candidate narrowing -> smallest sufficient capability -> lazy detail load`
+`intent + decision stage + dominant uncertainty -> entrypoint narrowing -> smallest sufficient entrypoint -> resolve declared composition -> lazy detail load of the applicable members`
+
+Selecting an entrypoint is not the whole routing step. A `workflow` entrypoint declares in its methodology source which entrypoints it is built from (`uses:`), and routing legitimately lands on a *member* instead of the workflow that sequences it, because members carry their own routing metadata. Composition therefore resolves in both directions — what the selection is built from, and which workflows it is a member of, with its sibling members named. Resolution is metadata-only and costs no context; which members the work unit actually needs stays a PDM judgment, and each is loaded individually.
+
+Composition is read only from the declared `uses:` contract, never inferred from an asset's heuristic cross-reference list, which would pull a skill's "References" section in as if it were a dependency.
+
+Candidate narrowing uses two match bases, reported separately and never blended. A **declared** match comes from hand-authored routing metadata (`primary_intents`, `decision_stage`). A **cue** match comes from the asset's own frontmatter self-description (`intent`, `description`, `theme`, `best_for`, `scenarios`). Cue matching exists because hand-authored routing metadata covers only a handful of entrypoints; without it the rest of the ecosystem is present in the registry but invisible to routing. A cue match can surface a candidate but can never outrank a declared one, and is capped at `weak_fit`.
+
+Match signals are weighted, not counted: a declared intent outranks a caller intent found in a self-description, which outranks a word that merely appears in the dominant-uncertainty prose. Match strength is applied before the smaller-tier preference — an entrypoint that barely matched is not *sufficient*, however small it is.
 
 Where a capability explicitly declares uncertainty types, the runtime may enforce them. Missing uncertainty metadata is treated as unknown rather than invented. This prevents the registry from pretending to know semantic routing information that has not been established.
 
