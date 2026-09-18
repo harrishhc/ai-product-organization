@@ -2,9 +2,8 @@
   "organizations": {
     "aetherai": {
       "repository": {
-        "type": "git_remote",
-        "remote_url": "git@github.com:harrishhc/aetherai-organization-context.git",
-        "local_clone_path": "./.organization-clones/aetherai"
+        "type": "local_path",
+        "location": "./organizations/aetherai"
       },
       "context_entry": "org-context.json"
     },

@@ -100,12 +100,30 @@ test('resolveOrganizationRepository refuses a "git_remote" organization whose lo
   );
 });
 
-test('aetherai is registered as a git_remote organization', () => {
+test('aetherai is registered as a local_path organization needing no sync step', () => {
+  // Reversed 2026-09-18: the dedicated repository's rationale (proposal §4) was
+  // that another organization could reuse PDM Core without inheriting aetherAI's
+  // process, which HH ruled out — PDM Core is his alone. With both repositories
+  // private and same-owner, separation bought no confidentiality and no extra
+  // durability, and cost a clone before every first read plus a second review
+  // cycle per change. The registry indirection is what the layer needs; a second
+  // repository is not.
   const { organizations } = JSON.parse(readFileSync(path.join(REPO_ROOT, 'products', 'registry.json'), 'utf8'));
   const entry = organizations.aetherai;
-  assert.equal(entry.repository.type, 'git_remote');
-  assert.match(entry.repository.remote_url, /aetherai-organization-context/);
+  assert.equal(entry.repository.type, 'local_path');
+  assert.equal(entry.repository.location, './organizations/aetherai');
   assert.equal(entry.context_entry, 'org-context.json');
+});
+
+test('a local_path organization resolves with no sync, and refuses one', async () => {
+  const { resolveOrganizationRepository } = await import('../runtime/productRegistry.js');
+  const { syncOrganizationContext } = await import('../runtime/productSync.js');
+  const { repositoryType } = resolveOrganizationRepository('aetherai');
+  assert.equal(repositoryType, 'local_path');
+  await assert.rejects(
+    () => syncOrganizationContext('aetherai', { initiatedByHH: true, runGitCommand: async () => '' }),
+    /not registered with repository.type "git_remote"/,
+  );
 });
 
 test('resolveProductOrganization returns the declared organization for the four active aetherAI products', () => {

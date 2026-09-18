@@ -1,0 +1,127 @@
+{
+  "organization_id": "aetherai",
+  "delivery_process": [
+    {
+      "classification": "EVIDENCE",
+      "statement": "A ticket must be complete before it enters a sprint; complete means it passes the five-item ticket standard in artifact_conventions (and usually carries a Figma link from design). Flow: sprint refinement -> sprint plan meeting, where RD explains the intended implementation approach.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14",
+        "HH direct confirmation to PDM, 2026-09-18 (reviewing Organization Context scope)",
+        "HH direct statement to PDM, 2026-09-18 — defined what complete means"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "PM defines WHAT; RD self-organizes HOW. Acceptance criteria should be testable but not implementation-prescriptive.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "Regulatory-affected product decisions are consulted with the internal RA (regulatory affairs) team before proceeding.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14",
+        "Split out of the stakeholders roster entry 2026-09-18: a consultation gate is a process step, and a read of delivery_process asking which gates apply would otherwise miss it"
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "classification": "EVIDENCE",
+      "statement": "PM owns product requirements and problem framing (WHAT). RD (engineering) self-organizes implementation (HOW) once acceptance criteria are testable.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14"
+      ]
+    }
+  ],
+  "artifact_conventions": [
+    {
+      "classification": "EVIDENCE",
+      "statement": "ClickUp (workspace 3625226) is the live source of truth for engineering/data tickets across products; tickets are not mirrored as a static copy into product repositories.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14",
+        "Confirmed operationally: colon-biopsy-ai-app's AGENTS.md explicitly treats ClickUp as live source of truth, not mirrored"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "Google Drive is the document home for PM deliverables; each product has a dedicated PDM product folder that is the correct destination for new documents.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "A ClickUp ticket must contain all five of the following. Any one missing is a fail (未通過), not a warning. (1) 標題 — states the end-to-end result: who, did what, achieved what. No vague phrasing, no internal codenames or technical module names. Even when the body is clear, the result must be rewritten into the title so a reader scanning the Story List understands it at a glance. (2) 既有現況描述 — present, and not an empty placeholder such as 目前無此功能. (3) 預期達成結果 — present, and not a restatement of the title. (4) Acceptance Criteria — at least three, each concrete and testable; format is free (Given/When/Then or bullets). Vague criteria such as 系統正常運作 do not count. (5) 權限說明 — which roles may execute the function; a pure background service must still state its trigger and its exception-handling role.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-18"
+      ]
+    }
+  ],
+  "reporting_obligations": [
+    {
+      "classification": "EVIDENCE",
+      "statement": "HH reports his products at a biweekly CEO meeting; his products occupy the first four document tabs in that meeting's running notes.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14"
+      ]
+    }
+  ],
+  "systems_of_record": [
+    {
+      "classification": "EVIDENCE",
+      "statement": "ClickUp = ticket system of record. Google Drive = document/deliverable system of record. Google Calendar = meeting schedule (sprint refinement and sprint plan meetings appear there).",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14"
+      ]
+    }
+  ],
+  "stakeholders": [
+    {
+      "classification": "EVIDENCE",
+      "statement": "KJB — HH's manager.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "Joe — CEO.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "Eva — CEO's EA.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "An internal RA (regulatory affairs) team exists. Its consultation gate is recorded in delivery_process, not here.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-09-14"
+      ]
+    }
+  ],
+  "confidence_notes": [
+    {
+      "classification": "ASSUMPTION",
+      "statement": "These sections originated from a claude.ai project-memory dump that HH flagged as possibly containing errors and not to be treated as fact before verification. HH has since confirmed two directly (2026-09-18): the sprint-entry gate in delivery_process, and that the stakeholders section is correctly organization-scoped because company roles are stable across products. Everything not carrying a 2026-09-18 confirmation remains EVIDENCE to cross-check against ClickUp/Drive/Calendar, not settled organizational fact.",
+      "source_refs": [
+        "ai-product-organization memory: user_harris_role_aetherai.md, its own caution note",
+        "HH direct confirmation to PDM, 2026-09-18 (reviewing Organization Context scope)"
+      ]
+    },
+    {
+      "classification": "ASSUMPTION",
+      "statement": "Product-specific stakeholders observed alongside the org-wide ones above (e.g. a named KOL/clinical advisor tied to one product's regulatory or clinical validation work) were deliberately excluded from this file. The boundary test (docs/proposals/organization-context-layer.md §3: does the statement survive replacing the product?) puts them in that product's own Product Context, not here.",
+      "source_refs": [
+        "docs/proposals/organization-context-layer.md §3"
+      ]
+    }
+  ]
+}
