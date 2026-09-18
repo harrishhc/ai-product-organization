@@ -63,9 +63,6 @@ evidence-based assumptions, label them explicitly, and proceed.
 Created by Dean Peters (Productside.com). TAM/SAM/SOM framework as
 popularized in venture and product strategy practice.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 3, 2026
 -->
 

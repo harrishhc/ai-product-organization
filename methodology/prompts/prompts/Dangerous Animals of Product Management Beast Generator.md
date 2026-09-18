@@ -30,9 +30,6 @@ the diagnosis is the point.
 ## Attribution:
 Created by Dean Peters (Productside.com).
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 30, 2026
 -->
 
@@ -105,6 +102,5 @@ Would you like to make any modifications to this session starter prompt, or are 
 - **Prompt Name**: product-management-creature-session-starter.md
 - **Prompt Description**: Sets the context for a session to explore product management challenges using a creative exercise with imaginary creatures, providing clear rules, a template, and objectives.
 - **Attribution**: Created by Dean Peters, September 2024
-- **Licensing**: CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
 
 -->

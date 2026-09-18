@@ -24,9 +24,6 @@ analysis framing based on "7 Ways to Analyze a Customer-Journey Map" by Kim Flah
 at Nielsen Norman Group:
 https://www.nngroup.com/articles/analyze-customer-journey-map/
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: March 1, 2026
 -->
 

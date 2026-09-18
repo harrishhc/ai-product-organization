@@ -45,9 +45,6 @@ Created by Dean Peters (Productside.com). Framework landscape drawn
 from common practice: RICE (Intercom), ICE (Sean Ellis), Kano, cost
 of delay (Reinertsen), MoSCoW, opportunity scoring (Ulwick).
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 3, 2026
 -->
 

@@ -47,7 +47,6 @@ Would you like to make any modifications to this template, or are you satisfied 
 <!-- 
 
 ## Attribution:
-Licensing: CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
 Influenced by Osterwalder's Value Proposition Canvas, adapted for interactive use by Dean Peters, March 15, 2024.
 
 -->

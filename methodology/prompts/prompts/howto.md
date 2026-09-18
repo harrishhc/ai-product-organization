@@ -107,9 +107,6 @@ If any of the following are missing from session context — [Required Data A], 
 ## Attribution:
 [Creator, inspiration sources, methodology used.]
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: [Insert Date]
 -->
 ---
@@ -162,7 +159,3 @@ Want to add your own prompt? Please ensure:
 - Prompts solve a real problem for product managers, teams, or educators.
 
 ---
-
-## **License**
-
-This repository and its contents are licensed under CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md): free to use, adapt, and share non-commercially with attribution and share-alike. Commercial use requires expressed written permission from Dean Peters.

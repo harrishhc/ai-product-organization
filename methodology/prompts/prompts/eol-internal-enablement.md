@@ -64,9 +64,6 @@ Created by Dean Peters (Productside.com), August 2026.
 Grounded in industry EOL enablement practice and common failure
 patterns in customer-facing team readiness.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: August 9, 2026
 -->
 

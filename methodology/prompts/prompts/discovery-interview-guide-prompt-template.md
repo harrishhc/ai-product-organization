@@ -63,9 +63,6 @@ Grounded in Rob Fitzpatrick's The Mom Test and continuous discovery
 interviewing practice (Teresa Torres), adapted for AI-assisted use by
 Dean Peters.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: July 3, 2026
 -->
 

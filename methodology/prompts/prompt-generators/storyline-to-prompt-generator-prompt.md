@@ -25,9 +25,6 @@ one recommended first. Accept `1`, `2`, `3`, `1 and 3`, or custom direction.
 
 Created by Dean Peters; facilitation-style prompt for pedagogic use.
 
-## Licensing:
-
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
 
 Date: March 2026
 

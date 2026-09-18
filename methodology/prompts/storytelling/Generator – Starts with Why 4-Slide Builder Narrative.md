@@ -25,9 +25,6 @@ Pedagogic framing for readers:
 Created by Dean Peters. Framework inspired by Simon Sinek's Start With Why /
 Golden Circle approach.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: March 1, 2026
 -->
 

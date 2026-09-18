@@ -1,7 +1,6 @@
 ---
 name: dangerous-animals-of-pm-generator
 description: Generate creature acronyms that name PM dysfunctions, blockers, or winning strategies. Use when you want to give your team shared vocabulary for the animals hiding in your product work.
-license: CC-BY-NC-SA-4.0
 metadata:
   intent: >-
     Guide product managers through a 5-question facilitation that maps their real jobs, pains, and frustrations onto creature acronyms — then outputs a session-starter prompt for a dedicated beast-naming exploration. Surfaces the "Dangerous Animals" (dysfunctions, anti-patterns, blockers) or "Beneficial Beasts" (strategies, behaviors, mindsets) lurking in daily PM work.
@@ -60,8 +59,6 @@ exercise.
 ## Attribution:
 Created by Dean Peters (Productside.com), September 2024.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires
 expressed written permission from Dean Peters.
 
 Date: August 8, 2026
@@ -360,7 +357,6 @@ back to you as a decision.
 
 ### Provenance
 - Adapted from `prompts/Dangerous Animals of Product Management Beast Generator.md` in `https://github.com/deanpeters/product-manager-prompts`
-- Created by Dean Peters, September 2024. CC BY-NC-SA 4.0 (see repo LICENSE and LICENSING.md); commercial use requires expressed written permission from Dean Peters.
 
 ---
 

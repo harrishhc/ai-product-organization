@@ -44,9 +44,6 @@ Then proceed. If answers are still partial, make reasonable assumptions and labe
 - Customer Journey Mapping Prompt Template created by Dean Peters, 01Apr24.
 - Adapted from NN/g-inspired journey mapping practice.
 
-## Licensing:
-CC BY-NC-SA 4.0 (see LICENSE and LICENSING.md). Commercial use requires expressed written permission from Dean Peters.
-
 Date: March 2, 2026
 -->
 
