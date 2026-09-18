@@ -8,7 +8,7 @@
 // This module must never import runtime/methodologyEvolution.js — ordinary
 // orchestration must have zero path to external methodology review.
 
-import { filterCandidates, selectSmallestSufficient, loadCapabilityDetail } from './registry.js';
+import { filterCandidates, selectSmallestSufficient, loadCapabilityDetail, resolveComposition } from './registry.js';
 import { getBoundedContext } from './context.js';
 import { selectDelegate } from './pdmCore.js';
 import { MAX_DELEGATION_DEPTH } from './instrumentation.js';
@@ -48,7 +48,7 @@ export function runStage(stageName, session) {
  * not replace stating it. Never loads capability detail files; that only
  * happens in loadSelectedCapability(), after a candidate is chosen.
  */
-export function selectCapability({ dominantUncertainty, intents, decisionStage }, session) {
+export function selectCapability({ dominantUncertainty, intents, decisionStage, spansMultipleStages = false }, session) {
   if (!dominantUncertainty) {
     throw new Error(
       'selectCapability requires an explicit dominantUncertainty (the decision bottleneck this selection is meant to reduce) — routing must not be intent/stage matching alone.'
@@ -56,7 +56,7 @@ export function selectCapability({ dominantUncertainty, intents, decisionStage }
   }
   const candidates = filterCandidates({ intents, decisionStage, dominantUncertainty });
   session?.recordCapabilitySelection?.(candidates.map((c) => c.id));
-  const selected = selectSmallestSufficient(candidates);
+  const selected = selectSmallestSufficient(candidates, { spansMultipleStages });
   return { selected, candidates, dominantUncertainty };
 }
 
@@ -67,6 +67,25 @@ export function loadSelectedCapability(selected, session) {
   const { meta, detail } = loadCapabilityDetail(selected.id);
   session?.recordCapabilityDetailLoad?.(selected.id, detail);
   return { meta, detail };
+}
+
+/**
+ * Resolves the selected entrypoint's declared composition before any detail is
+ * loaded. Selecting an entrypoint is not the whole routing step: a workflow
+ * entrypoint declares the methodology it is built from, and without resolving
+ * that, PDM would enter a composed workflow and re-invent its sequence.
+ *
+ * This is mechanism, not judgment — it reports what the methodology declares.
+ * Which members the current work unit actually needs stays a PDM decision, and
+ * each one is loaded individually via loadSelectedCapability().
+ */
+export function resolveSelectedComposition(selected, session) {
+  if (!selected) {
+    throw new Error('resolveSelectedComposition requires a selected candidate (from selectCapability).');
+  }
+  const resolved = resolveComposition(selected.id);
+  session?.recordToolCall?.(`composition:${selected.id}`);
+  return resolved;
 }
 
 /** Bounded Product Context retrieval — never the full product object. */

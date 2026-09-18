@@ -4,6 +4,7 @@ import {
   runStage,
   selectCapability,
   loadSelectedCapability,
+  resolveSelectedComposition,
   retrieveContext,
   delegateToSpecialist,
   completeDelegation,
@@ -86,4 +87,33 @@ test('delegating for an unmapped uncertainty type is refused rather than guessed
       session
     )
   );
+});
+
+test('end-to-end: a composed work unit resolves its sequence before loading any detail', () => {
+  const session = createSession();
+  const { selected } = selectCapability(
+    {
+      dominantUncertainty: 'discovery notes exist but no engineering-ready requirements document',
+      intents: ['prd'],
+      decisionStage: 'document',
+      spansMultipleStages: true,
+    },
+    session
+  );
+  assert.equal(selected.id, 'skills:prd-development');
+
+  const { composedBy } = resolveSelectedComposition(selected, session);
+  assert.equal(composedBy[0].id, 'commands:write-prd');
+  assert.ok(composedBy[0].siblings.includes('skills:problem-statement'));
+  // Resolving the composition must cost no capability detail.
+  assert.equal(session.summary().capabilityDetailLoads, 0);
+
+  // PDM then loads only the members this work unit needs.
+  loadSelectedCapability({ id: composedBy[0].siblings[0] }, session);
+  assert.equal(session.summary().capabilityDetailLoads, 1);
+});
+
+test('resolveSelectedComposition refuses a missing selection rather than guessing', () => {
+  const session = createSession();
+  assert.throws(() => resolveSelectedComposition(null, session));
 });

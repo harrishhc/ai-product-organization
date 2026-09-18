@@ -57,7 +57,7 @@ Do not assume that because a rule is documented it is fully enforced by runtime 
 ## Runtime map
 
 - `runtime/*.js` — plain Node.js runtime with no external npm dependency.
-- `runtime/registry.js` — methodology capability metadata resolution and path-safe loading.
+- `runtime/registry.js` — methodology entrypoint routing, declared-composition resolution, and path-safe loading. Only entrypoints (a skill's `SKILL.md`, a `capabilities/` asset, a `commands/` workflow) are routable; templates and worked examples stay indexed but unselectable.
 - `runtime/context.js` / `runtime/workState.js` — bounded Product Context and Work State / Active Brief operations.
 - `runtime/decisionRecord.js` — durable pending/resolved Founder decisions in the selected product.
 - `runtime/productRegistry.js` / `products/registry.json` — product and organization repository pointers plus portfolio policy (`priority`, `status`).
@@ -71,8 +71,11 @@ Do not assume that because a rule is documented it is fully enforced by runtime 
 
 ## Core operating discipline
 
-- **Use the repository's worker loop.** A normal work cycle starts from portfolio state, selects the next runnable product, reads its bounded state, selects the smallest sufficient methodology capability, completes one coherent work unit, persists what became durable, then re-evaluates the portfolio.
-- **Every product work unit needs an explicit dominant uncertainty.** Use `runtime/orchestrator.js#selectCapability({ dominantUncertainty, intents, decisionStage })` and `loadSelectedCapability()` rather than silently doing methodology work by intuition alone.
+- **Use the repository's worker loop.** A normal work cycle starts from portfolio state, selects the next runnable product, reads its bounded state, selects the smallest sufficient methodology entrypoint and resolves its declared composition, completes one coherent work unit, persists what became durable, then re-evaluates the portfolio.
+- **Every product work unit needs an explicit dominant uncertainty.** Use `runtime/orchestrator.js#selectCapability({ dominantUncertainty, intents, decisionStage, spansMultipleStages })` rather than silently doing methodology work by intuition alone. Set `spansMultipleStages` when the work unit crosses several decision stages; there the composing workflow entrypoint is the smaller choice, because entering a single component means re-deriving the rest of the sequence by intuition.
+- **Selecting an entrypoint is not the whole routing step.** Call `resolveSelectedComposition()` before loading detail. It reports what the selection is built from (`composes`) and which workflows it is a member of, with its sibling members named (`composedBy`). Routing often lands on a member — selecting `skills:prd-development` resolves to `/write-prd`, whose other members are problem framing, personas, and stories. Decide which members this work unit needs, then `loadSelectedCapability()` each one. Resolution is metadata-only; only the load costs context.
+- **A `weak_fit` / `cue` match is a weak signal, not an answer.** It means nothing declared routing metadata matched and the candidate surfaced only through its own self-description. Treat it as a starting point to verify against the entrypoint's own "When to Use / When NOT to Use", not as a routing decision already made.
+- **Check the selected candidate's `antiCues`.** They are authored as prose conditions, so the runtime reports them rather than enforcing them. If one holds, the selection is wrong however well it ranked — several name the entrypoint to use instead.
 - **Prefer bounded context.** Read a product's `active-brief.md` / Work State first; expand only the required Product Context or Organization Context sections; consult `knowledge/` only when the durable context is insufficient.
 - **Do not conflate state layers.** Work State describes where PDM is in its work. Product Context describes the product. Active Brief is disposable derived bootstrap. Founder Decision Brief is a human review artifact. The decision record is the durable decision state.
 - **Persist pending checkpoints immediately.** When PDM reaches a real Founder decision boundary, persist the pending recommendation before waiting for a response. The product becomes `WAITING_FOR_FOUNDER`; the overall portfolio does not stop.
