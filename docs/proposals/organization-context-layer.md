@@ -135,7 +135,11 @@ The same statement may need qualification if an organization policy has explicit
 
 ## 4. Storage recommendation
 
-Organization Context should be independently durable from PDM Core and product repositories. For the current aetherAI case, the preferred end state is a dedicated private organization-context repository owned by HH.
+Organization Context should be independently *addressable* from PDM Core and product repositories. That is what the `organizations` registry indirection provides, and it is the part with value. A separate repository is one way to store it, not a requirement of the layer.
+
+**Superseded 2026-09-18 for the aetherAI case.** The original recommendation here was a dedicated private organization-context repository. Its stated rationale was that another organization could then reuse PDM Core without inheriting aetherAI's process assumptions — and HH has since ruled that out: PDM Core is his alone and is not shared. With that premise gone, and with both repositories private and same-owner, separation bought no confidentiality boundary and no durability PDM Core's own remote does not already provide. It cost a `org-sync` clone before the first read in any fresh environment, a second PR cycle for every content change, and content invisible in PDM Core's own review surface. `aetherai` is now a `local_path` organization at `organizations/aetherai/`, which needs no sync step at all — `syncOrganizationContext` correctly refuses a non-`git_remote` entry, so the step disappears rather than being bypassed.
+
+**The choice rule going forward:** an organization gets its own repository only when its context must be access-isolated from PDM Core's own audience — a different company, a different confidentiality boundary. Otherwise it is a directory under `organizations/`. Both are supported by the same registry shape and the same `runtime/organizationContext.js`; neither requires new machinery. Do not let one precedent make the heavier option the default.
 
 The repository should contain:
 
@@ -185,7 +189,7 @@ Completed in #17 (2026-09-16), in this order. Step 8 is the one still open: the 
 
 Do not make the runtime change before the context itself exists.
 
-1. Create and validate the dedicated aetherAI Organization Context repository.
+1. Create and validate the dedicated aetherAI Organization Context repository. *(Done, then reversed 2026-09-18 — see §4. The content now lives at `organizations/aetherai/`.)*
 2. Extract organization-level facts from existing product material into that repository, preserving provenance and uncertainty classification.
 3. Review the resulting context for boundary violations and duplication.
 4. Add organization registry metadata.
@@ -210,7 +214,7 @@ All five are resolved; 9.3–9.5 record what actually shipped in #17 rather than
 
 **9.2 — RESOLVED.** Approved by the same decision (9.1 was the operative question; approving the abstraction was not a separate ask).
 
-**9.3 — RESOLVED.** `harrishhc/aetherai-organization-context` (private) was approved and created, and is registered in `products/registry.json` under `organizations.aetherai` with `local_clone_path: ./.organization-clones/aetherai`. Repository creation remains a hard stop under `governance/AUTONOMY_BOUNDARY.md` §3 ("Creating or deleting repositories") — 9.1's approval of the layer did not by itself authorize it, and a future organization repository needs its own explicit go-ahead.
+**9.3 — RESOLVED, then REVERSED 2026-09-18.** `harrishhc/aetherai-organization-context` (private) was approved and created. It was folded back into PDM Core as `organizations/aetherai/` after HH stated that PDM Core is exclusively his and will not be shared — the premise §4's separate-repository recommendation rested on. Archiving or deleting that repository remains a hard stop under `governance/AUTONOMY_BOUNDARY.md` §3 and is HH's to do. Repository creation remains a hard stop under `governance/AUTONOMY_BOUNDARY.md` §3 ("Creating or deleting repositories") — 9.1's approval of the layer did not by itself authorize it, and a future organization repository needs its own explicit go-ahead.
 
 **9.4 — RESOLVED as proposed.** All 4 active products (`colon-biopsy-ai-app`, `ocr-slide-label-reader`, `prostate-biopsy`, `slide-quality-control`) declare `organization: "aetherai"` in `products/registry.json`. Test fixtures deliberately declare no organization, which is what keeps the resolution path's "no organization" branch covered.
 
