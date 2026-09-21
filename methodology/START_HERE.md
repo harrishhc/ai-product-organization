@@ -1,130 +1,71 @@
-# Start Here
+# Start Here — the methodology baseline in this repository
 
-If you are new to this repo, you are in the right place.
+This directory is the HH-owned methodology baseline: 491 indexed assets, of
+which 86 are **entrypoints** PDM may select (a skill's `SKILL.md`, a
+`capabilities/` asset, a `commands/` workflow). Everything else — a
+`template.md`, an `examples/` file, a README — belongs to an entrypoint rather
+than being a choice of its own.
 
-You do **not** need to be a programmer to use PM Skills well.
+It is not read by browsing. PDM reaches it through the runtime, and that path
+is what this file describes.
 
-## New in v0.65
-
-You asked, we listened. We took a moment to create comprehensive instructions on how to install, integrate, or otherwise use any one or all of these skills.
-
-Start here:
-- `docs/Using PM Skills 101.md`
-- `docs/Platform Guides for PMs.md`
-- `docs/Using PM Skills with Slash Commands 101.md`
-
-## 0) Read This First (2 Minutes)
-
-- Beginner guide: `docs/Using PM Skills 101.md`
-- Platform chooser: `docs/Platform Guides for PMs.md`
-
-If you only remember one thing:
-- Pick **one skill**
-- Give **one real business problem**
-- Ask for **clarifying questions first**
-
-## 1) Choose Your Comfort Level
-
-### A) "I just want results in chat" (non-technical)
-
-Start with:
-- `Claude Desktop`: `docs/Using PM Skills with Claude Desktop.md`
-- `ChatGPT Desktop`: `docs/Using PM Skills with ChatGPT Desktop.md`
-
-Copy/paste starter prompt:
+## How methodology is actually reached here
 
 ```text
-Use the uploaded PM skill as my framework.
-Ask up to 3 clarifying questions first.
-Then produce the final output in markdown.
-End with assumptions, risks, and next steps.
+node bin/pdm-run.mjs next
+        ↓  prints the selected product, its dominant uncertainty,
+           and a routing shortlist with the top entrypoint's anti-cues
+selectCapability({ dominantUncertainty, intents, decisionStage })
+        ↓  metadata-only narrowing over all 86 entrypoints
+resolveSelectedComposition(selected)
+        ↓  what it is built from, and which workflows it is a member of
+loadSelectedCapability(...)   ← the only step that loads a file
 ```
 
-### B) "I can use a terminal" (higher control)
+Detail is loaded only after selection, one entrypoint at a time. Read
+[`../AGENTS.md`](../AGENTS.md) for the operating rules and
+[`../docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md) §17 for the selection
+boundary.
 
-Start with:
-- `Claude Code`: `docs/Using PM Skills with Claude Code.md`
-- `Claude /slash commands`: `docs/Using PM Skills with Slash Commands 101.md`
-- `Codex`: `docs/Using PM Skills with Codex.md`
+**Routing reads each asset's own frontmatter** — `description` (which states
+its own trigger), `intent`, `type`, `theme`, `best_for`, `scenarios`,
+`estimated_time`, and `uses:`/`outputs:` on commands. Editing a skill's
+frontmatter therefore changes how it routes; `.github/workflows/registry-sync.yml`
+regenerates `registry/ecosystem.json` on every push.
 
-Copy/paste starter prompt:
+**A matching invocable Skill is the low-cost door for authoring**, for the 14
+entrypoints that have one — but this repository's copy is canonical. See
+[`../governance/AUTONOMY_BOUNDARY.md`](../governance/AUTONOMY_BOUNDARY.md) §1
+for why, and for what exists only here.
 
-```text
-Using skills/prioritization-advisor/SKILL.md, help me choose a framework for 12 requests and one sprint.
-Ask questions one at a time, then give numbered recommendations.
-```
+## Human entry points
 
-### C) "I need repeatable workflows" (automation)
+- [`../docs/GETTING_STARTED.md`](../docs/GETTING_STARTED.md) — how HH starts a
+  worker session and where to work with PDM.
+- [`../AGENTS.md`](../AGENTS.md) — the provider-neutral agent contract.
 
-Start with:
-- `n8n`: `docs/Using PM Skills with n8n.md`
-- `LangFlow`: `docs/Using PM Skills with LangFlow.md`
-- `Python agents`: `docs/Using PM Skills with Python Agents.md`
+## What the upstream import did and did not bring
 
-### D) "I’m experimenting with alternative agent stacks"
+The baseline was seeded from
+[deanpeters/Product-Manager-Skills](https://github.com/deanpeters/Product-Manager-Skills)
+at commit `1b5a524` on 2026-09-10 (`Phase 3: methodology genesis + ecosystem
+runtime`). See [`provenance/`](provenance/) for the record.
 
-Start with:
-- `OpenClaw`: `docs/Using PM Skills with OpenClaw.md`
-- `Claude Cowork`: `docs/Using PM Skills with Claude Cowork.md`
+The methodology came in: `skills/` (77), `commands/` (6), `prompts/`,
+`workshops/`, `loops/`, `market-intelligence/`, `prompt-generators/`,
+`skeletons/`, and each skill's own `template.md`, `examples/` and `scripts/`.
 
-## 2) Pick Your First Outcome
+The upstream repository's **own operating manual did not**, and is not
+missing by oversight — this repository reaches methodology programmatically,
+so each piece already has a replacement here:
 
-### I need a PM artifact
+| Upstream | Replacement here |
+|---|---|
+| 20 per-tool setup guides (`docs/Using PM Skills with n8n.md`, `…with Cursor.md`, …) | Not applicable. PDM loads assets through `runtime/registry.js`; no one copies files into a tool by hand. |
+| 4 onboarding docs (`docs/Using PM Skills 101.md`, `docs/Platform Guides for PMs.md`, …) | `../docs/GETTING_STARTED.md` and `../AGENTS.md` |
+| `scripts/find-a-skill.sh --keyword X` | `runtime/orchestrator.js#selectCapability` — ranks all 86 entrypoints by fit, surfaces anti-cues, and resolves composition |
+| `scripts/run-pm.sh skill <name> "<task>"` | `bin/pdm-run.mjs next` plus `loadSelectedCapability` / the `Skill` tool |
+| `scripts/generate-catalog.py` → `catalog/*.yaml` | `../scripts/build-methodology-registry.mjs` → `registry/ecosystem.json`, which covers all 86 entrypoints with routing metadata and composition, and is rebuilt on every push |
 
-```bash
-./scripts/run-pm.sh skill user-story "Write stories for a new account settings page"
-```
-
-### I need help deciding
-
-```bash
-./scripts/run-pm.sh skill prioritization-advisor "We have 12 requests and one sprint"
-```
-
-### I need end-to-end guidance
-
-```bash
-./scripts/run-pm.sh command discover "Reduce onboarding drop-off for self-serve users"
-```
-
-## 3) Find The Right Skill Fast
-
-```bash
-./scripts/find-a-skill.sh --keyword onboarding
-./scripts/find-a-command.sh --keyword roadmap
-./scripts/find-a-command.sh --list-all
-```
-
-## 4) If You Feel Stuck
-
-- Start with one simple request and one skill file.
-- Use real context (segment, KPI, timeline).
-- Ask the assistant to explain assumptions before drafting.
-- Use `docs/Using PM Skills 101.md` as your baseline guide.
-
-## 5) Full Guides
-
-- Beginner onboarding: `docs/Using PM Skills 101.md`
-- Platform index for PMs: `docs/Platform Guides for PMs.md`
-- Claude Code: `docs/Using PM Skills with Claude Code.md`
-- Claude /slash commands: `docs/Using PM Skills with Slash Commands 101.md`
-- Codex: `docs/Using PM Skills with Codex.md`
-- OpenClaw: `docs/Using PM Skills with OpenClaw.md`
-- Claude Cowork: `docs/Using PM Skills with Claude Cowork.md`
-- Claude Desktop: `docs/Using PM Skills with Claude Desktop.md`
-- ChatGPT Desktop: `docs/Using PM Skills with ChatGPT Desktop.md`
-- n8n: `docs/Using PM Skills with n8n.md`
-- LangFlow: `docs/Using PM Skills with LangFlow.md`
-- Python agents: `docs/Using PM Skills with Python Agents.md`
-- Cursor: `docs/Using PM Skills with Cursor.md`
-- Windsurf: `docs/Using PM Skills with Windsurf.md`
-- Bolt: `docs/Using PM Skills with Bolt.md`
-- Replit Agent: `docs/Using PM Skills with Replit Agent.md`
-- Make.com: `docs/Using PM Skills with Make.com.md`
-- Devin: `docs/Using PM Skills with Devin.md`
-- CrewAI: `docs/Using PM Skills with CrewAI.md`
-- Gemini: `docs/Using PM Skills with Gemini.md`
-- ChatGPT (all options): `docs/Using PM Skills with ChatGPT.md`
-- Claude (all options): `docs/Using PM Skills with Claude.md`
-- Non-technical setup chooser: `docs/PM Skills Rule-of-Thumb Guide.md`
-- Multi-tool operating model: `docs/PM Tooling Operations Charter.md`
+A previous version of this file was the upstream copy, listing 27 files that
+were never imported. Every link in it was dead.
