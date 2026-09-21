@@ -64,7 +64,7 @@
       "related_skills": [
         "skills:problem-framing-canvas"
       ],
-      "size_bytes": 1350,
+      "size_bytes": 1468,
       "routing": {
         "primary_intents": [
           "prd",
