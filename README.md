@@ -16,6 +16,30 @@ HH 保有 Founder 級決策權；PDM 負責產品組合層級的判斷、工作�
 
 這個 repo 本身是 **PDM Core**。產品自己的知識、工作狀態與產品文件應該留在各自的 product repository，而不是全部複製到這裡。
 
+## 哪份文件是給誰看的
+
+每個事實只有一個擁有者。其他檔案連結過去，不複述。
+
+**人（HH）讀：**
+
+| 檔案 | 回答什麼 |
+|---|---|
+| `README.md`（這份） | 這是什麼、解決什麼問題、目前狀態 |
+| [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md) | 怎麼啟動、在哪工作、怎麼確認進了正確模式。**啟動指令只在這裡** |
+
+**Agent 讀：**
+
+| 檔案 | 回答什麼 |
+|---|---|
+| [`CLAUDE.md`](CLAUDE.md) | 只有一件事：去讀 `AGENTS.md`（Claude Code 啟動時自動載入） |
+| [`AGENTS.md`](AGENTS.md) | 跨 provider 的工作契約：自主權邊界、方法論路由、並行隔離、review surface |
+| [`governance/`](governance/) | 逐項規則，依任務需要才讀，不預先全部載入 |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | 架構記錄與範圍邊界（人也可讀，但它是 agent 判斷邊界的依據） |
+
+**目錄層級參考**（在該目錄工作時才需要）：[`methodology/README.md`](methodology/README.md)、[`products/`](products/)、[`organizations/README.md`](organizations/README.md)、各 `provenance/`。
+
+`AGENTS.md` 與 `governance/` 放的是**規則**，不是操作教學。「事後的 `cd` 不會改變 startup context」是 agent 需要知道的約束；「要打哪幾行指令」是 HH 要做的動作，屬於 `GETTING_STARTED.md`。
+
 ## 這個系統解決什麼問題？
 
 最重要的不是「做一個很大的 prompt」，而是把 PDM 的規則與產品工作的 durable state 放在 Git 裡。
@@ -88,25 +112,9 @@ PDM 是 portfolio-level worker，不是一次只管理一個產品。
 
 ## HH 怎麼開始用？
 
-完整的新手教學請看 [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md)。
+啟動步驟、位置驗證、以及各 provider 的差異，全部在 [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md)，這裡不重複。
 
-最重要的一點是：**從 PDM Core repo root 啟動 agent，而不是先在另一個 working directory 裡啟動後再靠單次 Bash `cd`。**
-
-例如 VM 上：
-
-```bash
-cd ~/workspace/ai-product-organization
-claude
-```
-
-Codex CLI 同理：
-
-```bash
-cd ~/workspace/ai-product-organization
-codex
-```
-
-Claude Code 會在 startup 時自動載入 root `CLAUDE.md`，再由它導向 `AGENTS.md`；Codex 原生使用 `AGENTS.md` 作為 repository instructions。
+唯一要先記住的一點：**從 PDM Core repo root 啟動 agent**，而不是在別的目錄啟動後再靠單次 Bash `cd` 補救 —— 事後的 `cd` 不會改變 agent process 的 startup context。
 
 啟動後，HH 可以直接用自然語言交辦工作，不需要每次重新貼完整背景。例如：
 

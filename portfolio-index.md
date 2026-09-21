@@ -4,16 +4,21 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-21T06:50:17.024Z
+Generated: 2026-09-21T09:46:50.978Z
 
-Products: 4 · READY 4 · WAITING_FOR_FOUNDER 0 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
+Products: 4 · READY 3 · WAITING_FOR_FOUNDER 1 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
 
 | Product | Priority | Status | Next action / why not | Last activity |
 |---|---|---|---|---|
 | colon-biopsy-ai-app | 1 | READY | 與 RA 開會確認「Biopsy-Colon_AI-Panel-Copy流程建議」文件（Google Doc，2026-09-04）的適用範圍認定：Colon Biopsy 常用語句非 AI 生成，是否落在 verify 風險控管範圍外。分析本身已完整，唯一缺的是實際與 RA 開會確認，非分析缺口。確認後需同步 KJB。 | 2026-09-21 |
 | ocr-slide-label-reader | 2 | READY | 向 KenHsiao 或 Jsaon Lin 直接跟催 z9088252jn 的 config 定義進度（Harris Chen 本人即為該票 assignee，可直接在 ClickUp 留言或當面確認，不需透過第三方） | 2026-09-17 |
-| prostate-biopsy | 1 | READY | 市場調查與競品分析（HH 2026-09-17 指示：全新產品應該做，但優先序較低，明天處理）—— 已知競品 Paige Prostate（FDA+CE-IVD）、Ibex Galen Prostate（CE-IVDR+FDA RUO）、DeepDx Prostate（Korea MFDS+CE-IVD+FDA De Novo）均走認證路線，本產品選擇 RUO，差異化定位待釐清 | 2026-09-17 |
-| slide-quality-control | 3 | READY | 向 KenHsiao（負責 model RD，threshold 實際調整的執行者）核實 Fold 的 threshold 政策是否已依 Specimen Artifact 的 PPV-first 原則調整，並在此原則下重新評估 71/74 FP 是否仍是問題 — ClickUp 查無相關票/留言記錄此決定。I-Chu Hung 是 KenHsiao 的主管，有一張相關的 in-progress 票 z9088270hc（無描述可判讀）；若 KenHsiao 不清楚決策層面的考量，再上呈 I-Chu Hung 確認 | 2026-09-17 |
+| prostate-biopsy | 1 | WAITING_FOR_FOUNDER | awaiting HH: dec_1789983896997_w3grex | 2026-09-21 |
+| slide-quality-control | 3 | READY | 向 KenHsiao（負責 model RD，threshold 實際調整的執行者）核實 Fold 的 threshold 政策是否已依 Specimen Artifact 的 PPV-first 原則調整，並在此原則下重新評估 71/74 FP 是否仍是問題 — 2026-09-21 已確認 z9088270hc 與此問題無關（見 recently_completed），ClickUp 上不存在任何可跟催此問題的票或留言串；只能透過直接對話（Slack/當面）取得，非 PDM 可透過非同步管道自行解卡 | 2026-09-21 |
 
 ## Next selected work
-**prostate-biopsy** — 市場調查與競品分析（HH 2026-09-17 指示：全新產品應該做，但優先序較低，明天處理）—— 已知競品 Paige Prostate（FDA+CE-IVD）、Ibex Galen Prostate（CE-IVDR+FDA RUO）、DeepDx Prostate（Korea MFDS+CE-IVD+FDA De Novo）均走認證路線，本產品選擇 RUO，差異化定位待釐清
+**colon-biopsy-ai-app** — 與 RA 開會確認「Biopsy-Colon_AI-Panel-Copy流程建議」文件（Google Doc，2026-09-04）的適用範圍認定：Colon Biopsy 常用語句非 AI 生成，是否落在 verify 風險控管範圍外。分析本身已完整，唯一缺的是實際與 RA 開會確認，非分析缺口。確認後需同步 KJB。
+
+## Waiting on HH
+- prostate-biopsy: dec_1789983896997_w3grex
+
+These block only their own product. They never stop the loop.

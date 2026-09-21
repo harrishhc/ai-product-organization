@@ -43,3 +43,35 @@ them later is Methodology Evolution work, not an automatic follow-on.
 of a capability's `source`. This import changed no runtime code; only
 methodology data (`registry.json` + `methodology/capabilities/*.md`) and the
 new vendor snapshot were added.
+
+## What the import did not bring, and why that is not a gap
+
+Recorded 2026-09-21, because the question came up twice: the genesis commit's
+message reads `import methodology genesis baseline`, which sounds like
+*everything*, and `methodology/START_HERE.md` was carried in referencing 27
+upstream files that were never imported — every link in it was dead. That file
+has been removed; this section is the durable answer in its place.
+
+**The methodology came in:** `skills/` (77), `commands/` (6), `prompts/`,
+`workshops/`, `loops/`, `market-intelligence/`, `prompt-generators/`,
+`skeletons/`, and each skill's own `template.md`, `examples/` and `scripts/`.
+
+**The upstream repository's own operating manual did not.** It answers "how do
+I, a person, get these files into my AI tool and use them by hand" — a workflow
+this repository replaced with programmatic resolution. Each omitted piece
+already has a more capable equivalent here:
+
+| Upstream | Equivalent here |
+|---|---|
+| 20 per-tool setup guides (`docs/Using PM Skills with n8n.md`, `…with Cursor.md`, …) | Not applicable. PDM resolves assets through `runtime/registry.js`; nothing is copied into a tool by hand. |
+| 4 onboarding docs (`docs/Using PM Skills 101.md`, `docs/Platform Guides for PMs.md`, …) | `docs/GETTING_STARTED.md` for HH, `AGENTS.md` for a worker |
+| `scripts/find-a-skill.sh --keyword X` (keyword grep over `catalog/`) | `runtime/orchestrator.js#selectCapability` — its direct descendant. Ranks all 86 entrypoints by fit, reports the match basis, surfaces `anti_cues`, and resolves composition. |
+| `scripts/run-pm.sh skill <name> "<task>"` | `bin/pdm-run.mjs next`, then `loadSelectedCapability` or the matching invocable `Skill` |
+| `scripts/generate-catalog.py` → `catalog/*.yaml` | `scripts/build-methodology-registry.mjs` → `registry/ecosystem.json`, covering all 86 entrypoints with routing metadata and declared composition, rebuilt by `.github/workflows/registry-sync.yml` on every push |
+
+None of the three scripts is a gap to fill. `catalog/*.yaml` remains as imported
+upstream material; nothing in the repository reads it, and
+`registry/ecosystem.json` is the authoritative index.
+
+Re-importing any of this later is Methodology Evolution work, and would need a
+concrete failure case that the equivalents above do not cover.
