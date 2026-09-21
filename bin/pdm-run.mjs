@@ -102,13 +102,16 @@ const session = createSession({ budget: Object.keys(budget).length > 0 ? budget 
  *
  * Loads no detail file — metadata only, so it costs no context.
  */
-function printRouting(dominantUncertainty) {
+function printRouting(dominantUncertainty, routingIntents = []) {
   if (!dominantUncertainty) {
     console.log('\n--- Methodology routing ---\nNo dominant uncertainty in this product\'s Work State; record one before routing.');
     return;
   }
-  const candidates = filterCandidates({ dominantUncertainty });
-  console.log('\n--- Methodology routing (shortlist from the dominant uncertainty alone) ---');
+  const candidates = filterCandidates({ dominantUncertainty, intents: routingIntents });
+  const basis = routingIntents.length
+    ? `routing_intents: ${routingIntents.join(', ')}`
+    : 'the dominant uncertainty alone';
+  console.log(`\n--- Methodology routing (shortlist from ${basis}) ---`);
 
   // The shortlist matches terms found in the uncertainty against the
   // methodology's own English self-description. An uncertainty written in
@@ -120,10 +123,16 @@ function printRouting(dominantUncertainty) {
   const noStrongMatch = candidates.length === 0 || candidates[0].fit === 'weak_fit';
 
   if (candidates.length === 0) {
-    console.log('  No entrypoint matched this uncertainty. This is no signal, not a weak one.');
-    console.log('  Route explicitly: selectCapability({ dominantUncertainty, intents: [...], decisionStage })');
-    console.log('  naming the work in the corpus\'s own terms (e.g. "competitive", "prd", "prioritization").');
-    console.log('  An uncertainty not written in English will match little here; supplying intents is the bridge.');
+    console.log('  No entrypoint matched. This is no signal, not a weak one.');
+    if (routingIntents.length === 0) {
+      console.log('  This product\'s Work State declares no `routing_intents`. Add them: they are the');
+      console.log('  corpus\'s own terms for this work (e.g. "competitive", "prd", "prioritization"),');
+      console.log('  recorded durably so routing does not depend on re-deriving them each session.');
+      console.log('  An uncertainty not written in English matches little here; that field is the bridge.');
+    } else {
+      console.log('  Even with routing_intents, nothing matched — the declared intents may not be the');
+      console.log('  corpus\'s terms. Check them against `filterCandidates` before widening the search.');
+    }
     return;
   }
   for (const c of candidates.slice(0, 5)) {
@@ -131,8 +140,11 @@ function printRouting(dominantUncertainty) {
   }
   if (candidates.length > 5) console.log(`  ... ${candidates.length - 5} more`);
   if (noStrongMatch) {
-    console.log('\n  Nothing above weak_fit: a starting point, not a selection. Confirm with explicit');
-    console.log('  intents/decisionStage — an uncertainty not written in English matches little here.');
+    console.log('\n  Nothing above weak_fit: a starting point, not a selection.');
+    if (routingIntents.length === 0) {
+      console.log('  Declaring `routing_intents` in this product\'s Work State would give routing the');
+      console.log('  corpus\'s own terms instead of whatever its prose happens to share with English.');
+    }
   }
 
   const top = candidates[0];
@@ -197,7 +209,7 @@ if (command === 'status') {
     console.log('\n--- Active Brief ---');
     console.log(brief.content);
   }
-  printRouting(selected.dominantUncertainty);
+  printRouting(selected.dominantUncertainty, selected.routingIntents);
   console.log(
     '\nNext: confirm or refine the routing above with intents/decisionStage ' +
       '(runtime/orchestrator.js#selectCapability), do ONE coherent work unit, persist durable state, ' +
