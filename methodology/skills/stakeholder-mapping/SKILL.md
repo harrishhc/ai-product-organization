@@ -164,3 +164,7 @@ For each stakeholder in "manage closely" and each Q1 stakeholder, create an enga
 - [workshop-facilitation](../workshop-facilitation/SKILL.md) — run the mapping exercise as a facilitated team session
 - MITRE Innovation Toolkit — [Stakeholder Map & Matrix](https://itk.mitre.org/toolkit-tools/stakeholder-map-and-matrix/)
 - MITRE Innovation Toolkit — [Stakeholder Power Categories](https://itk.mitre.org/toolkit-tools/stakeholder-power-categories/)
+
+## Template
+
+Use `template.md` in this skill directory as the fill-in structure for the output.

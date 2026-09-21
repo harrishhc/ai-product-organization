@@ -384,3 +384,7 @@ First experiment: Interview eight current customers who have requested forecasti
 ### Provenance
 - Applied through practitioner field material on organic growth
 - Growth Path Matrix axes: Customer/Market Context (Known to Less Known) and Degree of Product Change (Low to High)
+
+## Template
+
+Use `template.md` in this skill directory as the fill-in structure for the output.

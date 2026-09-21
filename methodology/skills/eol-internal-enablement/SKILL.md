@@ -288,3 +288,7 @@ to it.
 ### Provenance
 - Adapted from `prompts/eol-internal-enablement.md` in the
   `https://github.com/deanpeters/product-manager-prompts` repo.
+
+## Template
+
+Use `template.md` in this skill directory as the fill-in structure for the output.

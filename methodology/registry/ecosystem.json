@@ -5303,7 +5303,7 @@
       "related_skills": [
         "skills:director-readiness-advisor"
       ],
-      "size_bytes": 15403
+      "size_bytes": 15500
     },
     {
       "id": "skills:altitude-horizon-framework:examples:sample",
@@ -6839,7 +6839,7 @@
         "skills:eol-stakeholder-sequence",
         "skills:incoming-request-advisor"
       ],
-      "size_bytes": 12536
+      "size_bytes": 12633
     },
     {
       "id": "skills:eol-internal-enablement:examples:sample",
@@ -7410,7 +7410,7 @@
         "skills:director-readiness-advisor",
         "skills:vp-cpo-readiness-advisor"
       ],
-      "size_bytes": 19454
+      "size_bytes": 19551
     },
     {
       "id": "skills:executive-onboarding-playbook:examples:sample",
@@ -7611,7 +7611,7 @@
         "skills:saas-economics-efficiency-metrics",
         "skills:saas-revenue-growth-metrics"
       ],
-      "size_bytes": 16410
+      "size_bytes": 16507
     },
     {
       "id": "skills:finance-metrics-quickref:template",
@@ -8383,7 +8383,7 @@
         "skills:pol-probe",
         "skills:workshop-facilitation"
       ],
-      "size_bytes": 20981
+      "size_bytes": 21078
     },
     {
       "id": "skills:organic-growth-advisor:examples:sample",
@@ -10647,7 +10647,7 @@
       "composes": [],
       "composes_unresolved": [],
       "related_skills": [],
-      "size_bytes": 12150
+      "size_bytes": 12247
     },
     {
       "id": "skills:stakeholder-identification:examples:sample",
@@ -10748,7 +10748,7 @@
       "related_skills": [
         "skills:stakeholder-identification"
       ],
-      "size_bytes": 14096
+      "size_bytes": 14193
     },
     {
       "id": "skills:stakeholder-mapping:examples:sample",
