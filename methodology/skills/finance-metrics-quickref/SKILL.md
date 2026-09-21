@@ -321,3 +321,7 @@ Quick output:
 - Adapted from `research/finance/Finance_QuickRef.md`
 - Formulas from `research/finance/Finance for Product Managers.md`
 - Decision frameworks from `research/finance/Finance_For_PMs.Putting_It_Together_Synthesis.md`
+
+## Template
+
+Use `template.md` in this skill directory as the fill-in structure for the output.

@@ -290,3 +290,7 @@ See `examples/sample.md` for a full 30-60-90 diagnostic walkthrough with concret
 - Michael Watkins, *The First 90 Days* — Foundational reference for structured leadership transitions
 - Patrick Lencioni, *Five Dysfunctions of a Team* — Diagnostic for executive team dysfunction
 - Marty Cagan, *Empowered* — Organizational dynamics and product leadership at scale
+
+## Template
+
+Use `template.md` in this skill directory as the fill-in structure for the output.

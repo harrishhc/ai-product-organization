@@ -8,9 +8,11 @@ version: 0.1.0
 # PRD Readiness Gate
 
 ## Purpose
-Gate the transition to a formal PRD or an Engineering delegation
-(Specification §14 "PRD Gate"; Constitution §10 "Engineering gate"). A PRD is
-an execution contract, not a substitute for unresolved discovery.
+Gate the transition to a formal PRD or an Engineering delegation, per
+`governance/PDM_CONSTITUTION.md` question 8 — "When may it call Engineering?
+When the problem is clear, the solution is sufficiently chosen, and acceptance
+criteria are actionable." A PRD is an execution contract, not a substitute for
+unresolved discovery.
 
 ## When to use
 See `selection_cues` / `anti_cues` in the registry entry. This is typically

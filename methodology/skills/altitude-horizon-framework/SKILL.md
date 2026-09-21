@@ -259,3 +259,7 @@ See `examples/sample.md` for a full worked scenario with a completed Cascading C
 - Marty Cagan, *Empowered* — Organizational dynamics and role clarity in product leadership
 - Julie Zhuo, *The Making of a Manager* — IC-to-manager transition with practical war stories
 - Michael Watkins, *The First 90 Days* — Structured approach to leadership transitions
+
+## Template
+
+Use `template.md` in this skill directory as the fill-in structure for the output.

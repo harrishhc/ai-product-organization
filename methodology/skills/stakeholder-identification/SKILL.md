@@ -162,3 +162,7 @@ The second list produces a PRD with different requirements, a different rollout 
 - [proto-persona](../proto-persona/SKILL.md) — once high-priority user stakeholders are identified, develop hypothesis-driven personas
 - MITRE Innovation Toolkit — [Stakeholder Identification Canvas](https://itk.mitre.org/toolkit-tools/stakeholder-identification-canvas/)
 - MITRE Innovation Toolkit — [Community Map](https://itk.mitre.org/toolkit-tools/community-map/)
+
+## Template
+
+Use `template.md` in this skill directory as the fill-in structure for the output.
