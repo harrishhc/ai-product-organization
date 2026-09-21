@@ -30,6 +30,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { refreshPortfolio, selectNextWork, renderPortfolioIndex, writePortfolioIndex } from '../runtime/portfolio.js';
 import { resolveProductRepository } from '../runtime/productRegistry.js';
+import { filterCandidates, resolveComposition } from '../runtime/registry.js';
 import { createSession } from '../runtime/instrumentation.js';
 
 function parseArgs(argv) {
@@ -82,6 +83,72 @@ function printPortfolio(portfolio) {
 const [command, ...rest] = process.argv.slice(2);
 const { done, budget } = parseArgs(rest);
 const session = createSession({ budget: Object.keys(budget).length > 0 ? budget : undefined });
+/**
+ * A first-pass routing shortlist for the selected work's dominant uncertainty.
+ *
+ * This is the one piece of routing the command can honestly do on its own: the
+ * dominant uncertainty is already durable Work State, so no judgment is
+ * invented by querying with it. `intents` and `decisionStage` are PDM inputs
+ * and are deliberately not guessed, which is why this is labelled a shortlist
+ * and not a selection.
+ *
+ * It exists because the decisive signals were previously only reachable by
+ * remembering to call a function. A blind test on 2026-09-21 was saved by one
+ * anti-cue ("discovery is not yet mature (run prd-readiness-gate first)") that
+ * redirected the whole work unit; had the agent not thought to route, it would
+ * have produced a confident PRD with an invented persona section. Printing the
+ * shortlist and its anti-cues makes that visible at the start of every work
+ * unit instead of depending on recall.
+ *
+ * Loads no detail file — metadata only, so it costs no context.
+ */
+function printRouting(dominantUncertainty) {
+  if (!dominantUncertainty) {
+    console.log('\n--- Methodology routing ---\nNo dominant uncertainty in this product\'s Work State; record one before routing.');
+    return;
+  }
+  const candidates = filterCandidates({ dominantUncertainty });
+  console.log('\n--- Methodology routing (shortlist from the dominant uncertainty alone) ---');
+
+  // The shortlist matches terms found in the uncertainty against the
+  // methodology's own English self-description. An uncertainty written in
+  // another language therefore matches little or nothing — not weak evidence,
+  // no evidence — and printing that as a ranking invites acting on noise. No
+  // language detection is attempted: Latin-script proper nouns (Paige, DeepDx)
+  // make that unreliable, and the instruction below is the same either way.
+  // `intents` is a PDM input and is where the bridge belongs.
+  const noStrongMatch = candidates.length === 0 || candidates[0].fit === 'weak_fit';
+
+  if (candidates.length === 0) {
+    console.log('  No entrypoint matched this uncertainty. This is no signal, not a weak one.');
+    console.log('  Route explicitly: selectCapability({ dominantUncertainty, intents: [...], decisionStage })');
+    console.log('  naming the work in the corpus\'s own terms (e.g. "competitive", "prd", "prioritization").');
+    console.log('  An uncertainty not written in English will match little here; supplying intents is the bridge.');
+    return;
+  }
+  for (const c of candidates.slice(0, 5)) {
+    console.log(`  ${c.fit.padEnd(10)} ${c.matchBasis.padEnd(9)} ${(c.type ?? '').padEnd(11)} ${c.id}`);
+  }
+  if (candidates.length > 5) console.log(`  ... ${candidates.length - 5} more`);
+  if (noStrongMatch) {
+    console.log('\n  Nothing above weak_fit: a starting point, not a selection. Confirm with explicit');
+    console.log('  intents/decisionStage — an uncertainty not written in English matches little here.');
+  }
+
+  const top = candidates[0];
+  if (top.antiCues?.length) {
+    console.log(`\n  Anti-cues on ${top.id} — if one of these holds, it is the wrong entrypoint:`);
+    for (const cue of top.antiCues) console.log(`    - ${cue}`);
+  }
+  const { composes, composedBy } = resolveComposition(top.id);
+  if (composes.length) {
+    console.log(`\n  ${top.id} composes: ${composes.map((m) => m.id).join(', ')}`);
+  }
+  for (const parent of composedBy) {
+    console.log(`\n  ${top.id} is a member of ${parent.id}, alongside: ${parent.siblings.join(', ')}`);
+  }
+}
+
 for (let i = 0; i < done; i += 1) session.recordWorkItem(`prior-${i + 1}`);
 
 if (command === 'status') {
@@ -130,8 +197,9 @@ if (command === 'status') {
     console.log('\n--- Active Brief ---');
     console.log(brief.content);
   }
+  printRouting(selected.dominantUncertainty);
   console.log(
-    '\nNext: select a methodology capability for the dominant uncertainty above ' +
+    '\nNext: confirm or refine the routing above with intents/decisionStage ' +
       '(runtime/orchestrator.js#selectCapability), do ONE coherent work unit, persist durable state, ' +
       `then re-run: node bin/pdm-run.mjs next --done ${done + 1}`
   );

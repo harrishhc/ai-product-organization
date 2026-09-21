@@ -286,3 +286,53 @@ test('anti_cues are surfaced on candidates rather than silently enforced', () =>
   });
   assert.ok(stated.some((c) => c.id === 'capabilities:prioritization-comparison'));
 });
+
+test('a term appearing across most of the corpus carries no signal', () => {
+  // "product" is in nearly every entrypoint's description in a
+  // product-management corpus. Regression: two such words ("product", "deck")
+  // once promoted a SaaS-metrics skill to `fit` for a regulatory
+  // specification question.
+  const candidates = filterCandidates({
+    dominantUncertainty: 'the Product Deck reports an internal AUC far above external deployment concordance',
+  });
+  for (const c of candidates) {
+    assert.ok(!c.situationTerms.includes('product'), '"product" must be filtered as non-discriminating');
+    assert.ok(!c.descriptiveTerms.includes('product'), '"product" must be filtered as non-discriminating');
+  }
+  // Surfacing at weak_fit on one incidental word is honest; being selected is not.
+  const saas = candidates.filter((c) => c.id.startsWith('skills:saas-'));
+  for (const c of saas) {
+    assert.equal(c.fit, 'weak_fit', `${c.id} must not reach fit on corpus-generic words`);
+  }
+  assert.ok(
+    !selectSmallestSufficient(candidates).id.startsWith('skills:saas-'),
+    'a SaaS metrics skill must not be selected for a model-accuracy question',
+  );
+});
+
+test('a repeated word in the uncertainty is one signal, not several', () => {
+  // Regression: situationTerms counted duplicates, so a single word appearing
+  // twice satisfied the two-distinct-terms threshold that promotes to `fit`.
+  const [top] = filterCandidates({
+    dominantUncertainty: 'the sprint is blocked and the sprint cannot close until sprint config is defined',
+  });
+  if (top) {
+    assert.equal(new Set(top.situationTerms).size, top.situationTerms.length, 'situationTerms must be deduplicated');
+    assert.equal(new Set(top.cueTerms).size, top.cueTerms.length, 'cueTerms must be deduplicated');
+  }
+});
+
+test('an uncertainty in another language yields no match rather than a confident wrong one', () => {
+  // The methodology corpus is English. The portfolio's work state is written in
+  // Traditional Chinese, so this is the real case, not a hypothetical: routing
+  // must return nothing rather than rank on incidental Latin-script tokens.
+  const candidates = filterCandidates({
+    dominantUncertainty: '市場調查/競品分析尚未開始 —— 這是全新產品，目標客群缺乏系統性分析。',
+  });
+  assert.equal(candidates.length, 0);
+
+  // Supplying intents in the corpus's terms is the bridge, and it works.
+  const routed = filterCandidates({ intents: ['competitive'], dominantUncertainty: 'competitive positioning is unknown' });
+  assert.ok(routed.length > 0);
+  assert.ok(routed.some((c) => c.id === 'skills:battle-card-builder' || c.id === 'skills:competitive-research-snapshot'));
+});

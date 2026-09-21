@@ -25,7 +25,7 @@ export function loadRegistryMetadata() {
   return cachedRegistry;
 }
 
-export function _resetRegistryCache() { cachedRegistry = null; }
+export function _resetRegistryCache() { cachedRegistry = null; cachedCorpora = null; }
 
 // Function words and generic framing verbs only. A dominant uncertainty is
 // written as prose, so these appear in almost every query and in almost every
@@ -69,8 +69,37 @@ function descriptiveCorpus(cap) {
   ].filter(Boolean).join(' | '));
 }
 
+let cachedCorpora = null;
+function corpora() {
+  if (cachedCorpora) return cachedCorpora;
+  const { capabilities = [] } = loadRegistryMetadata();
+  cachedCorpora = capabilities.map((cap) => ({
+    cap, situation: situationCorpus(cap), descriptive: descriptiveCorpus(cap),
+  }));
+  return cachedCorpora;
+}
+
+// A term carries signal only if it distinguishes some entrypoints from the
+// rest. "product" appears in nearly every entrypoint's description in a
+// product-management corpus, so matching it says nothing — yet it is a long,
+// non-stopword word. Let the corpus decide rather than hand-maintaining a list:
+// a term present in more than this share of entrypoints is treated as having no
+// discriminating power. Two such terms once promoted a SaaS-metrics skill to
+// `fit` for a regulatory specification question, on "product" and "deck".
+const MAX_DOCUMENT_FREQUENCY = 0.3;
+
+function discriminating(terms) {
+  const all = corpora();
+  if (all.length === 0) return terms;
+  const limit = all.length * MAX_DOCUMENT_FREQUENCY;
+  return terms.filter((t) => all.filter((c) => c.situation.includes(t) || c.descriptive.includes(t)).length <= limit);
+}
+
 function significantTerms(value) {
-  return normalizeText(value).split(' ').filter((t) => t.length >= 4 && !STOPWORDS.has(t));
+  // Deduplicated: a word repeated in the uncertainty prose is one signal, not
+  // several. Counting repeats let a single word ("sprint", twice) satisfy the
+  // two-distinct-terms threshold that promotes a candidate to `fit`.
+  return [...new Set(normalizeText(value).split(' ').filter((t) => t.length >= 4 && !STOPWORDS.has(t)))];
 }
 
 /**
@@ -98,11 +127,10 @@ function matchStrength(candidate) {
  * A cue match can surface a candidate but can never outrank a declared one.
  */
 export function filterCandidates({ intents = [], decisionStage, dominantUncertainty } = {}) {
-  const { capabilities = [] } = loadRegistryMetadata();
   const results = [];
-  const uncertaintyTerms = significantTerms(dominantUncertainty);
+  const uncertaintyTerms = discriminating(significantTerms(dominantUncertainty));
 
-  for (const cap of capabilities) {
+  for (const { cap, situation, descriptive } of corpora()) {
     const matchedIntents = (cap.primary_intents ?? []).filter((i) => intents.includes(i));
     const stageMatch = decisionStage ? cap.decision_stage === decisionStage : false;
     const uncertaintyTypes = cap.uncertainty_types ?? null;
@@ -112,8 +140,6 @@ export function filterCandidates({ intents = [], decisionStage, dominantUncertai
 
     if (uncertaintyMatch === 'mismatch') continue;
 
-    const situation = situationCorpus(cap);
-    const descriptive = descriptiveCorpus(cap);
     const cueIntents = intents.filter((i) => {
       const t = normalizeText(i);
       return t && (situation.includes(t) || descriptive.includes(t));
