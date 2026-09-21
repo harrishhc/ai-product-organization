@@ -25,6 +25,18 @@ const REQUIRED_FIELDS = Object.freeze([
 ]);
 
 function assertRequiredFields(workState, verb) {
+  // Optional, and validated only when present: the methodology corpus is in
+  // English while a dominant uncertainty is written in the product's own
+  // language, so substring matching cannot bridge the two. These are the
+  // corpus's own terms for the same work ("competitive", "prd",
+  // "prioritization"), recorded durably so routing does not depend on whoever
+  // is driving re-deriving them each session.
+  if ('routing_intents' in workState) {
+    const v = workState.routing_intents;
+    if (!Array.isArray(v) || v.some((i) => typeof i !== 'string' || i.trim() === '')) {
+      throw new Error(`Cannot ${verb} Work State: routing_intents must be an array of non-empty strings.`);
+    }
+  }
   const missing = REQUIRED_FIELDS.filter((f) => !(f in workState));
   if (missing.length > 0) {
     throw new Error(`Cannot ${verb} Work State: missing required field(s): ${missing.join(', ')}`);

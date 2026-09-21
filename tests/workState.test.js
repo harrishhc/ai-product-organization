@@ -120,3 +120,21 @@ test('writeWorkState refuses a work_state_entry that escapes the repository root
   );
   assert.equal(existsSync(escapedPath), false, 'the escape target must never actually be created');
 });
+
+test('routing_intents is optional but validated when present', () => {
+  const base = loadWorkState('_template');
+  assert.doesNotThrow(() => writeWorkState('_template', { ...base }), 'absent is valid');
+
+  for (const bad of ['competitive', [''], ['ok', 42], [null]]) {
+    assert.throws(
+      () => writeWorkState('_template', { ...base, routing_intents: bad }),
+      /routing_intents must be an array of non-empty strings/,
+      `should reject ${JSON.stringify(bad)}`,
+    );
+  }
+
+  writeWorkState('_template', { ...base, routing_intents: ['competitive', 'market_sizing'] });
+  assert.deepEqual(loadWorkState('_template').routing_intents, ['competitive', 'market_sizing']);
+  writeWorkState('_template', base);
+  assert.ok(!('routing_intents' in loadWorkState('_template')));
+});

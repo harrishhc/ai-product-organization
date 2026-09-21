@@ -81,6 +81,7 @@ function refreshProduct(productId, session) {
     status: deriveWorkStatus({ workState, pendingCheckpoints }),
     currentFocus: workState.current_focus ?? null,
     dominantUncertainty: workState.dominant_uncertainty ?? null,
+    routingIntents: workState.routing_intents ?? [],
     nextAction: workState.next_actions?.[0] ?? null,
     nextActionCount: workState.next_actions?.length ?? 0,
     blocked: workState.blocked ?? [],
