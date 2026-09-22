@@ -142,31 +142,7 @@ PDM 應自己讀取必要的狀態、方法論與產品資料，不要求 HH 每
 
 正常情況下，你不需要自己一個一個檔案打開。PDM 應該遵守 repository 的 bootstrap / bounded-context 規則。
 
-大方向是：
-
-```text
-Claude Code / Codex 啟動
-        ↓
-provider adapter（例如 CLAUDE.md）
-        ↓
-AGENTS.md
-        ↓
-portfolio state
-        ↓
-選定產品
-        ↓
-Active Brief / Work State
-        ↓
-需要時才讀 bounded Product Context / Organization Context
-        ↓
-做一個 coherent work unit
-        ↓
-保存 durable state
-        ↓
-重新評估 portfolio
-```
-
-重點是「只讀需要的東西」。不應每次把所有產品、所有歷史、整套 methodology 都塞進 context。
+完整的延續鏈定義在 [`../governance/COLLABORATION_PROTOCOL.md`](../governance/COLLABORATION_PROTOCOL.md)「Cross-provider handoff」——那是唯一版本，這裡不重複那張圖。你只需要記住重點：**只讀需要的東西**。不應每次把所有產品、所有歷史、整套 methodology 都塞進 context；一個正常啟動的 session 應該只走到「選定產品 → 讀它的 Active Brief/Work State → 需要時才展開 bounded context」就開始做事，不會把整個 repository 攤開。
 
 ## 你怎麼知道它真的進入了正確模式？
 
@@ -199,31 +175,11 @@ git status --short
 
 PDM 不是每做一步就問你一次「要不要繼續」。
 
-正常工作流程是：
+完整的流程規則（Founder Decision Brief 該包含什麼、怎麼呈現、HH 的回覆怎麼被分類）定義在
+[`../governance/COLLABORATION_PROTOCOL.md`](../governance/COLLABORATION_PROTOCOL.md)
+的「Founder checkpoints」與「HH's response」——那是唯一版本，這裡不重複那張流程圖或分類規則。
 
-```text
-HH 給目標
-   ↓
-PDM 自己分析 / 查證 / 執行
-   ↓
-遇到自己有權決定的事情 → 繼續
-   ↓
-遇到真的需要 Founder 決策的事情
-   ↓
-建立 Founder Decision Brief
-   ↓
-把重點直接印在你所在的 terminal / tmux
-   ↓
-同時提供可以從你目前環境打開的遠端連結
-   ↓
-HH 決定
-   ↓
-PDM 保存 decision record
-   ↓
-繼續 portfolio
-```
-
-因此 HH 的主要成本應該是「決策」，不是「幫 PDM 操作 terminal」。
+這裡只留你會實際看到的樣子。HH 的主要成本應該是「決策」，不是「幫 PDM 操作 terminal」。
 
 例如 PDM 說：
 
@@ -262,7 +218,7 @@ Choose A / B, or tell me what assumption you want changed.
 先不要決定，補查 Y。
 ```
 
-這三種都應該能直接進入相應流程，不需要 HH 使用固定 command。
+這三種（決定 / 挑戰 / 要求先別決定）都應該能直接進入相應流程，不需要固定 command——分類規則見上面連結的 governance 文件。
 
 ## Git 與產品 repo 怎麼理解
 

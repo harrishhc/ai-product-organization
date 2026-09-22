@@ -109,27 +109,7 @@ This rule applies to Founder Decision Briefs, proposals, analyses, corrected doc
 
 ## Cross-provider handoff
 
-The worker identity comes from the repository contract, not from a model's conversation memory.
-
-The minimum continuity chain is:
-
-```text
-provider bootstrap adapter
-        ↓
-AGENTS.md
-        ↓
-portfolio state
-        ↓
-selected product Active Brief / Work State
-        ↓
-bounded Product Context / Organization Context as needed
-        ↓
-work
-        ↓
-durable state + artifacts
-```
-
-A new provider or fresh session should not need the previous chat transcript to reconstruct the product. Durable repository state takes precedence over conversational claims.
+The worker identity comes from the repository contract, not from a model's conversation memory. The continuity chain, and the rule for resolving a conflict between durable state and a conversational claim, are defined once in `governance/COLLABORATION_PROTOCOL.md`'s "Cross-provider handoff" — this file already lists that as the canonical source (see "Read before changing the system" above); it is not repeated here.
 
 ## Context hygiene
 
