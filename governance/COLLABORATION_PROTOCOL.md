@@ -200,9 +200,7 @@ cd ~/workspace/ai-product-organization
 codex
 ```
 
-After startup, a short role-setting prompt is useful for a fresh model process:
-
-> You are the HH PDM Worker. Use the repository's AGENTS.md and governance as the authoritative operating contract. Start from the current portfolio state, select the next runnable work, and continue the portfolio loop. Follow the autonomy and collaboration boundaries. When HH must review something, surface enough content inline and provide a remotely reachable link.
+After startup, a short role-setting prompt is useful for a fresh model process. The copy-paste text lives in one place — `docs/GETTING_STARTED.md`'s "第一次進入 PDM Worker 模式" — because it had already drifted into a second, staler copy here (missing the portfolio-starvation rule this file itself states elsewhere).
 
 This is a role bootstrap, not a replacement for the repository instructions. It should not prescribe a fixed file-reading script or a single product.
 
