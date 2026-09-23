@@ -4,7 +4,7 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-23T09:41:15.875Z
+Generated: 2026-09-23T11:12:16.022Z
 
 Products: 4 · READY 2 · WAITING_FOR_FOUNDER 0 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 2
 
@@ -12,7 +12,7 @@ Products: 4 · READY 2 · WAITING_FOR_FOUNDER 0 · BLOCKED 0 · IDLE 0 · UNINIT
 |---|---|---|---|---|
 | colon-biopsy-ai-app | 1 | READY | 與 RA 開會確認「Biopsy-Colon_AI-Panel-Copy流程建議」文件（Google Doc，2026-09-04）的適用範圍認定：Colon Biopsy 常用語句非 AI 生成，是否落在 verify 風險控管範圍外。分析本身已完整，唯一缺的是實際與 RA 開會確認，非分析缺口。確認後需同步 KJB。 | 2026-09-21 |
 | ocr-slide-label-reader | — | UNINITIALIZED | Product "ocr-slide-label-reader" uses repository.type "git_remote" but its local clone does not exist yet at C:\Users\harris.chen\projects\ai-product-organization\.product-clones\ocr-slide-label-reader. Run the deliberate sync step first: runtime/productSync.js#syncGitRemoteProduct (never performed automatically). | — |
-| prostate-biopsy | 1 | READY | 確認 UKE 資料上傳完成狀態（ClickUp Import_P26023_UKE_prostate_2026-09-22，2026-09-23 為上傳最終日期）並取得實際匯入筆數，核對硬碟盤點（T 2856 / TS 189 / N 1018，換算 1015/1018 cores） | 2026-09-23 |
+| prostate-biopsy | 1 | READY | 追蹤 UKE 資料上傳完成狀態（ClickUp Import_P26023_UKE_prostate_2026-09-22，2026-09-23 為上傳最終日期）並取得實際匯入筆數，核對硬碟盤點（T 2856 / TS 189 / N 1018，換算 1015/1018 cores） | 2026-09-23 |
 | slide-quality-control | — | UNINITIALIZED | Product "slide-quality-control" uses repository.type "git_remote" but its local clone does not exist yet at C:\Users\harris.chen\projects\ai-product-organization\.product-clones\slide-quality-control. Run the deliberate sync step first: runtime/productSync.js#syncGitRemoteProduct (never performed automatically). | — |
 
 ## Next selected work
