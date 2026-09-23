@@ -4,16 +4,16 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-21T06:50:17.024Z
+Generated: 2026-09-23T09:41:15.875Z
 
-Products: 4 · READY 4 · WAITING_FOR_FOUNDER 0 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
+Products: 4 · READY 2 · WAITING_FOR_FOUNDER 0 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 2
 
 | Product | Priority | Status | Next action / why not | Last activity |
 |---|---|---|---|---|
 | colon-biopsy-ai-app | 1 | READY | 與 RA 開會確認「Biopsy-Colon_AI-Panel-Copy流程建議」文件（Google Doc，2026-09-04）的適用範圍認定：Colon Biopsy 常用語句非 AI 生成，是否落在 verify 風險控管範圍外。分析本身已完整，唯一缺的是實際與 RA 開會確認，非分析缺口。確認後需同步 KJB。 | 2026-09-21 |
-| ocr-slide-label-reader | 2 | READY | 向 KenHsiao 或 Jsaon Lin 直接跟催 z9088252jn 的 config 定義進度（Harris Chen 本人即為該票 assignee，可直接在 ClickUp 留言或當面確認，不需透過第三方） | 2026-09-17 |
-| prostate-biopsy | 1 | READY | 市場調查與競品分析（HH 2026-09-17 指示：全新產品應該做，但優先序較低，明天處理）—— 已知競品 Paige Prostate（FDA+CE-IVD）、Ibex Galen Prostate（CE-IVDR+FDA RUO）、DeepDx Prostate（Korea MFDS+CE-IVD+FDA De Novo）均走認證路線，本產品選擇 RUO，差異化定位待釐清 | 2026-09-17 |
-| slide-quality-control | 3 | READY | 向 KenHsiao（負責 model RD，threshold 實際調整的執行者）核實 Fold 的 threshold 政策是否已依 Specimen Artifact 的 PPV-first 原則調整，並在此原則下重新評估 71/74 FP 是否仍是問題 — ClickUp 查無相關票/留言記錄此決定。I-Chu Hung 是 KenHsiao 的主管，有一張相關的 in-progress 票 z9088270hc（無描述可判讀）；若 KenHsiao 不清楚決策層面的考量，再上呈 I-Chu Hung 確認 | 2026-09-17 |
+| ocr-slide-label-reader | — | UNINITIALIZED | Product "ocr-slide-label-reader" uses repository.type "git_remote" but its local clone does not exist yet at C:\Users\harris.chen\projects\ai-product-organization\.product-clones\ocr-slide-label-reader. Run the deliberate sync step first: runtime/productSync.js#syncGitRemoteProduct (never performed automatically). | — |
+| prostate-biopsy | 1 | READY | 確認 UKE 資料上傳完成狀態（ClickUp Import_P26023_UKE_prostate_2026-09-22，2026-09-23 為上傳最終日期）並取得實際匯入筆數，核對硬碟盤點（T 2856 / TS 189 / N 1018，換算 1015/1018 cores） | 2026-09-23 |
+| slide-quality-control | — | UNINITIALIZED | Product "slide-quality-control" uses repository.type "git_remote" but its local clone does not exist yet at C:\Users\harris.chen\projects\ai-product-organization\.product-clones\slide-quality-control. Run the deliberate sync step first: runtime/productSync.js#syncGitRemoteProduct (never performed automatically). | — |
 
 ## Next selected work
-**prostate-biopsy** — 市場調查與競品分析（HH 2026-09-17 指示：全新產品應該做，但優先序較低，明天處理）—— 已知競品 Paige Prostate（FDA+CE-IVD）、Ibex Galen Prostate（CE-IVDR+FDA RUO）、DeepDx Prostate（Korea MFDS+CE-IVD+FDA De Novo）均走認證路線，本產品選擇 RUO，差異化定位待釐清
+**colon-biopsy-ai-app** — 與 RA 開會確認「Biopsy-Colon_AI-Panel-Copy流程建議」文件（Google Doc，2026-09-04）的適用範圍認定：Colon Biopsy 常用語句非 AI 生成，是否落在 verify 風險控管範圍外。分析本身已完整，唯一缺的是實際與 RA 開會確認，非分析缺口。確認後需同步 KJB。
