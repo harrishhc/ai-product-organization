@@ -19,18 +19,22 @@ at its pinned commit, not reconstructed from memory):
 
 - Each source's own agent contract and provider adapters (`AGENTS.md`,
   `CLAUDE.md`) — this repository has its own, and importing a second would
-  collide and confuse rather than help.
+  collide and confuse rather than help. Both sources have these.
 - Each source's own CLI tooling for browsing/invoking its content
-  (`scripts/`, e.g. `find-a-skill.sh`, `run-pm.sh`, `generate-catalog.py`) —
-  superseded here by `runtime/orchestrator.js#selectCapability` and
-  `bin/pdm-run.mjs`, which route the full imported corpus rather than a
-  keyword-grep subset.
-- Each source's own per-tool setup guides, onboarding docs, session logs,
-  contribution/submission guides, and release packaging (`docs/`, `app/`,
-  `dist/`, `SESSION-SUMMARY-*.md`, `SUBMISSIONS-GUIDE.md`,
-  `COUPLING-REMEDIATION-PLAN.md`) — these document how to use *that*
-  repository's own release process, not reusable methodology.
-- CI machinery (`.github/`).
+  (`scripts/`) — superseded here by `runtime/orchestrator.js#selectCapability`
+  and `bin/pdm-run.mjs`, which route the full imported corpus rather than a
+  keyword-grep subset. Both sources have a `scripts/` directory for this.
+- Each source's own per-tool setup guides, onboarding docs, and release
+  packaging (`docs/`, `app/`, `dist/` — Skills source only) — these document
+  how to use *that* repository's own release process, not reusable
+  methodology.
+- Each source's own project/development bookkeeping — dated dev logs,
+  planning, and contribution docs. Different per source: the Skills source
+  has `CONTRIBUTING.md`, `MARKETPLACE_STRATEGY.md`, `PLANS.md`,
+  `.claude-plugin/`, and a set of dated log files (`04JUL26.md` etc.); the
+  Prompts source has `SUBMISSIONS-GUIDE.md`, `COUPLING-REMEDIATION-PLAN.md`,
+  and `SESSION-SUMMARY-*.md`.
+- CI machinery (`.github/` — both sources).
 - From the Prompts source only, `resumes-resignations-reactions/` — content
   the upstream README itself labels "therapeutic workplace satire," not
   methodology (confirmed with HH 2026-09-24: leave excluded).
@@ -48,3 +52,12 @@ Prompts source has its own internal `skills/` subdirectory (a small, separate
 collection following the Agent Skills standard), which without namespacing
 would collide with `methodology/skills/` from the first source. See
 `registry/ecosystem.json` for the resulting `prompts:skills:...` ids.
+
+**Open item, found 2026-09-24, not yet decided:** the Skills source also has
+a `research/` directory — long-form essays and a Substack-post archive
+(`.zip`), not structured methodology assets. Unlike `prompting-style-guide.md`
+(imported separately the same day — it was a plain sibling of three
+already-imported guidance docs), this doesn't fit the pattern of anything
+else this baseline indexes, and importing a `.zip` archive has no precedent
+here. Not imported pending a content-curation call, the same kind `resumes-
+resignations-reactions/` above already got.
