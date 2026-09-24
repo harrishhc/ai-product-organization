@@ -9,6 +9,7 @@ import {
   listAssets,
   listCapabilityIds,
   loadRegistryMetadata,
+  renderRoutingShortlist,
 } from '../runtime/registry.js';
 import { createSession } from '../runtime/instrumentation.js';
 
@@ -335,4 +336,39 @@ test('an uncertainty in another language yields no match rather than a confident
   const routed = filterCandidates({ intents: ['competitive'], dominantUncertainty: 'competitive positioning is unknown' });
   assert.ok(routed.length > 0);
   assert.ok(routed.some((c) => c.id === 'skills:battle-card-builder' || c.id === 'skills:competitive-research-snapshot'));
+});
+
+test('renderRoutingShortlist states its own scope so a stale shortlist cannot be read as "no method applies"', () => {
+  // Regression: a blind test on 2026-09-24 gave a fresh agent an ad-hoc
+  // question unrelated to a product's recorded Work State uncertainty. The
+  // shortlist computed from that stale uncertainty came back all weak_fit,
+  // and the agent nearly concluded no methodology applied to the actual
+  // question — which this shortlist was never answering. It caught the
+  // mismatch itself; nothing in the output forced that catch. The scope
+  // caveat below is what now forces it.
+  const lines = renderRoutingShortlist('a question unrelated to any entrypoint keyword whatsoever');
+  const text = lines.join('\n');
+  assert.match(text, /routed against the uncertainty already on file/);
+  assert.match(text, /if the.*question at hand is different.*does not answer it/s);
+  assert.match(text, /State that.*dominantUncertainty and call selectCapability directly/s);
+});
+
+test('renderRoutingShortlist reproduces the blind-test shape: several weak_fit, no strong match', () => {
+  // Synthetic rather than a live product's exact Work State text, which is
+  // someone else's changeable data, not durable test fixture. This string is
+  // chosen because it independently reproduces the shape found in the
+  // blind test: a handful of cue-only weak_fit hits and nothing stronger —
+  // the exact condition the scope caveat above must fire for.
+  const lines = renderRoutingShortlist('the deck reported a figure');
+  const text = lines.join('\n');
+  assert.match(text, /weak_fit/);
+  assert.match(text, /Nothing above weak_fit: a starting point, not a selection/);
+  assert.doesNotMatch(text, /\bstrong_fit\b/);
+  assert.doesNotMatch(text, /^\s+fit\s/m);
+});
+
+test('renderRoutingShortlist surfaces anti-cues and composition for a real match, without loading any detail', () => {
+  const lines = renderRoutingShortlist('discovery notes exist but no engineering-ready requirements document', undefined);
+  const text = lines.join('\n');
+  assert.match(text, /skills:prd-development/);
 });
