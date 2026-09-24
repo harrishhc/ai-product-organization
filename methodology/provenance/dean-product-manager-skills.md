@@ -1,9 +1,23 @@
 # Provenance Record: Dean Peters — Product Manager Skills (initial seed)
 
 Governance-layer record, per Upstream Methodology Governance & Sync
-Specification §5. The raw pinned snapshot and the detailed per-file
-provenance live in [`vendor/dean-product-manager-skills/PROVENANCE.md`](../../vendor/dean-product-manager-skills/PROVENANCE.md);
-this file records the adoption event at the methodology-baseline level.
+Specification §5.
+
+**The `vendor/` snapshot this paragraph once pointed to no longer exists.**
+The 2026-09-10 genesis import (`508039a`) vendored the full upstream tree at
+`vendor/dean-product-manager-skills/`, moved the four initially-adopted skills
+into `methodology/skills/` (a rename, content preserved), then deleted the rest
+of `vendor/` — including `vendor/dean-product-manager-skills/PROVENANCE.md`,
+a per-file provenance table — as a "duplicate genesis vendor snapshot," on the
+premise that `methodology/` was now the canonical HH-owned copy. That premise
+holds for the skill content itself, but the deleted file's actual, non-duplicate
+job was recording *where each file came from*, and nothing replaced it.
+
+The detail is reconstructable, not preserved: the **Upstream commit** pinned
+below is the exact upstream state this baseline was seeded from. Diffing that
+commit against `methodology/` reproduces the same per-file provenance the
+deleted table held. This file records the adoption event at the
+methodology-baseline level.
 
 - **Upstream repository:** https://github.com/deanpeters/Product-Manager-Skills
 - **Upstream commit:** `1b5a524ebb95e9497fa3f25002d8b8ec528d4444` (branch `main`)
