@@ -85,8 +85,8 @@ runtime/         PDM Core 的 executable runtime
   productSync    deliberate product/org git sync / publish
   orchestrator   工作推理與 capability routing
 
-methodology/     HH 擁有的方法論 baseline
-vendor/          外部方法論的一次性 seed / provenance，不是 runtime dependency
+methodology/     HH 擁有的方法論 baseline（genesis import 的原始 vendor/ snapshot
+                 已在匯入當下清掉，細節見 methodology/provenance/）
 products/        Product Registry 與 development fixtures，不保存真實產品內容
 bin/             真正接觸 process / git / network 的 runtime adapters
 
