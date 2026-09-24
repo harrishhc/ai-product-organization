@@ -97,6 +97,12 @@ This rule applies to Founder Decision Briefs, proposals, analyses, corrected doc
 
 The worker identity comes from the repository contract, not from a model's conversation memory. The continuity chain, and the rule for resolving a conflict between durable state and a conversational claim, are defined once in `governance/COLLABORATION_PROTOCOL.md`'s "Cross-provider handoff" — this file already lists that as the canonical source (see "Read before changing the system" above); it is not repeated here.
 
+## Finding one dangling reference means finding all of them
+
+A review scoped to "verify the claims in this diff" repeatedly missed sibling instances of the exact same problem elsewhere in the repository — the same deleted path, the same stale number, the same duplicated rule — because the check never widened past the specific thing in front of it. Concretely, `vendor/dean-product-manager-skills/` was deleted at genesis; a dangling reference to it was found and fixed in `methodology/provenance/dean-product-manager-skills.md`, and a second, independent instance was found in `README.md`'s directory listing only when a *later* review re-checked from scratch rather than trusting the first fix was complete.
+
+When a fix corrects a stale fact, a broken link, or a dangling reference to something renamed or deleted, grep the whole repository for the same target string before calling the fix done — not just the one file the diff touched. `tests/docLinks.test.js` mechanizes this for markdown links on the actively-maintained surface (see its own header comment for what is and is not in scope, and why); it will not catch a stale plain-text claim inside a code block (the `README.md` case above was exactly that kind), so the grep-the-whole-repo habit is still required, not replaced by the test.
+
 ## Context hygiene
 
 A persistent PDM worker session is useful for portfolio continuity, but its conversational context is not durable state and grows over time. One-off investigative work whose intermediate output is not needed again should run in a disposable subagent or equivalent isolated task when the host supports it. Keep only the synthesized result in the persistent worker context.
