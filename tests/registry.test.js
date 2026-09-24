@@ -368,7 +368,19 @@ test('renderRoutingShortlist reproduces the blind-test shape: several weak_fit, 
 });
 
 test('renderRoutingShortlist surfaces anti-cues and composition for a real match, without loading any detail', () => {
+  // Found reviewing this PR: the original assertion here only checked
+  // 'skills:prd-development' appears anywhere in the text, which the
+  // candidate list line alone already satisfies — it would pass even if the
+  // anti-cues and composedBy sections this test is named for were silently
+  // dropped. Asserting each section by its own distinguishing text instead.
   const lines = renderRoutingShortlist('discovery notes exist but no engineering-ready requirements document', undefined);
   const text = lines.join('\n');
-  assert.match(text, /skills:prd-development/);
+  assert.match(text, /Anti-cues on skills:prd-development — if one of these holds, it is the wrong entrypoint:/);
+  assert.match(text, /discovery is not yet mature \(run prd-readiness-gate first\)/);
+  assert.match(text, /skills:prd-development is a member of commands:write-prd, alongside:/);
+  assert.match(text, /skills:problem-statement/);
+  // "Without loading any detail" is a signature-level guarantee, not
+  // something a black-box return value proves: renderRoutingShortlist never
+  // imports loadAsset/loadCapabilityDetail, so there is no code path from it
+  // that could load one — verified by import surface, not by this call.
 });
