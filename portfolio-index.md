@@ -4,16 +4,21 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-23T11:12:16.022Z
+Generated: 2026-09-24T08:09:18.571Z
 
-Products: 4 · READY 2 · WAITING_FOR_FOUNDER 0 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 2
+Products: 4 · READY 3 · WAITING_FOR_FOUNDER 1 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
 
 | Product | Priority | Status | Next action / why not | Last activity |
 |---|---|---|---|---|
 | colon-biopsy-ai-app | 1 | READY | 與 RA 開會確認「Biopsy-Colon_AI-Panel-Copy流程建議」文件（Google Doc，2026-09-04）的適用範圍認定：Colon Biopsy 常用語句非 AI 生成，是否落在 verify 風險控管範圍外。分析本身已完整，唯一缺的是實際與 RA 開會確認，非分析缺口。確認後需同步 KJB。 | 2026-09-21 |
-| ocr-slide-label-reader | — | UNINITIALIZED | Product "ocr-slide-label-reader" uses repository.type "git_remote" but its local clone does not exist yet at C:\Users\harris.chen\projects\ai-product-organization\.product-clones\ocr-slide-label-reader. Run the deliberate sync step first: runtime/productSync.js#syncGitRemoteProduct (never performed automatically). | — |
-| prostate-biopsy | 1 | READY | 追蹤 UKE 資料上傳完成狀態（ClickUp Import_P26023_UKE_prostate_2026-09-22，2026-09-23 為上傳最終日期）並取得實際匯入筆數，核對硬碟盤點（T 2856 / TS 189 / N 1018，換算 1015/1018 cores） | 2026-09-23 |
-| slide-quality-control | — | UNINITIALIZED | Product "slide-quality-control" uses repository.type "git_remote" but its local clone does not exist yet at C:\Users\harris.chen\projects\ai-product-organization\.product-clones\slide-quality-control. Run the deliberate sync step first: runtime/productSync.js#syncGitRemoteProduct (never performed automatically). | — |
+| ocr-slide-label-reader | 2 | READY | 向 KenHsiao 或 Jsaon Lin 直接跟催 z9088252jn 的 config 定義進度（Harris Chen 本人即為該票 assignee，可直接在 ClickUp 留言或當面確認，不需透過第三方） | 2026-09-22 |
+| prostate-biopsy | 1 | WAITING_FOR_FOUNDER | awaiting HH: dec_1789983896997_w3grex | 2026-09-21 |
+| slide-quality-control | 3 | READY | 向 KenHsiao（負責 model RD，threshold 實際調整的執行者）核實 Fold 的 threshold 政策是否已依 Specimen Artifact 的 PPV-first 原則調整，並在此原則下重新評估 71/74 FP 是否仍是問題 — 2026-09-21 已確認 z9088270hc 與此問題無關（見 recently_completed），ClickUp 上不存在任何可跟催此問題的票或留言串；只能透過直接對話（Slack/當面）取得，非 PDM 可透過非同步管道自行解卡 | 2026-09-21 |
 
 ## Next selected work
 **colon-biopsy-ai-app** — 與 RA 開會確認「Biopsy-Colon_AI-Panel-Copy流程建議」文件（Google Doc，2026-09-04）的適用範圍認定：Colon Biopsy 常用語句非 AI 生成，是否落在 verify 風險控管範圍外。分析本身已完整，唯一缺的是實際與 RA 開會確認，非分析缺口。確認後需同步 KJB。
+
+## Waiting on HH
+- prostate-biopsy: dec_1789983896997_w3grex
+
+These block only their own product. They never stop the loop.

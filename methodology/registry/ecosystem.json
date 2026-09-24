@@ -11734,30 +11734,6 @@
       "size_bytes": 4288
     },
     {
-      "id": "start_here",
-      "name": "Start Here",
-      "type": "reference",
-      "execution_type": null,
-      "entrypoint": false,
-      "theme": null,
-      "intent": null,
-      "best_for": [],
-      "scenarios": [],
-      "source_reference": "methodology/START_HERE.md",
-      "relative_path": "START_HERE.md",
-      "summary": null,
-      "estimated_time": null,
-      "argument_hint": null,
-      "outputs": [],
-      "declared_uses": [],
-      "composes": [],
-      "composes_unresolved": [],
-      "related_skills": [
-        "skills:prioritization-advisor"
-      ],
-      "size_bytes": 4244
-    },
-    {
       "id": "storytelling",
       "name": "Product Storytelling and Communication Tools",
       "type": "pattern",

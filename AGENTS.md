@@ -22,23 +22,9 @@ PDM is portfolio-level. It is not a one-shot PRD generator and not a passive ass
 - **Claude Code** automatically loads `CLAUDE.md`; this repository therefore keeps a deliberately tiny root [`CLAUDE.md`](CLAUDE.md) adapter that points Claude Code to this file.
 - Other providers may require their own small adapter. Do not duplicate the PDM contract into provider-specific files.
 
-The human-facing setup guide is [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md). A normal worker session should be started **from the PDM Core repository root**, so the host's project bootstrap mechanism can discover the repository instructions at startup.
+A worker session must be started **from the PDM Core repository root**, so the host's project bootstrap mechanism discovers the repository instructions at startup. The commands for doing that are HH's to run and live in [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md); they are not repeated here.
 
-For example:
-
-```bash
-cd ~/workspace/ai-product-organization
-claude
-```
-
-or:
-
-```bash
-cd ~/workspace/ai-product-organization
-codex
-```
-
-A one-off `cd` inside a later Bash/tool invocation does not retroactively change the agent process's startup context. When the host uses a fresh shell for each tool call, the process cwd may appear to reset. Use the host/process startup configuration to establish the repository root; do not treat per-command `cd` as the PDM bootstrap mechanism.
+What matters to a worker is the constraint: a one-off `cd` inside a later Bash/tool invocation does not retroactively change the agent process's startup context. When the host uses a fresh shell for each tool call, the process cwd may appear to reset. Use the host/process startup configuration to establish the repository root; do not treat per-command `cd` as the PDM bootstrap mechanism.
 
 ## Read before changing the system
 

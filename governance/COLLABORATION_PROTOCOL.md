@@ -186,19 +186,7 @@ This is distinct from `DELEGATION_LOGIC.md`, which routes product-domain uncerta
 
 The repository's provider adapter and `AGENTS.md` establish the operating contract. The human should normally start the host from the PDM Core repo root rather than repeatedly re-typing a kickoff prompt.
 
-Recommended shell startup:
-
-```bash
-cd ~/workspace/ai-product-organization
-claude
-```
-
-or:
-
-```bash
-cd ~/workspace/ai-product-organization
-codex
-```
+The shell commands for starting a session belong to HH and live in [`../docs/GETTING_STARTED.md`](../docs/GETTING_STARTED.md); they are not repeated here.
 
 After startup, a short role-setting prompt is useful for a fresh model process. The copy-paste text lives in one place — `docs/GETTING_STARTED.md`'s "第一次進入 PDM Worker 模式" — because it had already drifted into a second, staler copy here (missing the portfolio-starvation rule this file itself states elsewhere).
 
