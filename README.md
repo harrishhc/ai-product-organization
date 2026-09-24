@@ -126,33 +126,11 @@ PDM 應自己讀取必要的 portfolio / product state，選擇 work unit，完�
 
 ## HH 與 PDM 怎麼協作？
 
-PDM 的目標是消耗 **Founder decision bandwidth**，而不是 Founder execution bandwidth。
+PDM 的目標是消耗 **Founder decision bandwidth**，而不是 Founder execution bandwidth——所以 PDM 不應每做一小步就問：「要不要繼續？」，某產品進入 `WAITING_FOR_FOUNDER` 時也不停整個 portfolio。
 
-一般情況下：
-
-```text
-HH 給目標
-   ↓
-PDM 分析 / 查證 / 執行
-   ↓
-可自行決定的事情 → 直接做
-   ↓
-真正需要 Founder 決策
-   ↓
-Founder Decision Brief
-   ↓
-terminal / tmux 內直接呈現重點 + remotely reachable link
-   ↓
-HH 決定
-   ↓
-PDM 保存 decision record
-   ↓
-回到 portfolio loop
-```
-
-所以 PDM 不應每做一小步就問：「要不要繼續？」
-
-當某產品進入 `WAITING_FOR_FOUNDER`，PDM 也不應停止整個 portfolio，而是繼續處理其他 runnable products。
+完整的 checkpoint 流程（Founder Decision Brief 該包含什麼、怎麼呈現、HH 的回覆怎麼被分類）是 AI 執行準則，定義在
+[`governance/COLLABORATION_PROTOCOL.md`](governance/COLLABORATION_PROTOCOL.md)——那是唯一版本。人讀的操作說明與具體範例在
+[`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md)。
 
 ## Git 的角色
 
