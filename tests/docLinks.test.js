@@ -22,9 +22,10 @@ const REPO_ROOT = path.join(__dirname, '..');
  * forgets to grep the whole repo.
  *
  * Scope is deliberately narrow. Only the actively-maintained surface is
- * checked: root docs, governance/, docs/, and methodology's own
- * entrypoint corpus (capabilities/, commands/, provenance/, skills/*\/SKILL.md,
- * and each directory's own README.md). The bulk vendored reference trees
+ * checked: root docs, docs/, governance/, agents/, products/,
+ * organizations/, and methodology's own entrypoint corpus (capabilities/,
+ * commands/, provenance/, skills/*\/SKILL.md, and each directory's own
+ * README.md). The bulk vendored reference trees
  * under methodology/ (prompts/, storytelling/, skeletons/, vibes/,
  * workshops/, market-intelligence/, prompt-generators/) are excluded: a
  * scan at authoring time found roughly 90 pre-existing broken links there,
@@ -40,6 +41,9 @@ const SCOPE_DIRS = [
   '.', // root: README.md, AGENTS.md, CLAUDE.md — not recursed, see walk()
   'docs',
   'governance',
+  'agents', // recursed; each functional agent's own README.md
+  'products', // recursed; root README.md, _template/README.md, and any future fixture docs
+  'organizations', // recursed; root README.md and each organization's own README.md
   'methodology', // not recursed either — see walk()
   'methodology/capabilities',
   'methodology/commands',
@@ -68,6 +72,9 @@ function scopedMarkdownFiles() {
   walk(REPO_ROOT, { recurse: false }, files);
   walk(path.join(REPO_ROOT, 'docs'), { recurse: true }, files);
   walk(path.join(REPO_ROOT, 'governance'), { recurse: true }, files);
+  walk(path.join(REPO_ROOT, 'agents'), { recurse: true }, files);
+  walk(path.join(REPO_ROOT, 'products'), { recurse: true }, files);
+  walk(path.join(REPO_ROOT, 'organizations'), { recurse: true }, files);
   // methodology/ itself: only its own README.md and START_HERE-equivalent,
   // not the whole tree (that would pull in the excluded vendored trees).
   walk(path.join(REPO_ROOT, 'methodology'), { recurse: false }, files);
