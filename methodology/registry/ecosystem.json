@@ -3347,6 +3347,28 @@
       "size_bytes": 7062
     },
     {
+      "id": "prompts:prompting-style-guide",
+      "name": "Prompting Style Guide: The Dean Peters Method",
+      "type": "prompt",
+      "execution_type": null,
+      "entrypoint": false,
+      "theme": null,
+      "intent": null,
+      "best_for": [],
+      "scenarios": [],
+      "source_reference": "methodology/prompts/prompting-style-guide.md",
+      "relative_path": "prompts/prompting-style-guide.md",
+      "summary": null,
+      "estimated_time": null,
+      "argument_hint": null,
+      "outputs": [],
+      "declared_uses": [],
+      "composes": [],
+      "composes_unresolved": [],
+      "related_skills": [],
+      "size_bytes": 14942
+    },
+    {
       "id": "prompts:prompts",
       "name": "Strategic Product Management Frameworks",
       "type": "prompt",

@@ -11,7 +11,53 @@ These snapshots are the initial seed only. HH's repository is the runtime
 source of truth after import. External repositories are not runtime
 dependencies and are not consulted during ordinary product work.
 
-The import intentionally excludes upstream repository/application tooling
-such as , , , release packaging, and CI machinery.
-The prompt ecosystem is namespaced under  to preserve
-both source ecosystems without overwriting files with the same names.
+**What "exclude repository/application tooling" actually meant, verified
+2026-09-24 against both pinned upstream commits** (this sentence previously
+had unfilled template blanks; rather than guess the original wording, the
+exclusion is stated here from a direct diff against each upstream repository
+at its pinned commit, not reconstructed from memory):
+
+- Each source's own agent contract and provider adapters (`AGENTS.md`,
+  `CLAUDE.md`) — this repository has its own, and importing a second would
+  collide and confuse rather than help. Both sources have these.
+- Each source's own CLI tooling for browsing/invoking its content
+  (`scripts/`) — superseded here by `runtime/orchestrator.js#selectCapability`
+  and `bin/pdm-run.mjs`, which route the full imported corpus rather than a
+  keyword-grep subset. Both sources have a `scripts/` directory for this.
+- Each source's own per-tool setup guides, onboarding docs, and release
+  packaging (`docs/`, `app/`, `dist/` — Skills source only) — these document
+  how to use *that* repository's own release process, not reusable
+  methodology.
+- Each source's own project/development bookkeeping — dated dev logs,
+  planning, and contribution docs. Different per source: the Skills source
+  has `CONTRIBUTING.md`, `MARKETPLACE_STRATEGY.md`, `PLANS.md`,
+  `.claude-plugin/`, and a set of dated log files (`04JUL26.md` etc.); the
+  Prompts source has `SUBMISSIONS-GUIDE.md`, `COUPLING-REMEDIATION-PLAN.md`,
+  and `SESSION-SUMMARY-*.md`.
+- CI machinery (`.github/` — both sources).
+- From the Prompts source only, `resumes-resignations-reactions/` — content
+  the upstream README itself labels "therapeutic workplace satire," not
+  methodology (confirmed with HH 2026-09-24: leave excluded).
+
+Every directory that survived this filter was imported byte-complete, not
+partially — verified by diffing `prompt-generators/` and `storytelling/`
+against the pinned Prompts commit, file for file. This was a content-type
+exclusion, not a size or token constraint: no directory was truncated, and
+some multi-file directories (24 files under `market-intelligence/`, 39 under
+`prompts/`) came in whole.
+
+The prompt ecosystem is namespaced under `methodology/prompts/` to preserve
+both source ecosystems without overwriting files with the same names — the
+Prompts source has its own internal `skills/` subdirectory (a small, separate
+collection following the Agent Skills standard), which without namespacing
+would collide with `methodology/skills/` from the first source. See
+`registry/ecosystem.json` for the resulting `prompts:skills:...` ids.
+
+**Open item, found 2026-09-24, not yet decided:** the Skills source also has
+a `research/` directory — long-form essays and a Substack-post archive
+(`.zip`), not structured methodology assets. Unlike `prompting-style-guide.md`
+(imported separately the same day — it was a plain sibling of three
+already-imported guidance docs), this doesn't fit the pattern of anything
+else this baseline indexes, and importing a `.zip` archive has no precedent
+here. Not imported pending a content-curation call, the same kind `resumes-
+resignations-reactions/` above already got.
