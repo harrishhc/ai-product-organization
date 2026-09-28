@@ -377,8 +377,11 @@ test('renderRoutingShortlist surfaces anti-cues and composition for a real match
   const text = lines.join('\n');
   assert.match(text, /Anti-cues on skills:prd-development — if one of these holds, it is the wrong entrypoint:/);
   assert.match(text, /discovery is not yet mature \(run prd-readiness-gate first\)/);
-  assert.match(text, /skills:prd-development is a member of commands:write-prd, alongside:/);
-  assert.match(text, /skills:problem-statement/);
+  assert.match(
+    text,
+    /skills:prd-development is a member of commands:write-prd, alongside: skills:problem-statement, skills:proto-persona, skills:user-story, skills:user-story-splitting/,
+    'assert the whole composedBy line: a bare substring match could be satisfied by the candidate list instead',
+  );
   // "Without loading any detail" is a signature-level guarantee, not
   // something a black-box return value proves: renderRoutingShortlist never
   // imports loadAsset/loadCapabilityDetail, so there is no code path from it

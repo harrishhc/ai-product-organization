@@ -277,18 +277,6 @@ export function loadCapabilityDetail(id) {
 }
 
 /**
- * Resolves a selected entrypoint's declared composition (`uses:` in the
- * methodology source) into the ordered entrypoints it is built from.
- *
- * Metadata only — this deliberately loads no detail file, so resolving a
- * composition costs nothing in context. PDM decides which members the current
- * work unit actually needs and loads only those via loadCapabilityDetail().
- *
- * `composes` is the declared contract. It is never inferred from an asset's
- * `related_skills`, which is a heuristic cross-reference list and would pull in
- * a skill's "References" section as if it were a dependency.
- */
-/**
  * Renders a first-pass routing shortlist for a dominant uncertainty, as lines
  * of text — pure and I/O-free, so `bin/pdm-run.mjs` (which cannot be safely
  * imported by tests: it runs its CLI dispatch unconditionally at module load)
@@ -318,6 +306,13 @@ export function loadCapabilityDetail(id) {
  * shortlist was never answering. It caught the mismatch itself; nothing
  * forced that catch. Stated explicitly now so the next reader does not have
  * to rediscover it by nearly making the same mistake.
+ *
+ * No language detection is attempted when deciding what to say about a weak
+ * result: Latin-script proper nouns (Paige, DeepDx) inside an otherwise
+ * non-English uncertainty make any such check unreliable, and the instruction
+ * is the same either way — supply `intents`, which is where the bridge
+ * belongs. This rationale was dropped when the function moved here from
+ * bin/pdm-run.mjs in #33 while the behaviour and its output line both stayed.
  *
  * Loads no detail file — metadata only, so it costs no context.
  *
@@ -388,6 +383,18 @@ export function renderRoutingShortlist(dominantUncertainty, routingIntents = [])
   return lines;
 }
 
+/**
+ * Resolves a selected entrypoint's declared composition (`uses:` in the
+ * methodology source) into the ordered entrypoints it is built from.
+ *
+ * Metadata only — this deliberately loads no detail file, so resolving a
+ * composition costs nothing in context. PDM decides which members the current
+ * work unit actually needs and loads only those via loadCapabilityDetail().
+ *
+ * `composes` is the declared contract. It is never inferred from an asset's
+ * `related_skills`, which is a heuristic cross-reference list and would pull in
+ * a skill's "References" section as if it were a dependency.
+ */
 export function resolveComposition(id) {
   const { capabilities = [] } = loadRegistryMetadata();
   const entry = findCapability(id);

@@ -43,7 +43,7 @@ Do not assume that because a rule is documented it is fully enforced by runtime 
 ## Runtime map
 
 - `runtime/*.js` — plain Node.js runtime with no external npm dependency.
-- `runtime/registry.js` — methodology entrypoint routing, declared-composition resolution, and path-safe loading. Only entrypoints (a skill's `SKILL.md`, a `capabilities/` asset, a `commands/` workflow) are routable; templates and worked examples stay indexed but unselectable.
+- `runtime/registry.js` — methodology entrypoint routing, declared-composition resolution, path-safe loading, and the operator-facing routing shortlist text `bin/pdm-run.mjs` prints (`renderRoutingShortlist`, moved here in #33 because that CLI runs its dispatch at module load and so cannot be imported by a test). Only entrypoints (a skill's `SKILL.md`, a `capabilities/` asset, a `commands/` workflow) are routable; templates and worked examples stay indexed but unselectable.
 - `runtime/context.js` / `runtime/workState.js` — bounded Product Context and Work State / Active Brief operations.
 - `runtime/decisionRecord.js` — durable pending/resolved Founder decisions in the selected product.
 - `runtime/productRegistry.js` / `products/registry.json` — product and organization repository pointers plus portfolio policy (`priority`, `status`).
