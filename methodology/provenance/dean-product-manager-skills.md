@@ -66,9 +66,27 @@ message reads `import methodology genesis baseline`, which sounds like
 upstream files that were never imported — every link in it was dead. That file
 has been removed; this section is the durable answer in its place.
 
-**The methodology came in:** `skills/` (77), `commands/` (6), `prompts/`,
-`workshops/`, `loops/`, `market-intelligence/`, `prompt-generators/`,
-`skeletons/`, and each skill's own `template.md`, `examples/` and `scripts/`.
+**The methodology came in:** from the Skills source, `skills/` (77),
+`commands/` (6), `catalog/`, and each skill's own `template.md`, `examples/`
+and `scripts/`. From the Prompts source, everything under `prompts/` — which
+namespaces that whole ecosystem, including its own `workshops/`, `loops/`,
+`market-intelligence/`, `prompt-generators/`, `skeletons/`, `storytelling/`,
+`vibes/`, `flows/`, `catalog/` and `skills/` subdirectories.
+
+**Those Prompts-source directories live only under `prompts/`.** Copies of
+eight of them also sat at `methodology/`'s top level until 2026-09-29, when
+93 byte-identical duplicate files were removed. Root cause, recorded here so
+it cannot be reintroduced by the same route: the genesis importer first wrote
+the Prompts ecosystem's top level straight into `methodology/`, suffixing
+files with `.prompts` to dodge collisions with the Skills source. A later
+sub-commit of the same squashed commit (`508039a`), `fix: isolate prompt
+ecosystem from skill sources`, changed strategy to namespace the whole
+ecosystem under `prompts/`. The strategy fix was correct, but the importer
+only ever appended — it never cleaned up its previous output, and
+`feat: import methodology genesis baseline` ran four times across that
+commit. Every file operation in it is an `A`; there is not one rename or
+delete. So the first strategy's output simply stayed. The importer was
+retired in the same commit, so its logic can no longer be inspected.
 
 **The upstream repository's own operating manual did not.** It answers "how do
 I, a person, get these files into my AI tool and use them by hand" — a workflow
