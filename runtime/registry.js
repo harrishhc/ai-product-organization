@@ -288,6 +288,106 @@ export function loadCapabilityDetail(id) {
  * `related_skills`, which is a heuristic cross-reference list and would pull in
  * a skill's "References" section as if it were a dependency.
  */
+/**
+ * Renders a first-pass routing shortlist for a dominant uncertainty, as lines
+ * of text — pure and I/O-free, so `bin/pdm-run.mjs` (which cannot be safely
+ * imported by tests: it runs its CLI dispatch unconditionally at module load)
+ * can print it and tests can assert on it directly.
+ *
+ * This is the one piece of routing a caller can honestly do without PDM
+ * judgment: the dominant uncertainty is already durable Work State, so no
+ * judgment is invented by querying with it. `intents`/`decisionStage` are PDM
+ * inputs and are deliberately not guessed, which is why this is a shortlist,
+ * not a selection.
+ *
+ * It exists because the decisive signals were previously only reachable by
+ * remembering to call a function. A blind test on 2026-09-21 was saved by one
+ * anti-cue ("discovery is not yet mature (run prd-readiness-gate first)") that
+ * redirected the whole work unit; had the agent not thought to route, it would
+ * have produced a confident PRD with an invented persona section. Printing the
+ * shortlist and its anti-cues makes that visible at the start of every work
+ * unit instead of depending on recall.
+ *
+ * The scope caveat below exists because a second blind test on 2026-09-24
+ * found the shortlist can itself mislead: it is routed against the
+ * uncertainty already recorded in Work State — the product's *tracked*
+ * problem — not necessarily whatever HH is asking about in the current
+ * conversation. Handed an unrelated ad-hoc question, an agent reading an
+ * all-weak_fit shortlist computed from that stale, recorded uncertainty
+ * nearly concluded "no method applies" to the actual question, which the
+ * shortlist was never answering. It caught the mismatch itself; nothing
+ * forced that catch. Stated explicitly now so the next reader does not have
+ * to rediscover it by nearly making the same mistake.
+ *
+ * Loads no detail file — metadata only, so it costs no context.
+ *
+ * @param {string} dominantUncertainty
+ * @param {string[]} [routingIntents]
+ * @returns {string[]} lines of text; join('\n') to print
+ */
+export function renderRoutingShortlist(dominantUncertainty, routingIntents = []) {
+  if (!dominantUncertainty) {
+    return ['', '--- Methodology routing ---', "No dominant uncertainty in this product's Work State; record one before routing."];
+  }
+  const candidates = filterCandidates({ dominantUncertainty, intents: routingIntents });
+  const basis = routingIntents.length
+    ? `routing_intents: ${routingIntents.join(', ')}`
+    : 'the dominant uncertainty alone';
+  const lines = ['', `--- Methodology routing (shortlist from ${basis}) ---`];
+  lines.push(
+    '  (routed against the uncertainty already on file for this product — if the',
+    '  question at hand is different, this shortlist does not answer it. State that',
+    "  question's own dominantUncertainty and call selectCapability directly.)",
+  );
+
+  const noStrongMatch = candidates.length === 0 || candidates[0].fit === 'weak_fit';
+
+  if (candidates.length === 0) {
+    lines.push('  No entrypoint matched. This is no signal, not a weak one.');
+    if (routingIntents.length === 0) {
+      lines.push(
+        "  This product's Work State declares no `routing_intents`. Add them: they are the",
+        "  corpus's own terms for this work (e.g. \"competitive\", \"prd\", \"prioritization\"),",
+        '  recorded durably so routing does not depend on re-deriving them each session.',
+        '  An uncertainty not written in English matches little here; that field is the bridge.',
+      );
+    } else {
+      lines.push(
+        '  Even with routing_intents, nothing matched — the declared intents may not be the',
+        "  corpus's terms. Check them against `filterCandidates` before widening the search.",
+      );
+    }
+    return lines;
+  }
+  for (const c of candidates.slice(0, 5)) {
+    lines.push(`  ${c.fit.padEnd(10)} ${c.matchBasis.padEnd(9)} ${(c.type ?? '').padEnd(11)} ${c.id}`);
+  }
+  if (candidates.length > 5) lines.push(`  ... ${candidates.length - 5} more`);
+  if (noStrongMatch) {
+    lines.push('', '  Nothing above weak_fit: a starting point, not a selection.');
+    if (routingIntents.length === 0) {
+      lines.push(
+        "  Declaring `routing_intents` in this product's Work State would give routing the",
+        "  corpus's own terms instead of whatever its prose happens to share with English.",
+      );
+    }
+  }
+
+  const top = candidates[0];
+  if (top.antiCues?.length) {
+    lines.push('', `  Anti-cues on ${top.id} — if one of these holds, it is the wrong entrypoint:`);
+    for (const cue of top.antiCues) lines.push(`    - ${cue}`);
+  }
+  const { composes, composedBy } = resolveComposition(top.id);
+  if (composes.length) {
+    lines.push('', `  ${top.id} composes: ${composes.map((m) => m.id).join(', ')}`);
+  }
+  for (const parent of composedBy) {
+    lines.push('', `  ${top.id} is a member of ${parent.id}, alongside: ${parent.siblings.join(', ')}`);
+  }
+  return lines;
+}
+
 export function resolveComposition(id) {
   const { capabilities = [] } = loadRegistryMetadata();
   const entry = findCapability(id);
