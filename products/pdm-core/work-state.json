@@ -1,0 +1,37 @@
+{
+  "current_focus": "讓能力來源的差別在使用時可見：repo 方法論與帳號層級 skills 並存，而沒有任何東西在使用時標示兩者的差別。",
+  "dominant_uncertainty": "同一類錯誤（把帳號層級能力當成 repo 能力引用）已重複發生，而兩個字串比對取向的預防機制都被證偽。還不知道結構解是什麼。",
+  "in_progress": [],
+  "next_actions": [
+    "決定能力來源歧義的結構解（候選：repo 提供一個可重新產生對照表的指令，而非寫死清單或依賴模型記憶）",
+    "決定互動模式 2（Checkpointed Co-Construction）是否實作成 skill",
+    "定位那個未定位的低頻間歇測試失敗"
+  ],
+  "blocked": [],
+  "recently_completed": [
+    "PR #30 — 讓每個入口事實只有一個 owner，刪除重複的 START_HERE",
+    "PR #33 — 讓 routing shortlist 宣告自身範圍並移入 runtime/ 以便測試",
+    "PR #34 — 新增 repo 範圍的死連結檢查，修掉它找到的 5 個既有斷鏈",
+    "PR #35 — 匯入唯一真正缺漏的同層檔案，修正 GENESIS.md 未填的模板空白",
+    "PR #36 — 移除 genesis 匯入 namespacing 修復留下的 93 個重複檔案",
+    "PR #37 — 重新接上 #33 弄成孤兒的 JSDoc，還原它刪掉的理由說明"
+  ],
+  "open_questions": [
+    "PDM worker 在真實任務中實際查詢 repo 方法論的頻率，目前沒有可觀測的量測方式。",
+    "Runtime Governor 對對話長度結構性盲目，注意力稀釋無法被現有機制偵測。",
+    "methodology/catalog/ 是否退役；上游 research/ 是否匯入。"
+  ],
+  "routing_intents": [
+    "PDM Core 自身的方法論治理",
+    "capability routing 與 registry 正確性",
+    "repo 契約與 provider 可攜性",
+    "methodology governance",
+    "capability routing correctness",
+    "repository contract and cross-provider portability"
+  ],
+  "last_session": {
+    "date": "2026-09-29",
+    "summary": "把 routing 層從 7 個 entrypoint 修到 86 個；收斂入口文件的重複；清除 genesis 匯入的 93 個重複檔案；合併 #34/#35/#36/#37。註冊 PDM Core 本身為受管產品，使這些發現成為 durable state 而非對話內容。",
+    "decision_refs": []
+  }
+}

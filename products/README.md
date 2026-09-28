@@ -15,25 +15,48 @@ Each real product should have its own repository. This directory holds only:
   staging areas**, not the intended long-term home of real Product Context.
   Once a product has its own repository, its Product Context and Work State
   must move there and the registry entry should become `git_remote`.
+- `pdm-core/` is the one permanent exception to that rule — see below.
 
 ## Current real products
 
-The active portfolio currently contains four real products:
+The active portfolio contains four customer-facing products plus PDM Core
+itself:
 
 - `colon-biopsy-ai-app` — already migrated to its own repository and registered
   as `git_remote`.
 - `ocr-slide-label-reader` — currently staged locally; migrate to its own repo.
 - `prostate-biopsy` — currently staged locally; migrate to its own repo.
 - `slide-quality-control` — currently staged locally; migrate to its own repo.
+- `pdm-core` — PDM Core managed as a product. Its repository **is** this
+  repository (`local_path` at `.`), so unlike the four above it is not staged
+  pending migration and must never be moved out: there is nowhere to move it
+  to. `priority: 4` is deliberate — below every real product, so portfolio
+  selection can never pick PDM Core over customer-facing work.
 
 The staging directories are not a second source of truth after migration. They
 exist only so the portfolio can be bootstrapped before a product-owned
 repository is available.
 
-PDM Core must contain no product-specific assumptions — see
-[`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md) §6. When PDM works on a
-product, the effective working context is: PDM Core + the selected Product
-Context, resolved on demand via:
+### Why registering PDM Core does not violate §6
+
+[`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md) §6 requires that PDM Core
+contain no product-specific assumptions. `pdm-core/` satisfies it the same way
+every other product does: its context and Work State are product content under
+`products/`, and nothing in `methodology/` or `runtime/` reads them or is
+allowed to. The registry treats it as one product among five.
+
+The genuine risk is §6's other half — *"the existence of one product must not
+cause its conclusions to become universal PDM rules."* That failure mode is
+more tempting for PDM Core than for any other product, because this product's
+context file and the methodology it is about live in the same repository, so
+promoting a finding takes one commit instead of a deliberate decision. It is
+still a promotion, and it still needs the same bar: a finding recorded in
+`products/pdm-core/context.json` is that product's observation, not a rule.
+Turning it into a rule means changing `AGENTS.md`, `governance/`, or
+`docs/ARCHITECTURE.md` on its own merits, argued as a contract change.
+
+When PDM works on a product, the effective working context is: PDM Core + the
+selected Product Context, resolved on demand via:
 
 ```
 PDM -> Product Registry -> identify selected product -> resolve product

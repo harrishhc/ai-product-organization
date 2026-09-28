@@ -1,0 +1,146 @@
+{
+  "product_id": "pdm-core",
+  "context_version": "0.1.0",
+  "strategy": {
+    "vision": {
+      "classification": "EVIDENCE",
+      "statement": "PDM Core 是 PDM 的工作路徑本身：一組 provider-neutral 的 repo 契約、方法論資產與 runtime，讓 AI 產品經理能在多產品組合上以可稽核、可交接的方式工作。它的使用者不是病理科客戶，而是 PDM worker（任何 provider）與 Founder（HH）。",
+      "source_refs": ["AGENTS.md", "commit 508039a (genesis)"]
+    },
+    "known_goals": [
+      {
+        "classification": "EVIDENCE",
+        "statement": "每個方法論 entrypoint 都必須能被 metadata-first routing 選到。2026-09 的修復把可路由 entrypoint 從 7 個提升到 86 個（skills/*/SKILL.md、capabilities/*.md、commands/*.md），並修掉讓全部 77 個 intent 值都變成 \">-\" 的 block-scalar frontmatter bug。",
+        "source_refs": ["PR #33", "PR #37", "runtime/registry.js", "scripts/build-methodology-registry.mjs"]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "每個入口事實只能有一個 owner。重複的說明文件會各自漂移，最後互相矛盾；因此 START_HERE 被刪除、README / AGENTS.md / docs/GETTING_STARTED.md 的職責被明確切分為「人讀」與「AI 讀」。",
+        "source_refs": ["PR #30"]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "Durable state 必須存在 repo 裡，不能依賴對話記憶或模型側記憶。Product Context / Work State / Active Brief / decision records 都是檔案，因此換 session、換 provider 後仍然成立。",
+        "source_refs": ["AGENTS.md", "runtime/context.js", "runtime/workState.js"]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "找到一個懸空引用，就要把同類的全部找出來。這條規則本身是從三個 .md.prompts 檔案追出 93 個重複檔案的過程中寫下來的。",
+        "source_refs": ["AGENTS.md", "PR #36"]
+      }
+    ],
+    "non_goals": [
+      {
+        "classification": "EVIDENCE",
+        "statement": "不手寫 intent taxonomy。Dean Peters 的原始設計沒有 intent 分類法；hand-authored primary_intents / decision_stage 只存在於 7 個資產，補齊它等於發明一套上游沒有的詞彙表，且會隨資產增加而永久積欠維護成本。改為從資產自身的 frontmatter 推導 cue，並以 document-frequency 過濾（30% 門檻）取代手工 stopword 清單。",
+        "source_refs": ["AGENTS.md（deliberate non-features）", "runtime/registry.js"]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "不建立 repo 或刪除 repo。此為保留給 HH 的硬性停止點。",
+        "source_refs": ["governance/AUTONOMY_BOUNDARY.md"]
+      }
+    ],
+    "open_strategy_questions": [
+      "帳號層級 skills（~/.claude/skills/synced/，27 個，其中 14 個與 repo 方法論同名但版本較舊）與 repo 方法論並存，而使用時沒有任何東西標示兩者的差別。這已導致同一類錯誤重複發生（把帳號層級能力當成 repo 能力引用）。結構解未定。",
+      "互動模式 2（Checkpointed Co-Construction）是三個模式中唯一沒有 skill 實作的，唯一範例是 methodology/prompts/workshops/prd-workshop.md。是否實作成 skill 未定。",
+      "methodology/catalog/ 是否退役未定。",
+      "上游 Skills repo 的 research/ 目錄未匯入，且 GENESIS.md 已將其記為未決項。",
+      "Runtime Governor 的 estimatedTokens 只計算 PDM 主動載入的內容，對對話本身的長度結構性盲目 — 注意力稀釋因此無法被現有機制偵測。"
+    ]
+  },
+  "users": {
+    "segments": [
+      {
+        "classification": "EVIDENCE",
+        "statement": "PDM worker：在此 repo 上執行產品工作的 AI agent，可能是 Claude Code、Codex 或其他 provider。它的行為由 AGENTS.md 契約決定，而非由任何單一 provider 的設定決定。",
+        "source_refs": ["AGENTS.md", "CLAUDE.md"]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "Founder / 產品負責人（HH）：唯一能核准跨產品優先序、外部系統寫入、以及 repo 建立與刪除的人。",
+        "source_refs": ["governance/AUTONOMY_BOUNDARY.md"]
+      }
+    ],
+    "customer_knowledge": [],
+    "open_user_questions": [
+      "PDM worker 在真實任務中實際會不會去查 repo 的方法論，而不是自己推理？已知 routing 機制可用，但「實際被啟用的頻率」尚未有可觀測的量測方式。"
+    ]
+  },
+  "evidence": {
+    "research": [
+      {
+        "classification": "EVIDENCE",
+        "statement": "外部 AI 架構分析（2026-09 由 HH 轉來）的三項主張經量測後為錯。此後的處理原則是先量測再接受任何轉述的診斷。",
+        "source_refs": ["session 2026-09 的量測紀錄"]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "genesis 匯入把 Prompts 生態系的頂層同時寫進 methodology/ 與 methodology/prompts/，造成 8 個目錄共 90 個檔案 + 3 個 .md.prompts 檔案完全重複（以 blob hash 逐位元比對確認）。registry 資產數因移除而由 490 降為 397，delta 恰為 93；可路由 entrypoint 維持 86 不變，證明移除的都不是 PDM 能選到的路徑。",
+        "source_refs": ["PR #36", "methodology/provenance/dean-product-manager-skills.md"]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "AUTONOMY_BOUNDARY.md 原稱自主邊界涵蓋「most of methodology/skills/」，實際只涵蓋 registry 86 個 entrypoint 中的 14 個。文件的涵蓋範圍宣稱與實際不符是可量測的，而且曾經不符。",
+        "source_refs": ["PR #27"]
+      },
+      {
+        "classification": "EVIDENCE",
+        "statement": "存在一個未定位的低頻間歇測試失敗。三個假設（共用 _template fixture 競爭、由 #36 引入、portfolio-index.md 未提交）全部被證偽，22 次乾淨重跑無法重現。目前狀態是誠實的「未定位」，不是「已解決」。",
+        "source_refs": ["session 2026-09 的重跑紀錄"]
+      }
+    ],
+    "confidence_notes": [
+      {
+        "classification": "EVIDENCE",
+        "statement": "本 session 中，我在自己已檢查過兩次的 diff 裡漏掉了 #33 的 orphaned JSDoc，最後是由 code-review skill 找出來的。結論：對自己寫的 diff 重讀，不是有效的檢查方法；要用獨立的檢查途徑。",
+        "source_refs": ["PR #37"]
+      }
+    ]
+  },
+  "decisions": [],
+  "experiments": {
+    "active": [],
+    "learnings": [
+      {
+        "classification": "EVIDENCE",
+        "statement": "兩個為了防止同類錯誤而設計的預防機制都被證偽（皆為字串比對取向）。字串比對無法區分「引用了一個不存在於 repo 的能力」與「正確地談論一個外部能力」。",
+        "source_refs": ["session 2026-09"]
+      }
+    ],
+    "available_validation_artifacts": [
+      "npm test（189 個測試）",
+      "tests/docLinks.test.js（repo 範圍內的死連結檢查，排除 vendored 樹）",
+      "scripts/build-methodology-registry.mjs（registry 可逐位元重現）"
+    ]
+  },
+  "roadmap": {
+    "current_state": {
+      "classification": "EVIDENCE",
+      "statement": "Routing 層已可用（86 個 entrypoint、雙向 composition、跨語言 routing_intents）；文件重複已收斂；genesis 匯入殘留已清除。尚未解決的是「方法論是否真的被使用」的可觀測性，以及能力來源歧義造成的重複錯誤。",
+      "source_refs": ["PR #30", "PR #33", "PR #34", "PR #35", "PR #36", "PR #37"]
+    },
+    "items": [
+      {
+        "status": "now",
+        "item": "讓能力來源（repo 方法論 vs 帳號層級 skills）的差別在使用時可見，而不是靠記憶",
+        "classification": "HYPOTHESIS"
+      },
+      {
+        "status": "next",
+        "item": "決定互動模式 2 是否實作成 skill",
+        "classification": "HYPOTHESIS"
+      },
+      {
+        "status": "next",
+        "item": "定位那個間歇測試失敗",
+        "classification": "HYPOTHESIS"
+      },
+      {
+        "status": "later",
+        "item": "決定 methodology/catalog/ 退役與 research/ 匯入",
+        "classification": "HYPOTHESIS"
+      }
+    ]
+  }
+}

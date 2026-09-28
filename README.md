@@ -99,12 +99,14 @@ tests/           Node test suite 與 architectural invariants
 
 PDM 是 portfolio-level worker，不是一次只管理一個產品。
 
-目前 portfolio 已包含四個 real products：
+目前 portfolio 包含四個對客戶的 real products：
 
 - `colon-biopsy-ai-app`
 - `prostate-biopsy`
 - `ocr-slide-label-reader`
 - `slide-quality-control`
+
+外加 `pdm-core` —— PDM Core 自己也被當成產品管理，它的 repository 就是這個 repo。這樣做的目的是讓方法論本身的發現（什麼有效、什麼被證偽、哪些問題還沒解）成為 durable state，而不是只存在於某次對話裡。它的 `priority` 刻意設為 4，低於所有真實產品，因此 portfolio 選取永遠不會讓它排在對客戶的工作前面。詳細理由與它跟 ARCHITECTURE §6 的關係見 [`products/README.md`](products/README.md)。
 
 產品可以處於 `READY`、`WAITING_FOR_FOUNDER`、`BLOCKED`、`IDLE` 或 `UNINITIALIZED`；這些是由 Work State 與 decision 狀態推導出來的，不另外儲存一份 portfolio 狀態。
 
