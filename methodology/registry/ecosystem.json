@@ -5722,7 +5722,7 @@
         "skills:positioning-statement",
         "skills:workshop-facilitation"
       ],
-      "size_bytes": 21361
+      "size_bytes": 21365
     },
     {
       "id": "skills:eol-process:examples:sample",
@@ -5823,7 +5823,7 @@
         "skills:lifecycle-play-advisor",
         "skills:workshop-facilitation"
       ],
-      "size_bytes": 21696
+      "size_bytes": 21700
     },
     {
       "id": "skills:eol-stakeholder-sequence",
@@ -5857,7 +5857,7 @@
         "skills:eol-message",
         "skills:eol-readiness-advisor"
       ],
-      "size_bytes": 12393
+      "size_bytes": 12397
     },
     {
       "id": "skills:eol-stakeholder-sequence:examples:sample",
@@ -6747,7 +6747,6 @@
       "composes_unresolved": [],
       "related_skills": [
         "skills:discovery-interview-prep",
-        "skills:epic-hypothesis",
         "skills:jobs-to-be-done",
         "skills:pol-probe-advisor",
         "skills:problem-framing-canvas",
@@ -6755,7 +6754,7 @@
         "skills:proto-persona",
         "skills:workshop-facilitation"
       ],
-      "size_bytes": 26250
+      "size_bytes": 26222
     },
     {
       "id": "skills:lean-ux-canvas:examples:sample",
@@ -7376,13 +7375,8 @@
       "declared_uses": [],
       "composes": [],
       "composes_unresolved": [],
-      "related_skills": [
-        "skills:discovery-process",
-        "skills:epic-hypothesis",
-        "skills:pol-probe-advisor",
-        "skills:problem-statement"
-      ],
-      "size_bytes": 10856
+      "related_skills": [],
+      "size_bytes": 10840
     },
     {
       "id": "skills:pol-probe-advisor",
