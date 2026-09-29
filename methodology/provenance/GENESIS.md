@@ -58,10 +58,17 @@ would collide with `methodology/skills/` from the first source. See
 `registry/ecosystem.json` for the resulting `prompts:skills:...` ids.
 
 **Decided 2026-09-29, not imported:** the Skills source also has a `research/`
-directory. HH's call: it is the upstream author's own earlier research
-records, not methodology, so it is left out and no longer an open item — the
-same kind of content-type exclusion `resumes-resignations-reactions/` above
-got. This file records the reason so the question is not reopened by the
-absence; it does not describe the directory's contents, which were never
-inspected here. Reconsider only if a concrete failure case needs something
-in it.
+directory (long-form essays and a Substack-post archive `.zip`). HH's call:
+it is the upstream author's own earlier research records, not methodology, so
+it is left out and no longer an open item — the same kind of content-type
+exclusion `resumes-resignations-reactions/` above got. This file records the
+reason so the question is not reopened by the absence.
+
+One consequence to know about: `research/finance/` is the source material that
+seven imported skills cite under "Adapted from" —
+`acquisition-channel-advisor`, `business-health-diagnostic`,
+`feature-investment-advisor`, `finance-based-pricing-advisor`,
+`finance-metrics-quickref`, `saas-economics-efficiency-metrics` and
+`saas-revenue-growth-metrics`. Those citations dangle by design: they are
+attribution lines at the foot of each skill, not paths the runtime resolves. Reconsider only if a concrete failure case needs
+something in `research/`, including one of those seven citations.

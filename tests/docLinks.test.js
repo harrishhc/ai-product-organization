@@ -25,16 +25,17 @@ const REPO_ROOT = path.join(__dirname, '..');
  * checked: root docs, docs/, governance/, agents/, products/,
  * organizations/, and methodology's own entrypoint corpus (capabilities/,
  * commands/, provenance/, every .md under skills/ including examples, and
- * methodology/'s own README.md). The one vendored reference tree,
- * methodology/prompts/ (135 .md files; its storytelling/, workshops/,
- * market-intelligence/ etc. live inside it), is excluded because it holds
- * real dead links in upstream material nothing in this repository routes to
- * or reads programmatically (see methodology/provenance/ for what is
+ * methodology/'s own README.md). The vendored reference tree that holds real
+ * dead links, methodology/prompts/ (135 .md files; its storytelling/,
+ * workshops/, market-intelligence/ etc. live inside it), is excluded because
+ * it is upstream material nothing in this repository routes to or reads
+ * programmatically (methodology/catalog/, 3 .md files with no links, is also
+ * outside the scanned set) (see methodology/provenance/ for what is
  * actually indexed). An earlier version of this comment put the figure at
  * "roughly 90" and blamed URL-encoded filenames. That figure could not be
  * reproduced. Measured 2026-09-29 with the same link pattern: before #36 the
  * vendored trees under methodology/ held 74 unresolved links if filenames are
- * not URL-decoded and 26 if they are, 31 and 15 of them in top-level copies
+ * not URL-decoded and 27 if they are, 31 and 16 of them in top-level copies
  * #36 later removed; methodology/prompts/ alone has 43 and 11 today. So the
  * eleven that remain are real, and most of the original count was this
  * checker not decoding. If that tree
@@ -138,10 +139,12 @@ test('the checker itself reports a dead link and passes a live one, including a 
     '[live with fragment](./AGENTS.md#anything)',
     '[encoded live](./docs/GETTING%5FSTARTED.md)',
     '[encoded dead](./docs/NO%20SUCH.md)',
+    '[malformed escape](./100%.md)',
   ].join('\n');
   assert.deepEqual(brokenLinksIn(from, text), [
     'README.md -> ./no-such-file-anywhere.md',
     'README.md -> ./docs/NO%20SUCH.md',
+    'README.md -> ./100%.md',
   ]);
 });
 
