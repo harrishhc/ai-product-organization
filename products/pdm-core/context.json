@@ -32,7 +32,7 @@
     "non_goals": [
       {
         "classification": "EVIDENCE",
-        "statement": "不手寫 intent taxonomy。hand-authored primary_intents / decision_stage 只存在於 7 個資產，補齊它等於發明一套上游沒有的詞彙表，且會隨資產增加而永久積欠維護成本。改為從資產自身的 frontmatter 推導 cue，並以 document-frequency 過濾（30% 門檻）排除沒有鑑別力的領域詞（如 \"product\"），而不是手工維護領域詞清單；STOPWORDS 只保留函式詞。",
+        "statement": "不手寫 intent taxonomy。hand-authored primary_intents / decision_stage 只存在於 7 個資產，補齊它等於發明一套上游沒有的詞彙表，且會隨資產增加而永久積欠維護成本。改為從資產自身的 frontmatter 推導 cue，並以 document-frequency 過濾（30% 門檻）排除沒有鑑別力的領域詞（如 \"product\"），而不是手工維護領域詞清單；STOPWORDS 只保留功能詞與泛用框架動詞（如 need、want、make、unclear）。",
         "source_refs": ["AGENTS.md（deliberate non-features）", "runtime/registry.js"]
       },
       {
@@ -42,8 +42,8 @@
       }
     ],
     "open_strategy_questions": [
-      "帳號層級 skills（~/.claude/skills/synced/，27 個，其中 14 個與 repo 方法論同名但版本較舊）與 repo 方法論並存，而使用時沒有任何東西標示兩者的差別。這已導致同一類錯誤重複發生（把帳號層級能力當成 repo 能力引用）。結構解的方向已由 HH 於 2026-09-29 決定：skills 由 repo 維護、架構跟著 repo 走而不被單一 provider 綁定；HH 並已在帳號側關閉不再使用的同名帳號層 skills。repo 側的落實是 PR #41：AUTONOMY_BOUNDARY §1 改為 methodology/ 是唯一的 skill 來源、經 runtime 載入、不以 Skill 工具代替（未採 .claude/skills 符號連結層，也未加字串比對守門測試）。",
-      "互動模式 2（Checkpointed Co-Construction）是三個模式中唯一沒有 skill 實作的，唯一範例是 methodology/prompts/workshops/prd-workshop.md。是否實作成 skill 未定。",
+      "帳號層級 skills（~/.claude/skills/synced/；2026-09-21 量測為 27 個、其中 14 個與 repo 方法論同名但版本較舊，現況以 ls 為準）與 repo 方法論並存，而使用時沒有任何東西標示兩者的差別。這已導致同一類錯誤重複發生（把帳號層級能力當成 repo 能力引用）。結構解的方向已由 HH 於 2026-09-29 決定：skills 由 repo 維護、架構跟著 repo 走而不被單一 provider 綁定；HH 並已在帳號側關閉不再使用的同名帳號層 skills。repo 側的落實是 PR #41：AUTONOMY_BOUNDARY §1 改為 methodology/ 是唯一的 skill 來源、經 runtime 載入、不以 Skill 工具代替（未採 .claude/skills 符號連結層，也未加字串比對守門測試）。",
+      "互動模式 2（Checkpointed Co-Construction）是三個模式中唯一沒有 skill 實作的，現有範例是 methodology/prompts/workshops/ 下的 prd-workshop.md 與 product-sunset-workshop.md。是否實作成 skill 未定。",
       "methodology/catalog/ 是否退役未定。",
       "Runtime Governor 的 estimatedTokens 只計算 PDM 主動載入的內容，對對話本身的長度結構性盲目 — 注意力稀釋因此無法被現有機制偵測。"
     ]
@@ -80,7 +80,7 @@
       },
       {
         "classification": "EVIDENCE",
-        "statement": "AUTONOMY_BOUNDARY.md 原稱自主邊界涵蓋「most of methodology/skills/」，實際只涵蓋 registry 86 個 entrypoint 中的 14 個。文件的涵蓋範圍宣稱與實際不符是可量測的，而且曾經不符。",
+        "statement": "AUTONOMY_BOUNDARY.md 原稱「most of methodology/skills/」也註冊為可用 Skill 工具呼叫的同名 skill，實際只涵蓋 registry 86 個 entrypoint 中的 14 個。文件的涵蓋範圍宣稱與實際不符是可量測的，而且曾經不符。",
         "source_refs": ["PR #27"]
       },
       {
@@ -92,8 +92,8 @@
     "confidence_notes": [
       {
         "classification": "EVIDENCE",
-        "statement": "2026-09 的工作中，撰寫者（AI）在自己已檢查過兩次的 diff 裡漏掉了 #33 的 orphaned JSDoc，最後是由 code-review skill 找出來的。之後對 #34–#37 派出四個沒有前文的獨立 reviewer，又找出撰寫者寫的一句假話（provenance 稱 genesis commit「沒有任何 rename 或 delete」，實際為 492 A / 6 M / 6 D / 5 R100）與一個自我抄錯的資產數。結論：對自己寫的 diff 重讀，不是有效的檢查方法；要用獨立的檢查途徑，且獨立 reviewer 的指控要逐條核實後才採信。",
-        "source_refs": ["PR #37", "PR #34–#37 的獨立 review（2026-09-29）"]
+        "statement": "2026-09 的工作中，撰寫者（AI）在自己已檢查過兩次的 diff 裡漏掉了 #33 的 orphaned JSDoc，最後是由 code-review skill 找出來的。之後對 #34–#37 派出四個沒有前文的獨立 reviewer，又找出撰寫者寫的一句假話（provenance 稱 genesis commit「沒有任何 rename 或 delete」，實際為 492 A / 6 M / 6 D / 5 R100）與一個自我抄錯的資產數。結論：對自己寫的 diff 重讀，不是有效的檢查方法；要用獨立的檢查途徑，且獨立 reviewer 的指控要逐條核實後才採信。（reviewer 的對話紀錄不在 repo，屬弱證據；可在 repo 內核對的部分見 PR #39。）",
+        "source_refs": ["PR #37", "PR #39", "無 repo 內來源"]
       }
     ]
   },

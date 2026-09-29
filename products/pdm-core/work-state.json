@@ -21,17 +21,9 @@
     "Runtime Governor 對對話長度結構性盲目，注意力稀釋無法被現有機制偵測。",
     "methodology/catalog/ 是否退役。"
   ],
-  "routing_intents": [
-    "PDM Core 自身的方法論治理",
-    "capability routing 與 registry 正確性",
-    "repo 契約與 provider 可攜性",
-    "methodology governance",
-    "capability routing correctness",
-    "repository contract and cross-provider portability"
-  ],
   "last_session": {
     "date": "2026-09-29",
-    "summary": "把 routing 層從 7 個 entrypoint 修到 86 個；收斂入口文件的重複；清除 genesis 匯入的 93 個重複檔案；合併 #34/#35/#36/#37。註冊 PDM Core 本身為受管產品，使這些發現成為 durable state 而非對話內容。",
+    "summary": "收斂入口文件的重複；清除 genesis 匯入的 93 個重複檔案；合併 #34/#35/#36/#37。註冊 PDM Core 本身為受管產品，使這些發現成為 durable state 而非對話內容。",
     "decision_refs": []
   }
 }

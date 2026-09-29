@@ -19,26 +19,24 @@ Each real product should have its own repository. This directory holds only:
 
 ## Current real products
 
-The active portfolio contains four customer-facing products plus PDM Core
+The active portfolio contains the customer-facing products below plus PDM Core
 itself:
 
 - `colon-biopsy-ai-app` — already migrated to its own repository and registered
   as `git_remote`.
-- `ocr-slide-label-reader` — currently staged locally; migrate to its own repo.
-- `prostate-biopsy` — currently staged locally; migrate to its own repo.
-- `slide-quality-control` — currently staged locally; migrate to its own repo.
+- `ocr-slide-label-reader`, `prostate-biopsy`, `slide-quality-control` — each
+  registered as `git_remote`, cloned under `.product-clones/`.
 - `pdm-core` — PDM Core managed as a product. Its repository **is** this
-  repository (`local_path` at `.`), so unlike the four above it is not staged
-  pending migration and must never be moved out: there is nowhere to move it
-  to. `priority: 4` is deliberate — below every real product, so portfolio
+  repository (`local_path` at `.`), so unlike the three above it is not a separate
+  clone and must never be moved out: there is nowhere to move it to. `priority: 4` is deliberate — below every real product, so portfolio
   selection never ranks PDM Core ahead of a READY customer-facing product.
-  When no real product is READY (all waiting on HH or blocked), PDM Core is the
-  next work — intended, and consistent with "one product waiting must not stop
-  the others". The ordering is a registry convention, not test-enforced.
+  Only READY products are ranked, so when no real product is READY (waiting on
+  HH, blocked, idle, or not cloned on this machine), PDM Core is the next work —
+  intended, and consistent with "one product waiting must not stop the others". The ordering is a registry convention, not test-enforced.
 
-The staging directories are not a second source of truth after migration. They
-exist only so the portfolio can be bootstrapped before a product-owned
-repository is available.
+A `git_remote` product's clone under `.product-clones/` is a working copy, not
+a second source of truth: the product's own repository owns its Product Context
+and Work State.
 
 ### Why registering PDM Core does not violate §6
 
@@ -46,7 +44,7 @@ repository is available.
 contain no product-specific assumptions. `pdm-core/` satisfies it the same way
 every other product does: its context and Work State are product content under
 `products/`, and nothing in `methodology/` or `runtime/` reads them or is
-allowed to. The registry treats it as one product among five.
+allowed to. The registry treats it as one product among the others.
 
 The genuine risk is §6's other half — *"the existence of one product must not
 cause its conclusions to become universal PDM rules."* That failure mode is
