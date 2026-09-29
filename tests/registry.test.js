@@ -352,7 +352,7 @@ test('renderRoutingShortlist states its own scope so a stale shortlist cannot be
   const text = lines.join('\n');
   assert.match(text, /routed against the uncertainty already on file/);
   assert.match(text, /if the.*question at hand is different.*does not answer it/s);
-  assert.match(text, /State that.*dominantUncertainty and call selectCapability directly/s);
+  assert.match(text, /node bin\/pdm-run\.mjs route --uncertainty/);
 });
 
 test('renderRoutingShortlist reproduces the blind-test shape: several weak_fit, no strong match', () => {
@@ -405,6 +405,20 @@ test('declared uncertainty_types are enforced against the closed-vocabulary toke
 
     const mismatch = filterCandidates({ ...query, dominantUncertainty: 'q', uncertaintyType: 'evidence' });
     assert.ok(!mismatch.some((c) => c.id === cap.id), 'a declared type that differs from the token excludes it');
+  } finally {
+    delete cap.uncertainty_types;
+    _resetRegistryCache();
+  }
+});
+
+test('renderRoutingShortlist forwards uncertaintyType to the filter', () => {
+  const cap = loadRegistryMetadata().capabilities.find((c) => c.id === 'capabilities:prioritization-comparison');
+  try {
+    cap.uncertainty_types = ['workflow'];
+    const kept = renderRoutingShortlist('q', ['prioritization'], 'workflow').join('\n');
+    assert.match(kept, /capabilities:prioritization-comparison/);
+    const dropped = renderRoutingShortlist('q', ['prioritization'], 'evidence').join('\n');
+    assert.doesNotMatch(dropped, /capabilities:prioritization-comparison/);
   } finally {
     delete cap.uncertainty_types;
     _resetRegistryCache();

@@ -12,9 +12,10 @@
 // left entirely to whichever model happened to be driving. This command is the
 // loop's mechanical half: it answers "what is next, and may I continue?".
 //
-// It deliberately does NOT do the work. Selecting a methodology, reasoning
-// about a product, and writing durable state remain PDM judgment
-// (orchestrator.js's "mechanism, not judgment" rule applies here too).
+// It deliberately does NOT do the work. Reasoning about a product, deciding
+// which methodology the work unit actually needs, and writing durable state
+// remain PDM judgment (orchestrator.js's "mechanism, not judgment" rule applies
+// here too). `route` only runs the selection mechanism and reports its result.
 //
 // Usage:
 //   node bin/pdm-run.mjs status
@@ -48,8 +49,22 @@ function parseArgs(argv) {
     const eq = argv[i].indexOf('=');
     const flag = eq === -1 ? argv[i] : argv[i].slice(0, eq);
     const inline = eq === -1 ? undefined : argv[i].slice(eq + 1);
-    const text = () => inline ?? argv[++i];
-    const value = () => Number(text());
+    const fail = (message) => {
+      console.error(`${flag}: ${message}`);
+      process.exit(2);
+    };
+    const text = () => {
+      const v = inline ?? argv[++i];
+      if (v === undefined || v.trim() === '' || (inline === undefined && v.startsWith('--'))) {
+        fail('needs a value (use --flag=value if the value itself starts with "--")');
+      }
+      return v;
+    };
+    const value = () => {
+      const n = Number(text());
+      if (!Number.isInteger(n) || n < 0) fail('needs a non-negative integer');
+      return n;
+    };
     if (flag === '--uncertainty') out.route.dominantUncertainty = text();
     else if (flag === '--type') out.route.uncertaintyType = text();
     else if (flag === '--intents') out.route.intents = text().split(',').map((x) => x.trim()).filter(Boolean);
@@ -67,11 +82,12 @@ function parseArgs(argv) {
   return out;
 }
 
-/** Refresh is the one cheap read the protocol's loop opens with. */
-function refresh(session) {
+/** Refresh is the one cheap read the protocol's loop opens with. `route` is a
+ * read-only query and passes writeIndex: false so it never dirties the tree. */
+function refresh(session, { writeIndex = true } = {}) {
   const portfolio = refreshPortfolio({ session });
   const selected = selectNextWork(portfolio);
-  writePortfolioIndex(renderPortfolioIndex(portfolio, { selected }));
+  if (writeIndex) writePortfolioIndex(renderPortfolioIndex(portfolio, { selected }));
   return { portfolio, selected };
 }
 
@@ -158,7 +174,7 @@ if (command === 'status') {
       `then re-run: node bin/pdm-run.mjs next --done ${done + 1}`
   );
 } else if (command === 'route') {
-  const { selected } = refresh(session);
+  const { selected } = refresh(session, { writeIndex: false });
   const dominantUncertainty = route.dominantUncertainty ?? selected?.dominantUncertainty;
   if (!dominantUncertainty) {
     console.error('route needs an uncertainty: pass --uncertainty "..." (no READY product has one on file).');

@@ -11,6 +11,7 @@ import {
   delegationBudgetRemaining,
 } from '../runtime/orchestrator.js';
 import { createSession, MAX_DELEGATION_DEPTH } from '../runtime/instrumentation.js';
+import { loadRegistryMetadata, _resetRegistryCache } from '../runtime/registry.js';
 
 test('runStage rejects a stage name outside the twelve-stage loop', () => {
   const session = createSession();
@@ -52,6 +53,21 @@ test('selectCapability refuses an uncertaintyType outside the closed vocabulary 
     /Unknown uncertaintyType/,
   );
   assert.doesNotThrow(() => selectCapability({ dominantUncertainty: 'q', uncertaintyType: 'workflow', intents: ['prd'] }));
+});
+
+test('selectCapability forwards uncertaintyType to the registry filter', () => {
+  const cap = loadRegistryMetadata().capabilities.find((c) => c.id === 'capabilities:prioritization-comparison');
+  const query = { dominantUncertainty: 'q', intents: ['prioritization'], decisionStage: 'prioritize' };
+  try {
+    cap.uncertainty_types = ['workflow'];
+    const kept = selectCapability({ ...query, uncertaintyType: 'workflow' });
+    assert.ok(kept.candidates.some((c) => c.id === cap.id));
+    const dropped = selectCapability({ ...query, uncertaintyType: 'evidence' });
+    assert.ok(!dropped.candidates.some((c) => c.id === cap.id), 'a mismatching declared type must exclude it through selectCapability too');
+  } finally {
+    delete cap.uncertainty_types;
+    _resetRegistryCache();
+  }
 });
 
 test('delegation requires an explicit question, output, and decision it informs', () => {

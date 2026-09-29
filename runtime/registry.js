@@ -335,7 +335,8 @@ export function renderRoutingShortlist(dominantUncertainty, routingIntents = [],
   lines.push(
     '  (routed against the uncertainty already on file for this product — if the',
     '  question at hand is different, this shortlist does not answer it. State that',
-    "  question's own dominantUncertainty and call selectCapability directly.)",
+    "  question's own dominantUncertainty and run `node bin/pdm-run.mjs route --uncertainty \"...\"`,",
+    '  or call selectCapability directly.)',
   );
 
   const noStrongMatch = candidates.length === 0 || candidates[0].fit === 'weak_fit';
