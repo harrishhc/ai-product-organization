@@ -39,12 +39,16 @@ at its pinned commit, not reconstructed from memory):
   the upstream README itself labels "therapeutic workplace satire," not
   methodology (confirmed with HH 2026-09-24: leave excluded).
 
-Every directory that survived this filter was imported byte-complete, not
-partially — verified by diffing `prompt-generators/` and `storytelling/`
-against the pinned Prompts commit, file for file. This was a content-type
-exclusion, not a size or token constraint: no directory was truncated, and
-some multi-file directories (24 files under `market-intelligence/`, 39 under
-`prompts/`) came in whole.
+Directories that survived this filter were imported whole rather than
+sampled. Only `prompt-generators/` and `storytelling/` were diffed against the
+pinned Prompts commit; an earlier version of this paragraph claimed that check
+covered every surviving directory ("byte-complete… file for file"), which the
+record does not support, so treat the other directories as imported whole but
+not individually verified. This was a content-type exclusion, not a size or
+token constraint. Current file counts, for scale: 24 under
+`methodology/prompts/market-intelligence/` and 39 under
+`methodology/prompts/prompts/` (a nested directory that is itself named
+`prompts`, which is why the bare "39 under `prompts/`" was ambiguous).
 
 The prompt ecosystem is namespaced under `methodology/prompts/` to preserve
 both source ecosystems without overwriting files with the same names — the
@@ -54,8 +58,10 @@ would collide with `methodology/skills/` from the first source. See
 `registry/ecosystem.json` for the resulting `prompts:skills:...` ids.
 
 **Open item, found 2026-09-24, not yet decided:** the Skills source also has
-a `research/` directory — long-form essays and a Substack-post archive
-(`.zip`), not structured methodology assets. Unlike `prompting-style-guide.md`
+a `research/` directory. It was described here as long-form essays plus a
+Substack-post archive (`.zip`); that description was written without the
+directory in this checkout to compare against and has not been re-verified,
+so re-inspect the upstream `research/` before deciding. Unlike `prompting-style-guide.md`
 (imported separately the same day — it was a plain sibling of three
 already-imported guidance docs), this doesn't fit the pattern of anything
 else this baseline indexes, and importing a `.zip` archive has no precedent
