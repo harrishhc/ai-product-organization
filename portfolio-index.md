@@ -4,7 +4,7 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-09-29T10:27:41.802Z
+Generated: 2026-09-29T10:29:16.522Z
 
 Products: 5 · READY 4 · WAITING_FOR_FOUNDER 1 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
 
@@ -13,7 +13,7 @@ Products: 5 · READY 4 · WAITING_FOR_FOUNDER 1 · BLOCKED 0 · IDLE 0 · UNINIT
 | colon-biopsy-ai-app | 1 | READY | 與 I-Chu 核對：新版本新增的 158 個 Adenocarcinoma 亞型組織，標註時是否同步修正了與 HGD 共病/形態重疊的標註方式——這是 HGD 表現能否真正改善的關鍵，比 NET 閾值問題更根本，且時間軸文件未記錄任何修正 | 2026-09-21 |
 | ocr-slide-label-reader | 2 | READY | 向 KenHsiao 或 Jsaon Lin 直接跟催 z9088252jn 的 config 定義進度（Harris Chen 本人即為該票 assignee，可直接在 ClickUp 留言或當面確認，不需透過第三方） | 2026-09-22 |
 | prostate-biopsy | 1 | WAITING_FOR_FOUNDER | awaiting HH: dec_1789983896997_w3grex | 2026-09-21 |
-| pdm-core | 4 | READY | 落實 HH 2026-09-29 的決定（skills 由 repo 維護、不被單一 provider 綁定）：把 methodology/skills 放進 .claude/skills、縮短 AUTONOMY_BOUNDARY §1、加上檢查兩者名稱一致的守門測試 | 2026-09-29 |
+| pdm-core | 4 | READY | 觀察 PR #41 之後的真實工作：worker 是否改從 methodology/ 載入 skill，而不是呼叫 Skill 工具；若仍有人把帳號層級能力當成 repo 能力，再重新評估是否需要 .claude/skills adapter | 2026-09-29 |
 | slide-quality-control | 3 | READY | 向 KenHsiao（負責 model RD，threshold 實際調整的執行者）核實 Fold 的 threshold 政策是否已依 Specimen Artifact 的 PPV-first 原則調整，並在此原則下重新評估 71/74 FP 是否仍是問題 — 2026-09-21 已確認 z9088270hc 與此問題無關（見 recently_completed），ClickUp 上不存在任何可跟催此問題的票或留言串；只能透過直接對話（Slack/當面）取得，非 PDM 可透過非同步管道自行解卡 | 2026-09-21 |
 
 ## Next selected work
