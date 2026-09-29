@@ -4,7 +4,6 @@
   "in_progress": [],
   "next_actions": [
     "觀察 PR #41 之後的真實工作：worker 是否改從 methodology/ 載入 skill，而不是呼叫 Skill 工具；若仍有人把帳號層級能力當成 repo 能力，再重新評估是否需要 .claude/skills adapter",
-    "研究上游 Skills repo 的 research/ 內容（HH 要求先研究再決定是否匯入）",
     "決定互動模式 2（Checkpointed Co-Construction）是否實作成 skill",
     "定位那個未定位的低頻間歇測試失敗"
   ],
@@ -20,7 +19,7 @@
   "open_questions": [
     "PDM worker 在真實任務中實際查詢 repo 方法論的頻率，目前沒有可觀測的量測方式。",
     "Runtime Governor 對對話長度結構性盲目，注意力稀釋無法被現有機制偵測。",
-    "methodology/catalog/ 是否退役；上游 research/ 是否匯入。"
+    "methodology/catalog/ 是否退役。"
   ],
   "routing_intents": [
     "PDM Core 自身的方法論治理",
