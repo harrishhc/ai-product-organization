@@ -1,9 +1,10 @@
 {
   "current_focus": "讓能力來源的差別在使用時可見：repo 方法論與帳號層級 skills 並存，而沒有任何東西在使用時標示兩者的差別。",
-  "dominant_uncertainty": "同一類錯誤（把帳號層級能力當成 repo 能力引用）已重複發生，而兩個字串比對取向的預防機制都被證偽。還不知道結構解是什麼。",
+  "dominant_uncertainty": "同一類錯誤（把帳號層級能力當成 repo 能力引用）已重複發生，而兩個字串比對取向的預防機制都被證偽。HH 已於 2026-09-29 決定結構解的方向（skills 由 repo 維護），剩下的是落實與驗證它。",
   "in_progress": [],
   "next_actions": [
-    "決定能力來源歧義的結構解（候選：repo 提供一個可重新產生對照表的指令，而非寫死清單或依賴模型記憶）",
+    "落實 HH 2026-09-29 的決定（skills 由 repo 維護、不被單一 provider 綁定）：把 methodology/skills 放進 .claude/skills、縮短 AUTONOMY_BOUNDARY §1、加上檢查兩者名稱一致的守門測試",
+    "研究上游 Skills repo 的 research/ 內容（HH 要求先研究再決定是否匯入）",
     "決定互動模式 2（Checkpointed Co-Construction）是否實作成 skill",
     "定位那個未定位的低頻間歇測試失敗"
   ],

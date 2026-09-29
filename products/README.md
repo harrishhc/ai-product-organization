@@ -31,7 +31,10 @@ itself:
   repository (`local_path` at `.`), so unlike the four above it is not staged
   pending migration and must never be moved out: there is nowhere to move it
   to. `priority: 4` is deliberate — below every real product, so portfolio
-  selection can never pick PDM Core over customer-facing work.
+  selection never ranks PDM Core ahead of a READY customer-facing product.
+  When no real product is READY (all waiting on HH or blocked), PDM Core is the
+  next work — intended, and consistent with "one product waiting must not stop
+  the others". The ordering is a registry convention, not test-enforced.
 
 The staging directories are not a second source of truth after migration. They
 exist only so the portfolio can be bootstrapped before a product-owned

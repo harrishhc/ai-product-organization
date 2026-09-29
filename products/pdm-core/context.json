@@ -11,7 +11,7 @@
       {
         "classification": "EVIDENCE",
         "statement": "每個方法論 entrypoint 都必須能被 metadata-first routing 選到。2026-09 的修復把可路由 entrypoint 從 7 個提升到 86 個（skills/*/SKILL.md、capabilities/*.md、commands/*.md），並修掉讓全部 77 個 intent 值都變成 \">-\" 的 block-scalar frontmatter bug。",
-        "source_refs": ["PR #33", "PR #37", "runtime/registry.js", "scripts/build-methodology-registry.mjs"]
+        "source_refs": ["PR #20", "runtime/registry.js", "scripts/build-methodology-registry.mjs"]
       },
       {
         "classification": "EVIDENCE",
@@ -25,14 +25,14 @@
       },
       {
         "classification": "EVIDENCE",
-        "statement": "找到一個懸空引用，就要把同類的全部找出來。這條規則本身是從三個 .md.prompts 檔案追出 93 個重複檔案的過程中寫下來的。",
-        "source_refs": ["AGENTS.md", "PR #36"]
+        "statement": "找到一個懸空引用，就要把同類的全部找出來。這條規則寫在 AGENTS.md，起因是已刪除的 vendor/ 路徑在多個檔案裡各自懸空、被逐次發現；#36 追出 93 個重複檔案是同一類問題的後來實例，不是規則的起點。",
+        "source_refs": ["AGENTS.md", "PR #32", "PR #36"]
       }
     ],
     "non_goals": [
       {
         "classification": "EVIDENCE",
-        "statement": "不手寫 intent taxonomy。Dean Peters 的原始設計沒有 intent 分類法；hand-authored primary_intents / decision_stage 只存在於 7 個資產，補齊它等於發明一套上游沒有的詞彙表，且會隨資產增加而永久積欠維護成本。改為從資產自身的 frontmatter 推導 cue，並以 document-frequency 過濾（30% 門檻）取代手工 stopword 清單。",
+        "statement": "不手寫 intent taxonomy。hand-authored primary_intents / decision_stage 只存在於 7 個資產，補齊它等於發明一套上游沒有的詞彙表，且會隨資產增加而永久積欠維護成本。改為從資產自身的 frontmatter 推導 cue，並以 document-frequency 過濾（30% 門檻）排除沒有鑑別力的領域詞（如 \"product\"），而不是手工維護領域詞清單；STOPWORDS 只保留函式詞。",
         "source_refs": ["AGENTS.md（deliberate non-features）", "runtime/registry.js"]
       },
       {
@@ -42,10 +42,10 @@
       }
     ],
     "open_strategy_questions": [
-      "帳號層級 skills（~/.claude/skills/synced/，27 個，其中 14 個與 repo 方法論同名但版本較舊）與 repo 方法論並存，而使用時沒有任何東西標示兩者的差別。這已導致同一類錯誤重複發生（把帳號層級能力當成 repo 能力引用）。結構解未定。",
+      "帳號層級 skills（~/.claude/skills/synced/，27 個，其中 14 個與 repo 方法論同名但版本較舊）與 repo 方法論並存，而使用時沒有任何東西標示兩者的差別。這已導致同一類錯誤重複發生（把帳號層級能力當成 repo 能力引用）。結構解的方向已由 HH 於 2026-09-29 決定：skills 由 repo 維護、架構跟著 repo 走而不被單一 provider 綁定；HH 並已在帳號側關閉不再使用的同名帳號層 skills。repo 側的落實（.claude/skills、AUTONOMY_BOUNDARY §1、守門測試）尚未完成。",
       "互動模式 2（Checkpointed Co-Construction）是三個模式中唯一沒有 skill 實作的，唯一範例是 methodology/prompts/workshops/prd-workshop.md。是否實作成 skill 未定。",
       "methodology/catalog/ 是否退役未定。",
-      "上游 Skills repo 的 research/ 目錄未匯入，且 GENESIS.md 已將其記為未決項。",
+      "上游 Skills repo 的 research/ 目錄未匯入，GENESIS.md 記為未決項；HH 於 2026-09-29 指示先研究其內容再決定。",
       "Runtime Governor 的 estimatedTokens 只計算 PDM 主動載入的內容，對對話本身的長度結構性盲目 — 注意力稀釋因此無法被現有機制偵測。"
     ]
   },
@@ -71,8 +71,8 @@
     "research": [
       {
         "classification": "EVIDENCE",
-        "statement": "外部 AI 架構分析（2026-09 由 HH 轉來）的三項主張經量測後為錯。此後的處理原則是先量測再接受任何轉述的診斷。",
-        "source_refs": ["session 2026-09 的量測紀錄"]
+        "statement": "外部 AI 架構分析（2026-09 由 HH 轉來）的三項主張經量測後為錯。此後的處理原則是先量測再接受任何轉述的診斷。（弱證據：只來自 2026-09 的對話，repo 內沒有可驗證的紀錄。）",
+        "source_refs": ["無 repo 內來源"]
       },
       {
         "classification": "EVIDENCE",
@@ -86,14 +86,14 @@
       },
       {
         "classification": "EVIDENCE",
-        "statement": "存在一個未定位的低頻間歇測試失敗。三個假設（共用 _template fixture 競爭、由 #36 引入、portfolio-index.md 未提交）全部被證偽，22 次乾淨重跑無法重現。目前狀態是誠實的「未定位」，不是「已解決」。",
-        "source_refs": ["session 2026-09 的重跑紀錄"]
+        "statement": "存在一個未定位的低頻間歇測試失敗。三個假設（共用 _template fixture 競爭、由 #36 引入、portfolio-index.md 未提交）全部被證偽，多次乾淨重跑無法重現。目前狀態是誠實的「未定位」，不是「已解決」。（弱證據：重跑次數與被證偽的假設只來自對話，repo 內沒有可驗證的紀錄。）",
+        "source_refs": ["無 repo 內來源"]
       }
     ],
     "confidence_notes": [
       {
         "classification": "EVIDENCE",
-        "statement": "本 session 中，我在自己已檢查過兩次的 diff 裡漏掉了 #33 的 orphaned JSDoc，最後是由 code-review skill 找出來的。之後對 #34–#37 派出四個沒有前文的獨立 reviewer，又找出我寫的一句假話（provenance 稱 genesis commit「沒有任何 rename 或 delete」，實際為 492 A / 6 M / 6 D / 5 R100）與一個自我抄錯的資產數。結論：對自己寫的 diff 重讀，不是有效的檢查方法；要用獨立的檢查途徑，且獨立 reviewer 的指控要逐條核實後才採信。",
+        "statement": "2026-09 的工作中，撰寫者（AI）在自己已檢查過兩次的 diff 裡漏掉了 #33 的 orphaned JSDoc，最後是由 code-review skill 找出來的。之後對 #34–#37 派出四個沒有前文的獨立 reviewer，又找出撰寫者寫的一句假話（provenance 稱 genesis commit「沒有任何 rename 或 delete」，實際為 492 A / 6 M / 6 D / 5 R100）與一個自我抄錯的資產數。結論：對自己寫的 diff 重讀，不是有效的檢查方法；要用獨立的檢查途徑，且獨立 reviewer 的指控要逐條核實後才採信。",
         "source_refs": ["PR #37", "PR #34–#37 的獨立 review（2026-09-29）"]
       }
     ]
@@ -104,12 +104,12 @@
     "learnings": [
       {
         "classification": "EVIDENCE",
-        "statement": "兩個為了防止同類錯誤而設計的預防機制都被證偽（皆為字串比對取向）。字串比對無法區分「引用了一個不存在於 repo 的能力」與「正確地談論一個外部能力」。",
-        "source_refs": ["session 2026-09"]
+        "statement": "兩個為了防止同類錯誤而設計的預防機制都被證偽（皆為字串比對取向）。字串比對無法區分「引用了一個不存在於 repo 的能力」與「正確地談論一個外部能力」。（弱證據：只來自對話，repo 內沒有可驗證的紀錄。）",
+        "source_refs": ["無 repo 內來源"]
       }
     ],
     "available_validation_artifacts": [
-      "npm test（189 個測試）",
+      "npm test",
       "tests/docLinks.test.js（repo 範圍內的死連結檢查，排除 vendored 樹）",
       "scripts/build-methodology-registry.mjs（registry 可逐位元重現）"
     ]
