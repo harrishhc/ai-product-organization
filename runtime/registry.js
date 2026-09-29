@@ -120,13 +120,15 @@ function matchStrength(candidate) {
 /**
  * Filtering is metadata-only. The orchestrator is responsible for requiring
  * dominant uncertainty; direct registry callers may omit it. If an asset
- * declares explicit uncertainty_types, they are enforced rather than guessed.
+ * declares explicit uncertainty_types, they are enforced against
+ * `uncertaintyType` (a closed-vocabulary token), never against the
+ * `dominantUncertainty` prose, which can never equal a token.
  *
  * Two match bases are reported, never blended: `declared` (the asset's own
  * routing metadata matched) and `cue` (only its self-description matched).
  * A cue match can surface a candidate but can never outrank a declared one.
  */
-export function filterCandidates({ intents = [], decisionStage, dominantUncertainty } = {}) {
+export function filterCandidates({ intents = [], decisionStage, dominantUncertainty, uncertaintyType } = {}) {
   const results = [];
   const uncertaintyTerms = discriminating(significantTerms(dominantUncertainty));
 
@@ -134,8 +136,8 @@ export function filterCandidates({ intents = [], decisionStage, dominantUncertai
     const matchedIntents = (cap.primary_intents ?? []).filter((i) => intents.includes(i));
     const stageMatch = decisionStage ? cap.decision_stage === decisionStage : false;
     const uncertaintyTypes = cap.uncertainty_types ?? null;
-    const uncertaintyMatch = uncertaintyTypes && dominantUncertainty
-      ? (uncertaintyTypes.includes(dominantUncertainty) ? 'matched' : 'mismatch')
+    const uncertaintyMatch = uncertaintyTypes && uncertaintyType
+      ? (uncertaintyTypes.includes(uncertaintyType) ? 'matched' : 'mismatch')
       : 'unknown';
 
     if (uncertaintyMatch === 'mismatch') continue;
@@ -318,13 +320,14 @@ export function loadCapabilityDetail(id) {
  *
  * @param {string} dominantUncertainty
  * @param {string[]} [routingIntents]
+ * @param {string} [uncertaintyType]
  * @returns {string[]} lines of text; join('\n') to print
  */
-export function renderRoutingShortlist(dominantUncertainty, routingIntents = []) {
+export function renderRoutingShortlist(dominantUncertainty, routingIntents = [], uncertaintyType) {
   if (!dominantUncertainty) {
     return ['', '--- Methodology routing ---', "No dominant uncertainty in this product's Work State; record one before routing."];
   }
-  const candidates = filterCandidates({ dominantUncertainty, intents: routingIntents });
+  const candidates = filterCandidates({ dominantUncertainty, intents: routingIntents, uncertaintyType });
   const basis = routingIntents.length
     ? `routing_intents: ${routingIntents.join(', ')}`
     : 'the dominant uncertainty alone';
@@ -436,6 +439,41 @@ export function resolveComposition(id) {
     composed: members.length > 0,
     composedBy,
   };
+}
+
+/**
+ * Renders what to read for an already-selected entrypoint: its source file,
+ * companion template/examples that exist in the registry, anti-cues to check
+ * first, and declared composition. Metadata only; loads no detail file.
+ */
+export function renderSelection(selected) {
+  const { assets = [] } = loadRegistryMetadata();
+  const { entrypoint, composes, composedBy } = resolveComposition(selected.id);
+  if (selected.fit === 'weak_fit') {
+    return [
+      '',
+      `--- No confident selection: best match ${selected.id} is only weak_fit (${selected.matchBasis}) ---`,
+      '  A weak_fit is a keyword collision, not a fit for this situation. Do not read it as the answer.',
+      '  Supply `--intents` in the corpus\'s own terms (e.g. prd, prioritization, competitive), or',
+      '  conclude no methodology applies and reason from first principles.',
+    ];
+  }
+  const companions = assets.filter((a) => a.id.startsWith(`${selected.id}:`));
+  const lines = [
+    '',
+    `--- Selected: ${selected.id} (${selected.fit}, ${selected.matchBasis}, ${selected.type ?? 'unknown type'}) ---`,
+    `  Read:  ${entrypoint.source_reference}`,
+  ];
+  for (const a of companions) lines.push(`         ${a.source_reference}   (loadAsset('${a.id}'))`);
+  if (selected.antiCues?.length) {
+    lines.push('  Anti-cues — if one holds, this is the wrong entrypoint; re-route:');
+    for (const cue of selected.antiCues) lines.push(`    - ${cue}`);
+  }
+  if (composes.length) lines.push(`  Composes (in order): ${composes.map((m) => m.id).join(' -> ')}`);
+  for (const parent of composedBy) {
+    lines.push(`  Member of ${parent.id}, alongside: ${parent.siblings.join(', ')}`);
+  }
+  return lines;
 }
 
 export function listCapabilityIds() {

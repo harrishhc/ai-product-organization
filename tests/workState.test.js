@@ -138,3 +138,19 @@ test('routing_intents is optional but validated when present', () => {
   writeWorkState('_template', base);
   assert.ok(!('routing_intents' in loadWorkState('_template')));
 });
+
+test('uncertainty_type is optional, null-able, and must come from the closed vocabulary', () => {
+  const base = loadWorkState('_template');
+  for (const bad of ['workflow ', 'Workflow', 42, '', 'the buyer is unknown']) {
+    assert.throws(
+      () => writeWorkState('_template', { ...base, uncertainty_type: bad }),
+      /uncertainty_type must be null or one of/,
+      `should reject ${JSON.stringify(bad)}`,
+    );
+  }
+  writeWorkState('_template', { ...base, uncertainty_type: null });
+  writeWorkState('_template', { ...base, uncertainty_type: 'market' });
+  assert.equal(loadWorkState('_template').uncertainty_type, 'market');
+  writeWorkState('_template', base);
+  assert.ok(!('uncertainty_type' in loadWorkState('_template')));
+});

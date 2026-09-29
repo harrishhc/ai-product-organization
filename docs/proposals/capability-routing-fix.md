@@ -1,6 +1,9 @@
 # Proposal — Fix capability routing: the metadata is already there, the runtime ignores it
 
-**Status:** PROPOSAL — 未實作。`runtime/` 未更動。
+**Status:** PROPOSAL — 部分實作（2026-09-30 核對）。
+- **B 已實作：** `selectCapability`/`filterCandidates` 分出 `uncertaintyType`（封閉 token，硬過濾只比對它），Work State 新增選填 `uncertainty_type`，`pdm-run next` 據此印出 delegation 提示。
+- **A 部分：** cue 已被讀取（`selection_cues` 進描述性比對、`anti_cues` 隨候選輸出）；`cost_profile` 仍未使用，`selectSmallestSufficient` 仍用寫死的 `TIER_RANK`。
+- **C 未變：** 仍為「用過才標」，registry 目前沒有任何 capability 宣告 `uncertainty_types`，所以硬過濾在實務上尚不作用。
 **Authority:** Material PDM evolution → Propose / Required approval
 **Raised:** 2026-09-15
 

@@ -46,6 +46,14 @@ test('selectCapability refuses to route without an explicit dominant uncertainty
   assert.throws(() => selectCapability({ intents: ['prioritization'], decisionStage: 'prioritize' }, session));
 });
 
+test('selectCapability refuses an uncertaintyType outside the closed vocabulary rather than silently ignoring it', () => {
+  assert.throws(
+    () => selectCapability({ dominantUncertainty: 'q', uncertaintyType: 'the buyer is unknown', intents: ['prd'] }),
+    /Unknown uncertaintyType/,
+  );
+  assert.doesNotThrow(() => selectCapability({ dominantUncertainty: 'q', uncertaintyType: 'workflow', intents: ['prd'] }));
+});
+
 test('delegation requires an explicit question, output, and decision it informs', () => {
   const session = createSession();
   assert.throws(() => delegateToSpecialist({ dominantUncertaintyType: 'user_need' }, session));
