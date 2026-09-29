@@ -76,7 +76,7 @@
       },
       {
         "classification": "EVIDENCE",
-        "statement": "genesis 匯入把 Prompts 生態系的頂層同時寫進 methodology/ 與 methodology/prompts/，造成 8 個目錄共 90 個檔案 + 3 個 .md.prompts 檔案完全重複（以 blob hash 逐位元比對確認）。registry 資產數因移除而由 490 降為 397，delta 恰為 93；可路由 entrypoint 維持 86 不變，證明移除的都不是 PDM 能選到的路徑。",
+        "statement": "genesis 匯入把 Prompts 生態系的頂層同時寫進 methodology/ 與 methodology/prompts/，造成 8 個目錄共 90 個檔案 + 3 個 .md.prompts 檔案完全重複（以 blob hash 逐位元比對確認）。registry 資產數因移除而由 491 降為 398（#35 先合併而多出 1 個，PR 描述當時寫的 490→397 是合併順序造成的過時數字），delta 恰為 93；可路由 entrypoint 維持 86 不變，證明移除的都不是 PDM 能選到的路徑。",
         "source_refs": ["PR #36", "methodology/provenance/dean-product-manager-skills.md"]
       },
       {
@@ -93,8 +93,8 @@
     "confidence_notes": [
       {
         "classification": "EVIDENCE",
-        "statement": "本 session 中，我在自己已檢查過兩次的 diff 裡漏掉了 #33 的 orphaned JSDoc，最後是由 code-review skill 找出來的。結論：對自己寫的 diff 重讀，不是有效的檢查方法；要用獨立的檢查途徑。",
-        "source_refs": ["PR #37"]
+        "statement": "本 session 中，我在自己已檢查過兩次的 diff 裡漏掉了 #33 的 orphaned JSDoc，最後是由 code-review skill 找出來的。之後對 #34–#37 派出四個沒有前文的獨立 reviewer，又找出我寫的一句假話（provenance 稱 genesis commit「沒有任何 rename 或 delete」，實際為 492 A / 6 M / 6 D / 5 R100）與一個自我抄錯的資產數。結論：對自己寫的 diff 重讀，不是有效的檢查方法；要用獨立的檢查途徑，且獨立 reviewer 的指控要逐條核實後才採信。",
+        "source_refs": ["PR #37", "PR #34–#37 的獨立 review（2026-09-29）"]
       }
     ]
   },
