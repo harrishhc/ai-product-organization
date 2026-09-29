@@ -31,10 +31,13 @@ const REPO_ROOT = path.join(__dirname, '..');
  * real dead links in upstream material nothing in this repository routes to
  * or reads programmatically (see methodology/provenance/ for what is
  * actually indexed). An earlier version of this comment put the figure at
- * "roughly 90" and blamed URL-encoded filenames; independent review found
- * that mostly reflected this checker not URL-decoding, and that ~a third of
- * the count was double-counted top-level duplicates (removed in #36). The
- * figure is not reliable and is deliberately not restated. If that tree
+ * "roughly 90" and blamed URL-encoded filenames. That figure could not be
+ * reproduced. Measured 2026-09-29 with the same link pattern: before #36 the
+ * vendored trees under methodology/ held 74 unresolved links if filenames are
+ * not URL-decoded and 26 if they are, 31 and 15 of them in top-level copies
+ * #36 later removed; methodology/prompts/ alone has 43 and 11 today. So the
+ * eleven that remain are real, and most of the original count was this
+ * checker not decoding. If that tree
  * becomes actively maintained, widen SCOPE_DIRS accordingly.
  *
  * What this does NOT check, so a green run is not read as more than it is:

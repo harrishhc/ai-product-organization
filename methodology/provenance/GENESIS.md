@@ -39,14 +39,14 @@ at its pinned commit, not reconstructed from memory):
   the upstream README itself labels "therapeutic workplace satire," not
   methodology (confirmed with HH 2026-09-24: leave excluded).
 
-Directories that survived this filter were imported whole rather than
-sampled. Only `prompt-generators/` and `storytelling/` were diffed against the
-pinned Prompts commit; an earlier version of this paragraph claimed that check
-covered every surviving directory ("byte-complete… file for file"), which the
-record does not support, so treat the other directories as imported whole but
-not individually verified. This was a content-type exclusion, not a size or
-token constraint. Current file counts, for scale: 24 under
-`methodology/prompts/market-intelligence/` and 39 under
+Directories that survived this filter were meant to be imported whole rather
+than sampled. The record shows only `prompt-generators/` and `storytelling/`
+being diffed against the pinned Prompts commit; an earlier version of this
+paragraph claimed that check covered every surviving directory
+("byte-complete… file for file"), which nothing supports, so treat the other
+directories as intended-whole but not individually verified. This was a
+content-type exclusion, not a size or token constraint. Current file counts,
+for scale: 24 under `methodology/prompts/market-intelligence/` and 39 under
 `methodology/prompts/prompts/` (a nested directory that is itself named
 `prompts`, which is why the bare "39 under `prompts/`" was ambiguous).
 
@@ -57,13 +57,11 @@ collection following the Agent Skills standard), which without namespacing
 would collide with `methodology/skills/` from the first source. See
 `registry/ecosystem.json` for the resulting `prompts:skills:...` ids.
 
-**Open item, found 2026-09-24, not yet decided:** the Skills source also has
-a `research/` directory. It was described here as long-form essays plus a
-Substack-post archive (`.zip`); that description was written without the
-directory in this checkout to compare against and has not been re-verified,
-so re-inspect the upstream `research/` before deciding. Unlike `prompting-style-guide.md`
-(imported separately the same day — it was a plain sibling of three
-already-imported guidance docs), this doesn't fit the pattern of anything
-else this baseline indexes, and importing a `.zip` archive has no precedent
-here. Not imported pending a content-curation call, the same kind `resumes-
-resignations-reactions/` above already got.
+**Decided 2026-09-29, not imported:** the Skills source also has a `research/`
+directory. HH's call: it is the upstream author's own earlier research
+records, not methodology, so it is left out and no longer an open item — the
+same kind of content-type exclusion `resumes-resignations-reactions/` above
+got. This file records the reason so the question is not reopened by the
+absence; it does not describe the directory's contents, which were never
+inspected here. Reconsider only if a concrete failure case needs something
+in it.
