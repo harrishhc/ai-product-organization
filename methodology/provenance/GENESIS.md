@@ -55,7 +55,7 @@ both source ecosystems without overwriting files with the same names — the
 Prompts source has its own internal `skills/` subdirectory (a small, separate
 collection following the Agent Skills standard), which without namespacing
 would collide with `methodology/skills/` from the first source. See
-`registry/ecosystem.json` for the resulting `prompts:skills:...` ids.
+`methodology/registry/ecosystem.json` for the resulting `prompts:skills:...` ids.
 
 **Decided 2026-09-29, not imported:** the Skills source also has a `research/`
 directory (long-form essays and a Substack-post archive `.zip`). HH's call:
