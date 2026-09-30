@@ -103,12 +103,12 @@ already has a more capable equivalent here:
 | 20 per-tool setup guides (`docs/Using PM Skills with n8n.md`, `…with Cursor.md`, …) | Not applicable. PDM resolves assets through `runtime/registry.js`; nothing is copied into a tool by hand. |
 | 4 onboarding docs (`docs/Using PM Skills 101.md`, `docs/Platform Guides for PMs.md`, …) | `docs/GETTING_STARTED.md` for HH, `AGENTS.md` for a worker |
 | `scripts/find-a-skill.sh --keyword X` (keyword grep over `catalog/`) | `runtime/orchestrator.js#selectCapability` — its direct descendant. Ranks all 86 entrypoints by fit, reports the match basis, surfaces `anti_cues`, and resolves composition. |
-| `scripts/run-pm.sh skill <name> "<task>"` | `bin/pdm-run.mjs next`, then `loadSelectedCapability` or the matching invocable `Skill` |
-| `scripts/generate-catalog.py` → `catalog/*.yaml` | `scripts/build-methodology-registry.mjs` → `registry/ecosystem.json`, covering all 86 entrypoints with routing metadata and declared composition, rebuilt by `.github/workflows/registry-sync.yml` on every push |
+| `scripts/run-pm.sh skill <name> "<task>"` | `bin/pdm-run.mjs next`, then `loadSelectedCapability` |
+| `scripts/generate-catalog.py` → `catalog/*.yaml` | `scripts/build-methodology-registry.mjs` → `methodology/registry/ecosystem.json`, covering all 86 entrypoints with routing metadata and declared composition, rebuilt by `.github/workflows/registry-sync.yml` on every push to `main` |
 
 None of the three scripts is a gap to fill. `catalog/*.yaml` remains as imported
 upstream material; nothing in the repository reads it, and
-`registry/ecosystem.json` is the authoritative index.
+`methodology/registry/ecosystem.json` is the authoritative index.
 
 Re-importing any of this later is Methodology Evolution work, and would need a
 concrete failure case that the equivalents above do not cover.
