@@ -10,6 +10,8 @@ import {
   listCapabilityIds,
   loadRegistryMetadata,
   renderRoutingShortlist,
+  renderSelection,
+  _resetRegistryCache,
 } from '../runtime/registry.js';
 import { createSession } from '../runtime/instrumentation.js';
 
@@ -350,7 +352,7 @@ test('renderRoutingShortlist states its own scope so a stale shortlist cannot be
   const text = lines.join('\n');
   assert.match(text, /routed against the uncertainty already on file/);
   assert.match(text, /if the.*question at hand is different.*does not answer it/s);
-  assert.match(text, /State that.*dominantUncertainty and call selectCapability directly/s);
+  assert.match(text, /node bin\/pdm-run\.mjs route --uncertainty/);
 });
 
 test('renderRoutingShortlist reproduces the blind-test shape: several weak_fit, no strong match', () => {
@@ -382,4 +384,58 @@ test('renderRoutingShortlist surfaces anti-cues and composition for a real match
     /skills:prd-development is a member of commands:write-prd, alongside: skills:problem-statement, skills:proto-persona, skills:user-story, skills:user-story-splitting/,
     'assert the whole composedBy line: a bare substring match could be satisfied by the candidate list instead',
   );
+});
+
+test('declared uncertainty_types are enforced against the closed-vocabulary token, never the uncertainty prose', () => {
+  const cap = loadRegistryMetadata().capabilities.find((c) => c.id === 'capabilities:prioritization-comparison');
+  const query = { intents: ['prioritization'], decisionStage: 'prioritize' };
+  try {
+    cap.uncertainty_types = ['workflow'];
+    const prose = filterCandidates({ ...query, dominantUncertainty: 'we cannot decide which feature comes first' });
+    const viaProse = prose.find((c) => c.id === cap.id);
+    assert.ok(viaProse, 'prose alone must not exclude a capability that declares types');
+    assert.equal(viaProse.uncertaintyMatch, 'unknown');
+
+    const matched = filterCandidates({ ...query, dominantUncertainty: 'q', uncertaintyType: 'workflow' });
+    assert.equal(matched.find((c) => c.id === cap.id).uncertaintyMatch, 'matched');
+
+    const mismatch = filterCandidates({ ...query, dominantUncertainty: 'q', uncertaintyType: 'evidence' });
+    assert.ok(!mismatch.some((c) => c.id === cap.id), 'a declared type that differs from the token excludes it');
+  } finally {
+    delete cap.uncertainty_types;
+    _resetRegistryCache();
+  }
+});
+
+test('renderRoutingShortlist forwards uncertaintyType to the filter', () => {
+  const cap = loadRegistryMetadata().capabilities.find((c) => c.id === 'capabilities:prioritization-comparison');
+  try {
+    cap.uncertainty_types = ['workflow'];
+    const kept = renderRoutingShortlist('q', ['prioritization'], 'workflow').join('\n');
+    assert.match(kept, /capabilities:prioritization-comparison/);
+    const dropped = renderRoutingShortlist('q', ['prioritization'], 'evidence').join('\n');
+    assert.doesNotMatch(dropped, /capabilities:prioritization-comparison/);
+  } finally {
+    delete cap.uncertainty_types;
+    _resetRegistryCache();
+  }
+});
+
+test('renderSelection names the file to read, its companions, anti-cues and composition', () => {
+  const selected = filterCandidates({ intents: ['prd'] }).find((c) => c.id === 'skills:prd-development');
+  assert.ok(selected, 'prd-development should be routable by the prd intent');
+  const text = renderSelection(selected).join('\n');
+  assert.match(text, /Selected: skills:prd-development/);
+  assert.match(text, /Read:\s+methodology\/skills\/prd-development\/SKILL\.md/);
+  assert.match(text, /loadAsset\('skills:prd-development:template'\)/);
+  assert.match(text, /Anti-cues/);
+  assert.match(text, /Member of commands:write-prd/);
+});
+
+test('renderSelection refuses to present a weak_fit as a selection', () => {
+  const weak = { ...filterCandidates({ intents: ['prd'] }).find((c) => c.id === 'skills:prd-development'), fit: 'weak_fit', matchBasis: 'cue' };
+  const text = renderSelection(weak).join('\n');
+  assert.match(text, /No confident selection/);
+  assert.match(text, /keyword collision/);
+  assert.ok(!/Read:/.test(text), 'a weak match must not hand the worker a file to read as if selected');
 });

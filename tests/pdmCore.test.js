@@ -7,6 +7,8 @@ import {
   founderOverride,
   requiresHhApproval,
   selectDelegate,
+  describeDelegation,
+  UNCERTAINTY_TYPES,
 } from '../runtime/pdmCore.js';
 
 test('pdmStatement accepts all five constitutional statements', () => {
@@ -57,4 +59,16 @@ test('selectDelegate maps uncertainty types to the correct specialist', () => {
   assert.equal(selectDelegate('reliability'), 'qa');
   assert.equal(selectDelegate('implementation'), 'engineering');
   assert.equal(selectDelegate('totally_unknown_type'), null);
+});
+
+test('UNCERTAINTY_TYPES is exactly the set selectDelegate can map', () => {
+  assert.equal(UNCERTAINTY_TYPES.length, 12);
+  for (const t of UNCERTAINTY_TYPES) assert.ok(selectDelegate(t), `${t} must map to a specialist`);
+});
+
+test('describeDelegation names the specialist and its gate, or says none applies, or says the type is unset', () => {
+  assert.match(describeDelegation('user_need'), /delegate to "research".*users, needs/);
+  assert.match(describeDelegation(null), /uncertainty_type not set/);
+  assert.match(describeDelegation(undefined), /user_need/, 'the unset hint lists the valid tokens');
+  assert.match(describeDelegation('made_up'), /no specialist mapped; resolve within PDM/);
 });
