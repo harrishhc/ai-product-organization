@@ -18,3 +18,8 @@ node_modules/
 # is a checkout, not repository content — without this, `git add -A` stages one
 # whole, `.git` file and all.
 /.claude/
+
+# PDM Core is registered as a product whose repository is this one, so its
+# disposable Active Brief (runtime/workState.js) would otherwise appear here as
+# an untracked file; other products keep theirs in their own ignored clones.
+/products/pdm-core/active-brief.md
