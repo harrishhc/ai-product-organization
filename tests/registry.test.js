@@ -367,7 +367,7 @@ test('renderRoutingShortlist reproduces the blind-test shape: several weak_fit, 
   assert.doesNotMatch(text, /^\s+fit\s/m);
 });
 
-test('renderRoutingShortlist surfaces anti-cues and composition for a real match, without loading any detail', () => {
+test('renderRoutingShortlist surfaces anti-cues and composition for a real match', () => {
   // Found reviewing this PR: the original assertion here only checked
   // 'skills:prd-development' appears anywhere in the text, which the
   // candidate list line alone already satisfies — it would pass even if the
@@ -382,8 +382,4 @@ test('renderRoutingShortlist surfaces anti-cues and composition for a real match
     /skills:prd-development is a member of commands:write-prd, alongside: skills:problem-statement, skills:proto-persona, skills:user-story, skills:user-story-splitting/,
     'assert the whole composedBy line: a bare substring match could be satisfied by the candidate list instead',
   );
-  // "Without loading any detail" is a signature-level guarantee, not
-  // something a black-box return value proves: renderRoutingShortlist never
-  // imports loadAsset/loadCapabilityDetail, so there is no code path from it
-  // that could load one — verified by import surface, not by this call.
 });

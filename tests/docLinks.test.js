@@ -24,18 +24,28 @@ const REPO_ROOT = path.join(__dirname, '..');
  * Scope is deliberately narrow. Only the actively-maintained surface is
  * checked: root docs, docs/, governance/, agents/, products/,
  * organizations/, and methodology's own entrypoint corpus (capabilities/,
- * commands/, provenance/, skills/*\/SKILL.md, and each directory's own
- * README.md). The bulk vendored reference trees
- * under methodology/ (prompts/, storytelling/, skeletons/, vibes/,
- * workshops/, market-intelligence/, prompt-generators/) are excluded: a
- * scan at authoring time found roughly 90 pre-existing broken links there,
- * almost all URL-encoded upstream filenames in material nothing in this
- * repository routes to or reads programmatically (see
- * methodology/provenance/ for what is actually indexed). Enforcing that
- * tree here would either fail CI on unrelated genesis-import content
- * indefinitely, or force fixing ~90 links in reference material as a side
- * effect of an unrelated change — neither is this test's job. If that
- * tree becomes actively maintained, widen SCOPE_DIRS accordingly.
+ * commands/, provenance/, every .md under skills/ including examples, and
+ * methodology/'s own README.md). The vendored reference tree that holds real
+ * dead links, methodology/prompts/ (135 .md files; its storytelling/,
+ * workshops/, market-intelligence/ etc. live inside it), is excluded because
+ * it is upstream material nothing in this repository routes to or reads
+ * programmatically (methodology/catalog/, 3 .md files with no links, is also
+ * outside the scanned set) (see methodology/provenance/ for what is
+ * actually indexed). An earlier version of this comment put the figure at
+ * "roughly 90" and blamed URL-encoded filenames. That figure could not be
+ * reproduced. Measured 2026-09-29 with the same link pattern: before #36 the
+ * vendored trees under methodology/ held 74 unresolved links if filenames are
+ * not URL-decoded and 27 if they are, 31 and 16 of them in top-level copies
+ * #36 later removed; methodology/prompts/ alone has 43 and 11 today. So the
+ * eleven that remain are real, and most of the original count was this
+ * checker not decoding. If that tree
+ * becomes actively maintained, widen SCOPE_DIRS accordingly.
+ *
+ * What this does NOT check, so a green run is not read as more than it is:
+ * `#fragment` anchors (only the file part is resolved), reference-style
+ * links (`[t][ref]` + `[ref]: path`), HTML `<a href>`, and bare backtick or
+ * prose paths. Links inside fenced code blocks ARE extracted, so an example
+ * link shown in a code fence will be reported as dead.
  */
 const SCOPE_DIRS = [
   '.', // root: README.md, AGENTS.md, CLAUDE.md — not recursed, see walk()
@@ -96,20 +106,46 @@ function extractLinks(text) {
     .filter((link) => link.trim() !== '');
 }
 
-test('every markdown link on the actively-maintained surface resolves to a real file or directory', () => {
+/** The dead links in one file's text, as `<file> -> <link>` strings. Split out
+ * of the test below so it can be exercised on synthetic input: a checker that
+ * has never been seen to fail proves nothing by passing. */
+function brokenLinksIn(file, text) {
   const broken = [];
-  for (const file of scopedMarkdownFiles()) {
-    const text = readFileSync(file, 'utf8');
-    for (const link of extractLinks(text)) {
-      const withoutFragment = link.split('#')[0];
-      if (!withoutFragment) continue; // pure #anchor, nothing to resolve
-      const resolved = path.resolve(path.dirname(file), withoutFragment);
-      if (!existsSync(resolved)) {
-        broken.push(`${path.relative(REPO_ROOT, file)} -> ${link}`);
-      }
+  for (const link of extractLinks(text)) {
+    let withoutFragment = link.split('#')[0];
+    if (!withoutFragment) continue; // pure #anchor, nothing to resolve
+    try {
+      withoutFragment = decodeURIComponent(withoutFragment);
+    } catch {
+      // malformed escape: resolve the literal text rather than crash the run
+    }
+    if (!existsSync(path.resolve(path.dirname(file), withoutFragment))) {
+      broken.push(`${path.relative(REPO_ROOT, file)} -> ${link}`);
     }
   }
+  return broken;
+}
+
+test('every markdown link on the actively-maintained surface resolves to a real file or directory', () => {
+  const broken = scopedMarkdownFiles().flatMap((file) => brokenLinksIn(file, readFileSync(file, 'utf8')));
   assert.deepEqual(broken, [], `dead markdown link(s):\n${broken.join('\n')}`);
+});
+
+test('the checker itself reports a dead link and passes a live one, including a URL-encoded one', () => {
+  const from = path.join(REPO_ROOT, 'README.md');
+  const text = [
+    '[dead](./no-such-file-anywhere.md)',
+    '[live](./AGENTS.md)',
+    '[live with fragment](./AGENTS.md#anything)',
+    '[encoded live](./docs/GETTING%5FSTARTED.md)',
+    '[encoded dead](./docs/NO%20SUCH.md)',
+    '[malformed escape](./100%.md)',
+  ].join('\n');
+  assert.deepEqual(brokenLinksIn(from, text), [
+    'README.md -> ./no-such-file-anywhere.md',
+    'README.md -> ./docs/NO%20SUCH.md',
+    'README.md -> ./100%.md',
+  ]);
 });
 
 test('the scoped surface is non-trivial, so this test cannot silently pass on nothing', () => {

@@ -278,9 +278,11 @@ export function loadCapabilityDetail(id) {
 
 /**
  * Renders a first-pass routing shortlist for a dominant uncertainty, as lines
- * of text — pure and I/O-free, so `bin/pdm-run.mjs` (which cannot be safely
- * imported by tests: it runs its CLI dispatch unconditionally at module load)
- * can print it and tests can assert on it directly.
+ * of text. It returns lines rather than printing, so `bin/pdm-run.mjs` (which
+ * cannot be safely imported by tests: it runs its CLI dispatch unconditionally
+ * at module load) can print it and tests can assert on it directly. It is not
+ * I/O-free: the first call reads the cached registry metadata file, but it
+ * reads no capability detail file.
  *
  * This is the one piece of routing a caller can honestly do without PDM
  * judgment: the dominant uncertainty is already durable Work State, so no
@@ -304,17 +306,18 @@ export function loadCapabilityDetail(id) {
  * all-weak_fit shortlist computed from that stale, recorded uncertainty
  * nearly concluded "no method applies" to the actual question, which the
  * shortlist was never answering. It caught the mismatch itself; nothing
- * forced that catch. Stated explicitly now so the next reader does not have
- * to rediscover it by nearly making the same mistake.
+ * forced that catch, hence the explicit caveat in the output.
  *
  * No language detection is attempted when deciding what to say about a weak
- * result: Latin-script proper nouns (Paige, DeepDx) inside an otherwise
- * non-English uncertainty make any such check unreliable, and the instruction
- * is the same either way — supply `intents`, which is where the bridge
- * belongs. This rationale was dropped when the function moved here from
- * bin/pdm-run.mjs in #33 while the behaviour and its output line both stayed.
+ * or empty result: Latin-script proper nouns (Paige, DeepDx) inside an
+ * otherwise non-English uncertainty make any such check unreliable. The
+ * output branches only on whether `routingIntents` was supplied, because the
+ * remedy is the same either way — declare `routing_intents`, which is where
+ * the bridge to the corpus's terms belongs.
  *
- * Loads no detail file — metadata only, so it costs no context.
+ * Loads no detail file — metadata only, so it costs no context. The
+ * `composes`/`composedBy` lines come from `resolveComposition`, also
+ * metadata-only.
  *
  * @param {string} dominantUncertainty
  * @param {string[]} [routingIntents]
