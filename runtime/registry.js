@@ -314,8 +314,8 @@ export function loadCapabilityDetail(id) {
  * or empty result: Latin-script proper nouns (Paige, DeepDx) inside an
  * otherwise non-English uncertainty make any such check unreliable. The
  * output branches only on whether `routingIntents` was supplied, because the
- * remedy is the same either way — declare `routing_intents`, which is where
- * the bridge to the corpus's terms belongs.
+ * remedy is the same either way — declare `routing_intents` (verified with
+ * `route` first), which is where the bridge to the corpus's terms belongs.
  *
  * Loads no detail file — metadata only, so it costs no context. The
  * `composes`/`composedBy` lines come from `resolveComposition`, also
@@ -351,9 +351,10 @@ export function renderRoutingShortlist(dominantUncertainty, routingIntents = [],
         "  This product's Work State declares no `routing_intents`. They are the corpus's own",
         '  terms for this work (e.g. "competitive", "prd", "prioritization"); an uncertainty not',
         '  written in English matches little here, and that field is the bridge. Verify before',
-        '  recording: run `node bin/pdm-run.mjs route --uncertainty "..." --intents a,b` and keep',
-        '  only intents that surface something above weak_fit. Unverified ones route to unrelated',
-        '  weak_fit entrypoints, which looks like routing but is not.',
+        '  recording: run `node bin/pdm-run.mjs route --uncertainty "..." --intents <a,b>` and read',
+        '  what it selects. Intents that mean nothing here still surface unrelated entrypoints, so',
+        '  surfacing one is necessary, not sufficient: record an intent only if its top result',
+        '  resolves the work this uncertainty needs.',
       );
     } else {
       lines.push(
@@ -372,9 +373,10 @@ export function renderRoutingShortlist(dominantUncertainty, routingIntents = [],
     if (routingIntents.length === 0) {
       lines.push(
         "  `routing_intents` in this product's Work State can give routing the corpus's own terms",
-        '  instead of whatever its prose shares with English, but only if they verify: try',
-        '  `node bin/pdm-run.mjs route --uncertainty "..." --intents a,b` and record only intents',
-        '  that surface something above weak_fit.',
+        '  instead of whatever its prose shares with English, but verify them first: try',
+        '  `node bin/pdm-run.mjs route --uncertainty "..." --intents <a,b>` and read what it selects.',
+        '  Surfacing something above weak_fit is necessary, not sufficient: record an intent only',
+        '  if its top result resolves the work this uncertainty needs.',
       );
     }
   }
