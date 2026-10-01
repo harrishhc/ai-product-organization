@@ -19,7 +19,6 @@ See `provenance/GENESIS.md` for the genesis boundary and source commits.
 methodology/
   skills/                 # imported PM skills; HH-owned after genesis
   commands/               # imported command workflows
-  catalog/                # source catalog/index material
   prompts/                # imported prompt ecosystem, namespaced to avoid collisions
   capabilities/           # HH-authored local capabilities
   registry/               # compact metadata used for runtime routing

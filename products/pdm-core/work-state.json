@@ -23,8 +23,7 @@
   ],
   "open_questions": [
     "PDM worker 在真實任務中實際查詢 repo 方法論的頻率，目前沒有可觀測的量測方式。",
-    "Runtime Governor 對對話長度結構性盲目，注意力稀釋無法被現有機制偵測。",
-    "methodology/catalog/ 是否退役。"
+    "Runtime Governor 對對話長度結構性盲目，注意力稀釋無法被現有機制偵測。"
   ],
   "last_session": {
     "date": "2026-09-30",

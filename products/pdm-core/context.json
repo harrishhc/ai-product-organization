@@ -44,7 +44,6 @@
     "open_strategy_questions": [
       "帳號層級 skills（~/.claude/skills/synced/；2026-09-21 量測為 27 個、其中 14 個與 repo 方法論同名但版本較舊，現況以 ls 為準）與 repo 方法論並存，而使用時沒有任何東西標示兩者的差別。這已導致同一類錯誤重複發生（把帳號層級能力當成 repo 能力引用）。結構解的方向已由 HH 於 2026-09-29 決定：skills 由 repo 維護、架構跟著 repo 走而不被單一 provider 綁定；HH 並已在帳號側關閉不再使用的同名帳號層 skills。repo 側的落實是 PR #41：AUTONOMY_BOUNDARY §1 改為 methodology/ 是唯一的 skill 來源、經 runtime 載入、不以 Skill 工具代替（未採 .claude/skills 符號連結層，也未加字串比對守門測試）。",
       "互動模式 2（Checkpointed Co-Construction）是三個模式中唯一沒有 skill 實作的，現有範例是 methodology/prompts/workshops/ 下的 prd-workshop.md 與 product-sunset-workshop.md。是否實作成 skill 未定。",
-      "methodology/catalog/ 是否退役未定。",
       "Runtime Governor 的 estimatedTokens 只計算 PDM 主動載入的內容，對對話本身的長度結構性盲目 — 注意力稀釋因此無法被現有機制偵測。"
     ]
   },
@@ -133,11 +132,6 @@
       {
         "status": "next",
         "item": "定位那個間歇測試失敗",
-        "classification": "HYPOTHESIS"
-      },
-      {
-        "status": "later",
-        "item": "決定 methodology/catalog/ 是否退役",
         "classification": "HYPOTHESIS"
       }
     ]

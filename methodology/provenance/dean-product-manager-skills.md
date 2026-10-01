@@ -67,7 +67,7 @@ upstream files that were never imported — every link in it was dead. That file
 has been removed; this section is the durable answer in its place.
 
 **The methodology came in:** from the Skills source, `skills/` (77),
-`commands/` (6), `catalog/`, and each skill's own `template.md`, `examples/`
+`commands/` (6), and each skill's own `template.md`, `examples/`
 and `scripts/`. From the Prompts source, everything under `prompts/` — which
 namespaces that whole ecosystem, including its own `workshops/`, `loops/`,
 `market-intelligence/`, `prompt-generators/`, `skeletons/`, `storytelling/`,
@@ -106,9 +106,16 @@ already has a more capable equivalent here:
 | `scripts/run-pm.sh skill <name> "<task>"` | `bin/pdm-run.mjs next`, then `loadSelectedCapability` |
 | `scripts/generate-catalog.py` → `catalog/*.yaml` | `scripts/build-methodology-registry.mjs` → `methodology/registry/ecosystem.json`, covering all 86 entrypoints with routing metadata and declared composition, rebuilt by `.github/workflows/registry-sync.yml` on every push to `main` |
 
-None of the three scripts is a gap to fill. `catalog/*.yaml` remains as imported
-upstream material; nothing in the repository reads it, and
-`methodology/registry/ecosystem.json` is the authoritative index.
+None of the three scripts is a gap to fill. The Skills source's `catalog/`
+(`skills-index.yaml`, `commands-index.yaml`, `skills-by-type.md`, `commands.md`,
+`README.md`; 1209 lines) was imported by the genesis commit and removed on
+2026-10-01. It listed the same 77 skills and 6 commands the registry indexes
+(names, types and command arguments compared, no differences), and its own
+regeneration script was never imported, so it could not have been kept current.
+Nothing read it as logic; the registry build script indexed its five files as
+non-routable `reference` assets, which is why `ecosystem.json` shrank by five
+entries. `methodology/registry/ecosystem.json` is the authoritative index. The
+upstream original is recoverable from the pinned commit above.
 
 Re-importing any of this later is Methodology Evolution work, and would need a
 concrete failure case that the equivalents above do not cover.

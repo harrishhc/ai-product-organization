@@ -29,9 +29,8 @@ const REPO_ROOT = path.join(__dirname, '..');
  * dead links, methodology/prompts/ (135 .md files; its storytelling/,
  * workshops/, market-intelligence/ etc. live inside it), is excluded because
  * it is upstream material nothing in this repository routes to or reads
- * programmatically (methodology/catalog/, 3 .md files with no links, is also
- * outside the scanned set) (see methodology/provenance/ for what is
- * actually indexed). An earlier version of this comment put the figure at
+ * programmatically (see methodology/provenance/ for what is actually
+ * indexed). An earlier version of this comment put the figure at
  * "roughly 90" and blamed URL-encoded filenames. That figure could not be
  * reproduced. Measured 2026-09-29 with the same link pattern: before #36 the
  * vendored trees under methodology/ held 74 unresolved links if filenames are
