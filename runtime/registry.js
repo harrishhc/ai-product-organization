@@ -314,8 +314,8 @@ export function loadCapabilityDetail(id) {
  * or empty result: Latin-script proper nouns (Paige, DeepDx) inside an
  * otherwise non-English uncertainty make any such check unreliable. The
  * output branches only on whether `routingIntents` was supplied, because the
- * remedy is the same either way — declare `routing_intents`, which is where
- * the bridge to the corpus's terms belongs.
+ * remedy is the same either way — declare `routing_intents` (verified with
+ * `route` first), which is where the bridge to the corpus's terms belongs.
  *
  * Loads no detail file — metadata only, so it costs no context. The
  * `composes`/`composedBy` lines come from `resolveComposition`, also
@@ -348,10 +348,13 @@ export function renderRoutingShortlist(dominantUncertainty, routingIntents = [],
     lines.push('  No entrypoint matched. This is no signal, not a weak one.');
     if (routingIntents.length === 0) {
       lines.push(
-        "  This product's Work State declares no `routing_intents`. Add them: they are the",
-        "  corpus's own terms for this work (e.g. \"competitive\", \"prd\", \"prioritization\"),",
-        '  recorded durably so routing does not depend on re-deriving them each session.',
-        '  An uncertainty not written in English matches little here; that field is the bridge.',
+        "  This product's Work State declares no `routing_intents`. They are the corpus's own",
+        '  terms for this work (e.g. "competitive", "prd", "prioritization"); an uncertainty not',
+        '  written in English matches little here, and that field is the bridge. Verify before',
+        '  recording: run `node bin/pdm-run.mjs route --uncertainty "..." --intents <a,b>` and read',
+        '  what it selects. Intents that mean nothing here still surface unrelated entrypoints, so',
+        '  surfacing one is necessary, not sufficient: record an intent only if its top result',
+        '  resolves the work this uncertainty needs.',
       );
     } else {
       lines.push(
@@ -369,8 +372,11 @@ export function renderRoutingShortlist(dominantUncertainty, routingIntents = [],
     lines.push('', '  Nothing above weak_fit: a starting point, not a selection.');
     if (routingIntents.length === 0) {
       lines.push(
-        "  Declaring `routing_intents` in this product's Work State would give routing the",
-        "  corpus's own terms instead of whatever its prose happens to share with English.",
+        "  `routing_intents` in this product's Work State can give routing the corpus's own terms",
+        '  instead of whatever its prose shares with English, but verify them first: try',
+        '  `node bin/pdm-run.mjs route --uncertainty "..." --intents <a,b>` and read what it selects.',
+        '  Surfacing something above weak_fit is necessary, not sufficient: record an intent only',
+        '  if its top result resolves the work this uncertainty needs.',
       );
     }
   }

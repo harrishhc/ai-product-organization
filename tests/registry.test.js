@@ -369,6 +369,69 @@ test('renderRoutingShortlist reproduces the blind-test shape: several weak_fit, 
   assert.doesNotMatch(text, /^\s+fit\s/m);
 });
 
+test('renderRoutingShortlist tells the reader to verify intents before recording them, in every branch that advises declaring them', () => {
+  // The advice used to say "Add them". Intents that were never run through
+  // `route` can surface unrelated entrypoints, which reads as working routing,
+  // and surfacing one is not proof the intent is right (the placeholder `a,b`
+  // pasted verbatim selects an unrelated skill at `fit`). Each branch that
+  // mentions routing_intents must name the verification command AND say the
+  // result has to be read, not merely produced.
+  const verify = /route --uncertainty "\.\.\." --intents <a,b>/;
+  const readIt = /necessary, not sufficient/;
+
+  const noMatch = renderRoutingShortlist('qqqq zzzz', []).join('\n');
+  assert.match(noMatch, /No entrypoint matched\. This is no signal, not a weak one\./);
+  assert.match(noMatch, /Verify before\s+recording/);
+  assert.match(noMatch, verify);
+  assert.match(noMatch, readIt);
+  assert.doesNotMatch(noMatch, /Add them/);
+
+  const weakOnly = renderRoutingShortlist('the deck reported a figure', []).join('\n');
+  assert.match(weakOnly, /Nothing above weak_fit: a starting point, not a selection\./);
+  assert.match(weakOnly, verify);
+  assert.match(weakOnly, readIt, 'this phrase appears only in the advice, unlike "above weak_fit"');
+});
+
+test('renderRoutingShortlist does not advise declaring intents once the product already has them', () => {
+  const stillNothing = renderRoutingShortlist('qqqq zzzz', ['zzzz']).join('\n');
+  assert.match(stillNothing, /Even with routing_intents, nothing matched/);
+  assert.doesNotMatch(stillNothing, /Verify before/);
+
+  const weakWithIntents = renderRoutingShortlist('the deck reported a figure', ['zzzz']).join('\n');
+  assert.match(weakWithIntents, /Nothing above weak_fit: a starting point, not a selection\./);
+  assert.doesNotMatch(weakWithIntents, /--intents <a,b>/);
+});
+
+test('renderRoutingShortlist lists the members a top-ranked command composes', () => {
+  const text = renderRoutingShortlist('plan the roadmap', ['roadmap']).join('\n');
+  assert.match(
+    text,
+    /commands:plan-roadmap composes: skills:roadmap-planning, skills:epic-hypothesis, skills:prioritization-advisor, skills:user-story-mapping, skills:epic-breakdown-advisor/,
+  );
+});
+
+test('renderRoutingShortlist treats a fit result as a selection, caps the list at five and counts the rest', () => {
+  const query = { dominantUncertainty: 'plan the roadmap', intents: ['roadmap'] };
+  const total = filterCandidates(query).length;
+  assert.ok(total > 5 && filterCandidates(query)[0].fit !== 'weak_fit', 'precondition: a real match with more than five candidates');
+
+  const lines = renderRoutingShortlist(query.dominantUncertainty, query.intents);
+  const text = lines.join('\n');
+  assert.match(text, /shortlist from routing_intents: roadmap\)/);
+  assert.doesNotMatch(text, /Nothing above weak_fit/, 'a real fit must not be described as a weak starting point');
+  assert.doesNotMatch(text, /Verify before|necessary, not sufficient/, 'no declare-intents advice when there is a real match');
+  assert.equal(lines.filter((l) => /^ {2}(strong_fit|fit|weak_fit)\s/.test(l)).length, 5);
+  assert.match(text, new RegExp(`\\.\\.\\. ${total - 5} more`));
+
+  assert.match(renderRoutingShortlist('plan the roadmap').join('\n'), /shortlist from the dominant uncertainty alone\)/);
+});
+
+test('renderRoutingShortlist refuses to route without a dominant uncertainty', () => {
+  const text = renderRoutingShortlist('', ['roadmap']).join('\n');
+  assert.match(text, /No dominant uncertainty in this product's Work State; record one before routing\./);
+  assert.doesNotMatch(text, /^ {2}(strong_fit|fit|weak_fit)\s/m);
+});
+
 test('renderRoutingShortlist surfaces anti-cues and composition for a real match', () => {
   // Found reviewing this PR: the original assertion here only checked
   // 'skills:prd-development' appears anywhere in the text, which the
