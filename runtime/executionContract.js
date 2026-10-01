@@ -67,6 +67,9 @@ export function createExecutionRequest({
   if (resume_handle !== null && typeof resume_handle !== "string") {
     throw new Error("Execution contract: resume_handle must be null or an opaque string.");
   }
+  if (mode === EXECUTION_MODES.RESUME && (resume_handle === null || resume_handle === "")) {
+    throw new Error("Execution contract: mode \"resume\" requires a non-empty resume_handle.");
+  }
   return {
     contract_version: EXECUTION_CONTRACT_VERSION,
     run_id,
@@ -123,6 +126,17 @@ export function createExecutionResult({
       throw new Error("Execution contract: invalid error code " + JSON.stringify(error.code) + ".");
     }
     assertNonEmptyString(error.message, "error.message");
+  }
+
+  const resumable = status === EXECUTION_STATUS.PAUSED || status === EXECUTION_STATUS.WAITING_FOR_FOUNDER;
+  if (resumable && (resume_handle === null || resume_handle === "")) {
+    throw new Error("Execution contract: status " + status + " requires a non-empty resume_handle.");
+  }
+  if (status === EXECUTION_STATUS.FAILED && error === null) {
+    throw new Error("Execution contract: status FAILED requires an error.");
+  }
+  if (status === EXECUTION_STATUS.COMPLETED && error !== null) {
+    throw new Error("Execution contract: status COMPLETED must not carry an error.");
   }
 
   return {

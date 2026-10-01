@@ -74,6 +74,7 @@ test("execution result allows provider usage to be partially unavailable", () =>
     work_unit_id: "wu-1",
     product_id: "p1",
     status: EXECUTION_STATUS.PAUSED,
+    resume_handle: "host-token",
     summary: "Paused after an interrupt.",
     usage: { tool_calls: 3 },
   });
@@ -130,5 +131,28 @@ test("assert helpers reject incompatible or tampered envelopes", () => {
   assert.throws(
     () => assertExecutionResult({ ...result, status: "NOT_A_STATUS" }),
     /invalid status/
+  );
+});
+
+test("envelopes that contradict the lifecycle are rejected, not just malformed ones", () => {
+  const id = { run_id: "run-1", work_unit_id: "wu-1", product_id: "p1" };
+  const err = { code: EXECUTION_ERROR_CODES.TOOL, message: "tool failed" };
+
+  assert.throws(() => createExecutionRequest({ ...id, mode: EXECUTION_MODES.RESUME }), /requires a non-empty resume_handle/);
+  assert.throws(
+    () => createExecutionRequest({ ...id, mode: EXECUTION_MODES.RESUME, resume_handle: "" }),
+    /requires a non-empty resume_handle/
+  );
+
+  for (const status of [EXECUTION_STATUS.PAUSED, EXECUTION_STATUS.WAITING_FOR_FOUNDER]) {
+    assert.throws(() => createExecutionResult({ ...id, status }), /requires a non-empty resume_handle/);
+    assert.equal(createExecutionResult({ ...id, status, resume_handle: "h" }).resume_handle, "h");
+  }
+
+  assert.throws(() => createExecutionResult({ ...id, status: EXECUTION_STATUS.FAILED }), /FAILED requires an error/);
+  assert.equal(createExecutionResult({ ...id, status: EXECUTION_STATUS.FAILED, error: err }).error.code, "tool");
+  assert.throws(
+    () => createExecutionResult({ ...id, status: EXECUTION_STATUS.COMPLETED, error: err }),
+    /COMPLETED must not carry an error/
   );
 });
