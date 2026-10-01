@@ -120,13 +120,15 @@ function matchStrength(candidate) {
 /**
  * Filtering is metadata-only. The orchestrator is responsible for requiring
  * dominant uncertainty; direct registry callers may omit it. If an asset
- * declares explicit uncertainty_types, they are enforced rather than guessed.
+ * declares explicit uncertainty_types, they are enforced against
+ * `uncertaintyType` (a closed-vocabulary token), never against the
+ * `dominantUncertainty` prose, which can never equal a token.
  *
  * Two match bases are reported, never blended: `declared` (the asset's own
  * routing metadata matched) and `cue` (only its self-description matched).
  * A cue match can surface a candidate but can never outrank a declared one.
  */
-export function filterCandidates({ intents = [], decisionStage, dominantUncertainty } = {}) {
+export function filterCandidates({ intents = [], decisionStage, dominantUncertainty, uncertaintyType } = {}) {
   const results = [];
   const uncertaintyTerms = discriminating(significantTerms(dominantUncertainty));
 
@@ -134,8 +136,8 @@ export function filterCandidates({ intents = [], decisionStage, dominantUncertai
     const matchedIntents = (cap.primary_intents ?? []).filter((i) => intents.includes(i));
     const stageMatch = decisionStage ? cap.decision_stage === decisionStage : false;
     const uncertaintyTypes = cap.uncertainty_types ?? null;
-    const uncertaintyMatch = uncertaintyTypes && dominantUncertainty
-      ? (uncertaintyTypes.includes(dominantUncertainty) ? 'matched' : 'mismatch')
+    const uncertaintyMatch = uncertaintyTypes && uncertaintyType
+      ? (uncertaintyTypes.includes(uncertaintyType) ? 'matched' : 'mismatch')
       : 'unknown';
 
     if (uncertaintyMatch === 'mismatch') continue;
@@ -278,9 +280,11 @@ export function loadCapabilityDetail(id) {
 
 /**
  * Renders a first-pass routing shortlist for a dominant uncertainty, as lines
- * of text — pure and I/O-free, so `bin/pdm-run.mjs` (which cannot be safely
- * imported by tests: it runs its CLI dispatch unconditionally at module load)
- * can print it and tests can assert on it directly.
+ * of text. It returns lines rather than printing, so `bin/pdm-run.mjs` (which
+ * cannot be safely imported by tests: it runs its CLI dispatch unconditionally
+ * at module load) can print it and tests can assert on it directly. It is not
+ * I/O-free: the first call reads the cached registry metadata file, but it
+ * reads no capability detail file.
  *
  * This is the one piece of routing a caller can honestly do without PDM
  * judgment: the dominant uncertainty is already durable Work State, so no
@@ -304,27 +308,29 @@ export function loadCapabilityDetail(id) {
  * all-weak_fit shortlist computed from that stale, recorded uncertainty
  * nearly concluded "no method applies" to the actual question, which the
  * shortlist was never answering. It caught the mismatch itself; nothing
- * forced that catch. Stated explicitly now so the next reader does not have
- * to rediscover it by nearly making the same mistake.
+ * forced that catch, hence the explicit caveat in the output.
  *
  * No language detection is attempted when deciding what to say about a weak
- * result: Latin-script proper nouns (Paige, DeepDx) inside an otherwise
- * non-English uncertainty make any such check unreliable, and the instruction
- * is the same either way — supply `intents`, which is where the bridge
- * belongs. This rationale was dropped when the function moved here from
- * bin/pdm-run.mjs in #33 while the behaviour and its output line both stayed.
+ * or empty result: Latin-script proper nouns (Paige, DeepDx) inside an
+ * otherwise non-English uncertainty make any such check unreliable. The
+ * output branches only on whether `routingIntents` was supplied, because the
+ * remedy is the same either way — declare `routing_intents`, which is where
+ * the bridge to the corpus's terms belongs.
  *
- * Loads no detail file — metadata only, so it costs no context.
+ * Loads no detail file — metadata only, so it costs no context. The
+ * `composes`/`composedBy` lines come from `resolveComposition`, also
+ * metadata-only.
  *
  * @param {string} dominantUncertainty
  * @param {string[]} [routingIntents]
+ * @param {string} [uncertaintyType]
  * @returns {string[]} lines of text; join('\n') to print
  */
-export function renderRoutingShortlist(dominantUncertainty, routingIntents = []) {
+export function renderRoutingShortlist(dominantUncertainty, routingIntents = [], uncertaintyType) {
   if (!dominantUncertainty) {
     return ['', '--- Methodology routing ---', "No dominant uncertainty in this product's Work State; record one before routing."];
   }
-  const candidates = filterCandidates({ dominantUncertainty, intents: routingIntents });
+  const candidates = filterCandidates({ dominantUncertainty, intents: routingIntents, uncertaintyType });
   const basis = routingIntents.length
     ? `routing_intents: ${routingIntents.join(', ')}`
     : 'the dominant uncertainty alone';
@@ -332,7 +338,8 @@ export function renderRoutingShortlist(dominantUncertainty, routingIntents = [])
   lines.push(
     '  (routed against the uncertainty already on file for this product — if the',
     '  question at hand is different, this shortlist does not answer it. State that',
-    "  question's own dominantUncertainty and call selectCapability directly.)",
+    "  question's own dominantUncertainty and run `node bin/pdm-run.mjs route --uncertainty \"...\"`,",
+    '  or call selectCapability directly.)',
   );
 
   const noStrongMatch = candidates.length === 0 || candidates[0].fit === 'weak_fit';
@@ -436,6 +443,41 @@ export function resolveComposition(id) {
     composed: members.length > 0,
     composedBy,
   };
+}
+
+/**
+ * Renders what to read for an already-selected entrypoint: its source file,
+ * companion template/examples that exist in the registry, anti-cues to check
+ * first, and declared composition. Metadata only; loads no detail file.
+ */
+export function renderSelection(selected) {
+  const { assets = [] } = loadRegistryMetadata();
+  const { entrypoint, composes, composedBy } = resolveComposition(selected.id);
+  if (selected.fit === 'weak_fit') {
+    return [
+      '',
+      `--- No confident selection: best match ${selected.id} is only weak_fit (${selected.matchBasis}) ---`,
+      '  A weak_fit is a keyword collision, not a fit for this situation. Do not read it as the answer.',
+      '  Supply `--intents` in the corpus\'s own terms (e.g. prd, prioritization, competitive), or',
+      '  conclude no methodology applies and reason from first principles.',
+    ];
+  }
+  const companions = assets.filter((a) => a.id.startsWith(`${selected.id}:`));
+  const lines = [
+    '',
+    `--- Selected: ${selected.id} (${selected.fit}, ${selected.matchBasis}, ${selected.type ?? 'unknown type'}) ---`,
+    `  Read:  ${entrypoint.source_reference}`,
+  ];
+  for (const a of companions) lines.push(`         ${a.source_reference}   (loadAsset('${a.id}'))`);
+  if (selected.antiCues?.length) {
+    lines.push('  Anti-cues — if one holds, this is the wrong entrypoint; re-route:');
+    for (const cue of selected.antiCues) lines.push(`    - ${cue}`);
+  }
+  if (composes.length) lines.push(`  Composes (in order): ${composes.map((m) => m.id).join(' -> ')}`);
+  for (const parent of composedBy) {
+    lines.push(`  Member of ${parent.id}, alongside: ${parent.siblings.join(', ')}`);
+  }
+  return lines;
 }
 
 export function listCapabilityIds() {

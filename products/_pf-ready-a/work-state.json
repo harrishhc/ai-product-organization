@@ -1,6 +1,7 @@
 {
   "current_focus": "Draft the PRD",
   "dominant_uncertainty": "Which buyer signs off",
+  "uncertainty_type": "user_need",
   "in_progress": [],
   "next_actions": [
     "Draft PRD section 1"

@@ -131,3 +131,17 @@ const UNCERTAINTY_TYPE_TO_DELEGATE = Object.freeze({
 export function selectDelegate(dominantUncertaintyType) {
   return UNCERTAINTY_TYPE_TO_DELEGATE[dominantUncertaintyType] ?? null;
 }
+
+/** The closed vocabulary of uncertainty classifications; the same tokens drive delegation and capability routing. */
+export const UNCERTAINTY_TYPES = Object.freeze(Object.keys(UNCERTAINTY_TYPE_TO_DELEGATE));
+
+/** One line telling a worker who, if anyone, should be called for this uncertainty type. */
+export function describeDelegation(uncertaintyType) {
+  if (!uncertaintyType) {
+    return 'uncertainty_type not set in Work State (optional; one of ' + UNCERTAINTY_TYPES.join(', ') + ') — set it to get a delegation hint';
+  }
+  const agent = selectDelegate(uncertaintyType);
+  return agent
+    ? `${uncertaintyType} -> delegate to "${agent}": ${DELEGATION_GATES[agent]}`
+    : `${uncertaintyType} -> no specialist mapped; resolve within PDM`;
+}

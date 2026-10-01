@@ -39,25 +39,36 @@ at its pinned commit, not reconstructed from memory):
   the upstream README itself labels "therapeutic workplace satire," not
   methodology (confirmed with HH 2026-09-24: leave excluded).
 
-Every directory that survived this filter was imported byte-complete, not
-partially — verified by diffing `prompt-generators/` and `storytelling/`
-against the pinned Prompts commit, file for file. This was a content-type
-exclusion, not a size or token constraint: no directory was truncated, and
-some multi-file directories (24 files under `market-intelligence/`, 39 under
-`prompts/`) came in whole.
+Directories that survived this filter were meant to be imported whole rather
+than sampled. The record shows only `prompt-generators/` and `storytelling/`
+being diffed against the pinned Prompts commit; an earlier version of this
+paragraph claimed that check covered every surviving directory
+("byte-complete… file for file"), which nothing supports, so treat the other
+directories as intended-whole but not individually verified. This was a
+content-type exclusion, not a size or token constraint. Current file counts,
+for scale: 24 under `methodology/prompts/market-intelligence/` and 39 under
+`methodology/prompts/prompts/` (a nested directory that is itself named
+`prompts`, which is why the bare "39 under `prompts/`" was ambiguous).
 
 The prompt ecosystem is namespaced under `methodology/prompts/` to preserve
 both source ecosystems without overwriting files with the same names — the
 Prompts source has its own internal `skills/` subdirectory (a small, separate
 collection following the Agent Skills standard), which without namespacing
 would collide with `methodology/skills/` from the first source. See
-`registry/ecosystem.json` for the resulting `prompts:skills:...` ids.
+`methodology/registry/ecosystem.json` for the resulting `prompts:skills:...` ids.
 
-**Open item, found 2026-09-24, not yet decided:** the Skills source also has
-a `research/` directory — long-form essays and a Substack-post archive
-(`.zip`), not structured methodology assets. Unlike `prompting-style-guide.md`
-(imported separately the same day — it was a plain sibling of three
-already-imported guidance docs), this doesn't fit the pattern of anything
-else this baseline indexes, and importing a `.zip` archive has no precedent
-here. Not imported pending a content-curation call, the same kind `resumes-
-resignations-reactions/` above already got.
+**Decided 2026-09-29, not imported:** the Skills source also has a `research/`
+directory (long-form essays and a Substack-post archive `.zip`). HH's call:
+it is the upstream author's own earlier research records, not methodology, so
+it is left out and no longer an open item — the same kind of content-type
+exclusion `resumes-resignations-reactions/` above got. This file records the
+reason so the question is not reopened by the absence.
+
+One consequence to know about: `research/finance/` is the source material that
+seven imported skills cite under "Adapted from" —
+`acquisition-channel-advisor`, `business-health-diagnostic`,
+`feature-investment-advisor`, `finance-based-pricing-advisor`,
+`finance-metrics-quickref`, `saas-economics-efficiency-metrics` and
+`saas-revenue-growth-metrics`. Those citations dangle by design: they are
+attribution lines at the foot of each skill, not paths the runtime resolves. Reconsider only if a concrete failure case needs
+something in `research/`, including one of those seven citations.

@@ -1,0 +1,34 @@
+{
+  "current_focus": "驗證 skill 只從 repo 載入的規則（PR #41）在真實工作中有效：先前 repo 方法論與帳號層級 skills 並存，而使用時沒有任何東西標示兩者的差別。",
+  "dominant_uncertainty": "同一類錯誤（把帳號層級能力當成 repo 能力引用）已重複發生，而兩個字串比對取向的預防機制都被證偽。HH 已於 2026-09-29 決定結構解的方向（skills 由 repo 維護），落實在 PR #41（AUTONOMY_BOUNDARY §1），剩下的是驗證它在真實工作中有效。",
+  "in_progress": [],
+  "next_actions": [
+    "觀察 PR #41 之後的真實工作：worker 是否改從 methodology/ 載入 skill，而不是呼叫 Skill 工具；若仍有人把帳號層級能力當成 repo 能力，再重新評估是否需要 .claude/skills adapter",
+    "決定互動模式 2（Checkpointed Co-Construction）是否實作成 skill",
+    "定位那個未定位的低頻間歇測試失敗"
+  ],
+  "blocked": [],
+  "recently_completed": [
+    "PR #30 — 讓每個入口事實只有一個 owner，刪除重複的 START_HERE",
+    "PR #33 — 讓 routing shortlist 宣告自身範圍並移入 runtime/ 以便測試",
+    "PR #34 — 新增 repo 範圍的死連結檢查，修掉它找到的 5 個既有斷鏈",
+    "PR #35 — 匯入唯一真正缺漏的同層檔案，修正 GENESIS.md 未填的模板空白",
+    "PR #36 — 移除 genesis 匯入 namespacing 修復留下的 93 個重複檔案",
+    "PR #37 — 重新接上 #33 弄成孤兒的 JSDoc，還原它刪掉的理由說明",
+    "PR #38 — 註冊 PDM Core 本身為受管產品（priority 4，只在沒有 READY 的真實產品時被選到）",
+    "PR #39 — 修正獨立 review 發現 #34–#37 的錯誤宣稱（docLinks 數字、GENESIS research/ 記錄、registry 路徑）",
+    "PR #40 — 移除 #19 遺漏的 CC BY-NC-SA 授權行",
+    "PR #41 — methodology/ 成為唯一的 skill 來源，不再指示使用 Skill 工具",
+    "PR #42 — 新增 pdm-run route 與封閉詞彙的 uncertainty_type，並補上接線測試（203 個測試）"
+  ],
+  "open_questions": [
+    "PDM worker 在真實任務中實際查詢 repo 方法論的頻率，目前沒有可觀測的量測方式。",
+    "Runtime Governor 對對話長度結構性盲目，注意力稀釋無法被現有機制偵測。",
+    "methodology/catalog/ 是否退役。"
+  ],
+  "last_session": {
+    "date": "2026-09-30",
+    "summary": "合併 #38–#42。把 skills 只從 repo 載入的規則落實到 AUTONOMY_BOUNDARY；新增 pdm-run route，讓路由路徑可直接執行；新增 12 個值的 uncertainty_type。量測結果：86 個 capability 沒有任何一個宣告 uncertainty_types，且建置腳本不輸出該欄位，所以硬過濾目前不作用，uncertainty_type 唯一的實際效果是 next 印出的 delegation 提示。獨立 review 抓出並修掉多處錯誤宣稱；pdm-core 自己未驗證的 routing_intents 實測只命中 13 個離題的 weak_fit，已移除。",
+    "decision_refs": []
+  }
+}

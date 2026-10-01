@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { resolveProductRepository } from './productRegistry.js';
+import { UNCERTAINTY_TYPES } from './pdmCore.js';
 
 const REQUIRED_FIELDS = Object.freeze([
   'current_focus',
@@ -36,6 +37,12 @@ function assertRequiredFields(workState, verb) {
     if (!Array.isArray(v) || v.some((i) => typeof i !== 'string' || i.trim() === '')) {
       throw new Error(`Cannot ${verb} Work State: routing_intents must be an array of non-empty strings.`);
     }
+  }
+  // Optional closed-vocabulary classification of dominant_uncertainty (which is
+  // free prose). Validated only when present; never inferred, so an unclassified
+  // uncertainty stays unknown rather than guessed.
+  if ('uncertainty_type' in workState && workState.uncertainty_type !== null && !UNCERTAINTY_TYPES.includes(workState.uncertainty_type)) {
+    throw new Error(`Cannot ${verb} Work State: uncertainty_type must be null or one of ${UNCERTAINTY_TYPES.join(', ')}.`);
   }
   const missing = REQUIRED_FIELDS.filter((f) => !(f in workState));
   if (missing.length > 0) {

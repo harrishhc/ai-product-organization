@@ -261,6 +261,21 @@
       "priority": 1,
       "organization": "aetherai"
     },
+    "pdm-core": {
+      "repository": {
+        "type": "local_path",
+        "location": "."
+      },
+      "context_entry": "products/pdm-core/context.json",
+      "work_state_entry": "products/pdm-core/work-state.json",
+      "metadata": {
+        "owner": "harris.chen@aetherai.com",
+        "purpose": "PDM Core 管理自己。它的產品就是 PDM 的工作路徑本身 — repo 契約、方法論資產與 runtime。priority 刻意設為 4（低於所有真實產品），因此它永遠不會在 portfolio 選取中排到真實產品前面；它存在的目的是讓自身的治理發現成為 durable state，而不是讓它去競爭工作時間。"
+      },
+      "status": "active",
+      "priority": 4,
+      "organization": "aetherai"
+    },
     "slide-quality-control": {
       "repository": {
         "type": "git_remote",

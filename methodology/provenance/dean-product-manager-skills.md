@@ -76,17 +76,22 @@ namespaces that whole ecosystem, including its own `workshops/`, `loops/`,
 **Those Prompts-source directories live only under `prompts/`.** Copies of
 eight of them also sat at `methodology/`'s top level until 2026-09-29, when
 93 byte-identical duplicate files were removed. Root cause, recorded here so
-it cannot be reintroduced by the same route: the genesis importer first wrote
-the Prompts ecosystem's top level straight into `methodology/`, suffixing
-files with `.prompts` to dodge collisions with the Skills source. A later
-sub-commit of the same squashed commit (`508039a`), `fix: isolate prompt
-ecosystem from skill sources`, changed strategy to namespace the whole
-ecosystem under `prompts/`. The strategy fix was correct, but the importer
-only ever appended — it never cleaned up its previous output, and
-`feat: import methodology genesis baseline` ran four times across that
-commit. Every file operation in it is an `A`; there is not one rename or
-delete. So the first strategy's output simply stayed. The importer was
-retired in the same commit, so its logic can no longer be inspected.
+it cannot be reintroduced by the same route. What is directly observable in
+the squashed commit `508039a`: the Prompts ecosystem's top-level directories
+were added at `methodology/` unsuffixed, three files carry a `.prompts`
+suffix, and the same content was also added under `prompts/`. Its sub-commit
+titles include `fix: isolate prompt ecosystem from skill sources` and four
+occurrences of `feat: import methodology genesis baseline`. The reading that
+fits this evidence is that the importer first wrote the Prompts top level
+straight into `methodology/`, a later sub-commit re-namespaced under
+`prompts/`, and nothing cleaned up the first output — but that ordering and
+mechanism are **inferred**, not recorded: the commit is squashed and the
+importer was retired in the same commit, so its logic can no longer be
+inspected. (An earlier version of this paragraph said every file operation in
+`508039a` was an `A`. That was false: the commit is 492 A / 6 M / 6 D /
+5 R100 — the renames are the `vendor/` → `methodology/` moves and the deletes
+are four `capabilities/` files plus two `vendor/` files. It is true of, at
+most, the Prompts-import portion, which cannot be separated out.)
 
 **The upstream repository's own operating manual did not.** It answers "how do
 I, a person, get these files into my AI tool and use them by hand" — a workflow
@@ -98,12 +103,12 @@ already has a more capable equivalent here:
 | 20 per-tool setup guides (`docs/Using PM Skills with n8n.md`, `…with Cursor.md`, …) | Not applicable. PDM resolves assets through `runtime/registry.js`; nothing is copied into a tool by hand. |
 | 4 onboarding docs (`docs/Using PM Skills 101.md`, `docs/Platform Guides for PMs.md`, …) | `docs/GETTING_STARTED.md` for HH, `AGENTS.md` for a worker |
 | `scripts/find-a-skill.sh --keyword X` (keyword grep over `catalog/`) | `runtime/orchestrator.js#selectCapability` — its direct descendant. Ranks all 86 entrypoints by fit, reports the match basis, surfaces `anti_cues`, and resolves composition. |
-| `scripts/run-pm.sh skill <name> "<task>"` | `bin/pdm-run.mjs next`, then `loadSelectedCapability` or the matching invocable `Skill` |
-| `scripts/generate-catalog.py` → `catalog/*.yaml` | `scripts/build-methodology-registry.mjs` → `registry/ecosystem.json`, covering all 86 entrypoints with routing metadata and declared composition, rebuilt by `.github/workflows/registry-sync.yml` on every push |
+| `scripts/run-pm.sh skill <name> "<task>"` | `bin/pdm-run.mjs next`, then `loadSelectedCapability` |
+| `scripts/generate-catalog.py` → `catalog/*.yaml` | `scripts/build-methodology-registry.mjs` → `methodology/registry/ecosystem.json`, covering all 86 entrypoints with routing metadata and declared composition, rebuilt by `.github/workflows/registry-sync.yml` on every push to `main` |
 
 None of the three scripts is a gap to fill. `catalog/*.yaml` remains as imported
 upstream material; nothing in the repository reads it, and
-`registry/ecosystem.json` is the authoritative index.
+`methodology/registry/ecosystem.json` is the authoritative index.
 
 Re-importing any of this later is Methodology Evolution work, and would need a
 concrete failure case that the equivalents above do not cover.

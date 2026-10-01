@@ -10,7 +10,7 @@
 
 import { filterCandidates, selectSmallestSufficient, loadCapabilityDetail, resolveComposition } from './registry.js';
 import { getBoundedContext } from './context.js';
-import { selectDelegate } from './pdmCore.js';
+import { selectDelegate, UNCERTAINTY_TYPES } from './pdmCore.js';
 import { MAX_DELEGATION_DEPTH } from './instrumentation.js';
 
 // Specification §5 — the full reasoning loop. A given interaction should use
@@ -48,13 +48,16 @@ export function runStage(stageName, session) {
  * not replace stating it. Never loads capability detail files; that only
  * happens in loadSelectedCapability(), after a candidate is chosen.
  */
-export function selectCapability({ dominantUncertainty, intents, decisionStage, spansMultipleStages = false }, session) {
+export function selectCapability({ dominantUncertainty, uncertaintyType, intents, decisionStage, spansMultipleStages = false }, session) {
   if (!dominantUncertainty) {
     throw new Error(
       'selectCapability requires an explicit dominantUncertainty (the decision bottleneck this selection is meant to reduce) — routing must not be intent/stage matching alone.'
     );
   }
-  const candidates = filterCandidates({ intents, decisionStage, dominantUncertainty });
+  if (uncertaintyType != null && !UNCERTAINTY_TYPES.includes(uncertaintyType)) {
+    throw new Error(`Unknown uncertaintyType "${uncertaintyType}"; expected one of ${UNCERTAINTY_TYPES.join(', ')}.`);
+  }
+  const candidates = filterCandidates({ intents, decisionStage, dominantUncertainty, uncertaintyType });
   session?.recordCapabilitySelection?.(candidates.map((c) => c.id));
   const selected = selectSmallestSufficient(candidates, { spansMultipleStages });
   return { selected, candidates, dominantUncertainty };

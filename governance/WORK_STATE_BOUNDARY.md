@@ -20,7 +20,7 @@ Same treatment as the methodology registry (`ARCHITECTURE.md` §14: "derived met
 
 ## `docs/PRD.md`, where a product has one, is a narrative view — not a fourth source of truth
 
-A product may additionally keep a human-readable `docs/PRD.md` (written with the `prd-development` skill — see `governance/AUTONOMY_BOUNDARY.md` §1 on using it via the `Skill` tool rather than reinventing its structure). That document has no concept of Product Context, because it's a general-purpose PM skill, not something built for this repo. So this repo adds the one thing it's missing: **the PRD is subordinate to Product Context, the same way Active Brief and Work State are.** State this explicitly at the top of any `docs/PRD.md`:
+A product may additionally keep a human-readable `docs/PRD.md` (written with the `prd-development` skill — see `governance/AUTONOMY_BOUNDARY.md` §1 on loading it from `methodology/skills/prd-development/` rather than reinventing its structure). That document has no concept of Product Context, because it's a general-purpose PM skill, not something built for this repo. So this repo adds the one thing it's missing: **the PRD is subordinate to Product Context, the same way Active Brief and Work State are.** State this explicitly at the top of any `docs/PRD.md`:
 
 > Canonical source: this document is a narrative view of the product's Product Context (`context.json`, path per the product's registry entry). If the two disagree, Product Context is authoritative. Real history is `git log`, not a hand-maintained changelog.
 

@@ -38,6 +38,12 @@ test('refreshPortfolio derives each product\'s status from its own state', () =>
   assert.deepEqual(byId(portfolio, '_pf-waiting').pendingCheckpointIds, ['dec_pending_1']);
 });
 
+test('refreshPortfolio surfaces a product\'s uncertainty_type, and null when it is not recorded', () => {
+  const portfolio = refreshPortfolio({ productIds: ['_pf-ready-a', '_pf-ready-b'] });
+  assert.equal(byId(portfolio, '_pf-ready-a').uncertaintyType, 'user_need');
+  assert.equal(byId(portfolio, '_pf-ready-b').uncertaintyType, null);
+});
+
 test('a product that cannot be resolved yet becomes UNINITIALIZED instead of breaking the loop', () => {
   // Uses the dedicated _git-remote-not-cloned-yet fixture, never a real
   // product. This assertion previously pointed at colon-biopsy-ai-app and so
