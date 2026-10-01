@@ -348,10 +348,12 @@ export function renderRoutingShortlist(dominantUncertainty, routingIntents = [],
     lines.push('  No entrypoint matched. This is no signal, not a weak one.');
     if (routingIntents.length === 0) {
       lines.push(
-        "  This product's Work State declares no `routing_intents`. Add them: they are the",
-        "  corpus's own terms for this work (e.g. \"competitive\", \"prd\", \"prioritization\"),",
-        '  recorded durably so routing does not depend on re-deriving them each session.',
-        '  An uncertainty not written in English matches little here; that field is the bridge.',
+        "  This product's Work State declares no `routing_intents`. They are the corpus's own",
+        '  terms for this work (e.g. "competitive", "prd", "prioritization"); an uncertainty not',
+        '  written in English matches little here, and that field is the bridge. Verify before',
+        '  recording: run `node bin/pdm-run.mjs route --uncertainty "..." --intents a,b` and keep',
+        '  only intents that surface something above weak_fit. Unverified ones route to unrelated',
+        '  weak_fit entrypoints, which looks like routing but is not.',
       );
     } else {
       lines.push(
@@ -369,8 +371,10 @@ export function renderRoutingShortlist(dominantUncertainty, routingIntents = [],
     lines.push('', '  Nothing above weak_fit: a starting point, not a selection.');
     if (routingIntents.length === 0) {
       lines.push(
-        "  Declaring `routing_intents` in this product's Work State would give routing the",
-        "  corpus's own terms instead of whatever its prose happens to share with English.",
+        "  `routing_intents` in this product's Work State can give routing the corpus's own terms",
+        '  instead of whatever its prose shares with English, but only if they verify: try',
+        '  `node bin/pdm-run.mjs route --uncertainty "..." --intents a,b` and record only intents',
+        '  that surface something above weak_fit.',
       );
     }
   }

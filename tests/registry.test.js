@@ -369,6 +369,45 @@ test('renderRoutingShortlist reproduces the blind-test shape: several weak_fit, 
   assert.doesNotMatch(text, /^\s+fit\s/m);
 });
 
+test('renderRoutingShortlist tells the reader to verify intents before recording them, in every branch that advises declaring them', () => {
+  // The advice used to say "Add them". Intents that were never run through
+  // `route` routed to unrelated weak_fit entrypoints, which reads as working
+  // routing. Each branch that mentions routing_intents must now name the
+  // verification command and the bar (above weak_fit).
+  const verify = /route --uncertainty "\.\.\." --intents a,b/;
+  const bar = /above weak_fit/;
+
+  const noMatch = renderRoutingShortlist('qqqq zzzz', []).join('\n');
+  assert.match(noMatch, /No entrypoint matched\. This is no signal, not a weak one\./);
+  assert.match(noMatch, /Verify before\s+recording/);
+  assert.match(noMatch, verify);
+  assert.match(noMatch, bar);
+  assert.doesNotMatch(noMatch, /Add them/);
+
+  const weakOnly = renderRoutingShortlist('the deck reported a figure', []).join('\n');
+  assert.match(weakOnly, /Nothing above weak_fit: a starting point, not a selection\./);
+  assert.match(weakOnly, verify);
+  assert.match(weakOnly, bar);
+});
+
+test('renderRoutingShortlist does not advise declaring intents once the product already has them', () => {
+  const stillNothing = renderRoutingShortlist('qqqq zzzz', ['zzzz']).join('\n');
+  assert.match(stillNothing, /Even with routing_intents, nothing matched/);
+  assert.doesNotMatch(stillNothing, /Verify before/);
+
+  const weakWithIntents = renderRoutingShortlist('the deck reported a figure', ['zzzz']).join('\n');
+  assert.match(weakWithIntents, /Nothing above weak_fit: a starting point, not a selection\./);
+  assert.doesNotMatch(weakWithIntents, /--intents a,b/);
+});
+
+test('renderRoutingShortlist lists the members a top-ranked command composes', () => {
+  const text = renderRoutingShortlist('plan the roadmap', ['roadmap']).join('\n');
+  assert.match(
+    text,
+    /commands:plan-roadmap composes: skills:roadmap-planning, skills:epic-hypothesis, skills:prioritization-advisor, skills:user-story-mapping, skills:epic-breakdown-advisor/,
+  );
+});
+
 test('renderRoutingShortlist surfaces anti-cues and composition for a real match', () => {
   // Found reviewing this PR: the original assertion here only checked
   // 'skills:prd-development' appears anywhere in the text, which the
