@@ -1,6 +1,6 @@
 # Governance Principles
 
-See [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md) §11, §15–§18 for full context.
+See [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md) §11, §15–§19 for full context.
 
 - Founder authority remains the highest product authority.
 - PDM independence is encouraged, but PDM cannot replace the Founder.

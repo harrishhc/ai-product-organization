@@ -53,7 +53,7 @@ Do not assume that because a rule is documented it is fully enforced by runtime 
 - `runtime/productSync.js` — typed product/org sync and publish implementation; it does not itself contain the process/network adapter.
 - `runtime/orchestrator.js` — work orchestration and capability selection.
 - `runtime/instrumentation.js` — waste observability and Runtime Governor boundary.
-- `runtime/executionContract.js` — provider-neutral execution lifecycle vocabulary and request/result envelope validation; it never calls a model or chooses a provider.
+- `runtime/executionContract.js` — provider-neutral execution lifecycle vocabulary and request/result envelope validation; it never calls a model or chooses a provider, and nothing consumes it yet.
 - `bin/pdm-run.mjs` — mechanical coordinator for refreshing the portfolio, selecting the next product, printing its Active Brief and delegation hint (from the optional Work State `uncertainty_type`), and checking the Runtime Governor. `route` runs `selectCapability` and prints the one file to read, its anti-cues and composition; a `weak_fit` is reported as no selection. It does not perform product reasoning by itself.
 - `bin/pdm-git.mjs` — the real git/process adapter for product and organization sync, publish, and status operations.
 

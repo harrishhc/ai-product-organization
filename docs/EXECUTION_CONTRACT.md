@@ -1,6 +1,6 @@
 # PDM Execution Contract
 
-Status: Phase 2 — contract definition. No provider adapter is implemented by this document.
+Status: contract definition. No provider adapter exists yet: nothing in this repository produces or consumes these envelopes, and the current Claude Code / Codex path does not emit them.
 
 This contract defines the boundary between **PDM Core** and the **agent execution host**. It exists so Claude Code, Codex, LangGraph, or another execution backend can run the same PDM role without moving PDM's governance, methodology, or semantic state into the provider.
 
@@ -52,6 +52,8 @@ The host is responsible for:
 9. translating provider-specific interrupts into the contract's lifecycle states.
 
 The host must not silently turn a provider-side preference into a PDM decision.
+
+**Relation to `governance/COLLABORATION_PROTOCOL.md`.** That protocol names two things: the *Host* (today a VM with `tmux`, which keeps the process alive and reachable) and the *Provider process* (Claude Code, Codex CLI, which invokes the model and tools). Both sit on the host side of this contract; "execution host" here means the two taken together, and the contract does not require them to be separate processes.
 
 ## 4. Contract primitives
 
@@ -192,6 +194,12 @@ A completed lifecycle operation returns a provider-neutral result shape:
 
 summary is an execution summary, not a substitute for writing durable product state.
 
+Consistency rules, enforced by `runtime/executionContract.js`:
+
+- a request with `mode: "resume"` must carry a `resume_handle`;
+- a result with status `PAUSED` or `WAITING_FOR_FOUNDER` must carry a `resume_handle`, otherwise nothing can resume it;
+- a result with status `FAILED` must carry an `error`, and a `COMPLETED` result must not.
+
 Usage fields may be null because not every provider exposes the same telemetry. The host is responsible for reporting the actual quota signal when the provider makes it available.
 
 ## 8. Founder checkpoint sequence
@@ -280,7 +288,7 @@ A host may implement the actual specialist agent as a subagent, separate process
 
 ## 12. Provider adapters
 
-The first production adapter is expected to remain the current **Claude Code / Codex host path**, so this contract does not require direct model API access.
+The current **Claude Code / Codex host path** is not yet an adapter: it does not produce these envelopes. The contract is written so that path could become one without requiring direct model API access.
 
 A future LangGraph adapter is a separate implementation question. It may use an API, Agent SDK, or another provider transport, but those choices do not change this contract.
 
@@ -297,7 +305,7 @@ No provider-specific dependency is required in PDM Core by this contract.
 
 ## 13. Deliberately not specified yet
 
-Phase 2 defines the boundary, not the implementation details. It does **not** decide:
+This contract defines the boundary, not the implementation details. It does **not** decide:
 
 - which provider is used;
 - which model is selected;

@@ -206,31 +206,11 @@ Where a capability explicitly declares uncertainty types, the runtime may enforc
 
 ## 18. Execution Host Boundary
 
-PDM Core already has an execution mechanism through the current Claude Code / Codex host path. Phase 2 makes the boundary explicit so a future execution backend can be substituted without moving PDM judgment into the provider.
+PDM Core already has an execution mechanism through the current Claude Code / Codex host path. This section makes the boundary explicit so a future execution backend can be substituted without moving PDM judgment into the provider.
 
 The canonical contract is [docs/EXECUTION_CONTRACT.md](EXECUTION_CONTRACT.md). The runtime vocabulary and envelope validation live in [runtime/executionContract.js](../runtime/executionContract.js).
 
-~~~text
-PDM Intelligence + PDM Runtime
-  - product/work selection
-  - dominant uncertainty
-  - methodology selection/composition
-  - bounded context
-  - specialist delegation
-  - Founder authority
-  - durable semantic state
-  - Runtime Governor
-
-        ↓ Execution Contract
-
-Agent Execution Host
-  - provider process lifecycle
-  - model/tool invocation
-  - execution checkpoint / pause / resume
-  - streaming / transport
-  - provider usage/quota signal
-  - provider-specific retries and diagnostics
-~~~
+What PDM owns and what the host owns is listed once, in [EXECUTION_CONTRACT.md](EXECUTION_CONTRACT.md) §2 and §3, and is deliberately not repeated here.
 
 The host does not become a second memory system. Its checkpoint can remember execution position, but Product Context, Work State, decisions, methodology, and portfolio policy remain owned by their existing Git-backed sources.
 
