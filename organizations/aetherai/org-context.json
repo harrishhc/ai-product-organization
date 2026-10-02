@@ -24,6 +24,13 @@
         "HH direct statement to PDM, 2026-09-14",
         "Split out of the stakeholders roster entry 2026-09-18: a consultation gate is a process step, and a read of delivery_process asking which gates apply would otherwise miss it"
       ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "aetherSlide is delivered as an On-Premise deployment, so this deployment model applies to every product and AI App built on aetherSlide (e.g. Colon Biopsy AI App), not to one product. A feature spec that touches aetherSlide (configuration, defaults, administration, upgrades) should be written with the On-Premise model in mind. What the model implies for config distribution, version upgrades and per-site administration is not yet documented in this repository.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-10-03 (while reviewing ClickUp z9088270yd, the aetherSlide heatmap config ticket; asked that it be recorded as an aetherSlide-level practice affecting all aetherSlide-based product features)"
+      ]
     }
   ],
   "roles": [
@@ -121,6 +128,14 @@
       "statement": "Product-specific stakeholders observed alongside the org-wide ones above (e.g. a named KOL/clinical advisor tied to one product's regulatory or clinical validation work) were deliberately excluded from this file. The boundary test (docs/proposals/organization-context-layer.md §3: does the statement survive replacing the product?) puts them in that product's own Product Context, not here.",
       "source_refs": [
         "docs/proposals/organization-context-layer.md §3"
+      ]
+    },
+    {
+      "classification": "ASSUMPTION",
+      "statement": "The aetherSlide On-Premise delivery statement (delivery_process) comes from HH alone and has not been cross-checked. The Google Drive document 'aetherSlide-Solution-Core+' (Solutions Team internal discussion draft, 2026-03) also describes a centralized multi-tenant platform (SI-hosted or public-cloud, Shared Cloud) alongside Dedicated Deployment at the customer's own data center. Whether On-Premise is the only aetherSlide delivery model or the one that applies to the AI Apps in scope is not yet reconciled.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-10-03",
+        "Google Drive: aetherSlide-Solution-Core+ (file id 1x0QuX1W8jwIFYzcZwZAvkkG4juYzHZq2FNF3pPXXkfg), read 2026-10-03"
       ]
     }
   ]
