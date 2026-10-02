@@ -5,11 +5,22 @@ import {
   EXECUTION_ERROR_CODES,
   EXECUTION_MODES,
   EXECUTION_STATUS,
+  EXECUTION_TRANSITIONS,
+  RESUMABLE_STATUSES,
+  TERMINAL_STATUSES,
   createExecutionRequest,
   createExecutionResult,
   assertExecutionRequest,
   assertExecutionResult,
+  assertExecutionHistory,
+  assertExecutionTransition,
+  assertRunHistory,
+  assertResumeRequestFor,
+  canTransition,
+  isResumableStatus,
+  isTerminalStatus,
 } from "../runtime/executionContract.js";
+import { WORK_STATUSES } from "../runtime/portfolio.js";
 
 test("execution contract defines provider-neutral lifecycle states and modes", () => {
   assert.equal(EXECUTION_CONTRACT_VERSION, "1.0");
@@ -27,6 +38,7 @@ test("execution contract defines provider-neutral lifecycle states and modes", (
     RESUME: "resume",
   });
   assert.equal(EXECUTION_ERROR_CODES.TIMEOUT, "timeout");
+  assert.equal(EXECUTION_ERROR_CODES.RESUME_UNAVAILABLE, "resume_unavailable");
 });
 
 test("execution request is a small provider-neutral envelope", () => {
@@ -155,4 +167,243 @@ test("envelopes that contradict the lifecycle are rejected, not just malformed o
     () => createExecutionResult({ ...id, status: EXECUTION_STATUS.COMPLETED, error: err }),
     /COMPLETED must not carry an error/
   );
+});
+
+const ID = { run_id: "run-1", work_unit_id: "wu-1", product_id: "p1" };
+const ERR = { code: EXECUTION_ERROR_CODES.TOOL, message: "tool failed" };
+
+function result(status, extra = {}) {
+  const needsHandle = RESUMABLE_STATUSES.includes(status);
+  return createExecutionResult({
+    ...ID,
+    status,
+    resume_handle: needsHandle ? "h1" : null,
+    error: status === EXECUTION_STATUS.FAILED ? ERR : null,
+    ...extra,
+  });
+}
+
+test("transition table is exactly the documented matrix", () => {
+  assert.deepEqual(
+    Object.fromEntries(Object.entries(EXECUTION_TRANSITIONS).map(([from, to]) => [from, [...to]])),
+    {
+      RUNNING: ["RUNNING", "PAUSED", "WAITING_FOR_FOUNDER", "COMPLETED", "FAILED", "STOPPED"],
+      PAUSED: ["RUNNING", "STOPPED", "FAILED"],
+      WAITING_FOR_FOUNDER: ["RUNNING", "STOPPED", "FAILED"],
+      COMPLETED: [],
+      FAILED: [],
+      STOPPED: [],
+    }
+  );
+  assert.deepEqual(Object.keys(EXECUTION_TRANSITIONS).sort(), Object.values(EXECUTION_STATUS).sort());
+});
+
+test("terminal states have no exits; resumable states are exactly those that can return to RUNNING", () => {
+  assert.deepEqual([...TERMINAL_STATUSES].sort(), ["COMPLETED", "FAILED", "STOPPED"]);
+  for (const from of TERMINAL_STATUSES) {
+    for (const to of Object.values(EXECUTION_STATUS)) {
+      assert.equal(canTransition(from, to), false, from + " -> " + to);
+      assert.throws(() => assertExecutionTransition(from, to), /terminal/);
+    }
+  }
+  for (const status of Object.values(EXECUTION_STATUS)) {
+    const canReturnToRunning = status !== EXECUTION_STATUS.RUNNING && canTransition(status, EXECUTION_STATUS.RUNNING);
+    assert.equal(isResumableStatus(status), canReturnToRunning, status);
+    assert.equal(isTerminalStatus(status), EXECUTION_TRANSITIONS[status].length === 0, status);
+  }
+});
+
+test("only RUNNING may repeat itself; a suspended unit never jumps to COMPLETED or another suspension", () => {
+  for (const status of Object.values(EXECUTION_STATUS)) {
+    assert.equal(canTransition(status, status), status === EXECUTION_STATUS.RUNNING, status);
+  }
+  for (const from of RESUMABLE_STATUSES) {
+    assert.equal(canTransition(from, EXECUTION_STATUS.COMPLETED), false);
+    assert.equal(canTransition(from, EXECUTION_STATUS.PAUSED), false);
+    assert.equal(canTransition(from, EXECUTION_STATUS.WAITING_FOR_FOUNDER), false);
+  }
+  assert.throws(() => assertExecutionTransition("RUNNING", "NOT_A_STATUS"), /unknown status/);
+});
+
+test("execution states are not portfolio states, apart from the shared WAITING_FOR_FOUNDER name", () => {
+  const shared = Object.values(EXECUTION_STATUS).filter((status) => WORK_STATUSES.includes(status));
+  assert.deepEqual(shared, ["WAITING_FOR_FOUNDER"]);
+  for (const portfolioOnly of WORK_STATUSES.filter((status) => status !== "WAITING_FOR_FOUNDER")) {
+    assert.throws(() => assertExecutionTransition("RUNNING", portfolioOnly), /unknown status/);
+  }
+});
+
+test("a work-unit history must follow the lifecycle and nothing may follow a terminal status", () => {
+  assert.equal(assertExecutionHistory([result("COMPLETED")]).length, 1);
+  assert.equal(
+    assertExecutionHistory([result("RUNNING"), result("PAUSED"), result("RUNNING"), result("COMPLETED")]).length,
+    4
+  );
+  assert.throws(() => assertExecutionHistory([]), /non-empty array/);
+  assert.throws(() => assertExecutionHistory([result("COMPLETED"), result("RUNNING")]), /COMPLETED is terminal/);
+  assert.throws(() => assertExecutionHistory([result("STOPPED"), result("STOPPED")]), /STOPPED is terminal/);
+  assert.throws(() => assertExecutionHistory([result("PAUSED"), result("COMPLETED")]), /illegal transition PAUSED -> COMPLETED/);
+});
+
+test("FAILED is terminal: retrying is a new work unit, never a second outcome for the same one", () => {
+  const failed = result("FAILED");
+  assert.throws(() => assertExecutionHistory([failed, result("RUNNING")]), /FAILED is terminal.*new work unit/);
+  assert.throws(() => assertExecutionHistory([failed, result("COMPLETED")]), /FAILED is terminal/);
+
+  const retry = { ...ID, work_unit_id: "wu-2" };
+  const retried = [createExecutionResult({ ...retry, status: "RUNNING" }), createExecutionResult({ ...retry, status: "COMPLETED" })];
+  assert.equal(assertExecutionHistory([failed]).length, 1);
+  assert.equal(assertExecutionHistory(retried).length, 2);
+});
+
+test("a history is one work unit of one run on one product", () => {
+  assert.throws(
+    () => assertExecutionHistory([result("RUNNING"), createExecutionResult({ ...ID, work_unit_id: "wu-2", status: "COMPLETED" })]),
+    /exactly one work unit/
+  );
+  assert.throws(
+    () => assertExecutionHistory([result("RUNNING"), createExecutionResult({ ...ID, run_id: "run-2", status: "COMPLETED" })]),
+    /exactly one work unit/
+  );
+  assert.throws(
+    () => assertExecutionHistory([result("RUNNING"), createExecutionResult({ ...ID, product_id: "p2", status: "COMPLETED" })]),
+    /product_id changed/
+  );
+});
+
+test("resume applies only to a suspended work unit, with the handle that suspension issued", () => {
+  for (const status of RESUMABLE_STATUSES) {
+    const suspended = result(status);
+    const request = createExecutionRequest({ ...ID, mode: EXECUTION_MODES.RESUME, resume_handle: "h1" });
+    assert.deepEqual(assertResumeRequestFor(suspended, request), request);
+    assert.throws(
+      () => assertResumeRequestFor(suspended, { ...request, resume_handle: "stale-or-foreign" }),
+      /not the one issued/
+    );
+    assert.throws(() => assertResumeRequestFor(suspended, { ...request, work_unit_id: "wu-2" }), /does not match the suspended/);
+    assert.throws(() => assertResumeRequestFor(suspended, { ...request, product_id: "p2" }), /does not match the suspended/);
+  }
+
+  const resume = createExecutionRequest({ ...ID, mode: EXECUTION_MODES.RESUME, resume_handle: "h1" });
+  for (const status of [...TERMINAL_STATUSES, EXECUTION_STATUS.RUNNING]) {
+    assert.throws(() => assertResumeRequestFor(result(status), resume), /cannot resume a work unit in status/);
+  }
+  assert.throws(
+    () => assertResumeRequestFor(result("PAUSED"), createExecutionRequest({ ...ID, mode: EXECUTION_MODES.AUTONOMOUS })),
+    /not a resume request/
+  );
+});
+
+test("a resume handle exists only while its work unit is suspended and is single-use", () => {
+  for (const status of [EXECUTION_STATUS.RUNNING, ...TERMINAL_STATUSES]) {
+    const extra = status === EXECUTION_STATUS.FAILED ? { error: ERR } : {};
+    assert.throws(
+      () => createExecutionResult({ ...ID, status, resume_handle: "h1", ...extra }),
+      /must not carry a resume_handle/
+    );
+  }
+  for (const mode of [EXECUTION_MODES.AUTONOMOUS, EXECUTION_MODES.INTERACTIVE]) {
+    assert.throws(() => createExecutionRequest({ ...ID, mode, resume_handle: "h1" }), /only mode "resume" may carry/);
+  }
+
+  // After the resume the unit is RUNNING again, so the spent handle matches nothing.
+  const spent = createExecutionRequest({ ...ID, mode: EXECUTION_MODES.RESUME, resume_handle: "h1" });
+  assert.throws(() => assertResumeRequestFor(result("RUNNING"), spent), /cannot resume a work unit in status RUNNING/);
+});
+
+test("a Founder decision that changes the plan ends the suspended unit; a rejected handle fails it", () => {
+  const waiting = result("WAITING_FOR_FOUNDER");
+  const abandoned = createExecutionResult({ ...ID, status: "STOPPED", summary: "Decision changed the plan." });
+  assert.equal(assertExecutionHistory([waiting, abandoned]).length, 2);
+  assert.throws(() => assertExecutionHistory([waiting, abandoned, result("RUNNING")]), /STOPPED is terminal/);
+
+  const lost = createExecutionResult({
+    ...ID,
+    status: "FAILED",
+    error: { code: EXECUTION_ERROR_CODES.RESUME_UNAVAILABLE, message: "Host no longer holds this checkpoint." },
+  });
+  assert.equal(assertExecutionHistory([result("PAUSED"), lost]).length, 2);
+});
+
+test("a run spans many work units: one suspended on a Founder boundary does not stop the next", () => {
+  const report = (work_unit_id, product_id, status) =>
+    createExecutionResult({
+      run_id: "run-1",
+      work_unit_id,
+      product_id,
+      status,
+      resume_handle: RESUMABLE_STATUSES.includes(status) ? work_unit_id + "-h" : null,
+    });
+
+  // Reports in the order they happen: A suspends on HH, B and C run to completion, A is resumed.
+  const run = [
+    report("wu-A", "product-a", "WAITING_FOR_FOUNDER"),
+    report("wu-B", "product-b", "RUNNING"),
+    report("wu-B", "product-b", "COMPLETED"),
+    report("wu-C", "product-c", "COMPLETED"),
+    report("wu-A", "product-a", "RUNNING"),
+    report("wu-A", "product-a", "COMPLETED"),
+  ];
+  assert.equal(assertRunHistory(run).length, 6);
+
+  assert.throws(
+    () => assertRunHistory([...run, createExecutionResult({ ...ID, run_id: "run-2", status: "COMPLETED" })]),
+    /exactly one run/
+  );
+  assert.throws(() => assertRunHistory([]), /non-empty array/);
+});
+
+test("a terminal work_unit_id cannot be reused for a retry anywhere in the run", () => {
+  const unit = (work_unit_id, status) =>
+    createExecutionResult({ ...ID, work_unit_id, status, error: status === "FAILED" ? ERR : null });
+
+  const retriedAsNewUnit = [unit("wu-1", "FAILED"), unit("wu-2", "RUNNING"), unit("wu-2", "COMPLETED")];
+  assert.equal(assertRunHistory(retriedAsNewUnit).length, 3);
+
+  const retriedUnderSameId = [unit("wu-1", "FAILED"), unit("wu-2", "COMPLETED"), unit("wu-1", "RUNNING"), unit("wu-1", "COMPLETED")];
+  assert.throws(() => assertRunHistory(retriedUnderSameId), /FAILED is terminal.*new work unit/);
+});
+
+test("every suspension issues a new handle, and a handle belongs to one work unit", () => {
+  const suspended = (work_unit_id, status, handle) =>
+    createExecutionResult({ ...ID, work_unit_id, status, resume_handle: handle });
+
+  assert.throws(
+    () => assertExecutionHistory([suspended("wu-1", "PAUSED", "h1"), suspended("wu-1", "RUNNING", null), suspended("wu-1", "PAUSED", "h1")]),
+    /resume_handle reused/
+  );
+  assert.equal(
+    assertExecutionHistory([suspended("wu-1", "PAUSED", "h1"), suspended("wu-1", "RUNNING", null), suspended("wu-1", "PAUSED", "h2")]).length,
+    3
+  );
+  assert.throws(
+    () => assertRunHistory([suspended("wu-1", "PAUSED", "h1"), suspended("wu-2", "WAITING_FOR_FOUNDER", "h1")]),
+    /shared between work units/
+  );
+});
+
+test("resume_unavailable only ends a suspended work unit", () => {
+  const unavailable = createExecutionResult({
+    ...ID,
+    status: "FAILED",
+    error: { code: EXECUTION_ERROR_CODES.RESUME_UNAVAILABLE, message: "Host no longer holds this checkpoint." },
+  });
+  for (const status of RESUMABLE_STATUSES) {
+    assert.equal(assertExecutionHistory([result(status), unavailable]).length, 2);
+  }
+  assert.throws(() => assertExecutionHistory([unavailable]), /resume_unavailable can only end a suspended work unit/);
+  assert.throws(() => assertExecutionHistory([result("RUNNING"), unavailable]), /resume_unavailable can only end a suspended/);
+});
+
+test("honouring a resume is reported as RUNNING before anything else; a suspended unit never completes directly", () => {
+  assert.equal(assertExecutionHistory([result("PAUSED"), result("RUNNING"), result("COMPLETED")]).length, 3);
+  assert.equal(assertExecutionHistory([result("WAITING_FOR_FOUNDER"), result("RUNNING"), result("COMPLETED")]).length, 3);
+  assert.throws(() => assertExecutionHistory([result("PAUSED"), result("COMPLETED")]), /illegal transition PAUSED -> COMPLETED/);
+});
+
+test("envelopes carry no payload: unknown fields are rejected, not silently dropped", () => {
+  const request = createExecutionRequest({ ...ID, mode: EXECUTION_MODES.AUTONOMOUS });
+  assert.throws(() => assertExecutionRequest({ ...request, objective: "do X" }), /unexpected request field "objective"/);
+  const completed = result("COMPLETED");
+  assert.throws(() => assertExecutionResult({ ...completed, decisions: [{ id: "d1" }] }), /unexpected result field "decisions"/);
 });
