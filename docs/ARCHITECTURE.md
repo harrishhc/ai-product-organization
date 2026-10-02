@@ -210,7 +210,7 @@ PDM Core already has an execution mechanism through the current Claude Code / Co
 
 The canonical contract is [docs/EXECUTION_CONTRACT.md](EXECUTION_CONTRACT.md). The runtime vocabulary and envelope validation live in [runtime/executionContract.js](../runtime/executionContract.js).
 
-What PDM owns and what the host owns is listed once, in [EXECUTION_CONTRACT.md](EXECUTION_CONTRACT.md) §2 and §3, and is deliberately not repeated here.
+What PDM owns and what the host owns is listed once, in [EXECUTION_CONTRACT.md](EXECUTION_CONTRACT.md) §2 and §3, and is deliberately not repeated here. The same holds for run / work-unit cardinality, lifecycle transitions, completion semantics, tool authority and retry/resume (§4–§9 of that file).
 
 The host does not become a second memory system. Its checkpoint can remember execution position, but Product Context, Work State, decisions, methodology, and portfolio policy remain owned by their existing Git-backed sources.
 
