@@ -27,9 +27,10 @@
     },
     {
       "classification": "EVIDENCE",
-      "statement": "aetherSlide is delivered as an On-Premise deployment, so this deployment model applies to every product and AI App built on aetherSlide (e.g. Colon Biopsy AI App), not to one product. A feature spec that touches aetherSlide (configuration, defaults, administration, upgrades) should be written with the On-Premise model in mind. What the model implies for config distribution, version upgrades and per-site administration is not yet documented in this repository.",
+      "statement": "aetherSlide is delivered as an On-Premise deployment, so this deployment model applies to every product and AI App built on aetherSlide (e.g. Colon Biopsy AI App), not to one product. A feature spec that touches aetherSlide (configuration, defaults, administration, upgrades) should be written with the On-Premise model in mind. One stated consequence: each hospital runs its own deployment, so changing a global default affects only that deployment, not all hospitals (HH's reason for not writing a global-default-edit scenario in the heatmap config ticket). Version upgrades and App packaging are handled by a separate owner and were left out of that ticket. Other implications for config distribution and per-site administration are not documented in this repository.",
       "source_refs": [
-        "HH direct statement to PDM, 2026-10-03 (while reviewing ClickUp z9088270yd, the aetherSlide heatmap config ticket; asked that it be recorded as an aetherSlide-level practice affecting all aetherSlide-based product features)"
+        "HH direct statement to PDM, 2026-10-03 (while reviewing ClickUp z9088270yd, the aetherSlide heatmap config ticket; asked that it be recorded as an aetherSlide-level practice affecting all aetherSlide-based product features)",
+        "HH follow-up to PDM, 2026-10-03 (changing a global default does not affect all hospitals; upgrades and App packaging are controlled by someone else and need not be written in the ticket)"
       ]
     }
   ],
