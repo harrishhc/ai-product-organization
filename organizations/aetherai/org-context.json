@@ -24,6 +24,16 @@
         "HH direct statement to PDM, 2026-09-14",
         "Split out of the stakeholders roster entry 2026-09-18: a consultation gate is a process step, and a read of delivery_process asking which gates apply would otherwise miss it"
       ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "On-Premise is the most common way aetherSlide is delivered to customers: each hospital runs its own deployment. This applies to every product and AI App built on aetherSlide, not to one product. Other delivery models may exist and have not been examined; HH said not to spend effort on them for now. Consequences stated by HH for On-Premise deployments: version upgrades and App packaging are controlled by a separate owner; for the heatmap config ticket HH concluded that no global (cross-hospital) configuration mechanism is needed and configuration is set per site, without stating whether that applies to every aetherSlide feature. Other implications for config distribution and per-site administration are not documented in this repository.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-10-03 (while reviewing ClickUp z9088270yd, the aetherSlide heatmap config ticket; asked that it be recorded as an aetherSlide-level practice affecting all aetherSlide-based product features)",
+        "HH follow-up to PDM, 2026-10-03 (changing a global default does not affect all hospitals; upgrades and App packaging are controlled by someone else, so HH left both out of the heatmap config ticket; the global-default point was superseded by the 2026-10-05 statement below)",
+        "HH to PDM, 2026-10-05 (On-Premise is the most common delivery; other ways may exist; not worth exploring now)",
+        "HH to PDM, 2026-10-05 (because deployment is On-Premise, no global mechanism is needed; configuration is always by site; stated while revising the heatmap config ticket z9088270yd)"
+      ]
     }
   ],
   "roles": [
@@ -121,6 +131,15 @@
       "statement": "Product-specific stakeholders observed alongside the org-wide ones above (e.g. a named KOL/clinical advisor tied to one product's regulatory or clinical validation work) were deliberately excluded from this file. The boundary test (docs/proposals/organization-context-layer.md §3: does the statement survive replacing the product?) puts them in that product's own Product Context, not here.",
       "source_refs": [
         "docs/proposals/organization-context-layer.md §3"
+      ]
+    },
+    {
+      "classification": "ASSUMPTION",
+      "statement": "The aetherSlide delivery statement (delivery_process) comes from HH alone and has not been cross-checked. HH described On-Premise as the most common model and said other delivery models may exist (2026-10-05). The Google Drive document 'aetherSlide-Solution-Core+' (Solutions Team internal discussion draft, 2026-03) describes a centralized multi-tenant platform (SI-hosted or public-cloud, Shared Cloud) alongside Dedicated Deployment at the customer's own data center. Which of these models are in use, how common each is, and which apply to the AI Apps in scope have not been examined; HH said not to spend effort on this for now.",
+      "source_refs": [
+        "HH direct statement to PDM, 2026-10-03",
+        "HH to PDM, 2026-10-05",
+        "Google Drive: aetherSlide-Solution-Core+ (file id 1x0QuX1W8jwIFYzcZwZAvkkG4juYzHZq2FNF3pPXXkfg), read 2026-10-03"
       ]
     }
   ]
