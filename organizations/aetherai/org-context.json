@@ -27,11 +27,12 @@
     },
     {
       "classification": "EVIDENCE",
-      "statement": "On-Premise is the most common way aetherSlide is delivered to customers: each hospital runs its own deployment. This applies to every product and AI App built on aetherSlide, not to one product. Other delivery models may exist and have not been examined; HH said not to spend effort on them for now. Consequences stated by HH for On-Premise deployments: changing a global default affects only that hospital's deployment, not all hospitals; version upgrades and App packaging are controlled by a separate owner. Other implications for config distribution and per-site administration are not documented in this repository.",
+      "statement": "On-Premise is the most common way aetherSlide is delivered to customers: each hospital runs its own deployment. This applies to every product and AI App built on aetherSlide, not to one product. Other delivery models may exist and have not been examined; HH said not to spend effort on them for now. Consequences stated by HH for On-Premise deployments: version upgrades and App packaging are controlled by a separate owner; for the heatmap config ticket HH concluded that no global (cross-hospital) configuration mechanism is needed and configuration is set per site, without stating whether that applies to every aetherSlide feature. Other implications for config distribution and per-site administration are not documented in this repository.",
       "source_refs": [
         "HH direct statement to PDM, 2026-10-03 (while reviewing ClickUp z9088270yd, the aetherSlide heatmap config ticket; asked that it be recorded as an aetherSlide-level practice affecting all aetherSlide-based product features)",
-        "HH follow-up to PDM, 2026-10-03 (changing a global default does not affect all hospitals; upgrades and App packaging are controlled by someone else, so HH left both out of the heatmap config ticket)",
-        "HH to PDM, 2026-10-05 (On-Premise is the most common delivery; other ways may exist; not worth exploring now)"
+        "HH follow-up to PDM, 2026-10-03 (changing a global default does not affect all hospitals; upgrades and App packaging are controlled by someone else, so HH left both out of the heatmap config ticket; the global-default point was superseded by the 2026-10-05 statement below)",
+        "HH to PDM, 2026-10-05 (On-Premise is the most common delivery; other ways may exist; not worth exploring now)",
+        "HH to PDM, 2026-10-05 (because deployment is On-Premise, no global mechanism is needed; configuration is always by site; stated while revising the heatmap config ticket z9088270yd)"
       ]
     }
   ],
