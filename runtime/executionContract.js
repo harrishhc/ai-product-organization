@@ -82,6 +82,13 @@ function assertKnownFields(value, allowed, kind) {
   }
 }
 
+function assertSupportedVersion(value, { required }) {
+  const version = value?.contract_version;
+  if ((required || version !== undefined) && version !== EXECUTION_CONTRACT_VERSION) {
+    throw new Error("Execution contract: unsupported contract_version " + JSON.stringify(version ?? "missing") + ".");
+  }
+}
+
 function assertNonEmptyString(value, field) {
   if (typeof value !== "string" || value.trim() === "") {
     throw new Error("Execution contract: " + field + " must be a non-empty string.");
@@ -97,6 +104,7 @@ function assertRunIdentity(value) {
 export function createExecutionRequest(input = {}) {
   assertPlainObject(input, "request");
   assertKnownFields(input, REQUEST_FIELDS, "request");
+  assertSupportedVersion(input, { required: false });
   const { run_id, work_unit_id, product_id, mode, resume_handle = null } = input;
   assertNonEmptyString(run_id, "run_id");
   assertNonEmptyString(work_unit_id, "work_unit_id");
@@ -126,6 +134,7 @@ export function createExecutionRequest(input = {}) {
 export function createExecutionResult(input = {}) {
   assertPlainObject(input, "result");
   assertKnownFields(input, RESULT_FIELDS, "result");
+  assertSupportedVersion(input, { required: false });
   const { run_id, work_unit_id, product_id, status, resume_handle = null, summary = "", usage = {}, error = null } = input;
   const identity = { run_id, work_unit_id, product_id };
   assertRunIdentity(identity);
@@ -176,8 +185,8 @@ export function createExecutionResult(input = {}) {
   if (status === EXECUTION_STATUS.FAILED && error === null) {
     throw new Error("Execution contract: status FAILED requires an error.");
   }
-  if (status === EXECUTION_STATUS.COMPLETED && error !== null) {
-    throw new Error("Execution contract: status COMPLETED must not carry an error.");
+  if (status !== EXECUTION_STATUS.FAILED && error !== null) {
+    throw new Error("Execution contract: status " + status + " must not carry an error; only FAILED does.");
   }
 
   return {
@@ -194,24 +203,12 @@ export function createExecutionResult(input = {}) {
 }
 
 export function assertExecutionRequest(value) {
-  if (!value || value.contract_version !== EXECUTION_CONTRACT_VERSION) {
-    throw new Error(
-      "Execution contract: unsupported contract_version " +
-      JSON.stringify(value?.contract_version ?? "missing") +
-      "."
-    );
-  }
+  assertSupportedVersion(value, { required: true });
   return createExecutionRequest(value);
 }
 
 export function assertExecutionResult(value) {
-  if (!value || value.contract_version !== EXECUTION_CONTRACT_VERSION) {
-    throw new Error(
-      "Execution contract: unsupported contract_version " +
-      JSON.stringify(value?.contract_version ?? "missing") +
-      "."
-    );
-  }
+  assertSupportedVersion(value, { required: true });
   return createExecutionResult(value);
 }
 

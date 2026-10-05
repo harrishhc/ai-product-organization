@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import {
   EXECUTION_CONTRACT_VERSION,
   EXECUTION_ERROR_CODES,
@@ -416,15 +417,22 @@ test("resume_unavailable only ends a suspended work unit", () => {
       const failed = createExecutionResult({ ...ID, status: "FAILED", error: { code, message: "m" } });
       assert.throws(() => assertExecutionHistory([result(status), failed]), /a suspended work unit can only fail as resume_unavailable/);
     }
-    for (const other of ["RUNNING", "STOPPED"]) {
-      const mislabelled = createExecutionResult({
-        ...ID,
-        status: other,
-        error: { code: EXECUTION_ERROR_CODES.RESUME_UNAVAILABLE, message: "m" },
-      });
-      assert.throws(() => assertExecutionHistory([result(status), mislabelled]), /can only end a suspended work unit as FAILED/);
-    }
   }
+});
+
+test("only a FAILED result carries an error", () => {
+  const handle = (status) => (RESUMABLE_STATUSES.includes(status) ? { resume_handle: "h1" } : {});
+  for (const status of Object.values(EXECUTION_STATUS).filter((s) => s !== EXECUTION_STATUS.FAILED)) {
+    assert.throws(
+      () => createExecutionResult({ ...ID, status, ...handle(status), error: ERR }),
+      new RegExp("status " + status + " must not carry an error; only FAILED does")
+    );
+  }
+  // A history cannot smuggle a failure into a non-FAILED report either.
+  assert.throws(
+    () => assertExecutionHistory([result("RUNNING"), { ...result("STOPPED"), error: ERR }]),
+    /must not carry an error/
+  );
 });
 
 test("honouring a resume is reported as RUNNING before anything else; a suspended unit never completes directly", () => {
@@ -481,4 +489,69 @@ test("scalar envelope fields are type-checked", () => {
     assert.throws(() => createExecutionResult({ ...ID, status: "RUNNING", usage: { [field]: 1.5 } }), /non-negative integer/);
   }
   assert.equal(createExecutionResult({ ...ID, status: "RUNNING", usage: { duration_ms: 12.5 } }).usage.duration_ms, 12.5);
+});
+
+test("a constructor does not launder a wrong contract_version", () => {
+  for (const contract_version of ["9.0", null, 1]) {
+    assert.throws(() => createExecutionRequest({ ...ID, mode: EXECUTION_MODES.AUTONOMOUS, contract_version }), /unsupported contract_version/);
+    assert.throws(() => createExecutionResult({ ...ID, status: "RUNNING", contract_version }), /unsupported contract_version/);
+    assert.throws(() => assertExecutionResult({ ...result("RUNNING"), contract_version }), /unsupported contract_version/);
+  }
+  assert.equal(createExecutionRequest({ ...ID, mode: EXECUTION_MODES.AUTONOMOUS, contract_version: "1.0" }).contract_version, "1.0");
+  assert.throws(() => assertExecutionResult({ ...ID, status: "RUNNING" }), /unsupported contract_version "missing"/);
+  assert.throws(() => assertExecutionRequest({ ...ID, mode: EXECUTION_MODES.AUTONOMOUS }), /unsupported contract_version "missing"/);
+  assert.throws(() => assertExecutionRequest(null), /unsupported contract_version "missing"/);
+});
+
+test("identity, error message, usage and error shapes are validated", () => {
+  for (const field of Object.keys(ID)) {
+    for (const bad of ["", "   ", null, 7]) {
+      assert.throws(() => createExecutionRequest({ ...ID, [field]: bad, mode: EXECUTION_MODES.AUTONOMOUS }), new RegExp(field + " must be a non-empty string"));
+      assert.throws(() => createExecutionResult({ ...ID, [field]: bad, status: "RUNNING" }), new RegExp(field + " must be a non-empty string"));
+    }
+  }
+  assert.throws(() => createExecutionResult({ ...ID, status: "FAILED", error: { code: "tool", message: "" } }), /error.message must be a non-empty string/);
+  assert.throws(() => createExecutionResult({ ...ID, status: "FAILED", error: { code: "oops", message: "m" } }), /invalid error code/);
+  for (const bad of [Number.NaN, Number.POSITIVE_INFINITY]) {
+    assert.throws(() => createExecutionResult({ ...ID, status: "RUNNING", usage: { duration_ms: bad } }), /usage.duration_ms must be null or a non-negative finite number/);
+  }
+  for (const bad of [5, "x", []]) {
+    assert.throws(() => createExecutionResult({ ...ID, status: "RUNNING", usage: bad }), /usage must be an object/);
+    assert.throws(() => createExecutionResult({ ...ID, status: "FAILED", error: bad }), /error must be an object/);
+  }
+});
+
+// The tables in docs/EXECUTION_CONTRACT.md are the contract's human-readable
+// form; this keeps them from drifting away from the constants that enforce them.
+test("the contract document's tables match the validator's constants", () => {
+  const doc = readFileSync(new URL("../docs/EXECUTION_CONTRACT.md", import.meta.url), "utf8").split("\n");
+  const statuses = Object.values(EXECUTION_STATUS);
+
+  const matrixRows = doc.filter((line) => /^\| \*\*[A-Z_]+\*\* \|/.test(line));
+  assert.equal(matrixRows.length, statuses.length);
+  for (const row of matrixRows) {
+    const cells = row.split("|").slice(1, -1).map((cell) => cell.trim());
+    const from = cells[0].replaceAll("*", "");
+    assert.ok(statuses.includes(from), "unknown status in the matrix: " + from);
+    statuses.forEach((to, i) => {
+      assert.equal(canTransition(from, to), cells[i + 1].startsWith("yes"), from + " -> " + to + " differs between the document and the validator");
+    });
+  }
+
+  const stateRows = doc.filter((line) => /^\| [A-Z_]+ \| (yes|no) \|/.test(line));
+  assert.equal(stateRows.length, statuses.length);
+  for (const row of stateRows) {
+    const [status, terminal, resumable] = row.split("|").slice(1, -1).map((cell) => cell.trim());
+    assert.equal(isTerminalStatus(status), terminal === "yes", status + " terminal flag");
+    assert.equal(isResumableStatus(status), resumable.startsWith("yes"), status + " resumable flag");
+  }
+
+  const envelope = doc.slice(doc.findIndex((line) => line.startsWith("## 11. Result envelope")));
+  const block = envelope.slice(0, envelope.findIndex((line) => line.startsWith("`summary` is an execution summary"))).join("\n");
+  for (const code of Object.values(EXECUTION_ERROR_CODES)) {
+    assert.ok(block.includes('"' + code + '"'), "error code missing from the §11 envelope: " + code);
+  }
+  for (const status of statuses) {
+    assert.ok(block.includes('"' + status + '"'), "status missing from the §11 envelope: " + status);
+  }
 });
