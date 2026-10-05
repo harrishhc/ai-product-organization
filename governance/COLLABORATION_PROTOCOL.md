@@ -230,7 +230,7 @@ When the worker is about to stop because the host is ending, the usage budget is
 4. Regenerate `portfolio-index.md` when product state changed enough to affect selection/status.
 5. Commit and push changes in `ai-product-organization` itself when required by the repository workflow.
 
-A host restart is therefore a resume operation, not a request to reconstruct the product from scratch. In the execution contract's terms this is a new run resuming the PDM Worker role from durable state, not a `mode: "resume"` request, which applies only to a suspended work unit (see [`docs/EXECUTION_CONTRACT.md`](../docs/EXECUTION_CONTRACT.md) §4).
+A host restart is therefore a resume operation, not a request to reconstruct the product from scratch. In the execution contract's terms the PDM Worker role resumes from durable state with new work units; a `mode: "resume"` request applies only to a suspended work unit whose checkpoint the host durably kept (see [`docs/EXECUTION_CONTRACT.md`](../docs/EXECUTION_CONTRACT.md) §4).
 
 ## Deliberately not built yet
 

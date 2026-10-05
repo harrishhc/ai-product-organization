@@ -275,21 +275,22 @@ test("resume applies only to a suspended work unit, with the handle that suspens
   for (const status of RESUMABLE_STATUSES) {
     const suspended = result(status);
     const request = createExecutionRequest({ ...ID, mode: EXECUTION_MODES.RESUME, resume_handle: "h1" });
-    assert.deepEqual(assertResumeRequestFor(suspended, request), request);
+    assert.deepEqual(assertResumeRequestFor([suspended], request), request);
     assert.throws(
-      () => assertResumeRequestFor(suspended, { ...request, resume_handle: "stale-or-foreign" }),
+      () => assertResumeRequestFor([suspended], { ...request, resume_handle: "stale-or-foreign" }),
       /not the one issued/
     );
-    assert.throws(() => assertResumeRequestFor(suspended, { ...request, work_unit_id: "wu-2" }), /does not match the suspended/);
-    assert.throws(() => assertResumeRequestFor(suspended, { ...request, product_id: "p2" }), /does not match the suspended/);
+    for (const mismatch of [{ run_id: "run-2" }, { work_unit_id: "wu-2" }, { product_id: "p2" }]) {
+      assert.throws(() => assertResumeRequestFor([suspended], { ...request, ...mismatch }), /does not match the suspended/);
+    }
   }
 
   const resume = createExecutionRequest({ ...ID, mode: EXECUTION_MODES.RESUME, resume_handle: "h1" });
   for (const status of [...TERMINAL_STATUSES, EXECUTION_STATUS.RUNNING]) {
-    assert.throws(() => assertResumeRequestFor(result(status), resume), /cannot resume a work unit in status/);
+    assert.throws(() => assertResumeRequestFor([result(status)], resume), /cannot resume a work unit in status/);
   }
   assert.throws(
-    () => assertResumeRequestFor(result("PAUSED"), createExecutionRequest({ ...ID, mode: EXECUTION_MODES.AUTONOMOUS })),
+    () => assertResumeRequestFor([result("PAUSED")], createExecutionRequest({ ...ID, mode: EXECUTION_MODES.AUTONOMOUS })),
     /not a resume request/
   );
 });
@@ -308,7 +309,22 @@ test("a resume handle exists only while its work unit is suspended and is single
 
   // After the resume the unit is RUNNING again, so the spent handle matches nothing.
   const spent = createExecutionRequest({ ...ID, mode: EXECUTION_MODES.RESUME, resume_handle: "h1" });
-  assert.throws(() => assertResumeRequestFor(result("RUNNING"), spent), /cannot resume a work unit in status RUNNING/);
+  assert.throws(() => assertResumeRequestFor([result("PAUSED"), result("RUNNING")], spent), /cannot resume a work unit in status RUNNING/);
+
+  // A stale suspension cannot stand in for the latest one: the unit was
+  // resumed and suspended again, so only the second handle is live.
+  const second = (status) => createExecutionResult({ ...ID, status, resume_handle: "h2" });
+  const history = [result("PAUSED"), result("RUNNING"), second("WAITING_FOR_FOUNDER")];
+  assert.throws(() => assertResumeRequestFor(history, spent), /not the one issued/);
+  const live = createExecutionRequest({ ...ID, mode: EXECUTION_MODES.RESUME, resume_handle: "h2" });
+  assert.deepEqual(assertResumeRequestFor(history, live), live);
+
+  // The history itself must be a legal one: a suspension reported after a
+  // terminal status, or a handle issued twice, is not a unit that can resume.
+  const afterTerminal = [result("COMPLETED"), result("PAUSED")];
+  assert.throws(() => assertResumeRequestFor(afterTerminal, spent), /terminal|cannot move/i);
+  const reusedHandle = [result("PAUSED"), result("RUNNING"), result("PAUSED")];
+  assert.throws(() => assertResumeRequestFor(reusedHandle, spent), /reused/);
 });
 
 test("a Founder decision that changes the plan ends the suspended unit; a rejected handle fails it", () => {
@@ -393,6 +409,22 @@ test("resume_unavailable only ends a suspended work unit", () => {
   }
   assert.throws(() => assertExecutionHistory([unavailable]), /resume_unavailable can only end a suspended work unit/);
   assert.throws(() => assertExecutionHistory([result("RUNNING"), unavailable]), /resume_unavailable can only end a suspended/);
+
+  // It is the only way a suspended unit fails, and it is only ever a FAILED.
+  for (const status of RESUMABLE_STATUSES) {
+    for (const code of Object.values(EXECUTION_ERROR_CODES).filter((c) => c !== EXECUTION_ERROR_CODES.RESUME_UNAVAILABLE)) {
+      const failed = createExecutionResult({ ...ID, status: "FAILED", error: { code, message: "m" } });
+      assert.throws(() => assertExecutionHistory([result(status), failed]), /a suspended work unit can only fail as resume_unavailable/);
+    }
+    for (const other of ["RUNNING", "STOPPED"]) {
+      const mislabelled = createExecutionResult({
+        ...ID,
+        status: other,
+        error: { code: EXECUTION_ERROR_CODES.RESUME_UNAVAILABLE, message: "m" },
+      });
+      assert.throws(() => assertExecutionHistory([result(status), mislabelled]), /can only end a suspended work unit as FAILED/);
+    }
+  }
 });
 
 test("honouring a resume is reported as RUNNING before anything else; a suspended unit never completes directly", () => {
@@ -406,4 +438,47 @@ test("envelopes carry no payload: unknown fields are rejected, not silently drop
   assert.throws(() => assertExecutionRequest({ ...request, objective: "do X" }), /unexpected request field "objective"/);
   const completed = result("COMPLETED");
   assert.throws(() => assertExecutionResult({ ...completed, decisions: [{ id: "d1" }] }), /unexpected result field "decisions"/);
+});
+
+test("nested envelope objects carry no payload either, and a validated result is not aliased to its input", () => {
+  const failed = result("FAILED");
+  assert.throws(
+    () => assertExecutionResult({ ...failed, error: { ...ERR, objective: "do X" } }),
+    /unexpected error field "objective"/
+  );
+  assert.throws(
+    () => assertExecutionResult({ ...failed, usage: { tool_calls: 1, objective: "do X" } }),
+    /unexpected usage field "objective"/
+  );
+
+  const input = { ...ERR };
+  const validated = assertExecutionResult({ ...failed, error: input });
+  input.message = "changed after validation";
+  assert.equal(validated.error.message, ERR.message);
+});
+
+test("constructors reject unknown fields and non-objects with a contract error, not a TypeError", () => {
+  assert.throws(() => createExecutionRequest({ ...ID, mode: EXECUTION_MODES.AUTONOMOUS, objective: "do X" }), /unexpected request field "objective"/);
+  assert.throws(() => createExecutionResult({ ...ID, status: "RUNNING", payload: {} }), /unexpected result field "payload"/);
+  for (const bad of [null, "text", 7, []]) {
+    assert.throws(() => createExecutionRequest(bad), /Execution contract: request must be an object/);
+    assert.throws(() => createExecutionResult(bad), /Execution contract: result must be an object/);
+  }
+});
+
+test("a blank resume_handle is no handle", () => {
+  assert.throws(() => createExecutionRequest({ ...ID, mode: EXECUTION_MODES.RESUME, resume_handle: "   " }), /requires a non-empty resume_handle/);
+  assert.throws(() => createExecutionResult({ ...ID, status: "PAUSED", resume_handle: "   " }), /requires a non-empty resume_handle/);
+});
+
+test("scalar envelope fields are type-checked", () => {
+  assert.throws(() => createExecutionRequest({ ...ID, mode: "background" }), /invalid mode/);
+  assert.throws(() => createExecutionResult({ ...ID, status: "RUNNING", summary: 42 }), /summary must be a string/);
+  for (const field of ["input_tokens", "output_tokens", "tool_calls", "duration_ms"]) {
+    assert.throws(() => createExecutionResult({ ...ID, status: "RUNNING", usage: { [field]: -1 } }), /non-negative/);
+  }
+  for (const field of ["input_tokens", "output_tokens", "tool_calls"]) {
+    assert.throws(() => createExecutionResult({ ...ID, status: "RUNNING", usage: { [field]: 1.5 } }), /non-negative integer/);
+  }
+  assert.equal(createExecutionResult({ ...ID, status: "RUNNING", usage: { duration_ms: 12.5 } }).usage.duration_ms, 12.5);
 });

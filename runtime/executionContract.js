@@ -65,6 +65,15 @@ const RESULT_FIELDS = new Set([
   "contract_version", "run_id", "work_unit_id", "product_id", "status", "resume_handle", "summary", "usage", "error",
 ]);
 
+const USAGE_FIELDS = new Set(["input_tokens", "output_tokens", "tool_calls", "duration_ms"]);
+const ERROR_FIELDS = new Set(["code", "message"]);
+
+function assertPlainObject(value, kind) {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error("Execution contract: " + kind + " must be an object.");
+  }
+}
+
 function assertKnownFields(value, allowed, kind) {
   for (const key of Object.keys(value)) {
     if (!allowed.has(key)) {
@@ -85,13 +94,10 @@ function assertRunIdentity(value) {
   assertNonEmptyString(value?.product_id, "product_id");
 }
 
-export function createExecutionRequest({
-  run_id,
-  work_unit_id,
-  product_id,
-  mode,
-  resume_handle = null,
-} = {}) {
+export function createExecutionRequest(input = {}) {
+  assertPlainObject(input, "request");
+  assertKnownFields(input, REQUEST_FIELDS, "request");
+  const { run_id, work_unit_id, product_id, mode, resume_handle = null } = input;
   assertNonEmptyString(run_id, "run_id");
   assertNonEmptyString(work_unit_id, "work_unit_id");
   assertNonEmptyString(product_id, "product_id");
@@ -101,7 +107,7 @@ export function createExecutionRequest({
   if (resume_handle !== null && typeof resume_handle !== "string") {
     throw new Error("Execution contract: resume_handle must be null or an opaque string.");
   }
-  if (mode === EXECUTION_MODES.RESUME && (resume_handle === null || resume_handle === "")) {
+  if (mode === EXECUTION_MODES.RESUME && (resume_handle === null || resume_handle.trim() === "")) {
     throw new Error("Execution contract: mode \"resume\" requires a non-empty resume_handle.");
   }
   if (mode !== EXECUTION_MODES.RESUME && resume_handle !== null) {
@@ -117,16 +123,10 @@ export function createExecutionRequest({
   };
 }
 
-export function createExecutionResult({
-  run_id,
-  work_unit_id,
-  product_id,
-  status,
-  resume_handle = null,
-  summary = "",
-  usage = {},
-  error = null,
-} = {}) {
+export function createExecutionResult(input = {}) {
+  assertPlainObject(input, "result");
+  assertKnownFields(input, RESULT_FIELDS, "result");
+  const { run_id, work_unit_id, product_id, status, resume_handle = null, summary = "", usage = {}, error = null } = input;
   const identity = { run_id, work_unit_id, product_id };
   assertRunIdentity(identity);
   if (!STATUSES.has(status)) {
@@ -138,9 +138,8 @@ export function createExecutionResult({
   if (typeof summary !== "string") {
     throw new Error("Execution contract: summary must be a string.");
   }
-  if (usage === null || typeof usage !== "object" || Array.isArray(usage)) {
-    throw new Error("Execution contract: usage must be an object.");
-  }
+  assertPlainObject(usage, "usage");
+  assertKnownFields(usage, USAGE_FIELDS, "usage");
 
   const normalizedUsage = {
     input_tokens: usage.input_tokens ?? null,
@@ -150,15 +149,17 @@ export function createExecutionResult({
   };
 
   for (const [field, value] of Object.entries(normalizedUsage)) {
-    if (value !== null && (!Number.isFinite(value) || value < 0)) {
-      throw new Error("Execution contract: usage." + field + " must be null or a non-negative finite number.");
+    const countable = field !== "duration_ms";
+    if (value !== null && (!Number.isFinite(value) || value < 0 || (countable && !Number.isInteger(value)))) {
+      throw new Error(
+        "Execution contract: usage." + field + " must be null or a non-negative " + (countable ? "integer." : "finite number.")
+      );
     }
   }
 
   if (error !== null) {
-    if (typeof error !== "object" || Array.isArray(error)) {
-      throw new Error("Execution contract: error must be null or an object.");
-    }
+    assertPlainObject(error, "error");
+    assertKnownFields(error, ERROR_FIELDS, "error");
     if (!ERROR_CODES.has(error.code)) {
       throw new Error("Execution contract: invalid error code " + JSON.stringify(error.code) + ".");
     }
@@ -166,7 +167,7 @@ export function createExecutionResult({
   }
 
   const resumable = RESUMABLE_STATUSES.includes(status);
-  if (resumable && (resume_handle === null || resume_handle === "")) {
+  if (resumable && (resume_handle === null || resume_handle.trim() === "")) {
     throw new Error("Execution contract: status " + status + " requires a non-empty resume_handle.");
   }
   if (!resumable && resume_handle !== null) {
@@ -188,7 +189,7 @@ export function createExecutionResult({
     resume_handle,
     summary,
     usage: normalizedUsage,
-    error,
+    error: error === null ? null : { code: error.code, message: error.message },
   };
 }
 
@@ -200,7 +201,6 @@ export function assertExecutionRequest(value) {
       "."
     );
   }
-  assertKnownFields(value, REQUEST_FIELDS, "request");
   return createExecutionRequest(value);
 }
 
@@ -212,7 +212,6 @@ export function assertExecutionResult(value) {
       "."
     );
   }
-  assertKnownFields(value, RESULT_FIELDS, "result");
   return createExecutionResult(value);
 }
 
@@ -259,8 +258,16 @@ export function assertExecutionHistory(results) {
       throw new Error("Execution contract: product_id changed within work unit " + work_unit_id + ".");
     }
     assertExecutionTransition(previous, result.status);
-    if (result.error?.code === EXECUTION_ERROR_CODES.RESUME_UNAVAILABLE && !isResumableStatus(previous)) {
-      throw new Error("Execution contract: resume_unavailable can only end a suspended work unit, not one in " + previous + ".");
+    const unavailable = result.error?.code === EXECUTION_ERROR_CODES.RESUME_UNAVAILABLE;
+    const suspended = isResumableStatus(previous);
+    if (unavailable && !(suspended && result.status === EXECUTION_STATUS.FAILED)) {
+      throw new Error(
+        "Execution contract: resume_unavailable can only end a suspended work unit as FAILED, not " +
+        result.status + " after " + previous + "."
+      );
+    }
+    if (suspended && result.status === EXECUTION_STATUS.FAILED && !unavailable) {
+      throw new Error("Execution contract: a suspended work unit can only fail as resume_unavailable, not " + result.error.code + ".");
     }
     if (result.resume_handle !== null) {
       if (handles.has(result.resume_handle)) {
@@ -304,10 +311,13 @@ export function assertRunHistory(results) {
   return checked;
 }
 
-// A resume request is valid only against the latest result of a suspended
-// work unit, carrying exactly the handle that result issued.
-export function assertResumeRequestFor(latestResult, request) {
-  const result = assertExecutionResult(latestResult);
+// A resume request is valid only against a work unit whose latest reported
+// result is a suspension, carrying exactly the handle that result issued. It
+// takes the unit's whole history so a stale suspension cannot stand in for the
+// latest one.
+export function assertResumeRequestFor(history, request) {
+  const checked = assertExecutionHistory(history);
+  const result = checked[checked.length - 1];
   const req = assertExecutionRequest(request);
   if (req.mode !== EXECUTION_MODES.RESUME) {
     throw new Error("Execution contract: not a resume request.");
