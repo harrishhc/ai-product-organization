@@ -34,6 +34,21 @@
         "HH to PDM, 2026-10-05 (On-Premise is the most common delivery; other ways may exist; not worth exploring now)",
         "HH to PDM, 2026-10-05 (because deployment is On-Premise, no global mechanism is needed; configuration is always by site; stated while revising the heatmap config ticket z9088270yd)"
       ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "AI review gate on tickets: it runs when anyone moves Dev Stage to 5 Ready for Dev (automatic) or presses the ticket's AI Review button (manual, no Dev Stage change). A failing automatic review rolls Dev Stage back to 2 Defining (PdM) and lists the problems in the ticket's comment thread; the PDM fixes them and re-triggers, or replies 「確認」 in the thread to override a wrong verdict (the confirmer and time are recorded). Dev Stage values: 1 Open, 2 Defining (PdM), 3 Ready for Design (UX), 4 Designing (UX), 5 Ready for Dev (TPM), 6 Developing (RD, QA), 7 Done.",
+      "source_refs": [
+        "Google Doc「AI_Review_Agent_Story層級規範」(Drive 1olEZk7JH22_zThK3TTEAu-QXJq0z22zmhL0Mb_wRPFk), read 2026-10-06",
+        "ClickUp custom field Dev Stage on Colon Biopsy tickets, read 2026-10-06"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "From the aetherSlide 需求管理開發流程 SOP: a functional-requirement task is named [Module Name]/[Page Name]/[Feature Name] 需求描述; the PdM adds the task to a Sprint and completes the Task PRD content (design done) one week before Refinement; the PdM sets Task Priority; discussion happens on the task, not in private chats. The SOP is titled for aetherSlide; Colon Biopsy ships on aetherSlide, so it applies there; whether it governs other aetherAI platforms is not stated.",
+      "source_refs": [
+        "Google Doc「aetherSlide 需求管理開發流程 SOP」(Drive 1MV0Zx_Q87fCwIBgHpxr-BptEJ8a_5Wx1n98hJ7fbROw), read 2026-10-06"
+      ]
     }
   ],
   "roles": [
@@ -66,6 +81,62 @@
       "statement": "A ClickUp ticket must contain all five of the following. Any one missing is a fail (未通過), not a warning. (1) 標題 — states the end-to-end result: who, did what, achieved what. No vague phrasing, no internal codenames or technical module names. Even when the body is clear, the result must be rewritten into the title so a reader scanning the Story List understands it at a glance. (2) 既有現況描述 — present, and not an empty placeholder such as 目前無此功能. (3) 預期達成結果 — present, and not a restatement of the title. (4) Acceptance Criteria — at least three, each concrete and testable; format is free (Given/When/Then or bullets). Vague criteria such as 系統正常運作 do not count. (5) 權限說明 — which roles may execute the function; a pure background service must still state its trigger and its exception-handling role.",
       "source_refs": [
         "HH direct statement to PDM, 2026-09-18"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "The company's AI Review Agent (built by Gail Chan, spec'd in the Story-level document) is the executable form of the five-item ticket standard above. It names item (3) 需求說明 and fails it when missing or identical to the 標題; HH's 2026-09-18 statement calls the same item 預期達成結果. Treat them as one required item. Granularity runs 標題 > 需求說明 > Acceptance Criteria (coarse to fine); the three must not be copies of each other. The reviewer fails the 標題 even when the body states the end-to-end result, because the Story List reader must see what the work does without opening the ticket.",
+      "source_refs": [
+        "Google Doc「AI_Review_Agent_Story層級規範」(Drive 1olEZk7JH22_zThK3TTEAu-QXJq0z22zmhL0Mb_wRPFk), read 2026-10-06",
+        "ClickUp spec tasks for the AI reviewer by Gail Chan: [AI reviewer] task 維度 (86exthza7) and milestone 維度 (86exxbfan), read 2026-10-06",
+        "HH to PDM, 2026-10-06 (asked that aetherAI tickets follow the company reviewer standard from now on; pointed to the 需求規格品質 AI Reviewer built by Gail Chan)"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "The reviewer must-flag patterns inside a ticket body (reported to the PDM; they do not by themselves fail the required five): (a) unresolved or uncertain content, e.g. 「需向 RD 確認…」, 「等待設計師定版」; (b) 「建議…」 wording, because a ticket states what will be done, not suggestions; (c) strikethrough or coloured-text markings for dropped items, because nobody can tell when the change happened; (d) 「…等等」, which must be replaced by an enumeration; (e) links to a spec document ending in _latest instead of _sprint*, because _latest changes during implementation and the PDM must first freeze it as a _sprint* version.",
+      "source_refs": [
+        "Google Doc「AI_Review_Agent_Story層級規範」(Drive 1olEZk7JH22_zThK3TTEAu-QXJq0z22zmhL0Mb_wRPFk), read 2026-10-06",
+        "ClickUp spec tasks for the AI reviewer by Gail Chan: [AI reviewer] task 維度 (86exthza7) and milestone 維度 (86exxbfan), read 2026-10-06"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "Impact-scope statements the reviewer asks the PDM to make explicit: (a) a change touching the Viewer must enumerate which of the five viewers it affects: Normal Viewer V1, Normal Viewer V2, My Space Viewer, Shared with me Viewer, HER2 Calibration Viewer; (b) a change to an AI APP's presentation, function or output (verify, contour, Heatmap, Label, Withdraw, Report, etc.) must confirm whether General AI APP or other AI APPs are affected; (c) any user-visible text in a front-end screen or an API response must state i18n (multi-language) coverage and how the multi-language text is developed.",
+      "source_refs": [
+        "Google Doc「AI_Review_Agent_Story層級規範」(Drive 1olEZk7JH22_zThK3TTEAu-QXJq0z22zmhL0Mb_wRPFk), read 2026-10-06",
+        "ClickUp spec tasks for the AI reviewer by Gail Chan: [AI reviewer] task 維度 (86exthza7) and milestone 維度 (86exxbfan), read 2026-10-06"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "Reviewer reminders that do not affect pass/fail: Error Handling for the main error scenarios, and a Figma link for any screen-related feature (a URL, an inline link or a preview all count). The reviewer does not judge whether a Figma link is valid or the design is good, whether Figma matches the spec, or technical feasibility. The reviewer never edits requirement content; it only comments, and may attach module tags.",
+      "source_refs": [
+        "Google Doc「AI_Review_Agent_Story層級規範」(Drive 1olEZk7JH22_zThK3TTEAu-QXJq0z22zmhL0Mb_wRPFk), read 2026-10-06",
+        "ClickUp spec tasks for the AI reviewer by Gail Chan: [AI reviewer] task 維度 (86exthza7) and milestone 維度 (86exxbfan), read 2026-10-06"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "Module tag: the reviewer attaches one or more of 18 ClickUp tags (IMS, Viewer, Gateway, Worklist, Tag, Education, AIHub, QualityControl, Research, GigaStore, ReferralPortal, Notification, Message, Conference, Fluorescence, AILanding, ConsultDMZ, GigaPixelAIStudio). Names are the Module Name (EN/xFDA) in the aetherSlide_Module_latest sheet with spaces removed in UpperCamelCase. Signal priority: title bracket prefix, then ClickUp List/Folder name, then description semantics. High confidence is tagged automatically; low confidence or cross-module is suggested in the comment for the PDM to add. Module tag is not part of pass/fail.",
+      "source_refs": [
+        "Google Doc「AI_Review_Agent_Story層級規範」(Drive 1olEZk7JH22_zThK3TTEAu-QXJq0z22zmhL0Mb_wRPFk), read 2026-10-06",
+        "aetherSlide_Module_latest sheet (Drive 11KT-UEQvtVSFPuLFtaMd9emW1XUnz7wQsST2qSfyYfA), named in the Story-level document; sheet itself not read"
+      ]
+    },
+    {
+      "classification": "EVIDENCE",
+      "statement": "Milestone / project-brief level standard (reviewer's milestone dimension). Required: 專案背景 (at least two sentences), 專案目標, 預計上線時間, 目標客群 (roles and their pain, not only customer names), 商業流程說明, 受影響模組 (not 「待確認」), 上下游系統盤點, and a Story List whose titles are end-to-end results. Suggested: 連帶影響功能.",
+      "source_refs": [
+        "Google Doc「AI_Review_Agent_Milestone層級規範」(Drive 1xzW3qUgXhRMoxHKgMMlbBriVc8SACf_R6zCgyCgaw1w), read 2026-10-06",
+        "ClickUp spec tasks for the AI reviewer by Gail Chan: [AI reviewer] task 維度 (86exthza7) and milestone 維度 (86exxbfan), read 2026-10-06"
+      ]
+    },
+    {
+      "classification": "ASSUMPTION",
+      "statement": "PDM practice for aetherAI tickets, reconciling the reviewer standard with the PDM User Story format: keep the title as [Module][Page] followed by the end-to-end result (who does what and gets what, no internal codenames); keep User Story, Functional Requirement, Error Handling, Design, Assumptions and Constraints, Out of Scope and Acceptance Criteria where useful, and add separately labelled 既有現況描述, 需求說明, 權限說明, 影響範圍 (viewers / AI APP) and i18n 說明 sections. A User Story sentence is not assumed to satisfy 需求說明 on its own. Never leave unresolved, 「建議」 or 「等等」 wording in a ticket; resolve it or ask HH first. Reference another ticket by its name as link text, never a bare ID. After editing, the PDM or HH can run the ticket's AI Review button (manual trigger, no Dev Stage change) and read the verdict in PRD Quality (AI) and the comment thread.",
+      "source_refs": [
+        "PDM reconciliation of the sources above, 2026-10-06; proposed through a PR for HH review, not yet confirmed by HH"
       ]
     }
   ],
@@ -140,6 +211,15 @@
         "HH direct statement to PDM, 2026-10-03",
         "HH to PDM, 2026-10-05",
         "Google Drive: aetherSlide-Solution-Core+ (file id 1x0QuX1W8jwIFYzcZwZAvkkG4juYzHZq2FNF3pPXXkfg), read 2026-10-03"
+      ]
+    },
+    {
+      "classification": "ASSUMPTION",
+      "statement": "The ticket standard entries added 2026-10-06 come from the written specs of the AI Review Agent, not from Gail Chan's claude.ai Organization Project itself, which PDM's tools cannot open; anything that project holds beyond those specs is not captured. The 2026-09-18 five-item entry came from HH's own statement and predates these sources; the two agree on every item (only the name of item 3 differs).",
+      "source_refs": [
+        "Google Doc「AI_Review_Agent_Story層級規範」(Drive 1olEZk7JH22_zThK3TTEAu-QXJq0z22zmhL0Mb_wRPFk), read 2026-10-06",
+        "ClickUp spec tasks for the AI reviewer by Gail Chan: [AI reviewer] task 維度 (86exthza7) and milestone 維度 (86exxbfan), read 2026-10-06",
+        "HH to PDM, 2026-10-06 (asked that aetherAI tickets follow the company reviewer standard from now on; pointed to the 需求規格品質 AI Reviewer built by Gail Chan)"
       ]
     }
   ]
