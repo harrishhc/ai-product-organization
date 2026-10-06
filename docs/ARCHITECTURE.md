@@ -204,7 +204,19 @@ Match signals are weighted, not counted — declared metadata, then a caller int
 
 Where a capability explicitly declares uncertainty types, the runtime may enforce them. Missing uncertainty metadata is treated as unknown rather than invented. This prevents the registry from pretending to know semantic routing information that has not been established.
 
-## 18. Token / Runtime Efficiency Principles
+## 18. Execution Host Boundary
+
+PDM Core already has an execution mechanism through the current Claude Code / Codex host path. This section makes the boundary explicit so a future execution backend can be substituted without moving PDM judgment into the provider.
+
+The canonical contract is [docs/EXECUTION_CONTRACT.md](EXECUTION_CONTRACT.md). The runtime vocabulary and envelope validation live in [runtime/executionContract.js](../runtime/executionContract.js).
+
+What PDM owns and what the host owns is listed once, in [EXECUTION_CONTRACT.md](EXECUTION_CONTRACT.md) §2 and §3, and is deliberately not repeated here. The same holds for run / work-unit cardinality, lifecycle transitions, completion semantics, tool authority and retry/resume (§4–§9 of that file).
+
+The host does not become a second memory system. Its checkpoint can remember execution position, but Product Context, Work State, decisions, methodology, and portfolio policy remain owned by their existing Git-backed sources.
+
+The contract is intentionally implementation-neutral. Claude Code and Codex remain valid current execution paths; LangGraph, Agent SDK, or another runtime can be evaluated later as adapters without changing PDM governance or methodology.
+
+## 19. Token / Runtime Efficiency Principles
 
 The system should optimize decision quality per unit of context, latency, tool use, and agent coordination cost.
 
@@ -215,6 +227,6 @@ The system should optimize decision quality per unit of context, latency, tool u
 - Do not invoke a specialist when PDM can safely resolve the uncertainty from existing evidence.
 - Reuse stable session state and cached metadata instead of recomputing them.
 
-## 19. Architecture Principle Summary
+## 20. Architecture Principle Summary
 
-Capabilities are reusable; Product Context is product-specific; methodology is HH-owned and locally versioned; PDM owns judgment and orchestration; HH owns final authority; evolution is governed across three separate planes. The initial upstream ecosystem is genetic source material, not an ongoing dependency. PDM minimizes context, tool calls, and delegation while preserving decision quality.
+Capabilities are reusable; Product Context is product-specific; methodology is HH-owned and locally versioned; PDM owns judgment and orchestration; HH owns final authority; execution hosting is replaceable behind a provider-neutral contract; evolution is governed across three separate planes. The initial upstream ecosystem is genetic source material, not an ongoing dependency. PDM minimizes context, tool calls, and delegation while preserving decision quality.

@@ -80,11 +80,13 @@ The host should provide:
 
 The host does **not** define PDM's product-management logic.
 
+The provider-neutral boundary is defined once in [`docs/EXECUTION_CONTRACT.md`](../docs/EXECUTION_CONTRACT.md). It separates PDM-owned judgment and Git-backed semantic state from host-owned execution state, provider transport, pause/resume, and usage reporting. The current Claude Code / Codex path remains valid without introducing direct model API dependencies into PDM Core.
+
 `tmux` matters because it keeps the terminal process/session attached to the VM even when the user's local terminal, SSH connection, browser, or device disconnects. It does not by itself make the PDM autonomous; the provider process must already be capable of continuing agent work, and the host must keep that process alive.
 
 ### Provider process
 
-The provider process is Claude Code, Codex CLI, or another compatible agent host. Provider-specific bootstrap behavior belongs in a small adapter such as `CLAUDE.md`; provider-neutral PDM rules belong in `AGENTS.md` and the governance files.
+The provider process is Claude Code, Codex CLI, or another compatible agent host. Provider-specific bootstrap behavior belongs in a small adapter such as `CLAUDE.md`; provider-neutral PDM rules belong in `AGENTS.md` and the governance files. Execution lifecycle expectations are defined in [`docs/EXECUTION_CONTRACT.md`](../docs/EXECUTION_CONTRACT.md), not in provider-specific files.
 
 A provider process should be started with the PDM Core repository as its project/working directory whenever the provider's instruction discovery depends on cwd. A later one-off shell `cd` is not a substitute for starting the provider in the correct project context.
 
@@ -228,7 +230,7 @@ When the worker is about to stop because the host is ending, the usage budget is
 4. Regenerate `portfolio-index.md` when product state changed enough to affect selection/status.
 5. Commit and push changes in `ai-product-organization` itself when required by the repository workflow.
 
-A host restart is therefore a resume operation, not a request to reconstruct the product from scratch.
+A host restart is therefore a resume operation, not a request to reconstruct the product from scratch. In the execution contract's terms the PDM Worker role resumes from durable state with new work units; a `mode: "resume"` request applies only to a suspended work unit whose checkpoint the host durably kept (see [`docs/EXECUTION_CONTRACT.md`](../docs/EXECUTION_CONTRACT.md) §4).
 
 ## Deliberately not built yet
 
