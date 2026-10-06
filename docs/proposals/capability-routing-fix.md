@@ -141,7 +141,7 @@ selectCapability({
 
 ## 7. 風險
 
-- **A 讓候選結果變大**(多帶 cue 文字),與 §18 的 token 效率原則有張力。緩解:只對前 N 名候選帶 cue,不是全部。
+- **A 讓候選結果變大**(多帶 cue 文字),與 ARCHITECTURE §19 的 token 效率原則有張力。緩解:只對前 N 名候選帶 cue,不是全部。
 - **B 是 API 破壞性變更**,會動到 `selectCapability` 既有呼叫端與測試。
 - **C 讓 `uncertainty_types` 長期維持稀疏**,硬過濾長期幾乎不作用 —— 這是刻意的,證據累積前不假裝有分類法。
 

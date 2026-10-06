@@ -37,6 +37,7 @@ Start with the repository itself and read only the governance needed for the tas
 5. [`governance/WORK_STATE_BOUNDARY.md`](governance/WORK_STATE_BOUNDARY.md) — Product Context / Work State / Active Brief boundaries and durable-session protocol.
 6. [`governance/AUTONOMY_BOUNDARY.md`](governance/AUTONOMY_BOUNDARY.md) — what may proceed without asking HH and what requires a stop.
 7. [`governance/COLLABORATION_PROTOCOL.md`](governance/COLLABORATION_PROTOCOL.md) — PDM Worker loop, Founder Decision Briefs, host boundary, review-surface rules, and cross-provider handoff.
+8. [`docs/EXECUTION_CONTRACT.md`](docs/EXECUTION_CONTRACT.md) — provider-neutral boundary between PDM Core and the agent execution host; implementation details belong to adapters.
 
 Do not assume that because a rule is documented it is fully enforced by runtime code. When the task concerns actual behavior, inspect the relevant `runtime/` implementation and tests.
 
@@ -52,6 +53,7 @@ Do not assume that because a rule is documented it is fully enforced by runtime 
 - `runtime/productSync.js` — typed product/org sync and publish implementation; it does not itself contain the process/network adapter.
 - `runtime/orchestrator.js` — work orchestration and capability selection.
 - `runtime/instrumentation.js` — waste observability and Runtime Governor boundary.
+- `runtime/executionContract.js` — provider-neutral execution lifecycle vocabulary, request/result envelope validation and work-unit transition checks; it never calls a model or chooses a provider, and nothing consumes it yet.
 - `bin/pdm-run.mjs` — mechanical coordinator for refreshing the portfolio, selecting the next product, printing its Active Brief and delegation hint (from the optional Work State `uncertainty_type`), and checking the Runtime Governor. `route` runs `selectCapability` and prints the one file to read, its anti-cues and composition; a `weak_fit` is reported as no selection. It does not perform product reasoning by itself.
 - `bin/pdm-git.mjs` — the real git/process adapter for product and organization sync, publish, and status operations.
 
