@@ -19,15 +19,19 @@
     "PR #39 — 修正獨立 review 發現 #34–#37 的錯誤宣稱（docLinks 數字、GENESIS research/ 記錄、registry 路徑）",
     "PR #40 — 移除 #19 遺漏的 CC BY-NC-SA 授權行",
     "PR #41 — methodology/ 成為唯一的 skill 來源，不再指示使用 Skill 工具",
-    "PR #42 — 新增 pdm-run route 與封閉詞彙的 uncertainty_type，並補上接線測試（203 個測試）"
+    "PR #42 — 新增 pdm-run route 與封閉詞彙的 uncertainty_type，並補上接線測試（203 個測試）",
+    "PR #44 — 把 2026-09-30 的 session 記進 Work State",
+    "PR #45 — 移除 methodology/catalog/（凍結的上游索引，沒有任何東西讀它）",
+    "PR #46 — 補上 pdm-run status/next 的測試覆蓋，並要求記錄 routing_intents 前先驗證",
+    "PR #43 — 定義 provider-neutral 的 Execution Contract（run / work unit / lifecycle transition / completion / tool authority / retry vs resume），沒有新增 execution adapter；HH 於 2026-10-06 核可後合併"
   ],
   "open_questions": [
     "PDM worker 在真實任務中實際查詢 repo 方法論的頻率，目前沒有可觀測的量測方式。",
     "Runtime Governor 對對話長度結構性盲目，注意力稀釋無法被現有機制偵測。"
   ],
   "last_session": {
-    "date": "2026-09-30",
-    "summary": "合併 #38–#42。把 skills 只從 repo 載入的規則落實到 AUTONOMY_BOUNDARY；新增 pdm-run route，讓路由路徑可直接執行；新增 12 個值的 uncertainty_type。量測結果：86 個 capability 沒有任何一個宣告 uncertainty_types，且建置腳本不輸出該欄位，所以硬過濾目前不作用，uncertainty_type 唯一的實際效果是 next 印出的 delegation 提示。獨立 review 抓出並修掉多處錯誤宣稱；pdm-core 自己未驗證的 routing_intents 實測只命中 13 個離題的 weak_fit，已移除。",
+    "date": "2026-10-06",
+    "summary": "#44–#46 於 2026-10-01 合併。#43 經三輪獨立 review 後強化（2026-10-02、2026-10-05 推送，CI 綠），HH 於 2026-10-06 核可後合併：run / work unit 基數、lifecycle transition matrix、completion 語意、invokeTool 權限邊界、retry vs resume 寫進 docs/EXECUTION_CONTRACT.md，並由 runtime/executionContract.js 與 31 個測試（全套 250）強制，其中一個測試把文件裡的表格與 validator 常數對照。每輪 review 的發現都先實測成立才修：終態 work_unit_id 被重用、resume handle 重複使用、resume_unavailable 出現在錯誤的狀態、未知 envelope 欄位（含巢狀 usage/error）被默默接受、建構函式把錯誤的 contract_version 蓋成 1.0、非 FAILED 結果可帶 error。PDM 自己寫進文件的 Governor --done 規則（只有 COMPLETED 才計數）與 bin/pdm-run.mjs 實際行為相反，被 review 抓到後改正。已知且文件載明的限制：summary / resume_handle 是不限長度的自由字串；一個 run 同時只有一個 RUNNING unit、一個 product 同時只有一個非終態 unit 是義務而非機器檢查。",
     "decision_refs": []
   }
 }
