@@ -130,6 +130,22 @@
       "priority": 1,
       "organization": "aetherai"
     },
+    "gastric-biopsy-ai-app": {
+      "repository": {
+        "type": "git_remote",
+        "remote_url": "git@github.com:harrishhc/gastric-biopsy-ai-app.git",
+        "local_clone_path": "./.product-clones/gastric-biopsy-ai-app"
+      },
+      "context_entry": "product-context/context.json",
+      "work_state_entry": "product-context/work-state.json",
+      "metadata": {
+        "owner": "harris.chen@aetherai.com",
+        "purpose": "產品名稱為 LKCGMH_gastric_biopsy：專為林口長庚（LKCGMH，專案 A21019）客製的胃生檢 WSI AI 產品；registry id 沿用 repo 名稱 gastric-biopsy-ai-app。"
+      },
+      "status": "active",
+      "priority": 1,
+      "organization": "aetherai"
+    },
     "_portfolio-paused-fixture": {
       "repository": {
         "type": "local_path",
