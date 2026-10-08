@@ -136,7 +136,7 @@
       "classification": "ASSUMPTION",
       "statement": "PDM practice for aetherAI tickets, reconciling the reviewer standard with the PDM User Story format: keep the title as [Module][Page] followed by the end-to-end result (who does what and gets what, no internal codenames); keep User Story, Functional Requirement, Error Handling, Design, Assumptions and Constraints, Out of Scope and Acceptance Criteria where useful, and add separately labelled 既有現況描述, 需求說明, 權限說明 and 影響範圍 (viewers / AI APP) sections; do not add an i18n section (i18n is applied automatically, per HH 2026-10-07). A User Story sentence is not assumed to satisfy 需求說明 on its own. Never leave unresolved, 「建議」 or 「等等」 wording in a ticket; resolve it or ask HH first. Reference another ticket by its name as link text, never a bare ID. After editing, the PDM or HH can run the ticket's AI Review button (manual trigger, no Dev Stage change) and read the verdict in PRD Quality (AI) and the comment thread.",
       "source_refs": [
-        "PDM reconciliation of the sources above, 2026-10-06; proposed through a PR for HH review, not yet confirmed by HH"
+        "PDM reconciliation of the sources above, 2026-10-06; proposed through a PR for HH review. HH confirmed on 2026-10-07 that no i18n section is written and that the Viewer scope follows HH's statement; the remaining parts of this practice are not separately confirmed by HH"
       ]
     }
   ],
