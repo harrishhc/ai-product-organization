@@ -4,18 +4,18 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-10-06T15:04:46.502Z
+Generated: 2026-10-12T09:05:21.921Z
 
 Products: 6 · READY 6 · WAITING_FOR_FOUNDER 0 · BLOCKED 0 · IDLE 0 · UNINITIALIZED 0
 
 | Product | Priority | Status | Next action / why not | Last activity |
 |---|---|---|---|---|
-| colon-biopsy-ai-app | 1 | READY | 與 I-Chu 核對：新版本新增的 158 個 Adenocarcinoma 亞型組織，標註時是否同步修正了與 HGD 共病/形態重疊的標註方式——這是 HGD 表現能否真正改善的關鍵，比 NET 閾值問題更根本，且時間軸文件未記錄任何修正 | 2026-10-06 |
-| gastric-biopsy-ai-app | 1 | READY | 向洪翊筑／Nous Wang 確認線上 App（GitLab gastric-biopsy-triage-app）實際部署的模型版本、29 類閾值與 heatmap 門檻，並回寫 Product Context | 2026-10-06 |
+| colon-biopsy-ai-app | 1 | READY | 與 I-Chu 核對：新版本新增的 158 個 Adenocarcinoma 亞型組織，標註時是否同步修正了與 HGD 共病/形態重疊的標註方式——這是 HGD 表現能否真正改善的關鍵，比 NET 閾值問題更根本，且時間軸文件未記錄任何修正 | 2026-10-07 |
+| gastric-biopsy-ai-app | 1 | READY | 取得 GitLab gastric-biopsy-triage-app 的 model_config.json 與 checkpoint 資訊，向洪翊筑／Nous Wang 確認 App 1.1.1 的 checkpoint 與閾值，並與 data sheet 的 retrospective_20251028 run（推論 malignant 閾值約 0.27–0.28）比對，再回寫 Product Context | 2026-10-07 |
 | ocr-slide-label-reader | 2 | READY | HH 裁示 PRD v0.3 第 6 節的提案：準度門檻先看誤讀率、再看漏讀率；把花蓮慈濟 166 片凍結為回歸 benchmark；每站台每片型累積到至少 300 片才定數值目標（QA 自 2026-05-22 起多次詢問，記錄中未見答覆） | 2026-10-06 |
 | prostate-biopsy | 1 | READY | HH review 對 Nous Wang 的詢問計畫（2026-10-06 依 UKE_studies 完整重讀與 ClickUp 狀態再縮減為 4 題：Q4、Q6、Q9、Q14；HH 未核可前不對外發問），以及 HH 對 PRD v0.3.1 的 W2 結果文字提案（疑似癌症 / 未見可疑 / 部分結果 / 不適用 / 不可用 / 處理中）與 Q8（v1 不顯示分數）的意見 | 2026-10-06 |
 | pdm-core | 4 | READY | 觀察 PR #41 之後的真實工作：worker 是否改從 methodology/ 載入 skill，而不是呼叫 Skill 工具；若仍有人把帳號層級能力當成 repo 能力，再重新評估是否需要 .claude/skills adapter | 2026-10-06 |
 | slide-quality-control | 3 | READY | 向 KenHsiao（負責 model RD，threshold 實際調整的執行者）核實 Fold 的 threshold 政策是否已依 Specimen Artifact 的 PPV-first 原則調整，並在此原則下重新評估 71/74 FP 是否仍是問題 — 2026-09-21 已確認 z9088270hc 與此問題無關（見 recently_completed），ClickUp 上不存在任何可跟催此問題的票或留言串；只能透過直接對話（Slack/當面）取得，非 PDM 可透過非同步管道自行解卡 | 2026-09-21 |
 
 ## Next selected work
-**colon-biopsy-ai-app** — 與 I-Chu 核對：新版本新增的 158 個 Adenocarcinoma 亞型組織，標註時是否同步修正了與 HGD 共病/形態重疊的標註方式——這是 HGD 表現能否真正改善的關鍵，比 NET 閾值問題更根本，且時間軸文件未記錄任何修正
+**prostate-biopsy** — HH review 對 Nous Wang 的詢問計畫（2026-10-06 依 UKE_studies 完整重讀與 ClickUp 狀態再縮減為 4 題：Q4、Q6、Q9、Q14；HH 未核可前不對外發問），以及 HH 對 PRD v0.3.1 的 W2 結果文字提案（疑似癌症 / 未見可疑 / 部分結果 / 不適用 / 不可用 / 處理中）與 Q8（v1 不顯示分數）的意見
