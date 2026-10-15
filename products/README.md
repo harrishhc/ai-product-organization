@@ -31,7 +31,10 @@ itself:
   `gastric-biopsy-ai-app` on 2026-10-15) is the 林口長庚-only customised product;
   `gastric-biopsy` is the commercial product developed with 國泰 (Cathay) and
   deployed on aetherSlide. They were split because the CGMH product's clinical
-  usage flow was never studied and cannot be reused.
+  usage flow was never studied and cannot be reused. On 2026-10-15 HH set
+  `CGMH_gastric_biopsy` to the lowest real-product tier (`priority: 3`, tied with
+  `slide-quality-control`; least-recently-worked breaks the tie) because it has no task to
+  work now; it stays above `pdm-core` (4) per the convention below.
 - `pdm-core` — PDM Core managed as a product. Its repository **is** this
   repository (`local_path` at `.`), so unlike the three above it is not a separate
   clone and must never be moved out: there is nowhere to move it to. `priority: 4` is deliberate — below every real product, so portfolio

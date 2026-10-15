@@ -143,7 +143,7 @@
         "purpose": "專屬林口長庚（CGMH／LKCGMH，專案 A21019）的客製胃生檢 WSI AI 產品；repo 與 registry id 於 2026-10-15 由 gastric-biopsy-ai-app 改名為 CGMH_gastric_biopsy。改名與分拆原因（HH 2026-10-15）：此產品專屬 CGMH，當初未仔細研究 user flow，臨床使用方式無法復用，故將 repo 切開；商用版本改由新 repo gastric-biopsy 承接。"
       },
       "status": "active",
-      "priority": 1,
+      "priority": 3,
       "organization": "aetherai"
     },
     "gastric-biopsy": {

@@ -4,14 +4,14 @@
      Do not hand-edit: change the product's own Work State / Product Context
      and re-render. Status here is recomputed, never stored. -->
 
-Generated: 2026-10-15T07:12:05.872Z
+Generated: 2026-10-15T08:17:19.153Z
 
 Products: 7 · READY 6 · WAITING_FOR_FOUNDER 0 · BLOCKED 1 · IDLE 0 · UNINITIALIZED 0
 
 | Product | Priority | Status | Next action / why not | Last activity |
 |---|---|---|---|---|
 | colon-biopsy-ai-app | 1 | READY | 與 I-Chu 核對：新版本新增的 158 個 Adenocarcinoma 亞型組織，標註時是否同步修正了與 HGD 共病/形態重疊的標註方式——這是 HGD 表現能否真正改善的關鍵，比 NET 閾值問題更根本，且時間軸文件未記錄任何修正 | 2026-10-07 |
-| CGMH_gastric_biopsy | 1 | READY | 取得 GitLab gastric-biopsy-triage-app 的 model_config.json 與 checkpoint 資訊，向洪翊筑／Nous Wang 確認 App 1.1.1 的 checkpoint 與閾值，並與 data sheet 的 retrospective_20251028 run（推論 malignant 閾值約 0.27–0.28）比對，再回寫 Product Context | 2026-10-15 |
+| CGMH_gastric_biopsy | 3 | READY | 取得 GitLab gastric-biopsy-triage-app 的 model_config.json 與 checkpoint 資訊，向洪翊筑／Nous Wang 確認 App 1.1.1 的 checkpoint 與閾值，並與 data sheet 的 retrospective_20251028 run（推論 malignant 閾值約 0.27–0.28）比對，再回寫 Product Context | 2026-10-15 |
 | gastric-biopsy | 1 | BLOCKED | S0 資料稽核等待 HH 取得 Cropath 與國泰的資料細節與授權資訊; PRD 撰寫等待 S0 與 S1 完成 | 2026-10-15 |
 | ocr-slide-label-reader | 2 | READY | HH 裁示 PRD v0.3 第 6 節的提案：準度門檻先看誤讀率、再看漏讀率；把花蓮慈濟 166 片凍結為回歸 benchmark；每站台每片型累積到至少 300 片才定數值目標（QA 自 2026-05-22 起多次詢問，記錄中未見答覆） | 2026-10-06 |
 | prostate-biopsy | 1 | READY | HH review：(1) 對 Nous Wang 的詢問計畫（Q4、Q6、Q9、Q14；2026-10-12 起 Q14 併入 UKE 標註策略 E0 的資料請求：逐片分數表、中繼資料捷徑測試、val 是否用於挑 checkpoint）；(2) 對 UKE 的詢問草稿（資料權利、病人 ID 與原診斷欄位、是否有做了 IHC 的良性 core、UKE 病理醫師是否願意共同標註、是否可提供連續病例的封存測試集；經 Adam Yen，見 docs/uke-annotation-strategy-and-experiment-plan.md §10 A）；(3) PRD v0.4 的 W2 結果文字提案（疑似癌症 / 未見可疑 / 部分結果 / 不適用 / 不可用 / 處理中）與 Q8（v1 不顯示分數）的意見。HH 未核可前不對外發問。 | 2026-10-12 |
