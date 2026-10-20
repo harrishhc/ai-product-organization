@@ -156,7 +156,7 @@
       "work_state_entry": "product-context/work-state.json",
       "metadata": {
         "owner": "harris.chen@aetherai.com",
-        "purpose": "商用胃生檢 WSI AI 新產品（2026-10-15 自 CGMH_gastric_biopsy 分拆；與 colon-biopsy-ai-app 同樣部署於 aetherSlide）。資料：Cropath GI 156 片商用資料＋國泰（Cathay）將提供的胃部資料，後續與國泰合作開發商用模型與產品。與 CGMH 客製版是不同產品、不同 repo，不得共用病人資料或 IRB 範圍。"
+        "purpose": "商用胃生檢 WSI AI 新產品（2026-10-15 自 CGMH_gastric_biopsy 分拆；與 colon-biopsy-ai-app 同樣部署於 aetherSlide）。資料：國泰（Cathay）提供的胃部資料（國泰莊醫師協助蒐集與標記），公司已與國泰簽約開發商用模型與產品。與 CGMH 客製版是不同產品、不同 repo，不得共用病人資料或 IRB 範圍。"
       },
       "status": "active",
       "priority": 1,
